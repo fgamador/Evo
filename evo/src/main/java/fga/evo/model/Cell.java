@@ -5,19 +5,21 @@ import java.util.List;
 import java.util.Set;
 
 public class Cell {
-    static final double INTERACTION_SPRING_CONSTANT = 1;
+    static final double BOND_DAMPING_CONSTANT = 0.01;
+    static final double BOND_SPRING_CONSTANT = 1;
+    static final double COLLISION_SPRING_CONSTANT = 1;
     // costs and yields are all energy per area
     static final double FAT_GROWTH_COST = 1;
     static final double FAT_MAINTENANCE_COST = 0.005;
     static final double FAT_BURN_YIELD = 0.9;
     static final double PHOTOSYNTHETIC_RING_GROWTH_COST = 1.1;
     static final double PHOTOSYNTHETIC_RING_MAINTENANCE_COST = 0.005;
-    static final double MAX_PHOTOSYNTHETIC_RING_EFFICIENCY = 0.9; // TODO
-    static final double MIN_REPRODUCTION_RADIUS = 50; // TODO
-    static final double MIN_REPRODUCTION_ENERGY = 10; // TODO
-    static final double MAX_CHILD_RADIUS = 20; // TODO
-    static final double MAX_TOTAL_OVERLAP = 0.1; // TODO
-    static final double MASS_PER_AREA = 0.01; // TODO
+    static final double MAX_PHOTOSYNTHETIC_RING_EFFICIENCY = 0.9;
+    static final double MIN_REPRODUCTION_RADIUS = 50;
+    static final double MIN_REPRODUCTION_ENERGY = 10;
+    static final double MAX_CHILD_RADIUS = 20;
+    static final double MAX_TOTAL_OVERLAP = 0.1;
+    static final double MASS_PER_AREA = 0.01;
 
     private final World world;
     private Thruster thruster;
@@ -67,7 +69,7 @@ public class Cell {
     }
 
     /** Records that this cell is interacting with another cell. */
-    void addInteracting(CellCellInteraction pair) {
+    void addInteraction(CellCellInteraction pair) {
         interactingPairs.add(pair);
     }
 
@@ -216,8 +218,8 @@ public class Cell {
         //        forceY += thruster.getForceY();
         // }
 
-        forceX -= World.FLUID_RESISTANCE * radius * velocityX;
-        forceY -= World.FLUID_RESISTANCE * radius * velocityY;
+        forceX -= World.FLUID_RESISTANCE * radius * velocityX * velocityX;
+        forceY -= World.FLUID_RESISTANCE * radius * velocityY * velocityY;
 
         totalOverlap = 0;
         wallCollisionForces();
@@ -227,25 +229,25 @@ public class Cell {
     private void wallCollisionForces() {
         double leftOverlap = radius - centerX;
         if (leftOverlap > 0) {
-            forceX += INTERACTION_SPRING_CONSTANT * leftOverlap;
+            forceX += COLLISION_SPRING_CONSTANT * leftOverlap;
             totalOverlap += leftOverlap;
         }
 
         double rightOverlap = centerX + radius - world.getWidth();
         if (rightOverlap > 0) {
-            forceX -= INTERACTION_SPRING_CONSTANT * rightOverlap;
+            forceX -= COLLISION_SPRING_CONSTANT * rightOverlap;
             totalOverlap += rightOverlap;
         }
 
         double topOverlap = radius - centerY;
         if (topOverlap > 0) {
-            forceY += INTERACTION_SPRING_CONSTANT * topOverlap;
+            forceY += COLLISION_SPRING_CONSTANT * topOverlap;
             totalOverlap += topOverlap;
         }
 
         double bottomOverlap = centerY + radius - world.getHeight();
         if (bottomOverlap > 0) {
-            forceY -= INTERACTION_SPRING_CONSTANT * bottomOverlap;
+            forceY -= COLLISION_SPRING_CONSTANT * bottomOverlap;
             totalOverlap += bottomOverlap;
         }
     }

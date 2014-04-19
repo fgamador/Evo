@@ -43,7 +43,7 @@ public class World {
         // TODO find a non-O(N^2) way
         for (int i = 0; i < cells.size(); i++) {
             Cell cell2 = cells.get(i);
-            CellCellInteraction pair = new CellCellInteraction(cell1, cell2);
+            CellCellInteraction pair = new CellCellCollision(cell1, cell2);
             if (pair.getOverlap() > 0)
                 return true;
         }
@@ -87,17 +87,30 @@ public class World {
     /** Finds all the pairs of interacting cells. */
     private void detectInteractions() {
         // TODO find a non-O(N^2) way
+        // Idea: keep cells sorted by centerX, with each cell knowing its index.
+        // Each cell need check only those others with greater indexes until it
+        // finds another cell whose centerX is beyond the max radius plus the cell
+        // radius. Works for finding shadowing, too.
         for (int i = 0; i < cells.size(); i++) {
             Cell cell1 = cells.get(i);
             for (int j = i + 1; j < cells.size(); j++) {
                 Cell cell2 = cells.get(j);
-                CellCellInteraction pair = new CellCellInteraction(cell1, cell2);
-                if (pair.getOverlap() > 0 || cell2.equals(cell1.getChild())) {
-                    pair.calculateForces();
-                    cell1.addInteracting(pair);
-                    cell2.addInteracting(pair);
+                CellCellInteraction interaction = detectInteraction(cell1, cell2);
+                if (interaction != null) {
+                    interaction.calculateForces();
+                    cell1.addInteraction(interaction);
+                    cell2.addInteraction(interaction);
                 }
             }
+        }
+    }
+
+    private CellCellInteraction detectInteraction(Cell cell1, Cell cell2) {
+        if (cell2.equals(cell1.getChild())) {
+            return new CellCellBond(cell1, cell2);
+        } else {
+            CellCellCollision collision = new CellCellCollision(cell1, cell2);
+            return (collision.getOverlap() > 0) ? collision : null;
         }
     }
 

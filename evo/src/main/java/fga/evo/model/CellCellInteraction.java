@@ -1,11 +1,11 @@
 package fga.evo.model;
 
-public final class CellCellInteraction {
-    private final Cell cell1, cell2;
-    private double deltaX, deltaY;
-    private double separation;
-    private double overlap;
-    private double forceX, forceY;
+public abstract class CellCellInteraction {
+    protected final Cell cell1, cell2;
+    protected double deltaX, deltaY;
+    protected double separation;
+    protected double overlap;
+    protected double forceX, forceY;
 
     CellCellInteraction(final Cell cell1, final Cell cell2) {
         this.cell1 = cell1;
@@ -21,10 +21,13 @@ public final class CellCellInteraction {
     }
 
     void calculateForces() {
-        double force = Cell.INTERACTION_SPRING_CONSTANT * overlap;
+        double force = calculateForce();
         forceX = force * deltaX / separation;
         forceY = force * deltaY / separation;
     }
+
+    /** A positive force acts to increase separation. */
+    abstract protected double calculateForce();
 
     public final Cell getCell1() {
         return cell1;
