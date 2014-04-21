@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -24,14 +25,18 @@ public class Evo extends Application {
     private World world;
     private Group cellCircles;
     private Timeline timeline;
+    private CellCircle selectedCellCircle;
+    private CellCircle pulledCellCircle;
 
     @Override
     public void start(Stage stage) {
-        world = new World(2000, 1000);
-        world.populate(5, 10, 10);
+        //        world = new World(2000, 1000);
+        //        world.populate(5, 10, 10);
         //world.populate(50, 10, 15);
         //        world = new World(200, 200);
-        //        world.populate(2, 20);
+        //        world.populate(2, 10, 20);
+        world = new World(500, 500);
+        world.populate(1, 10, 10);
 
         Group root = new Group();
         Scene scene = new Scene(root, world.getWidth(), world.getHeight(), Color.BLACK);
@@ -45,19 +50,25 @@ public class Evo extends Application {
         root.getChildren().add(water);
 
         cellCircles = new Group();
-        for (Cell cell : world.getCells())
-            cellCircles.getChildren().add(new CellCircle(cell));
+        for (Cell cell : world.getCells()) {
+            addCell(cell);
+        }
         root.getChildren().add(cellCircles);
+
+        root.setOnMouseDragged(e -> onMouseDragged(e));
+        root.setOnMouseReleased(e -> onMouseReleased());
 
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.millis(40), new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 Set<Cell> newCells = world.tick();
-                for (Cell cell : newCells)
-                    cellCircles.getChildren().add(new CellCircle(cell));
-                for (Node circle : cellCircles.getChildren())
+                for (Cell cell : newCells) {
+                    addCell(cell);
+                }
+                for (Node circle : cellCircles.getChildren()) {
                     ((CellCircle) circle).update();
+                }
             }
         });
         timeline.getKeyFrames().add(kf);
@@ -66,7 +77,47 @@ public class Evo extends Application {
         stage.show();
     }
 
+    private void addCell(Cell cell) {
+        CellCircle cellCircle = new CellCircle(cell);
+        cellCircles.getChildren().add(cellCircle);
+        // TODO cellCircle.setOnMouseClicked(e -> onCellClicked(cellCircle));
+        cellCircle.setOnMousePressed(e -> onCellPressed(cellCircle, e));
+    }
+
+    private void onCellClicked(CellCircle cellCircle) {
+        if (selectedCellCircle != null) {
+            selectedCellCircle.setSelected(false);
+        }
+        if (selectedCellCircle == cellCircle) {
+            selectedCellCircle = null;
+        } else {
+            cellCircle.setSelected(true);
+            selectedCellCircle = cellCircle;
+        }
+    }
+
+    private void onCellPressed(CellCircle cellCircle, MouseEvent e) {
+        pulledCellCircle = cellCircle;
+        pulledCellCircle.setPullPoint(e.getSceneX(), e.getSceneY());
+        if (pulledCellCircle != selectedCellCircle) {
+            onCellClicked(cellCircle);
+        }
+    }
+
+    private void onMouseDragged(MouseEvent e) {
+        if (pulledCellCircle != null) {
+            pulledCellCircle.setPullPoint(e.getSceneX(), e.getSceneY());
+        }
+    }
+
+    private void onMouseReleased() {
+        if (pulledCellCircle != null) {
+            pulledCellCircle.releasePull();
+            pulledCellCircle = null;
+        }
+    }
+
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 }

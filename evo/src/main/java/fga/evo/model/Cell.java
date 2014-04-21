@@ -7,6 +7,7 @@ import java.util.Set;
 public class Cell {
     static final double BOND_DAMPING_CONSTANT = 0.01;
     static final double BOND_SPRING_CONSTANT = 1;
+    static final double PULL_SPRING_CONSTANT = 1;
     static final double COLLISION_SPRING_CONSTANT = 1;
     // costs and yields are all energy per area
     static final double FAT_GROWTH_COST = 1;
@@ -32,12 +33,16 @@ public class Cell {
     private double centerX, centerY;
     private double velocityX = 0, velocityY = 0;
     private double forceX = 0, forceY = 0;
-    private List<CellCellInteraction> interactingPairs = new ArrayList<CellCellInteraction>();
+    private double pullPointX = 0, pullPointY = 0;
+    private List<CellCellInteraction> interactingPairs = new ArrayList<>();
     private boolean alive = true;
+    private boolean pulled = false;
     private Cell parent = null;
     private Cell child = null;
     private double donatedEnergy;
     private double totalOverlap = 0;
+    private boolean reifyForces = false;
+    private List<Force> forces = new ArrayList<>();
 
     /** Creates an original, spontaneously generated cell. */
     Cell(World world, Thruster thruster, double radius, double centerX, double centerY) {
@@ -65,7 +70,6 @@ public class Cell {
     /** Housekeeping before all the cell ticks. */
     void pretick() {
         interactingPairs.clear();
-        forceX = forceY = 0;
     }
 
     /** Records that this cell is interacting with another cell. */
@@ -73,23 +77,13 @@ public class Cell {
         interactingPairs.add(pair);
     }
 
-    /**
-     * Advances the state of the cell by one time tick. Note that because cells
-     * are ticked in the order of their creation, a child cell will always gets
-     * its tick after its parent cell.
-     */
-    //    void tick(Set<Cell> newCells) {
-    //        if (alive) {
-    //            thruster.tick();
-    //            balanceEnergy(newCells);
-    //        }
-    //        calculateForces();
-    //        move();
-    //    }
-
     // -- energy, growth, reproduction --
 
     void balanceEnergy(Set<Cell> newCells) {
+        if (!alive) {
+            return;
+        }
+
         double availableEnergy = donatedEnergy() + photosynthesis() - maintenance();
         double growthEnergy = availableEnergy - thruster.getEnergy();
         if (growthEnergy > 0) {
@@ -213,41 +207,87 @@ public class Cell {
     // -- forces and motion --
 
     void calculateForces() {
+        forceX = forceY = 0;
+        if (!forces.isEmpty()) {
+            forces.clear();
+        }
+        totalOverlap = 0;
+
         // if (alive) {
         //        forceX += thruster.getForceX();
         //        forceY += thruster.getForceY();
         // }
 
-        forceX -= World.FLUID_RESISTANCE * radius * velocityX * velocityX;
-        forceY -= World.FLUID_RESISTANCE * radius * velocityY * velocityY;
-
-        totalOverlap = 0;
+        if (pulled) {
+            pullForce();
+        }
+        fluidResistanceForce();
         wallCollisionForces();
         pairInteractionForces();
+    }
+
+    private void pullForce() {
+        double pullX = PULL_SPRING_CONSTANT * (pullPointX - centerX);
+        double pullY = PULL_SPRING_CONSTANT * (pullPointY - centerY);
+        forceX += pullX;
+        forceY += pullY;
+        if (reifyForces) {
+            forces.add(new Force(0, 0, pullX, pullY));
+        }
+    }
+
+    private void fluidResistanceForce() {
+        double relativeVelocityX = velocityX - world.getCurrentX(centerX, centerY);
+        double relativeVelocityY = velocityY - world.getCurrentY(centerX, centerY);
+        double dragX = -Math.signum(relativeVelocityX) * World.FLUID_RESISTANCE * radius * relativeVelocityX
+            * relativeVelocityX;
+        double dragY = -Math.signum(relativeVelocityY) * World.FLUID_RESISTANCE * radius * relativeVelocityY
+            * relativeVelocityY;
+        forceX += dragX;
+        forceY += dragY;
+        if (reifyForces) {
+            forces.add(new Force(0, 0, dragX, dragY));
+        }
     }
 
     private void wallCollisionForces() {
         double leftOverlap = radius - centerX;
         if (leftOverlap > 0) {
-            forceX += COLLISION_SPRING_CONSTANT * leftOverlap;
+            double wallForce = COLLISION_SPRING_CONSTANT * leftOverlap;
+            forceX += wallForce;
+            if (reifyForces) {
+                forces.add(new Force(0 /*-radius*/, 0, wallForce, 0));
+            }
             totalOverlap += leftOverlap;
         }
 
         double rightOverlap = centerX + radius - world.getWidth();
         if (rightOverlap > 0) {
-            forceX -= COLLISION_SPRING_CONSTANT * rightOverlap;
+            double wallForce = -COLLISION_SPRING_CONSTANT * rightOverlap;
+            forceX += wallForce;
+            if (reifyForces) {
+                forces.add(new Force(0 /* radius */, 0, wallForce, 0));
+            }
             totalOverlap += rightOverlap;
         }
 
         double topOverlap = radius - centerY;
         if (topOverlap > 0) {
-            forceY += COLLISION_SPRING_CONSTANT * topOverlap;
+            double wallForce = COLLISION_SPRING_CONSTANT * topOverlap;
+            forceY += wallForce;
+            if (reifyForces) {
+                forces.add(new Force(0, 0 /*-radius*/, 0, wallForce));
+            }
             totalOverlap += topOverlap;
         }
 
         double bottomOverlap = centerY + radius - world.getHeight();
         if (bottomOverlap > 0) {
-            forceY -= COLLISION_SPRING_CONSTANT * bottomOverlap;
+            double wallForce = -COLLISION_SPRING_CONSTANT * bottomOverlap;
+            forceY += wallForce;
+            if (reifyForces) {
+                forces.add(new Force(0, 0 /* radius */, 0, wallForce));
+            }
             totalOverlap += bottomOverlap;
         }
     }
@@ -257,9 +297,15 @@ public class Cell {
             if (this == pair.getCell1()) {
                 forceX -= pair.getForceX();
                 forceY -= pair.getForceY();
+                if (reifyForces) {
+                    forces.add(new Force(0, 0, -pair.getForceX(), -pair.getForceY()));
+                }
             } else {
                 forceX += pair.getForceX();
                 forceY += pair.getForceY();
+                if (reifyForces) {
+                    forces.add(new Force(0, 0, pair.getForceX(), pair.getForceY()));
+                }
             }
             totalOverlap += pair.getOverlap();
         }
@@ -268,17 +314,9 @@ public class Cell {
     void move() {
         velocityX += forceX / mass;
         velocityY += forceY / mass;
-        centerX += velocityX + world.getCurrentX(centerX, centerY);
-        centerY += velocityY + world.getCurrentY(centerX, centerY);
+        centerX += velocityX;
+        centerY += velocityY;
     }
-
-    //    private void adjustPositionAsChild() {
-    //        CellCellInteraction pair = new CellCellInteraction(parent, this);
-    //        double cosAngle = pair.getDeltaX() / pair.getSeparation();
-    //        double sinAngle = pair.getDeltaY() / pair.getSeparation();
-    //        centerX = parent.centerX + (parent.radius + radius) * cosAngle;
-    //        centerY = parent.centerY + (parent.radius + radius) * sinAngle;
-    //    }
 
     // -- util --
 
@@ -327,5 +365,22 @@ public class Cell {
 
     public final Cell getChild() {
         return child;
+    }
+
+    public final void setReifyForces(boolean val) {
+        reifyForces = val;
+    }
+
+    public final List<Force> getForces() {
+        return forces;
+    }
+
+    public final void setPulled(boolean val) {
+        pulled = val;
+    }
+
+    public final void setPullPoint(double x, double y) {
+        pullPointX = x;
+        pullPointY = y;
     }
 }
