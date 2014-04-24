@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<fx:root type="BorderPane" xmlns:fx="http://javafx.com/fxml">
+  <top>
+    <HBox spacing="10">
+      <padding><Insets top="10" right="10" bottom="10" left="10" /></padding>
+      <Button fx:id="playPauseButton" text="||" onAction="#onPlayPauseButtonClicked"/>
+      <Button fx:id="singleStepButton" text=">|" disable="true" onAction="#onSingleStepButtonClicked"/>
+    </HBox>
+  </top>
+  <center>
+    <GridPane>
+<!--   <padding><Insets top="25" right="25" bottom="10" left="25" /></padding> -->
+<!--   <Label text="Center X:" GridPane.rowIndex="0" GridPane.columnIndex="0" /> -->
+<!--   <Text fx:id="centerX" GridPane.rowIndex="0" GridPane.columnIndex="1" /> -->
+    </GridPane>
+  </center>
+</fx:root>

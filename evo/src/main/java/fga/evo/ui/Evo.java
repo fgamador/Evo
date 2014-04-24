@@ -1,12 +1,12 @@
 package fga.evo.ui;
 
+import java.io.IOException;
 import java.util.Set;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -29,19 +29,19 @@ public class Evo extends Application {
     private CellCircle pulledCellCircle;
 
     @Override
-    public void start(Stage stage) {
-        //        world = new World(2000, 1000);
-        //        world.populate(5, 10, 10);
+    public void start(Stage primaryStage) throws IOException {
+        world = new World(2000, 1000);
+        world.populate(5, 10, 10);
         //world.populate(50, 10, 15);
         //        world = new World(200, 200);
         //        world.populate(2, 10, 20);
-        world = new World(500, 500);
-        world.populate(1, 10, 10);
+        //        world = new World(500, 500);
+        //        world.populate(1, 10, 10);
 
         Group root = new Group();
         Scene scene = new Scene(root, world.getWidth(), world.getHeight(), Color.BLACK);
-        stage.setScene(scene);
-        stage.setTitle("Evo");
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Evo");
 
         Rectangle water = new Rectangle(scene.getWidth(), scene.getHeight(), //
             new LinearGradient(0.5, 0, 0.5, 1, true, CycleMethod.NO_CYCLE, new Stop[] {
@@ -60,21 +60,30 @@ public class Evo extends Application {
 
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        KeyFrame kf = new KeyFrame(Duration.millis(40), new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                Set<Cell> newCells = world.tick();
-                for (Cell cell : newCells) {
-                    addCell(cell);
-                }
-                for (Node circle : cellCircles.getChildren()) {
-                    ((CellCircle) circle).update();
-                }
-            }
-        });
+        KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick()
+        //        new EventHandler<ActionEvent>() {
+        //            public void handle(ActionEvent event) {
+        //                tick();
+        //            }
+        //        }
+        );
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
-        stage.show();
+        primaryStage.show();
+
+        ControlWindow controls = new ControlWindow(primaryStage, this);
+        controls.show();
+    }
+
+    void tick() {
+        Set<Cell> newCells = world.tick();
+        for (Cell cell : newCells) {
+            addCell(cell);
+        }
+        for (Node circle : cellCircles.getChildren()) {
+            ((CellCircle) circle).update();
+        }
     }
 
     private void addCell(Cell cell) {
@@ -83,6 +92,8 @@ public class Evo extends Application {
         // TODO cellCircle.setOnMouseClicked(e -> onCellClicked(cellCircle));
         cellCircle.setOnMousePressed(e -> onCellPressed(cellCircle, e));
     }
+
+    // -- event handlers --
 
     private void onCellClicked(CellCircle cellCircle) {
         if (selectedCellCircle != null) {
@@ -116,6 +127,22 @@ public class Evo extends Application {
             pulledCellCircle = null;
         }
     }
+
+    // -- for control window --
+
+    boolean isRunning() {
+        return timeline.getStatus().equals(Animation.Status.RUNNING);
+    }
+
+    void pause() {
+        timeline.pause();
+    }
+
+    void resume() {
+        timeline.play();
+    }
+
+    // -- main --
 
     public static void main(String[] args) {
         launch(args);
