@@ -1,6 +1,9 @@
 package fga.evo.model;
 
 public class CellCellBond extends CellCellInteraction {
+    public static double SPRING_CONSTANT = 1;
+    public static double DAMPING_CONSTANT = 0.01;
+
     private double lastTickSeparation;
 
     CellCellBond(Cell cell1, Cell cell2) {
@@ -12,8 +15,8 @@ public class CellCellBond extends CellCellInteraction {
     protected double calculateForce() {
         double separationVelocity = separation - lastTickSeparation;
         lastTickSeparation = separation;
-        double dampingForce = -Cell.BOND_DAMPING_CONSTANT * separationVelocity * separationVelocity;
-        double springForce = Cell.BOND_SPRING_CONSTANT * overlap;
+        double dampingForce = -DAMPING_CONSTANT * separationVelocity * separationVelocity;
+        double springForce = SPRING_CONSTANT * overlap;
         return springForce + dampingForce;
     }
 }

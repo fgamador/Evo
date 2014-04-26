@@ -31,12 +31,12 @@ public class Evo extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         world = new World(2000, 1000);
-        world.populate(5, 10, 10);
+        //world.populate(5, 10, 10);
         //world.populate(50, 10, 15);
         //        world = new World(200, 200);
         //        world.populate(2, 10, 20);
-        //        world = new World(500, 500);
-        //        world.populate(1, 10, 10);
+        world = new World(500, 500);
+        world.populate(1, 10, 10);
 
         Group root = new Group();
         Scene scene = new Scene(root, world.getWidth(), world.getHeight(), Color.BLACK);
@@ -60,13 +60,7 @@ public class Evo extends Application {
 
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
-        KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick()
-        //        new EventHandler<ActionEvent>() {
-        //            public void handle(ActionEvent event) {
-        //                tick();
-        //            }
-        //        }
-        );
+        KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
         timeline.getKeyFrames().add(kf);
         timeline.play();
 

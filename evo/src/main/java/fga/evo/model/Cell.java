@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Cell {
-    static final double BOND_DAMPING_CONSTANT = 0.01;
-    static final double BOND_SPRING_CONSTANT = 1;
     static final double PULL_SPRING_CONSTANT = 1;
-    static final double COLLISION_SPRING_CONSTANT = 1;
     // costs and yields are all energy per area
     static final double FAT_GROWTH_COST = 1;
     static final double FAT_MAINTENANCE_COST = 0.005;
@@ -253,7 +250,7 @@ public class Cell {
     private void wallCollisionForces() {
         double leftOverlap = radius - centerX;
         if (leftOverlap > 0) {
-            double wallForce = COLLISION_SPRING_CONSTANT * leftOverlap;
+            double wallForce = CellCellCollision.SPRING_CONSTANT * leftOverlap;
             forceX += wallForce;
             if (reifyForces) {
                 forces.add(new Force(0 /*-radius*/, 0, wallForce, 0));
@@ -263,7 +260,7 @@ public class Cell {
 
         double rightOverlap = centerX + radius - world.getWidth();
         if (rightOverlap > 0) {
-            double wallForce = -COLLISION_SPRING_CONSTANT * rightOverlap;
+            double wallForce = -CellCellCollision.SPRING_CONSTANT * rightOverlap;
             forceX += wallForce;
             if (reifyForces) {
                 forces.add(new Force(0 /* radius */, 0, wallForce, 0));
@@ -273,7 +270,7 @@ public class Cell {
 
         double topOverlap = radius - centerY;
         if (topOverlap > 0) {
-            double wallForce = COLLISION_SPRING_CONSTANT * topOverlap;
+            double wallForce = CellCellCollision.SPRING_CONSTANT * topOverlap;
             forceY += wallForce;
             if (reifyForces) {
                 forces.add(new Force(0, 0 /*-radius*/, 0, wallForce));
@@ -283,7 +280,7 @@ public class Cell {
 
         double bottomOverlap = centerY + radius - world.getHeight();
         if (bottomOverlap > 0) {
-            double wallForce = -COLLISION_SPRING_CONSTANT * bottomOverlap;
+            double wallForce = -CellCellCollision.SPRING_CONSTANT * bottomOverlap;
             forceY += wallForce;
             if (reifyForces) {
                 forces.add(new Force(0, 0 /* radius */, 0, wallForce));
