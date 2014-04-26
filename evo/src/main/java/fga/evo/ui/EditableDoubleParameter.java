@@ -5,15 +5,14 @@ import javafx.beans.property.adapter.JavaBeanDoublePropertyBuilder;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.util.converter.NumberStringConverter;
 import fga.evo.model.ParameterAccess;
 
-public class DoubleParameterDisplay extends Group {
-    private String name;
+public class EditableDoubleParameter extends Group {
     private Text text;
     private TextField field;
+    private JavaBeanDoubleProperty parameter;
 
-    public DoubleParameterDisplay() {
+    public EditableDoubleParameter() {
         text = new Text();
         text.setOnMouseClicked(e -> onTextClicked());
         getChildren().add(text);
@@ -22,25 +21,26 @@ public class DoubleParameterDisplay extends Group {
         field.setVisible(false);
         field.setOnAction(e -> onValueEntered());
         getChildren().add(field);
-    }
 
-    public void setName(String value) {
-        name = value;
-        onSetName();
+        text.textProperty().bind(field.textProperty());
     }
 
     public String getName() {
-        return name;
+        return parameter.getName();
     }
 
-    private void onSetName() {
+    public void setName(String value) {
+        createParameterProperty(value);
+        field.setText(String.valueOf(parameter.getValue()));
+        //field.textProperty().bindBidirectional(parameter, new NumberStringConverter());
+    }
+
+    private void createParameterProperty(String name) {
         try {
             JavaBeanDoublePropertyBuilder builder = JavaBeanDoublePropertyBuilder.create();
             builder.bean(ParameterAccess.get());
             builder.name(name);
-            JavaBeanDoubleProperty property = builder.build();
-            text.textProperty().bind(field.textProperty());
-            field.textProperty().bindBidirectional(property, new NumberStringConverter());
+            parameter = builder.build();
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +53,14 @@ public class DoubleParameterDisplay extends Group {
     }
 
     private void onValueEntered() {
+        text.setStyle("");
         text.setVisible(true);
         field.setVisible(false);
+        try {
+            parameter.setValue(Double.valueOf(field.getText()));
+            field.setText(String.valueOf(parameter.getValue()));
+        } catch (NumberFormatException e) {
+            text.setStyle("-fx-fill: red;");
+        }
     }
 }

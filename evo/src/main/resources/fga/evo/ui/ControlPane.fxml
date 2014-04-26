@@ -20,10 +20,10 @@
       <padding><Insets top="25" right="25" bottom="25" left="25" /></padding>
 
       <Label text="Bond spring stiffness:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-      <DoubleParameterDisplay name="bondSpringConstant" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+      <EditableDoubleParameter name="bondSpringConstant" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
       <Label text="Bond spring damping:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-      <DoubleParameterDisplay name="bondDampingConstant" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+      <EditableDoubleParameter name="bondDampingConstant" GridPane.rowIndex="1" GridPane.columnIndex="1" />
     </GridPane>
   </center>
 </fx:root>
