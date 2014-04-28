@@ -24,6 +24,12 @@
 
       <Label text="Bond spring damping:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
       <EditableDoubleParameter name="bondDampingConstant" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+      <Label text="Max speed:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+      <EditableDoubleParameter name="maxSpeed" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+      <Label text="Usable growth energy per mass:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+      <EditableDoubleParameter name="usableGrowthEnergyPerMass" GridPane.rowIndex="3" GridPane.columnIndex="1" />
     </GridPane>
   </center>
 </fx:root>

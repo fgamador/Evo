@@ -25,4 +25,20 @@ public final class ParameterAccess {
     public void setBondDampingConstant(double value) {
         CellCellBond.DAMPING_CONSTANT = value;
     }
+
+    public double getMaxSpeed() {
+        return Cell.MAX_SPEED;
+    }
+
+    public void setMaxSpeed(double value) {
+        Cell.MAX_SPEED = value;
+    }
+
+    public double getUsableGrowthEnergyPerMass() {
+        return Cell.USABLE_GROWTH_ENERGY_PER_MASS;
+    }
+
+    public void setUsableGrowthEnergyPerMass(double value) {
+        Cell.USABLE_GROWTH_ENERGY_PER_MASS = value;
+    }
 }

@@ -67,10 +67,10 @@ public class CellCircle extends Group {
             photoRingCircle.setStrokeType(StrokeType.OUTSIDE);
             photoRingCircle.setStroke(Color.web("white"));
             photoRingCircle.setStrokeWidth(2);
-            cell.setReifyForces(true);
+            cell.setRecordForces(true);
         } else {
             photoRingCircle.setStroke(null);
-            cell.setReifyForces(false);
+            cell.setRecordForces(false);
             getChildren().removeAll(forceArrows);
             forceArrows.clear();
         }

@@ -15,9 +15,12 @@ public class Cell {
     static final double MAX_PHOTOSYNTHETIC_RING_EFFICIENCY = 0.9;
     static final double MIN_REPRODUCTION_RADIUS = 50;
     static final double MIN_REPRODUCTION_ENERGY = 10;
+    static final double CHILD_START_RADIUS = 1;
     static final double MAX_CHILD_RADIUS = 20;
     static final double MAX_TOTAL_OVERLAP = 0.1;
     static final double MASS_PER_AREA = 0.01;
+    static double USABLE_GROWTH_ENERGY_PER_MASS = 10;
+    static double MAX_SPEED = 4;
 
     private final World world;
     private Thruster thruster;
@@ -38,8 +41,7 @@ public class Cell {
     private Cell child = null;
     private double donatedEnergy;
     private double totalOverlap = 0;
-    private boolean reifyForces = false;
-    private List<Force> forces = new ArrayList<>();
+    private List<Force> forces = null;
 
     /** Creates an original, spontaneously generated cell. */
     Cell(World world, Thruster thruster, double radius, double centerX, double centerY) {
@@ -48,20 +50,24 @@ public class Cell {
         setRadius(radius);
         this.centerX = centerX;
         this.centerY = centerY;
-        fatRadius = 0.9 * radius; // TODO
+        fatRadius = 0.9 * radius; // TODO param
         photosyntheticRingOuterRadius = radius;
         radiiToAreas();
     }
 
     /** Creates a child cell. */
     private Cell(Cell parent, double angle) {
+        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
+            CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
         this.parent = parent;
-        world = parent.world;
-        thruster = ZeroThruster.INSTANCE;
-        centerX = parent.centerX + parent.radius * Math.cos(angle);
-        centerY = parent.centerY + parent.radius * Math.sin(angle);
-        fatArea = 0;
-        photosyntheticRingArea = 0;
+    }
+
+    private double getSpawningX(double angle, double childRadius) {
+        return centerX + (radius + childRadius) * Math.cos(angle);
+    }
+
+    private double getSpawningY(double angle, double childRadius) {
+        return centerY + (radius + childRadius) * Math.sin(angle);
     }
 
     /** Housekeeping before all the cell ticks. */
@@ -108,19 +114,21 @@ public class Cell {
 
     private void energySurplus(double growthEnergy, Set<Cell> newCells) {
         if (child != null) {
-            supportChild(growthEnergy);
+            growthEnergy = supportChild(growthEnergy);
         } else if (radius >= MIN_REPRODUCTION_RADIUS && growthEnergy >= MIN_REPRODUCTION_ENERGY) {
-            reproduce(growthEnergy, newCells);
-        } else if (totalOverlap < MAX_TOTAL_OVERLAP) { // don't grow if too crowded
+            growthEnergy = reproduce(growthEnergy, newCells);
+        }
+        if (totalOverlap < MAX_TOTAL_OVERLAP) { // don't grow if too crowded
             grow(growthEnergy);
         }
     }
 
-    private void supportChild(double growthEnergy) {
+    private double supportChild(double growthEnergy) {
         if (child.radius < MAX_CHILD_RADIUS) {
-            child.donatedEnergy += growthEnergy;
+            return donateEnery(child, growthEnergy);
         } else {
             releaseChild();
+            return growthEnergy;
         }
     }
 
@@ -129,12 +137,24 @@ public class Cell {
         child = null;
     }
 
-    private void reproduce(double growthEnergy, Set<Cell> newCells) {
+    private double reproduce(double growthEnergy, Set<Cell> newCells) {
         child = new Cell(this, world.randomAngle());
         newCells.add(child);
         //child.pretick();
-        child.donatedEnergy = growthEnergy;
+        growthEnergy = donateEnery(child, growthEnergy);
         child.balanceEnergy(newCells);
+        return growthEnergy;
+    }
+
+    double donateEnery(Cell child, double growthEnergy) {
+        double donatedEnergy = Math.min(growthEnergy, child.getMaxUsableGrowthEnergy());
+        child.donatedEnergy += donatedEnergy;
+        growthEnergy -= donatedEnergy;
+        return growthEnergy;
+    }
+
+    private double getMaxUsableGrowthEnergy() {
+        return USABLE_GROWTH_ENERGY_PER_MASS * mass;
     }
 
     private void grow(double growthEnergy) {
@@ -205,7 +225,7 @@ public class Cell {
 
     void calculateForces() {
         forceX = forceY = 0;
-        if (!forces.isEmpty()) {
+        if (forces != null) {
             forces.clear();
         }
         totalOverlap = 0;
@@ -228,7 +248,7 @@ public class Cell {
         double pullY = PULL_SPRING_CONSTANT * (pullPointY - centerY);
         forceX += pullX;
         forceY += pullY;
-        if (reifyForces) {
+        if (forces != null) {
             forces.add(new Force(0, 0, pullX, pullY));
         }
     }
@@ -236,13 +256,13 @@ public class Cell {
     private void fluidResistanceForce() {
         double relativeVelocityX = velocityX - world.getCurrentX(centerX, centerY);
         double relativeVelocityY = velocityY - world.getCurrentY(centerX, centerY);
-        double dragX = -Math.signum(relativeVelocityX) * World.FLUID_RESISTANCE * radius * relativeVelocityX
-            * relativeVelocityX;
-        double dragY = -Math.signum(relativeVelocityY) * World.FLUID_RESISTANCE * radius * relativeVelocityY
-            * relativeVelocityY;
+        double dragX = -Math.signum(relativeVelocityX) * World.FLUID_RESISTANCE * radius
+            * sqr(relativeVelocityX);
+        double dragY = -Math.signum(relativeVelocityY) * World.FLUID_RESISTANCE * radius
+            * sqr(relativeVelocityY);
         forceX += dragX;
         forceY += dragY;
-        if (reifyForces) {
+        if (forces != null) {
             forces.add(new Force(0, 0, dragX, dragY));
         }
     }
@@ -252,7 +272,7 @@ public class Cell {
         if (leftOverlap > 0) {
             double wallForce = CellCellCollision.SPRING_CONSTANT * leftOverlap;
             forceX += wallForce;
-            if (reifyForces) {
+            if (forces != null) {
                 forces.add(new Force(0 /*-radius*/, 0, wallForce, 0));
             }
             totalOverlap += leftOverlap;
@@ -262,7 +282,7 @@ public class Cell {
         if (rightOverlap > 0) {
             double wallForce = -CellCellCollision.SPRING_CONSTANT * rightOverlap;
             forceX += wallForce;
-            if (reifyForces) {
+            if (forces != null) {
                 forces.add(new Force(0 /* radius */, 0, wallForce, 0));
             }
             totalOverlap += rightOverlap;
@@ -272,7 +292,7 @@ public class Cell {
         if (topOverlap > 0) {
             double wallForce = CellCellCollision.SPRING_CONSTANT * topOverlap;
             forceY += wallForce;
-            if (reifyForces) {
+            if (forces != null) {
                 forces.add(new Force(0, 0 /*-radius*/, 0, wallForce));
             }
             totalOverlap += topOverlap;
@@ -282,7 +302,7 @@ public class Cell {
         if (bottomOverlap > 0) {
             double wallForce = -CellCellCollision.SPRING_CONSTANT * bottomOverlap;
             forceY += wallForce;
-            if (reifyForces) {
+            if (forces != null) {
                 forces.add(new Force(0, 0 /* radius */, 0, wallForce));
             }
             totalOverlap += bottomOverlap;
@@ -294,13 +314,13 @@ public class Cell {
             if (this == pair.getCell1()) {
                 forceX -= pair.getForceX();
                 forceY -= pair.getForceY();
-                if (reifyForces) {
+                if (forces != null) {
                     forces.add(new Force(0, 0, -pair.getForceX(), -pair.getForceY()));
                 }
             } else {
                 forceX += pair.getForceX();
                 forceY += pair.getForceY();
-                if (reifyForces) {
+                if (forces != null) {
                     forces.add(new Force(0, 0, pair.getForceX(), pair.getForceY()));
                 }
             }
@@ -311,6 +331,15 @@ public class Cell {
     void move() {
         velocityX += forceX / mass;
         velocityY += forceY / mass;
+
+        // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
+        double speedSquared = sqr(velocityX) + sqr(velocityY);
+        if (speedSquared > sqr(MAX_SPEED)) {
+            double speed = Math.sqrt(speedSquared);
+            velocityX *= MAX_SPEED / speed;
+            velocityY *= MAX_SPEED / speed;
+        }
+
         centerX += velocityX;
         centerY += velocityY;
     }
@@ -318,20 +347,23 @@ public class Cell {
     // -- util --
 
     private void radiiToAreas() {
-        fatArea = Math.PI * fatRadius * fatRadius;
-        photosyntheticRingArea = Math.PI * photosyntheticRingOuterRadius * photosyntheticRingOuterRadius
-            - fatArea;
+        fatArea = Math.PI * sqr(fatRadius);
+        photosyntheticRingArea = Math.PI * sqr(photosyntheticRingOuterRadius) - fatArea;
     }
 
     private void areasToRadii() {
         fatRadius = Math.sqrt(fatArea / Math.PI);
-        photosyntheticRingOuterRadius = Math.sqrt(fatRadius * fatRadius + photosyntheticRingArea / Math.PI);
+        photosyntheticRingOuterRadius = Math.sqrt(sqr(fatRadius) + photosyntheticRingArea / Math.PI);
         setRadius(photosyntheticRingOuterRadius);
     }
 
-    private void setRadius(double val) {
-        radius = val;
-        mass = MASS_PER_AREA * (Math.PI * radius * radius);
+    private void setRadius(double value) {
+        radius = value;
+        mass = MASS_PER_AREA * Math.PI * sqr(radius);
+    }
+
+    private static double sqr(double value) {
+        return value * value;
     }
 
     // -- accessors --
@@ -364,16 +396,16 @@ public class Cell {
         return child;
     }
 
-    public final void setReifyForces(boolean val) {
-        reifyForces = val;
+    public final void setRecordForces(boolean value) {
+        forces = value ? new ArrayList<>() : null;
     }
 
     public final List<Force> getForces() {
         return forces;
     }
 
-    public final void setPulled(boolean val) {
-        pulled = val;
+    public final void setPulled(boolean value) {
+        pulled = value;
     }
 
     public final void setPullPoint(double x, double y) {

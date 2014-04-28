@@ -15,7 +15,8 @@ public class CellCellBond extends CellCellInteraction {
     protected double calculateForce() {
         double separationVelocity = separation - lastTickSeparation;
         lastTickSeparation = separation;
-        double dampingForce = -DAMPING_CONSTANT * separationVelocity * separationVelocity;
+        double dampingForce = -Math.signum(separationVelocity) * DAMPING_CONSTANT * separationVelocity
+            * separationVelocity;
         double springForce = SPRING_CONSTANT * overlap;
         return springForce + dampingForce;
     }
