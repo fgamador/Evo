@@ -35,7 +35,7 @@ public class CellTest {
 
         cell.move();
 
-        assertPosition(0.25, -0.5, cell);
+        assertPosition(0.5, -1, cell);
         assertVelocity(0.5, -1, cell);
     }
 
@@ -46,7 +46,7 @@ public class CellTest {
 
         cell.move();
 
-        assertPosition(1, 0.5, cell);
+        assertPosition(2, 1, cell);
         assertVelocity(2, 1, cell);
     }
 
@@ -57,7 +57,7 @@ public class CellTest {
 
         cell.move();
 
-        assertPosition(0.75, -1.5, cell);
+        assertPosition(1, -2, cell);
         assertVelocity(0.5, -1, cell);
     }
 
@@ -68,7 +68,7 @@ public class CellTest {
 
         heavyCell.move();
 
-        assertPosition(0.25, -0.5, heavyCell);
+        assertPosition(0.5, -1, heavyCell);
         assertVelocity(0.5, -1, heavyCell);
     }
 

@@ -43,15 +43,15 @@ public class Cell {
      * Updates the cell's velocity and position per the forces currently on it, then clears the forces.
      */
     public final void move() {
-        // the acceleration to apply continuously over this time interval
+        // the acceleration to apply instantaneously at the beginning this time interval
         double accelerationX = forceX / mass;
         double accelerationY = forceY / mass;
-        // the position at the end of the time interval, updated by the average velocity
-        centerX += velocityX + accelerationX / 2;
-        centerY += velocityY + accelerationY / 2;
-        // the velocity at the end of the time interval
+        // the velocity during this time interval
         velocityX += accelerationX;
         velocityY += accelerationY;
+        // the position at the end of this time interval
+        centerX += velocityX;
+        centerY += velocityY;
         // clear the forces
         forceX = forceY = 0;
     }
@@ -60,6 +60,12 @@ public class Cell {
         assert centerX >= 0 && centerY >= 0;
         this.centerX = centerX;
         this.centerY = centerY;
+    }
+
+    /** for testing */
+    final void setVelocity(double velocityX, double velocityY) {
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
     }
 
     /**
