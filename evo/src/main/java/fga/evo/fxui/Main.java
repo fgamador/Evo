@@ -74,15 +74,15 @@ public class Main extends Application {
         cell.setPosition(250, 250);
         world.addCell(cell);
 
-//        Cell cell2 = new Cell(1, 10);
-//        cell2.setPosition(230, 250);
-//        world.addCell(cell2);
-//
+        Cell cell2 = new Cell(1, 10);
+        cell2.setPosition(230, 250);
+        world.addCell(cell2);
+
 //        Cell cell3 = new Cell(1, 10);
 //        cell3.setPosition(210, 250);
 //        world.addCell(cell3);
-//
-//        cell.addBond(cell2);
+
+        cell.addBond(cell2);
 //        cell2.addBond(cell3);
     }
 

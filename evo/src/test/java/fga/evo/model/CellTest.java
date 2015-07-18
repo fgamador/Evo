@@ -180,7 +180,7 @@ public class CellTest {
     }
 
     @Test
-    public void testAddInterCellForces_Bonded_XRestLength() {
+    public void testAddInterCellForces_Bonded_TouchingAtRest() {
         cell.addBond(cell2);
         cell2.setPosition(2, 0);
 
@@ -189,6 +189,43 @@ public class CellTest {
         assertForce(0, 0, cell);
         assertForce(0, 0, cell2);
     }
+
+    @Test
+    public void testAddInterCellForces_Bonded_TouchingMovingTogether() {
+        cell.addBond(cell2);
+        cell2.setPosition(2, 0);
+        cell.setVelocity(1, 0);
+        cell2.setVelocity(1, 0);
+
+        cell.addInterCellForces(cell2);
+
+        assertForce(0, 0, cell);
+        assertForce(0, 0, cell2);
+    }
+
+//    @Test
+//    public void testAddInterCellForces_Bonded_TouchingMovingIntoCompression() {
+//        cell.addBond(cell2);
+//        cell2.setPosition(2, 0);
+//        cell.setVelocity(1, 0);
+//
+//        cell.addInterCellForces(cell2);
+//
+//        assertForce(-0.5, 0, cell);
+//        assertForce(0.5, 0, cell2);
+//    }
+//
+//    @Test
+//    public void testAddInterCellForces_Bonded_TouchingMovingIntoTension() {
+//        cell.addBond(cell2);
+//        cell2.setPosition(2, 0);
+//        cell2.setVelocity(1, 0);
+//
+//        cell.addInterCellForces(cell2);
+//
+//        assertForce(0.5, 0, cell);
+//        assertForce(-0.5, 0, cell2);
+//    }
 
     @Test
     public void testAddInterCellForces_Bonded_XCollision() {
