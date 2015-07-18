@@ -26,10 +26,10 @@ public class PhysicsIntegrationTests {
 
         world.tick();
 
-        assertPosition(3, 3, cell1);
         assertVelocity(0, 0, cell1);
-        assertPosition(7, 7, cell2);
+        assertPosition(3, 3, cell1);
         assertVelocity(0, 0, cell2);
+        assertPosition(7, 7, cell2);
     }
 
     @Test
@@ -42,10 +42,10 @@ public class PhysicsIntegrationTests {
 
         world.tick();
 
-        assertPosition(1, 1, cell1);
         assertVelocity(0.5, 0.5, cell1);
-        assertPosition(499, 499, cell2);
+        assertPosition(1, 1, cell1);
         assertVelocity(-0.5, -0.5, cell2);
+        assertPosition(499, 499, cell2);
     }
 
     @Test
@@ -58,10 +58,10 @@ public class PhysicsIntegrationTests {
 
         world.tick();
 
-        assertPosition(4, 5, cell1);
         assertVelocity(-1, 0, cell1);
-        assertPosition(7, 5, cell2);
+        assertPosition(4, 5, cell1);
         assertVelocity(1, 0, cell2);
+        assertPosition(7, 5, cell2);
     }
 
     @Test
@@ -73,21 +73,21 @@ public class PhysicsIntegrationTests {
         world.setDragPoint(4, 4);
         world.tick();
 
-        assertPosition(4, 4, cell);
         assertVelocity(-1, -1, cell);
+        assertPosition(4, 4, cell);
         assertTrue(world.isDragging());
 
         world.setDragPoint(5, 5);
         world.tick();
 
-        assertPosition(4, 4, cell);
         assertVelocity(0, 0, cell);
+        assertPosition(4, 4, cell);
 
         world.endDrag();
         world.tick();
 
-        assertPosition(4, 4, cell);
         assertVelocity(0, 0, cell);
+        assertPosition(4, 4, cell);
         assertFalse(world.isDragging());
     }
 

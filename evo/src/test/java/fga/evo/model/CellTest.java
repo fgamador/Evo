@@ -25,8 +25,8 @@ public class CellTest {
     public void testMove_NoForces() {
         cell.move();
 
-        assertPosition(0, 0, cell);
         assertVelocity(0, 0, cell);
+        assertPosition(0, 0, cell);
     }
 
     @Test
@@ -35,8 +35,8 @@ public class CellTest {
 
         cell.move();
 
-        assertPosition(0.5, -1, cell);
         assertVelocity(0.5, -1, cell);
+        assertPosition(0.5, -1, cell);
     }
 
     @Test
@@ -46,8 +46,8 @@ public class CellTest {
 
         cell.move();
 
-        assertPosition(2, 1, cell);
         assertVelocity(2, 1, cell);
+        assertPosition(2, 1, cell);
     }
 
     @Test
@@ -57,8 +57,8 @@ public class CellTest {
 
         cell.move();
 
-        assertPosition(1, -2, cell);
         assertVelocity(0.5, -1, cell);
+        assertPosition(1, -2, cell);
     }
 
     @Test
@@ -68,8 +68,8 @@ public class CellTest {
 
         heavyCell.move();
 
-        assertPosition(0.5, -1, heavyCell);
         assertVelocity(0.5, -1, heavyCell);
+        assertPosition(0.5, -1, heavyCell);
     }
 
     @Test
