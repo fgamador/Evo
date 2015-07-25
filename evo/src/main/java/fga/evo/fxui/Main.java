@@ -84,6 +84,24 @@ public class Main extends Application {
 
         cell.addBond(cell2);
 //        cell2.addBond(cell3);
+
+        Cell cell3 = new Cell(1, 10);
+        cell3.setPhysics(2);
+        cell3.setPosition(100, 100);
+        world.addCell(cell3);
+
+        Cell cell4 = new Cell(1, 10);
+        cell4.setPhysics(2);
+        cell4.setPosition(80, 100);
+        world.addCell(cell4);
+
+        Cell cell5 = new Cell(1, 10);
+        cell5.setPhysics(2);
+        cell5.setPosition(60, 100);
+        world.addCell(cell5);
+
+        cell3.addBond(cell4);
+        cell4.addBond(cell5);
     }
 
     void tick() {

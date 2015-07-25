@@ -17,6 +17,7 @@ public class Cell {
     private double centerX, centerY;
     private double velocityX, velocityY;
     private double forceX, forceY;
+    private int physics = 1;
 
     public Cell(final double mass, final double radius) {
         this.mass = mass;
@@ -126,7 +127,11 @@ public class Cell {
 
         if (centerSeparation != 0) {
             if (bondedCells.contains(cell2)) {
-                addBondForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
+                if (physics == 1) {
+                    addBondForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
+                } else {
+                    addBondForces2(cell2, relativeCenterX, relativeCenterY, centerSeparation);
+                }
             } else {
                 addCollisionForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
             }
@@ -143,15 +148,20 @@ public class Cell {
         final double forceY = (relativeCenterY / centerSeparation) * force;
         addForce(forceX, forceY);
         cell2.addForce(-forceX, -forceY);
+    }
 
-//        final double relativeVelocityX = velocityX - cell2.velocityX;
-//        final double relativeVelocityY = velocityY - cell2.velocityY;
-//        final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
-//        final double massFactor = (1 / mass) + (1 / cell2.mass);
-//        final double forceX = ((compressionFactor * relativeCenterX) - relativeVelocityX) / massFactor;
-//        final double forceY = ((compressionFactor * relativeCenterY) - relativeVelocityY) / massFactor;
-//        addForce(forceX, forceY);
-//        cell2.addForce(-forceX, -forceY);
+    /**
+     * Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
+     */
+    private void addBondForces2(final Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
+        final double relativeVelocityX = velocityX - cell2.velocityX;
+        final double relativeVelocityY = velocityY - cell2.velocityY;
+        final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
+        final double massFactor = (1 / mass) + (1 / cell2.mass);
+        final double forceX = ((compressionFactor * relativeCenterX) - relativeVelocityX) / massFactor;
+        final double forceY = ((compressionFactor * relativeCenterY) - relativeVelocityY) / massFactor;
+        addForce(forceX, forceY);
+        cell2.addForce(-forceX, -forceY);
     }
 
     private void addCollisionForces(final Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
@@ -191,6 +201,14 @@ public class Cell {
 
     public final double getForceY() {
         return forceY;
+    }
+
+    public final int getPhysics() {
+        return physics;
+    }
+
+    public final void setPhysics(int val) {
+        physics = val;
     }
 
     public static double calcOverlapForce(double overlap) {
