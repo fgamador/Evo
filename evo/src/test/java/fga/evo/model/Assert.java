@@ -8,6 +8,14 @@ import static org.junit.Assert.assertEquals;
 public class Assert {
     public static final double DEFAULT_DELTA = 0.00001;
 
+    public static void assertEnergy(double energy, Cell cell) {
+        assertEnergy(energy, cell, DEFAULT_DELTA);
+    }
+
+    public static void assertEnergy(double energy, Cell cell, double delta) {
+        assertEquals("Energy", energy, cell.getEnergy(), delta);
+    }
+
     public static void assertForce(double forceX, double forceY, Cell cell) {
         assertForce(forceX, forceY, cell, DEFAULT_DELTA);
     }

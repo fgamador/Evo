@@ -8,14 +8,7 @@ import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class PhysicsIntegrationTests {
-    private World world;
-
-    @Before
-    public void setUp() {
-        world = new World();
-    }
-
+public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testNoCollision() {
         world.setBox(new Box(10, 10));
@@ -159,11 +152,5 @@ public class PhysicsIntegrationTests {
         world.tick();
 
         assertVelocity(1 - Fluid.getDragFactor(), 0, cell);
-    }
-
-    private Cell addCell(double mass, double radius) {
-        Cell cell = new Cell(mass, radius);
-        world.addCell(cell);
-        return cell;
     }
 }

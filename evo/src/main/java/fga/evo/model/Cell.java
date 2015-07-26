@@ -12,13 +12,15 @@ public class Cell {
     private static double overlapForceFactor = 1;
     private static double speedLimit = 4;
 
+    private int physics = 1; // TODO temp
+
     private Set<Cell> bondedCells = new HashSet<>();
     private double mass;
     private double radius;
     private double centerX, centerY;
     private double velocityX, velocityY;
     private double forceX, forceY;
-    private int physics = 1;
+    private double energy;
 
     public Cell(final double mass, final double radius) {
         this.mass = mass;
@@ -29,6 +31,47 @@ public class Cell {
         bondedCells.add(cell2);
         cell2.bondedCells.add(this);
     }
+
+    //=========================================================================
+    // Biology
+    //=========================================================================
+
+    /**
+     * Converts incoming light into energy.
+     *
+     * @param lightIntensity incoming light intensity, as energy per width
+     */
+    public void photosynthesize(double lightIntensity) {
+        // TODO energy += ...
+        energy = lightIntensity * radius * calcPhotoAbsorptivity();
+    }
+
+    /**
+     * Calculates the cell's efficiency at converting light into energy.
+     *
+     * @return the fraction of incident light that gets captured as energy
+     */
+    public double calcPhotoAbsorptivity() {
+        // absorptivity ranges from 0 to 1, asymptotic
+        double thickness = radius; // TODO photoRingOuterRadius - fatRadius;
+        return 1 - (1 / (thickness + 1));
+    }
+
+    /**
+     * Uses all the cell's currently available energy to grow, reproduce, etc.
+     */
+    public void useEnergy() {
+        // TODO
+        energy = 0;
+    }
+
+    public double getEnergy() {
+        return energy;
+    }
+
+    //=========================================================================
+    // Physics
+    //=========================================================================
 
     /**
      * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
@@ -190,11 +233,25 @@ public class Cell {
     }
 
     private void addOverlapForces(Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation, double overlap) {
-        final double force = Cell.calcOverlapForce(overlap);
+        final double force = calcOverlapForce(overlap);
         final double forceX = (relativeCenterX / centerSeparation) * force;
         final double forceY = (relativeCenterY / centerSeparation) * force;
         addForce(forceX, forceY);
         cell2.addForce(-forceX, -forceY);
+    }
+
+    public static double calcOverlapForce(final double overlap) {
+        return overlapForceFactor * overlap;
+    }
+
+    // TODO temp
+    public final int getPhysics() {
+        return physics;
+    }
+
+    // TODO temp
+    public final void setPhysics(final int val) {
+        physics = val;
     }
 
     public final double getRadius() {
@@ -225,21 +282,13 @@ public class Cell {
         return forceY;
     }
 
-    public final int getPhysics() {
-        return physics;
-    }
-
-    public final void setPhysics(final int val) {
-        physics = val;
-    }
-
     public static double sqr(double val) {
         return val * val;
     }
 
-    public static double calcOverlapForce(final double overlap) {
-        return overlapForceFactor * overlap;
-    }
+    //=========================================================================
+    // Parameters
+    //=========================================================================
 
     public static double getSpeedLimit() {
         return speedLimit;

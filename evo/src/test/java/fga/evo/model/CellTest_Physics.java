@@ -9,7 +9,7 @@ import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.assertEquals;
 
-public class CellTest {
+public class CellTest_Physics {
     public static final double SQRT_2 = Math.sqrt(2);
 
     private Cell cell, cell2;
