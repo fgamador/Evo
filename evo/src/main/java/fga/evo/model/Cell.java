@@ -45,14 +45,27 @@ public class Cell {
      */
     public final void move() {
         // the acceleration to apply instantaneously at the beginning this time interval
-        double accelerationX = forceX / mass;
-        double accelerationY = forceY / mass;
+        final double accelerationX = forceX / mass;
+        final double accelerationY = forceY / mass;
+
         // the velocity during this time interval
         velocityX += accelerationX;
         velocityY += accelerationY;
+
+        // TODO from the old version
+//        static double MAX_SPEED = 4;
+//        // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
+//        double speedSquared = sqr(velocityX) + sqr(velocityY);
+//        if (speedSquared > sqr(MAX_SPEED)) {
+//            double speed = Math.sqrt(speedSquared);
+//            velocityX *= MAX_SPEED / speed;
+//            velocityY *= MAX_SPEED / speed;
+//        }
+
         // the position at the end of this time interval
         centerX += velocityX;
         centerY += velocityY;
+
         // clear the forces
         forceX = forceY = 0;
     }
@@ -141,7 +154,7 @@ public class Cell {
     /**
      * Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
      */
-    private void addBondForces(final Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
+    private void addBondForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double overlap = radius + cell2.radius - centerSeparation;
         final double force = Cell.calcOverlapForce(overlap);
         final double forceX = (relativeCenterX / centerSeparation) * force;
@@ -153,7 +166,7 @@ public class Cell {
     /**
      * Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
      */
-    private void addBondForces2(final Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
+    private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double relativeVelocityX = velocityX - cell2.velocityX;
         final double relativeVelocityY = velocityY - cell2.velocityY;
         final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
@@ -164,7 +177,7 @@ public class Cell {
         cell2.addForce(-forceX, -forceY);
     }
 
-    private void addCollisionForces(final Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
+    private void addCollisionForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double overlap = radius + cell2.radius - centerSeparation;
         if (overlap > 0) {
             final double force = Cell.calcOverlapForce(overlap);
@@ -211,7 +224,7 @@ public class Cell {
         physics = val;
     }
 
-    public static double calcOverlapForce(double overlap) {
+    public static double calcOverlapForce(final double overlap) {
         return overlapForceFactor * overlap;
     }
 

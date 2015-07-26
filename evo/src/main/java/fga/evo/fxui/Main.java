@@ -1,8 +1,9 @@
 package fga.evo.fxui;
 
+import fga.evo.model.Box;
 import fga.evo.model.Cell;
+import fga.evo.model.Fluid;
 import fga.evo.model.World;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -34,7 +35,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        world = new World(WIDTH, HEIGHT);
+        world = new World();
+        world.setBox(new Box(WIDTH, HEIGHT));
+        world.setFluid(new Fluid());
         populate();
 
         Group root = new Group();
@@ -78,30 +81,30 @@ public class Main extends Application {
         cell2.setPosition(230, 250);
         world.addCell(cell2);
 
-//        Cell cell3 = new Cell(1, 10);
-//        cell3.setPosition(210, 250);
-//        world.addCell(cell3);
+        Cell cell3 = new Cell(1, 10);
+        cell3.setPosition(210, 250);
+        world.addCell(cell3);
 
         cell.addBond(cell2);
-//        cell2.addBond(cell3);
-
-        Cell cell3 = new Cell(1, 10);
-        cell3.setPhysics(2);
-        cell3.setPosition(100, 100);
-        world.addCell(cell3);
+        cell2.addBond(cell3);
 
         Cell cell4 = new Cell(1, 10);
         cell4.setPhysics(2);
-        cell4.setPosition(80, 100);
+        cell4.setPosition(100, 100);
         world.addCell(cell4);
 
         Cell cell5 = new Cell(1, 10);
         cell5.setPhysics(2);
-        cell5.setPosition(60, 100);
+        cell5.setPosition(80, 100);
         world.addCell(cell5);
 
-        cell3.addBond(cell4);
+        Cell cell6 = new Cell(1, 10);
+        cell6.setPhysics(2);
+        cell6.setPosition(60, 100);
+        world.addCell(cell6);
+
         cell4.addBond(cell5);
+        cell5.addBond(cell6);
     }
 
     void tick() {
@@ -137,22 +140,22 @@ public class Main extends Application {
 //    }
 
     private void onCellPressed(CellCircle cellCircle, MouseEvent e) {
-        world.startDrag(cellCircle.getCell());
-        world.setDragPoint(e.getSceneX(), e.getSceneY());
+        world.startPull(cellCircle.getCell());
+        world.setPullPoint(e.getSceneX(), e.getSceneY());
 //        if (pulledCellCircle != selectedCellCircle) {
 //            onCellClicked(cellCircle);
 //        }
     }
 
     private void onMouseDragged(MouseEvent e) {
-        if (world.isDragging()) {
-            world.setDragPoint(e.getSceneX(), e.getSceneY());
+        if (world.isPulling()) {
+            world.setPullPoint(e.getSceneX(), e.getSceneY());
         }
     }
 
     private void onMouseReleased() {
-        if (world.isDragging()) {
-            world.endDrag();
+        if (world.isPulling()) {
+            world.endPull();
         }
     }
 
