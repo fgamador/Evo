@@ -31,7 +31,25 @@ public class Cell {
     }
 
     /**
-     * Adds a force on the cell that will influence the next call to {@link #move()}.
+     * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
+     */
+    public final void setPosition(final double centerX, final double centerY) {
+        assert centerX >= 0 && centerY >= 0;
+        this.centerX = centerX;
+        this.centerY = centerY;
+    }
+
+    /**
+     * Sets the cell's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
+     */
+    public final void setVelocity(double velocityX, double velocityY) {
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+    }
+
+    /**
+     * Adds a force on the cell that will be used by the next call to {@link #move()}. This is the only way to
+     * influence the cell's motion (after setting its initial position and possibly velocity).
      *
      * @param x X-component of the force
      * @param y Y-component of the force
@@ -70,20 +88,6 @@ public class Cell {
         forceX = forceY = 0;
     }
 
-    public final void setPosition(final double centerX, final double centerY) {
-        assert centerX >= 0 && centerY >= 0;
-        this.centerX = centerX;
-        this.centerY = centerY;
-    }
-
-    /**
-     * for testing
-     */
-    final void setVelocity(double velocityX, double velocityY) {
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
-    }
-
     /**
      * Returns the force exerted on the cell if it is in collision with a wall to its left (smaller x position).
      *
@@ -107,7 +111,7 @@ public class Cell {
     }
 
     /**
-     * Returns the force exerted on the cell if it is in collision with a wall to its left (smaller y position).
+     * Returns the force exerted on the cell if it is in collision with a wall above it (smaller y position).
      *
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
@@ -118,7 +122,7 @@ public class Cell {
     }
 
     /**
-     * Returns the force exerted on the cell if it is in collision with a wall to its right (larger y position).
+     * Returns the force exerted on the cell if it is in collision with a wall below it (larger y position).
      *
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
@@ -130,6 +134,7 @@ public class Cell {
 
     /**
      * Adds the forces due to the interaction of this cell with another cell, such as a collision or a bond.
+     * Updates the forces on both of the cells. Call this only once for any particular pair of cells.
      *
      * @param cell2 the other cell
      */
@@ -152,19 +157,16 @@ public class Cell {
     }
 
     /**
-     * Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
+     * Adds forces to the cells that will move them back toward just touching one another.
      */
     private void addBondForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double overlap = radius + cell2.radius - centerSeparation;
-        final double force = Cell.calcOverlapForce(overlap);
-        final double forceX = (relativeCenterX / centerSeparation) * force;
-        final double forceY = (relativeCenterY / centerSeparation) * force;
-        addForce(forceX, forceY);
-        cell2.addForce(-forceX, -forceY);
+        addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
     }
 
     /**
-     * Experimental. Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
+     * Experimental. Adds forces to the cells that, in the absence of other forces, will restore the
+     * gap/overlap to zero on the next call to {@link #move()}.
      */
     private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double relativeVelocityX = velocityX - cell2.velocityX;
@@ -177,15 +179,22 @@ public class Cell {
         cell2.addForce(-forceX, -forceY);
     }
 
+    /**
+     * Adds forces to the cells that will push them away from one another.
+     */
     private void addCollisionForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double overlap = radius + cell2.radius - centerSeparation;
         if (overlap > 0) {
-            final double force = Cell.calcOverlapForce(overlap);
-            final double forceX = (relativeCenterX / centerSeparation) * force;
-            final double forceY = (relativeCenterY / centerSeparation) * force;
-            addForce(forceX, forceY);
-            cell2.addForce(-forceX, -forceY);
+            addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
         }
+    }
+
+    private void addOverlapForces(Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation, double overlap) {
+        final double force = Cell.calcOverlapForce(overlap);
+        final double forceX = (relativeCenterX / centerSeparation) * force;
+        final double forceY = (relativeCenterY / centerSeparation) * force;
+        addForce(forceX, forceY);
+        cell2.addForce(-forceX, -forceY);
     }
 
     public final double getRadius() {
