@@ -10,6 +10,7 @@ import java.util.Set;
  */
 public class Cell {
     private static double overlapForceFactor = 1;
+    private static double speedLimit = 4;
 
     private Set<Cell> bondedCells = new HashSet<>();
     private double mass;
@@ -52,15 +53,14 @@ public class Cell {
         velocityX += accelerationX;
         velocityY += accelerationY;
 
-        // TODO from the old version
-//        static double MAX_SPEED = 4;
-//        // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
-//        double speedSquared = sqr(velocityX) + sqr(velocityY);
-//        if (speedSquared > sqr(MAX_SPEED)) {
-//            double speed = Math.sqrt(speedSquared);
-//            velocityX *= MAX_SPEED / speed;
-//            velocityY *= MAX_SPEED / speed;
-//        }
+        // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
+        // numerical/discretization problems can cause extreme velocities; cap them
+        final double speedSquared = sqr(velocityX) + sqr(velocityY);
+        if (speedSquared > sqr(speedLimit)) {
+            final double throttling = speedLimit / Math.sqrt(speedSquared);
+            velocityX *= throttling;
+            velocityY *= throttling;
+        }
 
         // the position at the end of this time interval
         centerX += velocityX;
@@ -136,7 +136,7 @@ public class Cell {
     public void addInterCellForces(final Cell cell2) {
         final double relativeCenterX = centerX - cell2.centerX;
         final double relativeCenterY = centerY - cell2.centerY;
-        final double centerSeparation = Math.sqrt(relativeCenterX * relativeCenterX + relativeCenterY * relativeCenterY);
+        final double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
 
         if (centerSeparation != 0) {
             if (bondedCells.contains(cell2)) {
@@ -164,7 +164,7 @@ public class Cell {
     }
 
     /**
-     * Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
+     * Experimental. Adds forces to the cells that, in the absence of other forces, will restore the gap/overlap to zero on the next call to {@link #move()}.
      */
     private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
         final double relativeVelocityX = velocityX - cell2.velocityX;
@@ -220,12 +220,24 @@ public class Cell {
         return physics;
     }
 
-    public final void setPhysics(int val) {
+    public final void setPhysics(final int val) {
         physics = val;
+    }
+
+    public static double sqr(double val) {
+        return val * val;
     }
 
     public static double calcOverlapForce(final double overlap) {
         return overlapForceFactor * overlap;
+    }
+
+    public static double getSpeedLimit() {
+        return speedLimit;
+    }
+
+    public static void setSpeedLimit(final double val) {
+        speedLimit = val;
     }
 
     public static double getOverlapForceFactor() {

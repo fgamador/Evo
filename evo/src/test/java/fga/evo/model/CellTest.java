@@ -73,6 +73,16 @@ public class CellTest {
     }
 
     @Test
+    public void testMove_SpeedLimit() {
+        cell.setVelocity(8 / SQRT_2, -8 / SQRT_2);
+
+        cell.move();
+
+        assertEquals(4, Cell.getSpeedLimit(), 0);
+        assertVelocity(4 / SQRT_2, -4 / SQRT_2, cell);
+    }
+
+    @Test
     public void testCalcOverlapForce() {
         double defaultOverlapForceFactor = Cell.getOverlapForceFactor();
         try {
