@@ -12,7 +12,7 @@ public class BoxTest {
     @Before
     public void setUp() {
         box = new Box(10, 10);
-        cell = new Cell(1, 1);
+        cell = new Cell(1);
     }
 
     @Test

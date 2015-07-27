@@ -10,6 +10,7 @@ import java.util.Set;
  * @author Franz Amador
  */
 public class Cell {
+    private static double tissueDensity = 0.01;
     private static double speedLimit = 4;
     private static double photoRingCostFactor = 0.005;
     private static double photoRingGrowthFactor = 1.1;
@@ -26,9 +27,9 @@ public class Cell {
     private double photoRingArea;
     private double energy;
 
-    public Cell(final double mass, final double radius) {
-        this.mass = mass;
+    public Cell(final double radius) {
         this.radius = radius;
+        this.mass = tissueDensity * Math.PI * sqr(radius);
     }
 
     public final void addBond(Cell cell2) {
@@ -293,6 +294,10 @@ public class Cell {
         physics = val;
     }
 
+    public final double getMass() {
+        return mass;
+    }
+
     public final double getRadius() {
         return radius;
     }
@@ -328,6 +333,14 @@ public class Cell {
     //=========================================================================
     // Parameters
     //=========================================================================
+
+    public static double getTissueDensity() {
+        return tissueDensity;
+    }
+
+    public static void setTissueDensity(double val) {
+        tissueDensity = val;
+    }
 
     public static double getSpeedLimit() {
         return speedLimit;

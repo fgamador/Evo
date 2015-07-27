@@ -12,7 +12,7 @@ public class FluidTest {
 
     @Before
     public void setUp() {
-        cell = new Cell(1, 2);
+        cell = new Cell(2);
         cell.setPosition(5, 5);
         fluid = new Fluid();
     }

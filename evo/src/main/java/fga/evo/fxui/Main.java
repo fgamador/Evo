@@ -73,32 +73,32 @@ public class Main extends Application {
     }
 
     private void populate() {
-        Cell cell = new Cell(1, 10);
+        Cell cell = new Cell(10);
         cell.setPosition(250, 250);
         world.addCell(cell);
 
-        Cell cell2 = new Cell(1, 10);
+        Cell cell2 = new Cell(10);
         cell2.setPosition(230, 250);
         world.addCell(cell2);
 
-        Cell cell3 = new Cell(1, 10);
+        Cell cell3 = new Cell(10);
         cell3.setPosition(210, 250);
         world.addCell(cell3);
 
         cell.addBond(cell2);
         cell2.addBond(cell3);
 
-        Cell cell4 = new Cell(1, 10);
+        Cell cell4 = new Cell(10);
         cell4.setPhysics(2);
         cell4.setPosition(100, 100);
         world.addCell(cell4);
 
-        Cell cell5 = new Cell(1, 10);
+        Cell cell5 = new Cell(10);
         cell5.setPhysics(2);
         cell5.setPosition(80, 100);
         world.addCell(cell5);
 
-        Cell cell6 = new Cell(1, 10);
+        Cell cell6 = new Cell(10);
         cell6.setPhysics(2);
         cell6.setPosition(60, 100);
         world.addCell(cell6);

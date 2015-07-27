@@ -11,7 +11,7 @@ public class PullerTest {
 
     @Before
     public void setUp() {
-        cell = new Cell(1, 1);
+        cell = new Cell(1);
         puller = new Puller(cell);
     }
 

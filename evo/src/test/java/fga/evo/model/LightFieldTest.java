@@ -37,7 +37,7 @@ public class LightFieldTest {
 
     @Test
     public void testIlluminateCell() {
-        Cell cell = new Cell(1, 1);
+        Cell cell = new Cell(1);
         cell.setPosition(50, 50);
 
         lighting.illuminateCell(cell);

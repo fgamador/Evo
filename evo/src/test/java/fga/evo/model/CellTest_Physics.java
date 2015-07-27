@@ -13,12 +13,26 @@ public class CellTest_Physics {
     public static final double SQRT_2 = Math.sqrt(2);
 
     private Cell cell, cell2;
+    private double defaultTissueDensity;
 
     @Before
     public void setUp() {
-        cell = new Cell(1, 1);
-        cell2 = new Cell(1, 1);
+        defaultTissueDensity = Cell.getTissueDensity();
+        // ensure that a cell with radius 1 has mass 1
+        Cell.setTissueDensity(1 / Math.PI);
+        cell = new Cell(1);
+        cell2 = new Cell(1);
         cell.setPosition(0, 0);
+    }
+
+    @After
+    public void tearDown() {
+        Cell.setTissueDensity(defaultTissueDensity);
+    }
+
+    @Test
+    public void testGetMass() {
+        assertEquals(Cell.getTissueDensity() * Math.PI, new Cell(1).getMass(), 0);
     }
 
     @Test
@@ -63,7 +77,7 @@ public class CellTest_Physics {
 
     @Test
     public void testMove_DoubleMass() {
-        Cell heavyCell = new Cell(2, 1);
+        Cell heavyCell = new Cell(SQRT_2);
         heavyCell.addForce(1, -2);
 
         heavyCell.move();

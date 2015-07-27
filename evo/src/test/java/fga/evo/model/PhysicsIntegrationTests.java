@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,11 +10,25 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PhysicsIntegrationTests extends WorldIntegrationTests {
+    private double defaultTissueDensity;
+
+    @Before
+    public void setUp() {
+        defaultTissueDensity = Cell.getTissueDensity();
+        // ensure that a cell with radius 1 has mass 1
+        Cell.setTissueDensity(1 / Math.PI);
+    }
+
+    @After
+    public void tearDown() {
+        Cell.setTissueDensity(defaultTissueDensity);
+    }
+
     @Test
     public void testNoCollision() {
         world.setBox(new Box(10, 10));
-        Cell cell1 = addCell(1, 1);
-        Cell cell2 = addCell(1, 1);
+        Cell cell1 = addCell(1);
+        Cell cell2 = addCell(1);
         // no cell or wall overlap
         cell1.setPosition(3, 3);
         cell2.setPosition(7, 7);
@@ -29,8 +44,8 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testBoxCornerCollisions() {
         world.setBox(new Box(500, 500));
-        Cell cell1 = addCell(1, 1);
-        Cell cell2 = addCell(1, 1);
+        Cell cell1 = addCell(1);
+        Cell cell2 = addCell(1);
         // overlap walls by 0.5
         cell1.setPosition(0.5, 0.5);
         cell2.setPosition(499.5, 499.5);
@@ -46,35 +61,35 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testFullWallCollision() {
         world.setBox(new Box(500, 500));
-        Cell cell = addCell(1, 10);
+        Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
-        cell.setPosition(10, 250); // overlap 0.0, accel 0.0
+        cell.setPosition(1, 250); // overlap 0.0, accel 0.0
 
         world.tick();
 
         assertVelocity(-1, 0, cell);
-        assertPosition(9, 250, cell); // overlap 1, accel 1
+        assertPosition(0, 250, cell); // overlap 1, accel 1
 
         world.tick();
 
         assertVelocity(0, 0, cell);
-        assertPosition(9, 250, cell); // overlap 1, accel 1
+        assertPosition(0, 250, cell); // overlap 1, accel 1
 
         world.tick();
 
         assertVelocity(1, 0, cell);
-        assertPosition(10, 250, cell); // overlap 0, accel 0
+        assertPosition(1, 250, cell); // overlap 0, accel 0
 
         world.tick();
 
         assertVelocity(1, 0, cell);
-        assertPosition(11, 250, cell); // overlap 0, accel 0
+        assertPosition(2, 250, cell); // overlap 0, accel 0
     }
 
     @Test
     public void testCellCollision() {
-        Cell cell1 = addCell(1, 1);
-        Cell cell2 = addCell(1, 1);
+        Cell cell1 = addCell(1);
+        Cell cell2 = addCell(1);
         // overlap by 1
         cell1.setPosition(5, 5);
         cell2.setPosition(6, 5);
@@ -89,7 +104,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testTick_Pull() {
-        Cell cell = addCell(1, 1);
+        Cell cell = addCell(1);
         cell.setPosition(5, 5);
         world.startPull(cell);
 
@@ -146,7 +161,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testFluidDrag() {
         world.setFluid(new Fluid());
-        Cell cell = addCell(1, 1);
+        Cell cell = addCell(1);
         cell.setVelocity(1, 0);
 
         world.tick();
