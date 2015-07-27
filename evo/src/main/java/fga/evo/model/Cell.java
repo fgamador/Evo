@@ -4,13 +4,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The basic living unit in evo. A circular entity that can move and grow.
+ * The basic living unit in evo. A circle-shaped entity that can move and grow. Cells can bond together
+ * to form larger organisms.
  *
  * @author Franz Amador
  */
 public class Cell {
-    private static double overlapForceFactor = 1;
     private static double speedLimit = 4;
+    private static double photoRingCostFactor = 0.005;
+    private static double photoRingGrowthFactor = 1.1;
+    private static double overlapForceFactor = 1;
 
     private int physics = 1; // TODO temp
 
@@ -20,6 +23,7 @@ public class Cell {
     private double centerX, centerY;
     private double velocityX, velocityY;
     private double forceX, forceY;
+    private double photoRingArea;
     private double energy;
 
     public Cell(final double mass, final double radius) {
@@ -27,7 +31,7 @@ public class Cell {
         this.radius = radius;
     }
 
-    public void addBond(Cell cell2) {
+    public final void addBond(Cell cell2) {
         bondedCells.add(cell2);
         cell2.bondedCells.add(this);
     }
@@ -48,25 +52,60 @@ public class Cell {
 
     /**
      * Calculates the cell's efficiency at converting light into energy.
+     * This depends on the thickness of the photosynthetic ring and starts
+     * at 0 (no ring) and asymptotically approaches 1 (infinite thickness).
      *
      * @return the fraction of incident light that gets captured as energy
      */
-    public double calcPhotoAbsorptivity() {
-        // absorptivity ranges from 0 to 1, asymptotic
+    public final double calcPhotoAbsorptivity() {
         double thickness = radius; // TODO photoRingOuterRadius - fatRadius;
         return 1 - (1 / (thickness + 1));
     }
 
+    public void subtractMaintenanceEnergy() {
+        double photoRingCost = photoRingCostFactor * getPhotoRingArea(); // TODO photoRingArea;
+//        double fatCost = fatCostFactor * fatArea;
+        energy -= photoRingCost; // TODO + fatCost;
+    }
+
+    // TODO basic energy-balance idea:
+    // 1) start with any energy carried over from last tick
+    // 2) add energy from photosynthesis (and absorption/digestion,
+    //    which suggests that secreted clouds persist from last tick)
+    // 3) subtract energy from tissue maintenance;
+    //    we now know our total budget for this tick
+    // 4) delegate to control unit (brains), which treats
+    //    energy budget as one of its inputs
+    // 5) control unit outputs (-inf..inf) signals to tissues,
+    //    which cost energy (growth, secretion) or yield energy
+    //    (shrinkage); can also donate energy to other bonded
+    //    cells (or to whole-organism pool?)
+    // 6) if we end up in the black, carry over to next tick
+    //    (subject to possible max)
+    //    if we end up in the red, we die
+    //    (probably will need to start with a lot of cells
+    //    so some survive the initial few ticks)
+
     /**
-     * Uses all the cell's currently available energy to grow, reproduce, etc.
+     * Uses the cell's currently available energy to grow, reproduce, etc.
      */
     public void useEnergy() {
-        // TODO
+        // TODO not really right
         energy = 0;
     }
 
-    public double getEnergy() {
+    /**
+     * Returns the cell's current energy budget.
+     *
+     * @return the total energy available for growth, secretion, donation, thruster, etc.
+     */
+    public final double getEnergy() {
         return energy;
+    }
+
+    public final double getPhotoRingArea() {
+        // TODO use field
+        return Math.PI * sqr(radius);
     }
 
     //=========================================================================
@@ -296,6 +335,22 @@ public class Cell {
 
     public static void setSpeedLimit(final double val) {
         speedLimit = val;
+    }
+
+    public static double getPhotoRingCostFactor() {
+        return photoRingCostFactor;
+    }
+
+    public static void setPhotoRingCostFactor(double val) {
+        photoRingCostFactor = val;
+    }
+
+    public static double getPhotoRingGrowthFactor() {
+        return photoRingGrowthFactor;
+    }
+
+    public static void setPhotoRingGrowthFactor(double val) {
+        photoRingGrowthFactor = val;
     }
 
     public static double getOverlapForceFactor() {
