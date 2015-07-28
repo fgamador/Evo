@@ -44,4 +44,17 @@ public class CellTest_Biology {
 
         assertEnergy(0, cell);
     }
+
+//    @Test
+//    public void testUseEnergy_SimpleGrowth() {
+//        Cell cell = new Cell(1);
+//        assertEquals(Math.PI, cell.getPhotoRingArea(), 0);
+//        cell.addEnergy(2);
+//        // TODO add simple control
+//
+//        cell.useEnergy();
+//
+//        assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
+//        assertEnergy(0, cell);
+//    }
 }

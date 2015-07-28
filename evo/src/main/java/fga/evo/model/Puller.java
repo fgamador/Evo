@@ -1,7 +1,7 @@
 package fga.evo.model;
 
 /**
- * Represents the user's mouse cursor pulling a cell.
+ * Created when the user's mouse cursor drags a cell.
  *
  * @author Franz Amador
  */

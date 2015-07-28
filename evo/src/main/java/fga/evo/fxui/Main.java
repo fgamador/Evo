@@ -36,8 +36,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         world = new World();
-        world.setBox(new Box(WIDTH, HEIGHT));
-        world.setFluid(new Fluid());
+        world.addEnvironmentComponent(new Box(WIDTH, HEIGHT));
+        world.addEnvironmentComponent(new Fluid());
         populate();
 
         Group root = new Group();

@@ -19,7 +19,7 @@ public class FluidTest {
 
     @Test
     public void testAddDragForceToCell_NoMotion() {
-        fluid.addDragForceToCell(cell);
+        fluid.addForcesToCell(cell);
 
         assertForce(0, 0, cell);
     }
@@ -28,7 +28,7 @@ public class FluidTest {
     public void testAddDragForceToCell_Motion() {
         cell.setVelocity(-2, 3);
 
-        fluid.addDragForceToCell(cell);
+        fluid.addForcesToCell(cell);
 
         assertForce(8 * Fluid.getDragFactor(), -18 * Fluid.getDragFactor(), cell);
     }
@@ -40,7 +40,7 @@ public class FluidTest {
             Fluid.setDragFactor(2);
             cell.setVelocity(1, 0);
 
-            fluid.addDragForceToCell(cell);
+            fluid.addForcesToCell(cell);
 
             assertForce(-4, 0, cell);
         } finally {

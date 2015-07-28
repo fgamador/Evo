@@ -5,7 +5,7 @@ package fga.evo.model;
  *
  * @author Franz Amador
  */
-public class Box {
+public class Box extends EnvironmentComponent {
     private double width, height;
 
     public Box(final double width, final double height) {
@@ -13,7 +13,8 @@ public class Box {
         this.height = height;
     }
 
-    public final void addWallCollisionForcesToCell(final Cell cell) {
+    @Override
+    public final void addForcesToCell(final Cell cell) {
         cell.addForce(cell.calcLowXWallCollisionForce(0), 0);
         cell.addForce(cell.calcHighXWallCollisionForce(width), 0);
         cell.addForce(0, cell.calcLowYWallCollisionForce(0));

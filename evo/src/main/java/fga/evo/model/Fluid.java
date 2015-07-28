@@ -5,10 +5,11 @@ package fga.evo.model;
  *
  * @author Franz Amador
  */
-public class Fluid {
+public class Fluid extends EnvironmentComponent {
     private static double dragFactor = 0.001;
 
-    public void addDragForceToCell(final Cell cell) {
+    @Override
+    public void addForcesToCell(final Cell cell) {
         double dragX = -Math.signum(cell.getVelocityX()) * dragFactor * cell.getRadius()
                 * sqr(cell.getVelocityX());
         double dragY = -Math.signum(cell.getVelocityY()) * dragFactor * cell.getRadius()

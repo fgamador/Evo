@@ -8,20 +8,15 @@ import java.util.List;
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
 public class World {
-    private Box box;
-    private Fluid fluid;
-    private Puller puller;
+    private List<EnvironmentComponent> environmentComponents = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
+    private Puller puller;
 
-    public void setBox(final Box val) {
-        box = val;
+    public final void addEnvironmentComponent(final EnvironmentComponent component) {
+        environmentComponents.add(component);
     }
 
-    public void setFluid(final Fluid val) {
-        fluid = val;
-    }
-
-    public void addCell(final Cell cell) {
+    public final void addCell(final Cell cell) {
         cells.add(cell);
     }
 
@@ -47,12 +42,8 @@ public class World {
     private void addForcesToCell(final int index) {
         Cell cell = cells.get(index);
 
-        if (box != null) {
-            box.addWallCollisionForcesToCell(cell);
-        }
-
-        if (fluid != null) {
-            fluid.addDragForceToCell(cell);
+        for (EnvironmentComponent component : environmentComponents) {
+            component.addForcesToCell(cell);
         }
 
         // TODO Idea: keep cells sorted by centerX. Need check a cell against

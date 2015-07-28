@@ -19,7 +19,7 @@ public class BoxTest {
     public void testAddCollisionForcesToCell_JustTouching() {
         cell.setPosition(1, 1);
 
-        box.addWallCollisionForcesToCell(cell);
+        box.addForcesToCell(cell);
 
         assertForce(0, 0, cell);
     }
@@ -28,7 +28,7 @@ public class BoxTest {
     public void testAddCollisionForcesToCell_LowXYCollision() {
         cell.setPosition(0.5, 0.5);
 
-        box.addWallCollisionForcesToCell(cell);
+        box.addForcesToCell(cell);
 
         assertForce(0.5, 0.5, cell);
     }
@@ -37,7 +37,7 @@ public class BoxTest {
     public void testAddCollisionForcesToCell_HighXYCollision() {
         cell.setPosition(9.5, 9.5);
 
-        box.addWallCollisionForcesToCell(cell);
+        box.addForcesToCell(cell);
 
         assertForce(-0.5, -0.5, cell);
     }

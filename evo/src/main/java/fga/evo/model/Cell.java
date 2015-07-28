@@ -10,10 +10,10 @@ import java.util.Set;
  * @author Franz Amador
  */
 public class Cell {
-    private static double tissueDensity = 0.01;
+    private static double tissueDensity = 0.01; // mass per area
     private static double speedLimit = 4;
-    private static double photoRingCostFactor = 0.005;
-    private static double photoRingGrowthFactor = 1.1;
+    private static double photoRingCostFactor = 0.005; // energy per area
+    private static double photoRingGrowthCostFactor = 1.1; // energy per area
     private static double overlapForceFactor = 1;
 
     private int physics = 1; // TODO temp
@@ -42,13 +42,19 @@ public class Cell {
     //=========================================================================
 
     /**
+     * Adds to the cell's available energy.
+     */
+    public final void addEnergy(final double energy) {
+        this.energy += energy;
+    }
+
+    /**
      * Converts incoming light into energy.
      *
      * @param lightIntensity incoming light intensity, as energy per width
      */
     public void photosynthesize(double lightIntensity) {
-        // TODO energy += ...
-        energy = lightIntensity * radius * calcPhotoAbsorptivity();
+        addEnergy(lightIntensity * radius * calcPhotoAbsorptivity());
     }
 
     /**
@@ -66,7 +72,7 @@ public class Cell {
     public void subtractMaintenanceEnergy() {
         double photoRingCost = photoRingCostFactor * getPhotoRingArea(); // TODO photoRingArea;
 //        double fatCost = fatCostFactor * fatArea;
-        energy -= photoRingCost; // TODO + fatCost;
+        addEnergy(-photoRingCost); // TODO - fatCost;
     }
 
     // TODO basic energy-balance idea:
@@ -358,12 +364,12 @@ public class Cell {
         photoRingCostFactor = val;
     }
 
-    public static double getPhotoRingGrowthFactor() {
-        return photoRingGrowthFactor;
+    public static double getPhotoRingGrowthCostFactor() {
+        return photoRingGrowthCostFactor;
     }
 
-    public static void setPhotoRingGrowthFactor(double val) {
-        photoRingGrowthFactor = val;
+    public static void setPhotoRingGrowthCostFactor(double val) {
+        photoRingGrowthCostFactor = val;
     }
 
     public static double getOverlapForceFactor() {
