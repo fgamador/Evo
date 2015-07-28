@@ -40,7 +40,7 @@ public class LightFieldTest {
         Cell cell = new Cell(1);
         cell.setPosition(50, 50);
 
-        lighting.illuminateCell(cell);
+        lighting.addEnergyToCell(cell);
 
         assertEnergy(0.5, cell);
     }

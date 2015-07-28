@@ -29,6 +29,16 @@ public class World {
         }
 
         // TODO should be easily parallelizeable
+        for (Cell cell : cells) {
+            addEnergyToCell(cell);
+        }
+
+        // TODO should be easily parallelizeable
+        for (Cell cell : cells) {
+            cell.useEnergy();
+        }
+
+        // TODO should be easily parallelizeable
         for (int i = 0; i < cells.size(); i++) {
             addForcesToCell(i);
         }
@@ -36,6 +46,12 @@ public class World {
         // TODO should be easily parallelizeable
         for (Cell cell : cells) {
             cell.move();
+        }
+    }
+
+    private void addEnergyToCell(final Cell cell) {
+        for (EnvironmentComponent component : environmentComponents) {
+            component.addEnergyToCell(cell);
         }
     }
 

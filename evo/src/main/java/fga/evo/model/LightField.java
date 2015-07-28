@@ -1,13 +1,11 @@
 package fga.evo.model;
 
-// TODO factor out common base class with Box and Fluid: EnvironmentComponent or something,
-// with methods for the various tick phases (with default do-nothing implementations)
 /**
  * The light illuminating the cells.
  *
  * @author Franz Amador
  */
-public class LightField {
+public class LightField extends EnvironmentComponent {
     private static double MAX_INTENSITY = 2;
 
     private double height;
@@ -16,7 +14,8 @@ public class LightField {
         this.height = height;
     }
 
-    public final void illuminateCell(final Cell cell) {
+    @Override
+    public void addEnergyToCell(final Cell cell) {
         cell.photosynthesize(calcLightIntensity(cell.getCenterY()));
     }
 

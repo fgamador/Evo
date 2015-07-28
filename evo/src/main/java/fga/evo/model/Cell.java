@@ -28,8 +28,8 @@ public class Cell {
     private double energy;
 
     public Cell(final double radius) {
-        this.radius = radius;
-        this.mass = tissueDensity * Math.PI * sqr(radius);
+        setRadius(radius);
+        radiiToAreas();
     }
 
     public final void addBond(Cell cell2) {
@@ -97,8 +97,10 @@ public class Cell {
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
     public void useEnergy() {
-        // TODO not really right
-        energy = 0;
+        // TODO should be driven by control (brains)
+        photoRingArea += energy / photoRingGrowthCostFactor;
+        energy = 0; // TODO not really right
+        areasToRadii();
     }
 
     /**
@@ -111,8 +113,25 @@ public class Cell {
     }
 
     public final double getPhotoRingArea() {
-        // TODO use field
-        return Math.PI * sqr(radius);
+        return photoRingArea;
+    }
+
+    private void radiiToAreas() {
+//        fatArea = Math.PI * sqr(fatRadius);
+//        photoRingArea = Math.PI * sqr(photoRingOuterRadius) - fatArea;
+        photoRingArea = Math.PI * sqr(radius);
+    }
+
+    private void areasToRadii() {
+//        fatRadius = Math.sqrt(fatArea / Math.PI);
+//        photoRingOuterRadius = Math.sqrt(sqr(fatRadius) + photoRingArea / Math.PI);
+        final double photoRingOuterRadius = Math.sqrt(photoRingArea / Math.PI);
+        setRadius(photoRingOuterRadius);
+    }
+
+    private void setRadius(double val) {
+        radius = val;
+        mass = tissueDensity * Math.PI * sqr(radius);
     }
 
     //=========================================================================

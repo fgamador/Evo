@@ -34,27 +34,16 @@ public class CellTest_Biology {
         assertEnergy(-Math.PI * 9 * Cell.getPhotoRingCostFactor(), cell);
     }
 
-    // TODO no longer valid
     @Test
-    public void testUseEnergyUsesAllEnergy() {
-        Cell cell = new Cell(3);
-        cell.photosynthesize(2);
+    public void testUseEnergy_SimpleGrowth() {
+        Cell cell = new Cell(1);
+        assertEquals(Math.PI, cell.getPhotoRingArea(), 0);
+        cell.addEnergy(2);
+        // TODO add simple control
 
         cell.useEnergy();
 
+        assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
         assertEnergy(0, cell);
     }
-
-//    @Test
-//    public void testUseEnergy_SimpleGrowth() {
-//        Cell cell = new Cell(1);
-//        assertEquals(Math.PI, cell.getPhotoRingArea(), 0);
-//        cell.addEnergy(2);
-//        // TODO add simple control
-//
-//        cell.useEnergy();
-//
-//        assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
-//        assertEnergy(0, cell);
-//    }
 }

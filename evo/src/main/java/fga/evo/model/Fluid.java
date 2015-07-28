@@ -17,18 +17,6 @@ public class Fluid extends EnvironmentComponent {
         cell.addForce(dragX, dragY);
     }
 
-    public static double getDragFactor() {
-        return dragFactor;
-    }
-
-    public static void setDragFactor(final double val) {
-        dragFactor = val;
-    }
-
-    private static double sqr(final double value) {
-        return value * value;
-    }
-
     // from old version
 //    private void fluidResistanceForce() {
 //        double relativeVelocityX = velocityX - world.getCurrentX(centerX, centerY);
@@ -53,4 +41,20 @@ public class Fluid extends EnvironmentComponent {
 //    final double getCurrentY(double x, double y) {
 //        return -Math.sin(2 * Math.PI * x / width) * Math.sin(Math.PI * y / height);
 //    }
+
+    private static double sqr(final double value) {
+        return value * value;
+    }
+
+    //=========================================================================
+    // Parameters
+    //=========================================================================
+
+    public static double getDragFactor() {
+        return dragFactor;
+    }
+
+    public static void setDragFactor(final double val) {
+        dragFactor = val;
+    }
 }
