@@ -35,13 +35,23 @@ public class CellTest_Biology {
     }
 
     @Test
+    public void testGrowPhotoRing() {
+        Cell cell = new Cell(1);
+        cell.addEnergy(3);
+
+        cell.growPhotoRing(2);
+
+        assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
+        assertEnergy(1, cell);
+    }
+
+    @Test
     public void testUseEnergy_SimpleGrowth() {
         Cell cell = new Cell(1);
         assertEquals(Math.PI, cell.getPhotoRingArea(), 0);
         cell.addEnergy(2);
-        // TODO add simple control
 
-        cell.useEnergy();
+        cell.useEnergy(c -> c.growPhotoRing(c.getEnergy()));
 
         assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
         assertEnergy(0, cell);

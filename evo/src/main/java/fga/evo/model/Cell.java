@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.fxui.CellCircle;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -96,11 +98,21 @@ public class Cell {
     /**
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
-    public void useEnergy() {
-        // TODO should be driven by control (brains)
-        photoRingArea += energy / photoRingGrowthCostFactor;
-        energy = 0; // TODO not really right
+    public void useEnergy(CellControl control) {
+        control.allocateEnergy(this);
         areasToRadii();
+    }
+
+    /**
+     * Grows the photosynthetic ring by an amount determined by the specified
+     * energy.
+     *
+     * @param growthEnergy the amount of the cell's energy to use
+     */
+    public void growPhotoRing(double growthEnergy) {
+        // TODO what if negative? what if not enough energy available?
+        photoRingArea += growthEnergy / photoRingGrowthCostFactor;
+        energy -= growthEnergy;
     }
 
     /**
