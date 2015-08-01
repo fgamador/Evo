@@ -5,12 +5,12 @@ package fga.evo.model;
  *
  * @author Franz Amador
  */
-public class LightField extends EnvironmentComponent {
+public class Illumination extends EnvironmentalInfluence {
     private static double MAX_INTENSITY = 2;
 
     private double height;
 
-    public LightField(final double height) {
+    public Illumination(final double height) {
         this.height = height;
     }
 

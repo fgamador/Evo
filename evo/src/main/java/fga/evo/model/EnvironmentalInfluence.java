@@ -5,7 +5,7 @@ package fga.evo.model;
  *
  * @author Franz Amador
  */
-public abstract class EnvironmentComponent {
+public abstract class EnvironmentalInfluence {
     public void addEnergyToCell(final Cell cell) { }
 
     public void addForcesToCell(final Cell cell) { }

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testPhotosyntheticGrowth() {
-        world.addEnvironmentComponent(new LightField(10));
+        world.addEnvironmentComponent(new Illumination(10));
         Cell cell = addCell(1);
         // TODO install simple brains
         cell.setPosition(5, 5);

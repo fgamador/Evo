@@ -5,10 +5,10 @@ package fga.evo.model;
  *
  * @author Franz Amador
  */
-public class Box extends EnvironmentComponent {
+public class Walls extends EnvironmentalInfluence {
     private double width, height;
 
-    public Box(final double width, final double height) {
+    public Walls(final double width, final double height) {
         this.width = width;
         this.height = height;
     }

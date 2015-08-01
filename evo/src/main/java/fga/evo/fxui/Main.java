@@ -1,8 +1,8 @@
 package fga.evo.fxui;
 
-import fga.evo.model.Box;
+import fga.evo.model.Walls;
 import fga.evo.model.Cell;
-import fga.evo.model.Fluid;
+import fga.evo.model.Drag;
 import fga.evo.model.World;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,8 +36,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         world = new World();
-        world.addEnvironmentComponent(new Box(WIDTH, HEIGHT));
-        world.addEnvironmentComponent(new Fluid());
+        world.addEnvironmentComponent(new Walls(WIDTH, HEIGHT));
+        world.addEnvironmentComponent(new Drag());
         populate();
 
         Group root = new Group();

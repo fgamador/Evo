@@ -8,12 +8,12 @@ import java.util.List;
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
 public class World {
-    private List<EnvironmentComponent> environmentComponents = new ArrayList<>();
+    private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private Puller puller;
 
-    public final void addEnvironmentComponent(final EnvironmentComponent component) {
-        environmentComponents.add(component);
+    public final void addEnvironmentComponent(final EnvironmentalInfluence component) {
+        environmentalInfluences.add(component);
     }
 
     public final void addCell(final Cell cell) {
@@ -51,7 +51,7 @@ public class World {
     }
 
     private void addEnergyToCell(final Cell cell) {
-        for (EnvironmentComponent component : environmentComponents) {
+        for (EnvironmentalInfluence component : environmentalInfluences) {
             component.addEnergyToCell(cell);
         }
     }
@@ -59,7 +59,7 @@ public class World {
     private void addForcesToCell(final int index) {
         Cell cell = cells.get(index);
 
-        for (EnvironmentComponent component : environmentComponents) {
+        for (EnvironmentalInfluence component : environmentalInfluences) {
             component.addForcesToCell(cell);
         }
 

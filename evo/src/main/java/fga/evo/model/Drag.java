@@ -1,11 +1,11 @@
 package fga.evo.model;
 
 /**
- * The fluid medium in which the cells live.
+ * Drag caused by the fluid medium in which the cells live.
  *
  * @author Franz Amador
  */
-public class Fluid extends EnvironmentComponent {
+public class Drag extends EnvironmentalInfluence {
     private static double dragFactor = 0.001;
 
     @Override

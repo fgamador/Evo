@@ -6,20 +6,20 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertForce;
 import static org.junit.Assert.assertEquals;
 
-public class FluidTest {
+public class DragTest {
     private Cell cell;
-    private Fluid fluid;
+    private Drag drag;
 
     @Before
     public void setUp() {
         cell = new Cell(2);
         cell.setPosition(5, 5);
-        fluid = new Fluid();
+        drag = new Drag();
     }
 
     @Test
     public void testAddDragForceToCell_NoMotion() {
-        fluid.addForcesToCell(cell);
+        drag.addForcesToCell(cell);
 
         assertForce(0, 0, cell);
     }
@@ -28,23 +28,23 @@ public class FluidTest {
     public void testAddDragForceToCell_Motion() {
         cell.setVelocity(-2, 3);
 
-        fluid.addForcesToCell(cell);
+        drag.addForcesToCell(cell);
 
-        assertForce(8 * Fluid.getDragFactor(), -18 * Fluid.getDragFactor(), cell);
+        assertForce(8 * Drag.getDragFactor(), -18 * Drag.getDragFactor(), cell);
     }
 
     @Test
     public void testAddDragForceToCell_DragFactor() {
-        double defaultDragFactor = Fluid.getDragFactor();
+        double defaultDragFactor = Drag.getDragFactor();
         try {
-            Fluid.setDragFactor(2);
+            Drag.setDragFactor(2);
             cell.setVelocity(1, 0);
 
-            fluid.addForcesToCell(cell);
+            drag.addForcesToCell(cell);
 
             assertForce(-4, 0, cell);
         } finally {
-            Fluid.setDragFactor(defaultDragFactor);
+            Drag.setDragFactor(defaultDragFactor);
         }
     }
 }

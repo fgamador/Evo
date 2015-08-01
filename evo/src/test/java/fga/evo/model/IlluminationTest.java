@@ -7,12 +7,12 @@ import static fga.evo.model.Assert.assertEnergy;
 import static fga.evo.model.Assert.assertForce;
 import static org.junit.Assert.assertEquals;
 
-public class LightFieldTest {
-    private LightField lighting;
+public class IlluminationTest {
+    private Illumination lighting;
 
     @Before
     public void setUp() {
-        lighting = new LightField(100);
+        lighting = new Illumination(100);
     }
 
     @Test
@@ -24,14 +24,14 @@ public class LightFieldTest {
 
     @Test
     public void testCalcLightIntensity_MaxIntensity() {
-        double defaultMaxIntensity = LightField.getMaxIntensity();
+        double defaultMaxIntensity = Illumination.getMaxIntensity();
         try {
-            LightField.setMaxIntensity(4);
+            Illumination.setMaxIntensity(4);
             assertEquals(4, lighting.calcLightIntensity(0), 0);
             assertEquals(2, lighting.calcLightIntensity(50), 0);
             assertEquals(0, lighting.calcLightIntensity(100), 0);
         } finally {
-            LightField.setMaxIntensity(defaultMaxIntensity);
+            Illumination.setMaxIntensity(defaultMaxIntensity);
         }
     }
 
