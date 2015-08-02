@@ -6,13 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The basic living unit in evo. A circle-shaped entity that can move and grow. Cells can bond together
- * to form larger organisms.
+ * The basic living unit in evo. A circular entity that can move and grow and reproduce.
+ * Cells can also bond together to form larger organisms.
  *
  * @author Franz Amador
  */
 public class Cell {
-    private static double tissueDensity = 0.01; // mass per area
+    private static double tissueDensity = 0.0011; // mass per area
     private static double speedLimit = 4;
     private static double photoRingCostFactor = 0.005; // energy per area
     private static double photoRingGrowthCostFactor = 1.1; // energy per area
@@ -28,6 +28,7 @@ public class Cell {
     private double forceX, forceY;
     private double photoRingArea;
     private double energy;
+    private double area;
 
     public Cell(final double radius) {
         setRadius(radius);
@@ -361,6 +362,10 @@ public class Cell {
 
     public final double getForceY() {
         return forceY;
+    }
+
+    public double getArea() {
+        return Math.PI * sqr(radius);
     }
 
     public static double sqr(double val) {

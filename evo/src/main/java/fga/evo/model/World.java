@@ -12,8 +12,8 @@ public class World {
     private List<Cell> cells = new ArrayList<>();
     private Puller puller;
 
-    public final void addEnvironmentComponent(final EnvironmentalInfluence component) {
-        environmentalInfluences.add(component);
+    public final void addEnvironmentalInfluence(final EnvironmentalInfluence influence) {
+        environmentalInfluences.add(influence);
     }
 
     public final void addCell(final Cell cell) {
@@ -51,16 +51,16 @@ public class World {
     }
 
     private void addEnergyToCell(final Cell cell) {
-        for (EnvironmentalInfluence component : environmentalInfluences) {
-            component.addEnergyToCell(cell);
+        for (EnvironmentalInfluence influence : environmentalInfluences) {
+            influence.addEnergyToCell(cell);
         }
     }
 
     private void addForcesToCell(final int index) {
         Cell cell = cells.get(index);
 
-        for (EnvironmentalInfluence component : environmentalInfluences) {
-            component.addForcesToCell(cell);
+        for (EnvironmentalInfluence influence : environmentalInfluences) {
+            influence.addForcesToCell(cell);
         }
 
         // TODO Idea: keep cells sorted by centerX. Need check a cell against
