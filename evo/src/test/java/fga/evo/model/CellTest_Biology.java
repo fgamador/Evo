@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 public class CellTest_Biology {
 //    public static final double SQRT_2 = Math.sqrt(2);
+    // TODO move most/all of these to PhotoRingTest
 
     @Test
     public void testGetPhotoRingArea() {
@@ -31,7 +32,7 @@ public class CellTest_Biology {
     public void testSubtractMaintenanceEnergy() {
         Cell cell = new Cell(3);
         cell.subtractMaintenanceEnergy();
-        assertEnergy(-Math.PI * 9 * Cell.getPhotoRingCostFactor(), cell);
+        assertEnergy(-Math.PI * 9 * PhotoRing.getMaintenanceCost(), cell);
     }
 
     @Test
@@ -41,7 +42,7 @@ public class CellTest_Biology {
 
         cell.growPhotoRing(2);
 
-        assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
+        assertEquals(Math.PI + 2 / PhotoRing.getGrowthCost(), cell.getPhotoRingArea(), 0);
         assertEnergy(1, cell);
     }
 
@@ -53,7 +54,7 @@ public class CellTest_Biology {
 
         cell.useEnergy(c -> c.growPhotoRing(c.getEnergy()));
 
-        assertEquals(Math.PI + 2 / Cell.getPhotoRingGrowthCostFactor(), cell.getPhotoRingArea(), 0);
+        assertEquals(Math.PI + 2 / PhotoRing.getGrowthCost(), cell.getPhotoRingArea(), 0);
         assertEnergy(0, cell);
     }
 }

@@ -14,14 +14,15 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Before
     public void setUp() {
-        defaultTissueDensity = Cell.getTissueDensity();
+        defaultTissueDensity = PhotoRing.getTissueDensity();
         // ensure that a cell with radius 1 has mass 1
-        Cell.setTissueDensity(1 / Math.PI);
+        // TODO mock the mass
+        PhotoRing.setTissueDensity(1 / Math.PI);
     }
 
     @After
     public void tearDown() {
-        Cell.setTissueDensity(defaultTissueDensity);
+        PhotoRing.setTissueDensity(defaultTissueDensity);
     }
 
     @Test
@@ -103,6 +104,17 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
+    public void testFluidDrag() {
+        world.addEnvironmentalInfluence(new Drag());
+        Cell cell = addCell(1);
+        cell.setVelocity(1, 0);
+
+        world.tick();
+
+        assertVelocity(1 - Drag.getDragFactor(), 0, cell);
+    }
+
+    @Test
     public void testTick_Pull() {
         Cell cell = addCell(1);
         cell.setPosition(5, 5);
@@ -157,15 +169,4 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 //
 //        // TODO to be continued...
 //    }
-
-    @Test
-    public void testFluidDrag() {
-        world.addEnvironmentalInfluence(new Drag());
-        Cell cell = addCell(1);
-        cell.setVelocity(1, 0);
-
-        world.tick();
-
-        assertVelocity(1 - Drag.getDragFactor(), 0, cell);
-    }
 }

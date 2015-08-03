@@ -12,26 +12,27 @@ import java.util.Set;
  * @author Franz Amador
  */
 public class Cell {
-    private static double tissueDensity = 0.0011; // mass per area
+    //private static double tissueDensity = 0.0011; // mass per area TODO obsolete
     private static double speedLimit = 4;
-    private static double photoRingCostFactor = 0.005; // energy per area
-    private static double photoRingGrowthCostFactor = 1.1; // energy per area
+    //private static double photoRingCostFactor = 0.005; // energy per area TODO obsolete
+    //private static double photoRingGrowthCostFactor = 1.1; // energy per area TODO obsolete
     private static double overlapForceFactor = 1;
 
     private int physics = 1; // TODO temp
 
     private Set<Cell> bondedCells = new HashSet<>();
     private double mass;
-    private double radius;
+    private double radius; // TODO obsolete?
     private double centerX, centerY;
     private double velocityX, velocityY;
     private double forceX, forceY;
     private double photoRingArea;
     private double energy;
-    private double area;
+    private PhotoRing photoRing;
 
     public Cell(final double radius) {
-        setRadius(radius);
+        photoRing = new PhotoRing(radius);
+        setRadius(radius); // TODO obsolete
         radiiToAreas();
     }
 
@@ -57,7 +58,8 @@ public class Cell {
      * @param lightIntensity incoming light intensity, as energy per width
      */
     public void photosynthesize(double lightIntensity) {
-        addEnergy(lightIntensity * radius * calcPhotoAbsorptivity());
+        addEnergy(photoRing.photosynthesize(lightIntensity));
+        //addEnergy(lightIntensity * radius * calcPhotoAbsorptivity());
     }
 
     /**
@@ -67,15 +69,18 @@ public class Cell {
      *
      * @return the fraction of incident light that gets captured as energy
      */
+    // TODO obsolete
     public final double calcPhotoAbsorptivity() {
-        double thickness = radius; // TODO photoRingOuterRadius - fatRadius;
-        return 1 - (1 / (thickness + 1));
+        return photoRing.calcPhotoAbsorptivity();
+//        double thickness = radius; // TODO photoRingOuterRadius - fatRadius;
+//        return 1 - (1 / (thickness + 1));
     }
 
     public void subtractMaintenanceEnergy() {
-        double photoRingCost = photoRingCostFactor * getPhotoRingArea(); // TODO photoRingArea;
+        addEnergy(-photoRing.getMaintenanceEnergy());
+        //double photoRingCost = photoRingCostFactor * getPhotoRingArea(); // TODO photoRingArea;
 //        double fatCost = fatCostFactor * fatArea;
-        addEnergy(-photoRingCost); // TODO - fatCost;
+        //addEnergy(-photoRingCost); // TODO - fatCost;
     }
 
     // TODO basic energy-balance idea:
@@ -111,8 +116,9 @@ public class Cell {
      * @param growthEnergy the amount of the cell's energy to use
      */
     public void growPhotoRing(double growthEnergy) {
+        photoRing.growArea(growthEnergy);
         // TODO what if negative? what if not enough energy available?
-        photoRingArea += growthEnergy / photoRingGrowthCostFactor;
+        //photoRingArea += growthEnergy / photoRingGrowthCostFactor;
         energy -= growthEnergy;
     }
 
@@ -125,26 +131,35 @@ public class Cell {
         return energy;
     }
 
+    // TODO obsolete
     public final double getPhotoRingArea() {
-        return photoRingArea;
+        return photoRing.getArea();
+    //        return photoRingArea;
     }
 
     private void radiiToAreas() {
+        // TODO iterate through rings
+        photoRing.outerRadiusToArea();
 //        fatArea = Math.PI * sqr(fatRadius);
 //        photoRingArea = Math.PI * sqr(photoRingOuterRadius) - fatArea;
-        photoRingArea = Math.PI * sqr(radius);
+        //photoRingArea = Math.PI * sqr(radius);
     }
 
     private void areasToRadii() {
+        // TODO iterate through rings
+        photoRing.areaToOuterRadius();
+        setRadius(photoRing.getOuterRadius());
 //        fatRadius = Math.sqrt(fatArea / Math.PI);
 //        photoRingOuterRadius = Math.sqrt(sqr(fatRadius) + photoRingArea / Math.PI);
-        final double photoRingOuterRadius = Math.sqrt(photoRingArea / Math.PI);
-        setRadius(photoRingOuterRadius);
+        //final double photoRingOuterRadius = Math.sqrt(photoRingArea / Math.PI);
+        //setRadius(photoRingOuterRadius);
     }
 
+    // TODO obsolete
     private void setRadius(double val) {
         radius = val;
-        mass = tissueDensity * Math.PI * sqr(radius);
+        // TODO calc mass from ring masses
+        mass = PhotoRing.getTissueDensity() * Math.PI * sqr(radius);
     }
 
     //=========================================================================
@@ -376,13 +391,13 @@ public class Cell {
     // Parameters
     //=========================================================================
 
-    public static double getTissueDensity() {
-        return tissueDensity;
-    }
-
-    public static void setTissueDensity(double val) {
-        tissueDensity = val;
-    }
+//    public static double getTissueDensity() {
+//        return tissueDensity;
+//    }
+//
+//    public static void setTissueDensity(double val) {
+//        tissueDensity = val;
+//    }
 
     public static double getSpeedLimit() {
         return speedLimit;
@@ -392,21 +407,21 @@ public class Cell {
         speedLimit = val;
     }
 
-    public static double getPhotoRingCostFactor() {
-        return photoRingCostFactor;
-    }
-
-    public static void setPhotoRingCostFactor(double val) {
-        photoRingCostFactor = val;
-    }
-
-    public static double getPhotoRingGrowthCostFactor() {
-        return photoRingGrowthCostFactor;
-    }
-
-    public static void setPhotoRingGrowthCostFactor(double val) {
-        photoRingGrowthCostFactor = val;
-    }
+//    public static double getPhotoRingCostFactor() {
+//        return photoRingCostFactor;
+//    }
+//
+//    public static void setPhotoRingCostFactor(double val) {
+//        photoRingCostFactor = val;
+//    }
+//
+//    public static double getPhotoRingGrowthCostFactor() {
+//        return photoRingGrowthCostFactor;
+//    }
+//
+//    public static void setPhotoRingGrowthCostFactor(double val) {
+//        photoRingGrowthCostFactor = val;
+//    }
 
     public static double getOverlapForceFactor() {
         return overlapForceFactor;
