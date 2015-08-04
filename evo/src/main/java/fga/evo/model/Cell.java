@@ -134,7 +134,7 @@ public class Cell {
     private void setRadius(double val) {
         radius = val;
         // TODO calc mass from ring masses
-        mass = PhotoRing.getTissueDensity() * Math.PI * sqr(radius);
+        mass = PhotoRing.parameters.getTissueDensity() * Math.PI * sqr(radius);
     }
 
     //=========================================================================

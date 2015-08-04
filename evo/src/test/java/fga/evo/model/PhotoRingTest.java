@@ -2,17 +2,9 @@ package fga.evo.model;
 
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertEnergy;
 import static org.junit.Assert.assertEquals;
 
 public class PhotoRingTest {
-//    @Test
-//    public void testFoo() {
-//        PhotoRing ring = new PhotoRing();
-//        ring.areaToOuterRadius(1);
-//        assertEquals(1, ring.getOuterRadius(), 0);
-//    }
-
     @Test
     public void testGetArea() {
         PhotoRing ring = new PhotoRing(1);
@@ -39,17 +31,16 @@ public class PhotoRingTest {
     public void testGetMaintenanceEnergy() {
         PhotoRing ring = new PhotoRing(3);
         ring.outerRadiusToArea();
-        assertEquals(Math.PI * 9 * PhotoRing.getMaintenanceCost(), ring.getMaintenanceEnergy(), 0);
+        assertEquals(Math.PI * 9 * PhotoRing.parameters.getMaintenanceCost(), ring.getMaintenanceEnergy(), 0);
     }
 
-//    @Test
-//    public void testGrowPhotoRing() {
-//        Cell cell = new Cell(1);
-//        cell.addEnergy(3);
-//
-//        cell.growPhotoRing(2);
-//
-//        assertEquals(Math.PI + 2 / PhotoRing.getGrowthCost(), cell.getPhotoRingArea(), 0);
-//        assertEnergy(1, cell);
-//    }
+    @Test
+    public void testGrowArea() {
+        PhotoRing ring = new PhotoRing(1);
+        ring.outerRadiusToArea();
+
+        ring.growArea(2);
+
+        assertEquals(Math.PI + 2 / PhotoRing.parameters.getGrowthCost(), ring.getArea(), 0);
+    }
 }

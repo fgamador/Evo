@@ -17,10 +17,10 @@ public class CellTest_Physics {
 
     @Before
     public void setUp() {
-        defaultTissueDensity = PhotoRing.getTissueDensity();
+        defaultTissueDensity = PhotoRing.parameters.getTissueDensity();
         // ensure that a cell with radius 1 has mass 1
         // TODO mock the mass
-        PhotoRing.setTissueDensity(1 / Math.PI);
+        PhotoRing.parameters.setTissueDensity(1 / Math.PI);
         cell = new Cell(1);
         cell2 = new Cell(1);
         cell.setPosition(0, 0);
@@ -28,7 +28,7 @@ public class CellTest_Physics {
 
     @After
     public void tearDown() {
-        PhotoRing.setTissueDensity(defaultTissueDensity);
+        PhotoRing.parameters.setTissueDensity(defaultTissueDensity);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class CellTest_Physics {
 
     @Test
     public void testGetMass() {
-        assertEquals(PhotoRing.getTissueDensity() * Math.PI, new Cell(1).getMass(), 0);
+        assertEquals(PhotoRing.parameters.getTissueDensity() * Math.PI, new Cell(1).getMass(), 0);
     }
 
     @Test
