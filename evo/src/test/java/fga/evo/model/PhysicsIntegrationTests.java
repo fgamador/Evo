@@ -115,6 +115,18 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
+    public void testBuoyancy() {
+        PhotoRing.setTissueDensity(defaultTissueDensity);
+        world.addEnvironmentalInfluence(new Buoyancy());
+        assertTrue(PhotoRing.getTissueDensity() > Buoyancy.getFluidDensity());
+        Cell cell = addCell(1);
+
+        world.tick();
+
+        assertTrue(cell.getVelocityY() > 0);
+    }
+
+    @Test
     public void testTick_Pull() {
         Cell cell = addCell(1);
         cell.setPosition(5, 5);

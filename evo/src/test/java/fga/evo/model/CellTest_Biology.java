@@ -7,20 +7,8 @@ import static org.junit.Assert.assertEquals;
 
 public class CellTest_Biology {
 //    public static final double SQRT_2 = Math.sqrt(2);
-    // TODO move most/all of these to PhotoRingTest
 
-    @Test
-    public void testGetPhotoRingArea() {
-        assertEquals(Math.PI, new Cell(1).getPhotoRingArea(), 0);
-        assertEquals(Math.PI * 4, new Cell(2).getPhotoRingArea(), 0);
-    }
-
-    @Test
-    public void testCalcPhotoAbsorptivity() {
-        assertEquals(0.5, new Cell(1).calcPhotoAbsorptivity(), 0);
-        assertEquals(0.75, new Cell(3).calcPhotoAbsorptivity(), 0);
-    }
-
+    // TODO dupe?
     @Test
     public void testPhotosynthesize() {
         Cell cell = new Cell(3);
@@ -28,6 +16,7 @@ public class CellTest_Biology {
         assertEnergy(4.5, cell);
     }
 
+    // TODO dupe?
     @Test
     public void testSubtractMaintenanceEnergy() {
         Cell cell = new Cell(3);

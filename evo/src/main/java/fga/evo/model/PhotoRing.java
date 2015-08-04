@@ -3,17 +3,14 @@ package fga.evo.model;
 /**
  * A cell's ring of photosynthetic tissue.
  */
-public class PhotoRing {
-    private static double tissueDensity = 0.0011; // mass per area
+public class PhotoRing extends TissueRing {
+    private static double tissueDensity = 0.011; // mass per area
     private static double growthCost = 1.1; // energy per area
     private static double maintenanceCost = 0.005; // energy per area
     //private static double shrinkageYield = 0.1; // energy per area
 
-    private double innerRadius, outerRadius;
-    private double area;
-
     public PhotoRing(double outerRadius) {
-        this.outerRadius = outerRadius;
+        super(outerRadius);
     }
 
     /**
@@ -48,24 +45,7 @@ public class PhotoRing {
      * @param growthEnergy the amount of the cell's energy to use
      */
     public final void growArea(double growthEnergy) {
-        // TODO shrink if negative
-        area += growthEnergy / growthCost;
-    }
-
-    public final void outerRadiusToArea() { // TODO innerRadius
-        area = Math.PI * sqr(outerRadius);
-    }
-
-    public final void areaToOuterRadius() { // TODO innerRadius
-        outerRadius = Math.sqrt(area / Math.PI);
-    }
-
-    public final double getOuterRadius() {
-        return outerRadius;
-    }
-
-    public final double getArea() {
-        return area;
+        super.growArea(growthEnergy, growthCost);
     }
 
     public static double sqr(double val) {
