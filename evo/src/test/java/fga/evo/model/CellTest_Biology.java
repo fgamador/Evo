@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class CellTest_Biology {
 //    public static final double SQRT_2 = Math.sqrt(2);
 
-    // TODO dupe?
+    // TODO dup?
     @Test
     public void testPhotosynthesize() {
         Cell cell = new Cell(3);
@@ -16,7 +16,7 @@ public class CellTest_Biology {
         assertEnergy(4.5, cell);
     }
 
-    // TODO dupe?
+    // TODO dup?
     @Test
     public void testSubtractMaintenanceEnergy() {
         Cell cell = new Cell(3);

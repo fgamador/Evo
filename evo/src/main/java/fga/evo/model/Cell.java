@@ -330,6 +330,11 @@ public class Cell {
         return radius;
     }
 
+    public double getArea() {
+        // TODO return area; // Calculated from rings
+        return Math.PI * sqr(radius);
+    }
+
     public final double getCenterX() {
         return centerX;
     }
@@ -354,10 +359,7 @@ public class Cell {
         return forceY;
     }
 
-    public double getArea() {
-        return Math.PI * sqr(radius);
-    }
-
+    // TODO move to Util
     public static double sqr(double val) {
         return val * val;
     }
