@@ -1,7 +1,5 @@
 package fga.evo.model;
 
-import fga.evo.fxui.CellCircle;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +27,6 @@ public class Cell {
     public Cell(final double radius) {
         photoRing = new PhotoRing(radius);
         setRadius(radius); // TODO obsolete
-        radiiToAreas();
     }
 
     public final void addBond(Cell cell2) {
@@ -109,20 +106,14 @@ public class Cell {
         return energy;
     }
 
-    // TODO obsolete
+    // TODO obsolete? used by tests
     public final double getPhotoRingArea() {
         return photoRing.getArea();
     }
 
-    private void radiiToAreas() {
-        // TODO iterate through rings
-        photoRing.outerRadiusToArea();
-        // TODO set cell area
-    }
-
     private void areasToRadii() {
         // TODO iterate through rings
-        photoRing.areaToOuterRadius();
+        photoRing.updateFromArea();
         setRadius(photoRing.getOuterRadius());
 //        fatRadius = Math.sqrt(fatArea / Math.PI);
 //        photoRingOuterRadius = Math.sqrt(sqr(fatRadius) + photoRingArea / Math.PI);
@@ -134,7 +125,7 @@ public class Cell {
     private void setRadius(double val) {
         radius = val;
         // TODO calc mass from ring masses
-        mass = PhotoRing.parameters.getTissueDensity() * Math.PI * sqr(radius);
+        mass = photoRing.getMass();
     }
 
     //=========================================================================

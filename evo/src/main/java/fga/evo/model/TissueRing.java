@@ -13,6 +13,7 @@ public abstract class TissueRing {
     protected TissueRing(Parameters parameters, double outerRadius) {
         this.parameters = parameters;
         this.outerRadius = outerRadius;
+        updateFromOuterRadius();
     }
 
     /**
@@ -30,14 +31,16 @@ public abstract class TissueRing {
         return area * parameters.maintenanceCost;
     }
 
-    public final void outerRadiusToArea() { // TODO innerArea
+    private void updateFromOuterRadius() { // TODO innerArea
 //        area = Math.PI * sqr(outerRadius) - innerArea;
         area = Math.PI * sqr(outerRadius);
+        mass = parameters.tissueDensity * area;
     }
 
-    public final void areaToOuterRadius() { // TODO innerRadius
+    public final void updateFromArea() { // TODO innerRadius
 //        outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         outerRadius = Math.sqrt(area / Math.PI);
+        mass = parameters.tissueDensity * area;
     }
 
     public final double getOuterRadius() {
