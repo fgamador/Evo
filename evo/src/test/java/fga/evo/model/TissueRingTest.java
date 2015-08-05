@@ -6,19 +6,26 @@ import static org.junit.Assert.assertEquals;
 
 public class TissueRingTest {
     @Test
-    public void testUpdateFromOuterRadius() {
-        TestRing ring = new TestRing(1);
+    public void testNewAsInnermostRing() {
+        TestRing ring = new TestRing(1, 0);
         assertEquals(Math.PI, ring.getArea(), 0);
-        assertEquals(Math.PI / 2, ring.getMass(), 0);
+        assertEquals(ring.getArea() / 2, ring.getMass(), 0);
 
-        ring = new TestRing(2);
+        ring = new TestRing(2, 0);
         assertEquals(Math.PI * 4, ring.getArea(), 0);
-        assertEquals(Math.PI * 2, ring.getMass(), 0);
+        assertEquals(ring.getArea() / 2, ring.getMass(), 0);
+    }
+
+    @Test
+    public void testNewAsOuterRing() {
+        TestRing ring = new TestRing(1, 0.5);
+        assertEquals(Math.PI - 0.5, ring.getArea(), 0);
+        assertEquals(ring.getArea() / 2, ring.getMass(), 0);
     }
 
     @Test
     public void testGrowArea() {
-        TestRing ring = new TestRing(1);
+        TestRing ring = new TestRing(1, 0);
 
         ring.growArea(2);
 
@@ -27,18 +34,30 @@ public class TissueRingTest {
 
     @Test
     public void testUpdateFromArea() {
-        TestRing ring = new TestRing(1);
+        TestRing ring = new TestRing(1, 0);
         ring.growArea(2);
 
-        ring.updateFromArea();
+        ring.updateFromArea(0);
 
-        //assertEquals(2, ring.getOuterRadius(), 0);
+        assertEquals(2.7, ring.getOuterRadius(), 0.1);
+        assertEquals(ring.getArea() * TestRing.parameters.getTissueDensity(), ring.getMass(), 0);
+    }
+
+    @Test
+    public void testUpdateFromAreaAsOuterRing() {
+        TestRing innerRing = new TestRing(0.5, 0);
+        TestRing ring = new TestRing(1, innerRing.getArea());
+        ring.growArea(2);
+
+        ring.updateFromArea(innerRing.getOuterRadius());
+
+        assertEquals(2.7, ring.getOuterRadius(), 0.1);
         assertEquals(ring.getArea() * TestRing.parameters.getTissueDensity(), ring.getMass(), 0);
     }
 
     @Test
     public void testGetMaintenanceEnergy() {
-        TestRing ring = new TestRing(3);
+        TestRing ring = new TestRing(3, 0);
         assertEquals(Math.PI * 9 * TestRing.parameters.getMaintenanceCost(), ring.getMaintenanceEnergy(), 0);
     }
 
@@ -51,8 +70,8 @@ public class TissueRingTest {
             //parameters.setShrinkageYield(0);
         }
 
-        public TestRing(double outerRadius) {
-            super(parameters, outerRadius);
+        public TestRing(double outerRadius, double innerArea) {
+            super(parameters, outerRadius, innerArea);
         }
     }
 }

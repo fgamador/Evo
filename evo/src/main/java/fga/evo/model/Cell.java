@@ -22,10 +22,12 @@ public class Cell {
     private double velocityX, velocityY;
     private double forceX, forceY;
     private double energy;
+    private FloatRing floatRing;
     private PhotoRing photoRing;
 
     public Cell(final double radius) {
-        photoRing = new PhotoRing(radius);
+        floatRing = new FloatRing(0, 0);
+        photoRing = new PhotoRing(radius, floatRing.getArea());
         setRadius(radius); // TODO obsolete
     }
 
@@ -86,6 +88,11 @@ public class Cell {
         areasToRadii();
     }
 
+    public void growFloatRing(double growthEnergy) {
+        floatRing.growArea(growthEnergy);
+        energy -= growthEnergy;
+    }
+
     /**
      * Grows the photosynthetic ring by an amount determined by the specified
      * energy.
@@ -107,13 +114,18 @@ public class Cell {
     }
 
     // TODO obsolete? used by tests
+    public final double getFloatRingArea() {
+        return floatRing.getArea();
+    }
+
+    // TODO obsolete? used by tests
     public final double getPhotoRingArea() {
         return photoRing.getArea();
     }
 
     private void areasToRadii() {
         // TODO iterate through rings
-        photoRing.updateFromArea();
+        photoRing.updateFromArea(0);
         setRadius(photoRing.getOuterRadius());
 //        fatRadius = Math.sqrt(fatArea / Math.PI);
 //        photoRingOuterRadius = Math.sqrt(sqr(fatRadius) + photoRingArea / Math.PI);
@@ -121,7 +133,7 @@ public class Cell {
         //setRadius(photoRingOuterRadius);
     }
 
-    // TODO obsolete
+    // TODO obsolete?
     private void setRadius(double val) {
         radius = val;
         // TODO calc mass from ring masses

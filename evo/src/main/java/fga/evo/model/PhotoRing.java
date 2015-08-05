@@ -13,8 +13,8 @@ public class PhotoRing extends TissueRing {
         //parameters.setShrinkageYield(0.1);
     }
 
-    public PhotoRing(double outerRadius) {
-        super(parameters, outerRadius);
+    public PhotoRing(double outerRadius, double innerArea) {
+        super(parameters, outerRadius, innerArea);
     }
 
     /**

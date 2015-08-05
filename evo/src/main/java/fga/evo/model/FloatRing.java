@@ -12,7 +12,7 @@ public class FloatRing extends TissueRing {
         //parameters.setShrinkageYield(0);
     }
 
-    public FloatRing(double outerRadius) {
-        super(parameters, outerRadius);
+    public FloatRing(double outerRadius, double innerArea) {
+        super(parameters, outerRadius, innerArea);
     }
 }

@@ -27,11 +27,27 @@ public class CellTest_Biology {
     @Test
     public void testGrowPhotoRing() {
         Cell cell = new Cell(1);
+        double oldPhotoRingArea = cell.getPhotoRingArea();
         cell.addEnergy(3);
 
         cell.growPhotoRing(2);
 
-        assertEquals(Math.PI + 2 / PhotoRing.parameters.getGrowthCost(), cell.getPhotoRingArea(), 0);
+        assertEquals(oldPhotoRingArea + 2 / PhotoRing.parameters.getGrowthCost(), cell.getPhotoRingArea(), 0);
+        assertEnergy(1, cell);
+    }
+
+    @Test
+    public void testGrowFloatRing() {
+        Cell cell = new Cell(1);
+        double oldPhotoRingArea = cell.getPhotoRingArea();
+        cell.addEnergy(2);
+
+        cell.growFloatRing(1);
+
+        assertEquals(1 / FloatRing.parameters.getGrowthCost(), cell.getFloatRingArea(), 0);
+        // TODO radius
+        assertEquals(oldPhotoRingArea, cell.getPhotoRingArea(), 0);
+        // TODO assertEquals(cell.getFloatRingArea() + cell.getPhotoRingArea(), cell.getArea(), 0);
         assertEnergy(1, cell);
     }
 
