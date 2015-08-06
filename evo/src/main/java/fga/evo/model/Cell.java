@@ -16,8 +16,9 @@ public class Cell {
     private int physics = 1; // TODO temp
 
     private Set<Cell> bondedCells = new HashSet<>();
-    private double mass;
-    private double radius; // TODO obsolete?
+    private double mass; // cached sum of ring masses
+    private double radius; // cached outer radius of outer ring
+    private double area; // cached sum of ring areas
     private double centerX, centerY;
     private double velocityX, velocityY;
     private double forceX, forceY;
@@ -28,7 +29,7 @@ public class Cell {
     public Cell(final double radius) {
         floatRing = new FloatRing(0, 0);
         photoRing = new PhotoRing(radius, floatRing.getArea());
-        setRadius(radius); // TODO obsolete
+        updateFromRings();
     }
 
     public final void addBond(Cell cell2) {
@@ -85,10 +86,19 @@ public class Cell {
      */
     public void useEnergy(CellControl control) {
         control.allocateEnergy(this);
-        areasToRadii();
+        floatRing.updateFromArea(0);
+        photoRing.updateFromArea(floatRing.getOuterRadius());
+        updateFromRings();
     }
 
+    /**
+     * Grows the floatation (air) ring by an amount determined by the specified
+     * energy.
+     *
+     * @param growthEnergy the amount of the cell's energy to use
+     */
     public void growFloatRing(double growthEnergy) {
+        // TODO shrink if negative
         floatRing.growArea(growthEnergy);
         energy -= growthEnergy;
     }
@@ -100,6 +110,7 @@ public class Cell {
      * @param growthEnergy the amount of the cell's energy to use
      */
     public void growPhotoRing(double growthEnergy) {
+        // TODO shrink if negative
         photoRing.growArea(growthEnergy);
         energy -= growthEnergy;
     }
@@ -113,31 +124,18 @@ public class Cell {
         return energy;
     }
 
-    // TODO obsolete? used by tests
-    public final double getFloatRingArea() {
-        return floatRing.getArea();
+    private void updateFromRings() {
+        radius = photoRing.getOuterRadius();
+        mass = floatRing.getMass() + photoRing.getMass();
+        area = Math.PI * sqr(radius);
     }
 
-    // TODO obsolete? used by tests
-    public final double getPhotoRingArea() {
-        return photoRing.getArea();
+    public final FloatRing getFloatRing() {
+        return floatRing;
     }
 
-    private void areasToRadii() {
-        // TODO iterate through rings
-        photoRing.updateFromArea(0);
-        setRadius(photoRing.getOuterRadius());
-//        fatRadius = Math.sqrt(fatArea / Math.PI);
-//        photoRingOuterRadius = Math.sqrt(sqr(fatRadius) + photoRingArea / Math.PI);
-        //final double photoRingOuterRadius = Math.sqrt(photoRingArea / Math.PI);
-        //setRadius(photoRingOuterRadius);
-    }
-
-    // TODO obsolete?
-    private void setRadius(double val) {
-        radius = val;
-        // TODO calc mass from ring masses
-        mass = photoRing.getMass();
+    public final PhotoRing getPhotoRing() {
+        return photoRing;
     }
 
     //=========================================================================
@@ -334,8 +332,7 @@ public class Cell {
     }
 
     public double getArea() {
-        // TODO return area; // Calculated from rings
-        return Math.PI * sqr(radius);
+        return area;
     }
 
     public final double getCenterX() {

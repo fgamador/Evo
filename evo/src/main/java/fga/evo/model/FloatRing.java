@@ -6,7 +6,7 @@ package fga.evo.model;
 public class FloatRing extends TissueRing {
     public static final Parameters parameters = new Parameters();
     static {
-        parameters.setTissueDensity(0.0);
+        parameters.setTissueDensity(0.0001);
         parameters.setGrowthCost(0.01);
         parameters.setMaintenanceCost(0.005);
         //parameters.setShrinkageYield(0);
