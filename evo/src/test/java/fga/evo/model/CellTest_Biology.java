@@ -52,11 +52,11 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_PhotoRingGrowth() {
-        Cell cell = new Cell(1);
+        Cell cell = new Cell(1, c -> c.growPhotoRing(c.getEnergy()));
         assertEquals(Math.PI, cell.getPhotoRing().getArea(), 0);
         cell.addEnergy(2);
 
-        cell.useEnergy(c -> c.growPhotoRing(c.getEnergy()));
+        cell.useEnergy();
 
         assertEquals(Math.PI + 2 / PhotoRing.parameters.getGrowthCost(), cell.getPhotoRing().getArea(), 0);
         assertEnergy(0, cell);
@@ -64,12 +64,12 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_FloatRingGrowth() {
-        Cell cell = new Cell(1);
+        Cell cell = new Cell(1, c -> c.growFloatRing(c.getEnergy()));
         double oldPhotoRingArea = cell.getPhotoRing().getArea();
         double oldPhotoRingMass = cell.getPhotoRing().getMass();
         cell.addEnergy(1);
 
-        cell.useEnergy(c -> c.growFloatRing(c.getEnergy()));
+        cell.useEnergy();
 
         assertTrue(cell.getFloatRing().getArea() > 0);
         assertEquals(oldPhotoRingArea, cell.getPhotoRing().getArea(), 0);

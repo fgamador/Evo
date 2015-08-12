@@ -18,4 +18,10 @@ public abstract class WorldIntegrationTests {
         world.addCell(cell);
         return cell;
     }
+
+    protected Cell addCell(double radius, CellControl control) {
+        Cell cell = new Cell(radius, control);
+        world.addCell(cell);
+        return cell;
+    }
 }

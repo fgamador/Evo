@@ -35,8 +35,7 @@ public class World {
 
         // TODO should be easily parallelizeable
         for (Cell cell : cells) {
-            // TODO where to keep the cell control?
-            cell.useEnergy(c -> c.growPhotoRing(c.getEnergy()));
+            cell.useEnergy();
         }
 
         // TODO should be easily parallelizeable

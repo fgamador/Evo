@@ -25,10 +25,16 @@ public class Cell {
     private double energy;
     private FloatRing floatRing;
     private PhotoRing photoRing;
+    private CellControl control;
 
     public Cell(final double radius) {
+        this(radius, c -> {});
+    }
+
+    public Cell(final double radius, final CellControl control) {
         floatRing = new FloatRing(0, 0);
         photoRing = new PhotoRing(radius, floatRing.getArea());
+        this.control = control;
         updateFromRings();
     }
 
@@ -84,7 +90,7 @@ public class Cell {
     /**
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
-    public void useEnergy(CellControl control) {
+    public void useEnergy() {
         control.allocateEnergy(this);
         floatRing.updateFromArea(0);
         photoRing.updateFromArea(floatRing.getOuterRadius());
