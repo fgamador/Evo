@@ -3,7 +3,7 @@ package fga.evo.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertForce;
+import static fga.evo.model.Assert.assertNetForce;
 
 public class PullerTest {
     private Cell cell;
@@ -22,7 +22,7 @@ public class PullerTest {
 
         puller.addForceToCell();
 
-        assertForce(0, 0, cell);
+        assertNetForce(0, 0, cell);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class PullerTest {
 
         puller.addForceToCell();
 
-        assertForce(1, 1, cell);
+        assertNetForce(1, 1, cell);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class PullerTest {
 
             puller.addForceToCell();
 
-            assertForce(2, 2, cell);
+            assertNetForce(2, 2, cell);
         } finally {
             Puller.setPullForceFactor(defaultForceFactor);
         }

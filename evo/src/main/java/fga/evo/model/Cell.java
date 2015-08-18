@@ -21,7 +21,7 @@ public class Cell {
     private double area; // cached sum of ring areas
     private double centerX, centerY;
     private double velocityX, velocityY;
-    private double forceX, forceY;
+    private double netForceX, netForceY;
     private double energy;
     private FloatRing floatRing;
     private PhotoRing photoRing;
@@ -173,8 +173,8 @@ public class Cell {
      * @param y Y-component of the force
      */
     public final void addForce(final double x, final double y) {
-        forceX += x;
-        forceY += y;
+        netForceX += x;
+        netForceY += y;
     }
 
     /**
@@ -182,8 +182,8 @@ public class Cell {
      */
     public final void move() {
         // the acceleration to apply instantaneously at the beginning this time interval
-        final double accelerationX = forceX / mass;
-        final double accelerationY = forceY / mass;
+        final double accelerationX = netForceX / mass;
+        final double accelerationY = netForceY / mass;
 
         // the velocity during this time interval
         velocityX += accelerationX;
@@ -203,7 +203,7 @@ public class Cell {
         centerY += velocityY;
 
         // clear the forces
-        forceX = forceY = 0;
+        netForceX = netForceY = 0;
     }
 
     /**
@@ -357,12 +357,12 @@ public class Cell {
         return velocityY;
     }
 
-    public final double getForceX() {
-        return forceX;
+    public final double getNetForceX() {
+        return netForceX;
     }
 
-    public final double getForceY() {
-        return forceY;
+    public final double getNetForceY() {
+        return netForceY;
     }
 
     // TODO move to Util

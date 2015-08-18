@@ -22,7 +22,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testBuoyancyControl() {
+    public void testBuoyancyControl_Deeper() {
         world.addEnvironmentalInfluence(new Buoyancy());
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
 
@@ -31,9 +31,39 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         assertEquals(0, cell.getVelocityY(), 0.01);
 
-//        cell.setPosition(100, 150);
-//        world.tick();
-//
-//        assertTrue(cell.getVelocityY() < 0);
+        cell.setPosition(100, 101);
+        world.tick();
+
+        double velocityY_101 = cell.getVelocityY();
+        assertTrue(velocityY_101 < 0);
+
+        cell.setPosition(100, 102);
+        world.tick();
+
+        double velocityY_102 = cell.getVelocityY();
+        assertTrue(velocityY_102 < velocityY_101);
+    }
+
+    @Test
+    public void testBuoyancyControl_Shallower() {
+        world.addEnvironmentalInfluence(new Buoyancy());
+        Cell cell = addCell(1, new FixedDepthSeekingControl(100));
+
+        cell.setPosition(100, 100);
+        world.tick();
+
+        assertEquals(0, cell.getVelocityY(), 0.01);
+
+        cell.setPosition(100, 99);
+        world.tick();
+
+        double velocityY_99 = cell.getVelocityY();
+        assertTrue(velocityY_99 > 0);
+
+        cell.setPosition(100, 98);
+        world.tick();
+
+        double velocityY_98 = cell.getVelocityY();
+        assertTrue(velocityY_98 > velocityY_99);
     }
 }

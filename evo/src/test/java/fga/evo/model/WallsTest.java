@@ -3,7 +3,7 @@ package fga.evo.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertForce;
+import static fga.evo.model.Assert.assertNetForce;
 
 public class WallsTest {
     private Walls walls;
@@ -21,7 +21,7 @@ public class WallsTest {
 
         walls.addForcesToCell(cell);
 
-        assertForce(0, 0, cell);
+        assertNetForce(0, 0, cell);
     }
 
     @Test
@@ -30,7 +30,7 @@ public class WallsTest {
 
         walls.addForcesToCell(cell);
 
-        assertForce(0.5, 0.5, cell);
+        assertNetForce(0.5, 0.5, cell);
     }
 
     @Test
@@ -39,6 +39,6 @@ public class WallsTest {
 
         walls.addForcesToCell(cell);
 
-        assertForce(-0.5, -0.5, cell);
+        assertNetForce(-0.5, -0.5, cell);
     }
 }

@@ -33,9 +33,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         world = new World();
-        world.addEnvironmentalInfluence(new Walls(WIDTH, HEIGHT));
-        world.addEnvironmentalInfluence(new Drag());
-        world.addEnvironmentalInfluence(new Buoyancy());
+        addInfluences();
         populate();
 
         Group root = new Group();
@@ -70,8 +68,14 @@ public class Main extends Application {
 //        controls.show();
     }
 
+    private void addInfluences() {
+        world.addEnvironmentalInfluence(new Walls(WIDTH, HEIGHT));
+        world.addEnvironmentalInfluence(new Drag());
+        world.addEnvironmentalInfluence(new Buoyancy());
+    }
+
     private void populate() {
-        Cell cell = new Cell(10);
+        Cell cell = new Cell(10, new FixedDepthSeekingControl(250));
         cell.setPosition(250, 250);
         world.addCell(cell);
 

@@ -3,7 +3,7 @@ package fga.evo.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertForce;
+import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.assertEquals;
 
 public class DragTest {
@@ -20,7 +20,7 @@ public class DragTest {
     public void testAddDragForceToCell_NoMotion() {
         drag.addForcesToCell(cell);
 
-        assertForce(0, 0, cell);
+        assertNetForce(0, 0, cell);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class DragTest {
 
         drag.addForcesToCell(cell);
 
-        assertForce(8 * Drag.getDragFactor(), -18 * Drag.getDragFactor(), cell);
+        assertNetForce(8 * Drag.getDragFactor(), -18 * Drag.getDragFactor(), cell);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class DragTest {
 
             drag.addForcesToCell(cell);
 
-            assertForce(-4, 0, cell);
+            assertNetForce(-4, 0, cell);
         } finally {
             Drag.setDragFactor(defaultDragFactor);
         }

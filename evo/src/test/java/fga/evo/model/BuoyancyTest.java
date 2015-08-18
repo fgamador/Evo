@@ -4,7 +4,7 @@ import mockit.Expectations;
 import org.junit.Before;
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertForce;
+import static fga.evo.model.Assert.assertNetForce;
 
 public class BuoyancyTest {
     private Buoyancy buoyancy;
@@ -27,7 +27,7 @@ public class BuoyancyTest {
 
         buoyancy.addForcesToCell(cell);
 
-        assertForce(0, 0, cell);
+        assertNetForce(0, 0, cell);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class BuoyancyTest {
 
         buoyancy.addForcesToCell(cell);
 
-        assertForce(0, -Buoyancy.getGravity() * Math.PI, cell);
+        assertNetForce(0, -Buoyancy.getGravity() * Math.PI, cell);
     }
 
     @Test
@@ -51,6 +51,6 @@ public class BuoyancyTest {
 
         buoyancy.addForcesToCell(cell);
 
-        assertForce(0, Buoyancy.getGravity() * Math.PI, cell);
+        assertNetForce(0, Buoyancy.getGravity() * Math.PI, cell);
     }
 }

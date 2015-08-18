@@ -16,13 +16,13 @@ public class Assert {
         assertEquals("Energy", energy, cell.getEnergy(), delta);
     }
 
-    public static void assertForce(double forceX, double forceY, Cell cell) {
-        assertForce(forceX, forceY, cell, DEFAULT_DELTA);
+    public static void assertNetForce(double forceX, double forceY, Cell cell) {
+        assertNetForce(forceX, forceY, cell, DEFAULT_DELTA);
     }
 
-    public static void assertForce(double forceX, double forceY, Cell cell, double delta) {
-        assertEquals("Force X", forceX, cell.getForceX(), delta);
-        assertEquals("Force Y", forceY, cell.getForceY(), delta);
+    public static void assertNetForce(double forceX, double forceY, Cell cell, double delta) {
+        assertEquals("Force X", forceX, cell.getNetForceX(), delta);
+        assertEquals("Force Y", forceY, cell.getNetForceY(), delta);
     }
 
     public static void assertPosition(double centerX, double centerY, Cell cell) {

@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertForce;
+import static fga.evo.model.Assert.assertNetForce;
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.assertEquals;
@@ -156,8 +156,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0, 0, cell);
-        assertForce(0, 0, cell2);
+        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, cell2);
     }
 
     @Test
@@ -166,8 +166,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(-1, 0, cell);
-        assertForce(1, 0, cell2);
+        assertNetForce(-1, 0, cell);
+        assertNetForce(1, 0, cell2);
     }
 
     @Test
@@ -176,8 +176,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0, 0, cell);
-        assertForce(0, 0, cell2);
+        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, cell2);
     }
 
     @Test
@@ -186,8 +186,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(-SQRT_2 / 2, -SQRT_2 / 2, cell);
-        assertForce(SQRT_2 / 2, SQRT_2 / 2, cell2);
+        assertNetForce(-SQRT_2 / 2, -SQRT_2 / 2, cell);
+        assertNetForce(SQRT_2 / 2, SQRT_2 / 2, cell2);
     }
 
     @Test
@@ -196,8 +196,8 @@ public class CellTest_Physics {
 
         cell2.addInterCellForces(cell);
 
-        assertForce(-SQRT_2 / 2, -SQRT_2 / 2, cell);
-        assertForce(SQRT_2 / 2, SQRT_2 / 2, cell2);
+        assertNetForce(-SQRT_2 / 2, -SQRT_2 / 2, cell);
+        assertNetForce(SQRT_2 / 2, SQRT_2 / 2, cell2);
     }
 
     @Test
@@ -206,8 +206,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0, 0, cell);
-        assertForce(0, 0, cell2);
+        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, cell2);
     }
 
     @Test
@@ -217,8 +217,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0, 0, cell);
-        assertForce(0, 0, cell2);
+        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, cell2);
     }
 
     @Test
@@ -230,8 +230,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0, 0, cell);
-        assertForce(0, 0, cell2);
+        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, cell2);
     }
 
     @Test
@@ -243,8 +243,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(-0.5, 0, cell);
-        assertForce(0.5, 0, cell2);
+        assertNetForce(-0.5, 0, cell);
+        assertNetForce(0.5, 0, cell2);
     }
 
     @Test
@@ -256,8 +256,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0.5, 0, cell);
-        assertForce(-0.5, 0, cell2);
+        assertNetForce(0.5, 0, cell);
+        assertNetForce(-0.5, 0, cell2);
     }
 
     @Test
@@ -267,8 +267,8 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(-1, 0, cell);
-        assertForce(1, 0, cell2);
+        assertNetForce(-1, 0, cell);
+        assertNetForce(1, 0, cell2);
     }
 
     @Test
@@ -278,7 +278,7 @@ public class CellTest_Physics {
 
         cell.addInterCellForces(cell2);
 
-        assertForce(0, 1, cell);
-        assertForce(0, -1, cell2);
+        assertNetForce(0, 1, cell);
+        assertNetForce(0, -1, cell2);
     }
 }

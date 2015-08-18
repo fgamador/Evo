@@ -32,6 +32,16 @@ public class TissueRingTest {
         assertEquals(Math.PI + 2 / TestRing.parameters.getGrowthCost(), ring.getArea(), 0);
     }
 
+//    @Test
+//    public void testGrowArea_Negative() {
+//        TestRing ring = new TestRing(100, 0);
+//
+//        double cost = ring.growArea(-1);
+//
+//        assertEquals(-1, cost, 0); // TODO
+//        assertEquals(Math.PI + 2 / TestRing.parameters.getShrinkageYield(), ring.getArea(), 0);
+//    }
+
     @Test
     public void testUpdateFromArea() {
         TestRing ring = new TestRing(1, 0);
@@ -67,7 +77,7 @@ public class TissueRingTest {
             parameters.setTissueDensity(0.5);
             parameters.setGrowthCost(0.1);
             parameters.setMaintenanceCost(0.05);
-            //parameters.setShrinkageYield(0);
+            parameters.setShrinkageYield(0.05);
         }
 
         public TestRing(double outerRadius, double innerArea) {
