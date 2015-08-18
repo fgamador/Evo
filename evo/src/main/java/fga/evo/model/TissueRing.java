@@ -16,6 +16,16 @@ public abstract class TissueRing {
         updateFromOuterRadius(innerArea);
     }
 
+    // New thinkings:
+    //    double getGrowthCost(double growthFraction)
+    //    void grow(double growthFraction)
+    //    double shrink(double shrinkageFraction)
+    // The neural net decides to grow some rings and shrink some rings by some fraction.
+    // The control handles this as follows:
+    // 1) Do all the shrinkage and add the returned energy to the pot.
+    // 2) Ask about the total cost of all the growth.
+    // 3) Do all the growth, scaled as necessary per the available energy.
+
     /**
      * Grows the ring by an amount determined by the specified energy. Using a negative
      * energy shrinks the ring and yields energy.
