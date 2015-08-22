@@ -11,8 +11,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
-        Cell cell = addCell(1, c -> c.growPhotoRing(c.getEnergy()));
-        // TODO install simple brains (currently built into world tick)
+        Cell cell = addCell(1, c -> c.requestResizePhotoArea(1000));
         cell.setPosition(5, 5);
 
         world.tick();

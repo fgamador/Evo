@@ -1,6 +1,10 @@
 package fga.evo.model;
 
+import com.sun.xml.internal.ws.streaming.TidyXMLStreamReader;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,6 +27,7 @@ public class Cell {
     private double velocityX, velocityY;
     private double netForceX, netForceY;
     private double energy;
+    private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
     private CellControl control;
@@ -32,8 +37,8 @@ public class Cell {
     }
 
     public Cell(final double radius, final CellControl control) {
-        floatRing = new FloatRing(0, 0);
-        photoRing = new PhotoRing(radius, floatRing.getArea());
+        tissueRings.add(floatRing = new FloatRing(0, 0));
+        tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
         this.control = control;
         updateFromRings();
     }
@@ -92,33 +97,29 @@ public class Cell {
      */
     public void useEnergy() {
         control.allocateEnergy(this);
+
+        // TODO shrinkage
+        double requestedEnergy = 0;
+        for (TissueRing ring : tissueRings) {
+            requestedEnergy += ring.getRequestedEnergy();
+        }
+        if (requestedEnergy > energy) {
+            for (TissueRing ring : tissueRings) {
+                ring.scaleResizeRequest(energy / requestedEnergy);
+            }
+        }
+        for (TissueRing ring : tissueRings) {
+            ring.resize();
+        }
+        if (requestedEnergy > energy) {
+            energy = 0;
+        } else {
+            energy -= requestedEnergy;
+        }
+
         floatRing.updateFromArea(0);
         photoRing.updateFromArea(floatRing.getOuterRadius());
         updateFromRings();
-    }
-
-    /**
-     * Grows the floatation (air) ring by an amount determined by the specified
-     * energy.
-     *
-     * @param growthEnergy the amount of the cell's energy to use
-     */
-    public void growFloatRing(double growthEnergy) {
-        // TODO shrink if negative
-        floatRing.growArea(growthEnergy);
-        energy -= growthEnergy;
-    }
-
-    /**
-     * Grows the photosynthetic ring by an amount determined by the specified
-     * energy.
-     *
-     * @param growthEnergy the amount of the cell's energy to use
-     */
-    public void growPhotoRing(double growthEnergy) {
-        // TODO shrink if negative
-        photoRing.growArea(growthEnergy);
-        energy -= growthEnergy;
     }
 
     /**
@@ -136,10 +137,40 @@ public class Cell {
         area = Math.PI * sqr(radius);
     }
 
+    /**
+     * Records a request that the cell's float-ring area change by a specified (additive) amount.
+     *
+     * @param deltaArea the amount to add to the current area (negative shrinks the area)
+     */
+    public void requestResizeFloatArea(double deltaArea) {
+        floatRing.requestResize(deltaArea);
+    }
+
+    /**
+     * Records a request that the cell's photo-ring area change by a specified (additive) amount.
+     *
+     * @param deltaArea the amount to add to the current area (negatives shrinks the area)
+     */
+    public void requestResizePhotoArea(double deltaArea) {
+        photoRing.requestResize(deltaArea);
+    }
+
+    public double getFloatArea() {
+        return floatRing.getArea();
+    }
+
+    public double getPhotoArea() {
+        return photoRing.getArea();
+    }
+
+    // TODO obsolete
+    /** @deprecated */
     public final FloatRing getFloatRing() {
         return floatRing;
     }
 
+    // TODO obsolete
+    /** @deprecated */
     public final PhotoRing getPhotoRing() {
         return photoRing;
     }

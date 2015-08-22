@@ -9,6 +9,7 @@ public abstract class TissueRing {
     protected double outerRadius;
     protected double area;
     protected double mass;
+    private double requestedDeltaArea;
 
     protected TissueRing(Parameters parameters, double outerRadius, double innerArea) {
         this.parameters = parameters;
@@ -27,17 +28,26 @@ public abstract class TissueRing {
     // 3) Do all the growth, scaled as necessary per the available energy.
 
     /**
-     * Grows the ring by an amount determined by the specified energy. Using a negative
-     * energy shrinks the ring and yields energy.
+     * Records a request that the ring's area change by a specified (additive) amount.
      *
-     * @param growthEnergy the amount of the cell's energy to use; can be negative
-     * @return the amount of energy consumed. Negative if energy was yielded.
+     * @param deltaArea the amount to add to the current area (negatives shrinks the area)
      */
-    public final double growArea(final double growthEnergy) {
-        // TODO shrink if negative
-        assert growthEnergy >= 0;
-        area += growthEnergy / parameters.growthCost;
-        return growthEnergy;
+    public void requestResize(double deltaArea) {
+        requestedDeltaArea = deltaArea;
+    }
+
+    public double getRequestedEnergy() {
+        // TODO shrinkage
+        return requestedDeltaArea * parameters.getGrowthCost();
+    }
+
+    public void scaleResizeRequest(double ratio) {
+        requestedDeltaArea *= ratio;
+    }
+
+    public void resize() {
+        area += requestedDeltaArea;
+        requestedDeltaArea = 0;
     }
 
     public final double getMaintenanceEnergy() {
