@@ -24,7 +24,7 @@ public class Cell implements CellControl.ControlApi {
     private double centerX, centerY;
     private double velocityX, velocityY;
     private double netForceX, netForceY;
-    private double energy;
+    private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
