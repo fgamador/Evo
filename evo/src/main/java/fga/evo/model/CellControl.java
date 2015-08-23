@@ -8,8 +8,6 @@ public interface CellControl {
     void allocateEnergy(ControlApi cell);
 
     interface ControlApi {
-        void addForce(double x, double y); // TODO hack
-
         double getCenterY();
         double getEnergy();
         double getFloatArea();

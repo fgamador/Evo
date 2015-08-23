@@ -72,11 +72,12 @@ public class Main extends Application {
         world.addEnvironmentalInfluence(new Walls(WIDTH, HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
         world.addEnvironmentalInfluence(new Buoyancy());
+        world.addEnvironmentalInfluence(new Illumination(HEIGHT));
     }
 
     private void populate() {
-        Cell cell = new Cell(10, new FixedDepthSeekingControl(250));
-        cell.setPosition(250, 50);
+        Cell cell = new Cell(10, new FixedDepthSeekingControl(100));
+        cell.setPosition(250, 100);
         world.addCell(cell);
 
 //        ControlApi cell2 = new ControlApi(10);

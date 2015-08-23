@@ -140,10 +140,10 @@ public class CellTest_Biology {
         assertEquals(oldPhotoRingArea, cell.getPhotoArea(), 0);
         assertEquals(cell.getFloatArea() + cell.getPhotoArea(), cell.getArea(), 0.00001);
 
-//        assertTrue(cell.getFloatRing().getOuterRadius() > 0);
-//        assertTrue(cell.getPhotoRing().getOuterRadius() > 1);
-//        assertTrue(cell.getPhotoRing().getOuterRadius() > cell.getFloatRing().getOuterRadius());
-//        assertEquals(cell.getPhotoRing().getOuterRadius(), cell.getRadius(), 0);
+        assertTrue(cell.getFloatRingOuterRadius() > 0);
+        assertTrue(cell.getPhotoRingOuterRadius() > 1);
+        assertTrue(cell.getPhotoRingOuterRadius() > cell.getFloatRingOuterRadius());
+        assertEquals(cell.getPhotoRingOuterRadius(), cell.getRadius(), 0);
 
 //        assertTrue(cell.getFloatRing().getMass() > 0);
 //        assertEquals(oldPhotoRingMass, cell.getPhotoRing().getMass(), 0);

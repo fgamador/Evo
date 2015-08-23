@@ -17,22 +17,21 @@ import java.util.List;
 public class CellCircle extends Group {
     private Cell cell;
     private Circle photoRingCircle;
-//    private Circle fatCircle;
-    private boolean wasAlive = true;
-    private boolean selected;
-//    private List<ForceArrow> forceArrows = new ArrayList<>();
+    private Circle floatRingCircle;
+    //private boolean wasAlive = true;
+    //private boolean selected;
+    //private List<ForceArrow> forceArrows = new ArrayList<>();
 
     CellCircle(Cell cell) {
         this.cell = cell;
 
         Color photoRingColor = (cell.getPhysics() == 1) ? Color.web("#99ff00", 0.7) : Color.web("#22aa00", 0.7);
-//        photoRingCircle = new Circle(cell.getPhotosyntheticRingOuterRadius(), photoRingColor);
-        photoRingCircle = new Circle(cell.getRadius(), photoRingColor);
+        photoRingCircle = new Circle(cell.getPhotoRingOuterRadius(), photoRingColor);
         getChildren().add(photoRingCircle);
 
-//        Color fatCircleColor = Color.web("#ddff00", 1);
-//        fatCircle = new Circle(cell.getFatRadius(), fatCircleColor);
-//        getChildren().add(fatCircle);
+        Color floatCircleColor = Color.web("#eeeeff", 1);
+        floatRingCircle = new Circle(cell.getFloatRingOuterRadius(), floatCircleColor);
+        getChildren().add(floatRingCircle);
 
         setTranslateX(cell.getCenterX());
         setTranslateY(cell.getCenterY());
@@ -42,8 +41,8 @@ public class CellCircle extends Group {
         setTranslateX(cell.getCenterX());
         setTranslateY(cell.getCenterY());
 
-//        photoRingCircle.setRadius(cell.getPhotosyntheticRingOuterRadius());
-//        fatCircle.setRadius(cell.getFatRadius());
+        photoRingCircle.setRadius(cell.getPhotoRingOuterRadius());
+        floatRingCircle.setRadius(cell.getFloatRingOuterRadius());
 
 //        if (wasAlive && !cell.isAlive()) {
 //            wasAlive = false;

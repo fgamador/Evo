@@ -156,6 +156,14 @@ public class Cell implements CellControl.ControlApi {
         photoRing.requestResize(deltaArea);
     }
 
+    public double getFloatRingOuterRadius() {
+        return floatRing.getOuterRadius();
+    }
+
+    public double getPhotoRingOuterRadius() {
+        return photoRing.getOuterRadius();
+    }
+
     public double getFloatArea() {
         return floatRing.getArea();
     }
