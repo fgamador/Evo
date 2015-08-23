@@ -13,7 +13,9 @@ public class FixedDepthSeekingControl implements CellControl {
     }
 
     @Override
-    public void allocateEnergy(Cell cell) {
-        cell.addForce(0, 0.01 * (y - cell.getCenterY()));
+    public void allocateEnergy(ControlApi cell) {
+        // TODO fake
+//        cell.addForce(0, 0.01 * (y - cell.getCenterY()));
+        cell.requestFloatAreaResize(cell.getCenterY() - y);
     }
 }

@@ -33,12 +33,12 @@ public abstract class TissueRing {
      * @param deltaArea the amount to add to the current area (negatives shrinks the area)
      */
     public void requestResize(double deltaArea) {
-        requestedDeltaArea = deltaArea;
+        requestedDeltaArea = Math.max(deltaArea, -area);
     }
 
     public double getRequestedEnergy() {
-        // TODO shrinkage
-        return requestedDeltaArea * parameters.getGrowthCost();
+        return requestedDeltaArea *
+                ((requestedDeltaArea >= 0) ? parameters.getGrowthCost() : parameters.getShrinkageYield());
     }
 
     public void scaleResizeRequest(double ratio) {

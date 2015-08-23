@@ -9,7 +9,7 @@ public class FloatRing extends TissueRing {
         parameters.setTissueDensity(0.0001);
         parameters.setGrowthCost(0.01);
         parameters.setMaintenanceCost(0.005);
-        //parameters.setShrinkageYield(0);
+        parameters.setShrinkageYield(0);
     }
 
     public FloatRing(double outerRadius, double innerArea) {

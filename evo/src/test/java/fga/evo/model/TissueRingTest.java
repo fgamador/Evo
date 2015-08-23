@@ -33,6 +33,24 @@ public class TissueRingTest {
     }
 
     @Test
+    public void testRequestResize_Shrinkage() {
+        TestRing ring = new TestRing(1, 0);
+
+        ring.requestResize(-2);
+
+        assertEquals(-2 * TestRing.parameters.getShrinkageYield(), ring.getRequestedEnergy(), 0);
+    }
+
+    @Test
+    public void testRequestResize_NotBelowZero() {
+        TestRing ring = new TestRing(1, 0);
+
+        ring.requestResize(-5);
+
+        assertEquals(-Math.PI * TestRing.parameters.getShrinkageYield(), ring.getRequestedEnergy(), 0);
+    }
+
+    @Test
     public void testScaleResizeRequest() {
         TestRing ring = new TestRing(1, 0);
         ring.requestResize(10);
@@ -61,6 +79,16 @@ public class TissueRingTest {
         ring.resize();
 
         assertEquals(Math.PI + 5, ring.getArea(), 0);
+    }
+
+    @Test
+    public void testResize_NotBelowZero() {
+        TestRing ring = new TestRing(1, 0);
+        ring.requestResize(-5);
+
+        ring.resize();
+
+        assertEquals(0, ring.getArea(), 0);
     }
 
     // TODO test shrinkage

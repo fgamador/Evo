@@ -1,7 +1,5 @@
 package fga.evo.model;
 
-import com.sun.xml.internal.ws.streaming.TidyXMLStreamReader;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +11,7 @@ import java.util.Set;
  *
  * @author Franz Amador
  */
-public class Cell {
+public class Cell implements CellControl.ControlApi {
     private static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
@@ -98,7 +96,6 @@ public class Cell {
     public void useEnergy() {
         control.allocateEnergy(this);
 
-        // TODO shrinkage
         double requestedEnergy = 0;
         for (TissueRing ring : tissueRings) {
             requestedEnergy += ring.getRequestedEnergy();
@@ -117,8 +114,12 @@ public class Cell {
             energy -= requestedEnergy;
         }
 
-        floatRing.updateFromArea(0);
-        photoRing.updateFromArea(floatRing.getOuterRadius());
+        double innerRadius = 0;
+        for (TissueRing ring : tissueRings) {
+            ring.updateFromArea(innerRadius);
+            innerRadius = ring.getOuterRadius();
+        }
+
         updateFromRings();
     }
 
@@ -142,7 +143,7 @@ public class Cell {
      *
      * @param deltaArea the amount to add to the current area (negative shrinks the area)
      */
-    public void requestResizeFloatArea(double deltaArea) {
+    public void requestFloatAreaResize(double deltaArea) {
         floatRing.requestResize(deltaArea);
     }
 
@@ -151,7 +152,7 @@ public class Cell {
      *
      * @param deltaArea the amount to add to the current area (negatives shrinks the area)
      */
-    public void requestResizePhotoArea(double deltaArea) {
+    public void requestPhotoAreaResize(double deltaArea) {
         photoRing.requestResize(deltaArea);
     }
 
@@ -161,18 +162,6 @@ public class Cell {
 
     public double getPhotoArea() {
         return photoRing.getArea();
-    }
-
-    // TODO obsolete
-    /** @deprecated */
-    public final FloatRing getFloatRing() {
-        return floatRing;
-    }
-
-    // TODO obsolete
-    /** @deprecated */
-    public final PhotoRing getPhotoRing() {
-        return photoRing;
     }
 
     //=========================================================================

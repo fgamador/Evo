@@ -11,12 +11,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
-        Cell cell = addCell(1, c -> c.requestResizePhotoArea(1000));
+        Cell cell = addCell(1, c -> c.requestPhotoAreaResize(1000));
         cell.setPosition(5, 5);
 
         world.tick();
 
-        assertEquals(Math.PI + 0.5 / PhotoRing.parameters.getGrowthCost(), cell.getPhotoRing().getArea(), 0);
+        assertEquals(Math.PI + 0.5 / PhotoRing.parameters.getGrowthCost(), cell.getPhotoArea(), 0);
         assertEnergy(0, cell);
     }
 
@@ -24,6 +24,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testBuoyancyControl_Deeper() {
         world.addEnvironmentalInfluence(new Buoyancy());
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
+        cell.addEnergy(100);
 
         cell.setPosition(100, 100);
         world.tick();
@@ -47,6 +48,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testBuoyancyControl_Shallower() {
         world.addEnvironmentalInfluence(new Buoyancy());
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
+        cell.addEnergy(100);
 
         cell.setPosition(100, 100);
         world.tick();
