@@ -6,18 +6,22 @@ package fga.evo.model;
  * @author Franz Amador
  */
 public class Walls extends EnvironmentalInfluence {
-    private double width, height;
+    private double width, depth;
 
-    public Walls(final double width, final double height) {
+    public Walls(final double width, final double depth) {
+        if (depth <= 0) {
+            throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
+        }
+
         this.width = width;
-        this.height = height;
+        this.depth = depth;
     }
 
     @Override
     public final void addForcesToCell(final Cell cell) {
         cell.addForce(cell.calcLowXWallCollisionForce(0), 0);
         cell.addForce(cell.calcHighXWallCollisionForce(width), 0);
-        cell.addForce(0, cell.calcLowYWallCollisionForce(0));
-        cell.addForce(0, cell.calcHighYWallCollisionForce(height));
+        cell.addForce(0, cell.calcHighYWallCollisionForce(0));
+        cell.addForce(0, cell.calcLowYWallCollisionForce(-depth));
     }
 }

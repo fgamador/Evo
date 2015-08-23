@@ -39,7 +39,7 @@ public class BuoyancyTest {
 
         buoyancy.addForcesToCell(cell);
 
-        assertNetForce(0, -Buoyancy.getGravity() * Math.PI, cell);
+        assertNetForce(0, Buoyancy.getGravity() * Math.PI, cell);
     }
 
     @Test
@@ -51,6 +51,6 @@ public class BuoyancyTest {
 
         buoyancy.addForcesToCell(cell);
 
-        assertNetForce(0, Buoyancy.getGravity() * Math.PI, cell);
+        assertNetForce(0, -Buoyancy.getGravity() * Math.PI, cell);
     }
 }

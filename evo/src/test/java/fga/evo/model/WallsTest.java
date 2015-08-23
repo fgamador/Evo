@@ -17,7 +17,7 @@ public class WallsTest {
 
     @Test
     public void testAddCollisionForcesToCell_JustTouching() {
-        cell.setPosition(1, 1);
+        cell.setPosition(1, -1);
 
         walls.addForcesToCell(cell);
 
@@ -26,19 +26,19 @@ public class WallsTest {
 
     @Test
     public void testAddCollisionForcesToCell_LowXYCollision() {
-        cell.setPosition(0.5, 0.5);
+        cell.setPosition(0.5, -0.5);
 
         walls.addForcesToCell(cell);
 
-        assertNetForce(0.5, 0.5, cell);
+        assertNetForce(0.5, -0.5, cell);
     }
 
     @Test
     public void testAddCollisionForcesToCell_HighXYCollision() {
-        cell.setPosition(9.5, 9.5);
+        cell.setPosition(9.5, -9.5);
 
         walls.addForcesToCell(cell);
 
-        assertNetForce(-0.5, -0.5, cell);
+        assertNetForce(-0.5, 0.5, cell);
     }
 }

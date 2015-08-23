@@ -91,8 +91,6 @@ public class TissueRingTest {
         assertEquals(0, ring.getArea(), 0);
     }
 
-    // TODO test shrinkage
-
     @Test
     public void testUpdateFromArea() {
         TestRing ring = new TestRing(1, 0);

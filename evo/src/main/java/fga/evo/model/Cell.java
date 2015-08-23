@@ -180,7 +180,7 @@ public class Cell implements CellControl.ControlApi {
      * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
      */
     public final void setPosition(final double centerX, final double centerY) {
-        assert centerX >= 0 && centerY >= 0;
+        assert centerX >= 0 && centerY <= 0;
         this.centerX = centerX;
         this.centerY = centerY;
     }
@@ -257,7 +257,7 @@ public class Cell implements CellControl.ControlApi {
     }
 
     /**
-     * Returns the force exerted on the cell if it is in collision with a wall above it (smaller y position).
+     * Returns the force exerted on the cell if it is in collision with a wall below it (smaller y position).
      *
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
@@ -268,7 +268,7 @@ public class Cell implements CellControl.ControlApi {
     }
 
     /**
-     * Returns the force exerted on the cell if it is in collision with a wall below it (larger y position).
+     * Returns the force exerted on the cell if it is in collision with a wall above it (larger y position).
      *
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision

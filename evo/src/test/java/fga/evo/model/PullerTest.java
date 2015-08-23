@@ -17,8 +17,8 @@ public class PullerTest {
 
     @Test
     public void testAddForceToCell_NoPull() {
-        cell.setPosition(5, 5);
-        puller.setPosition(5, 5);
+        cell.setPosition(5, -5);
+        puller.setPosition(5, -5);
 
         puller.addForceToCell();
 
@@ -27,18 +27,18 @@ public class PullerTest {
 
     @Test
     public void testAddForceToCell_Pull() {
-        cell.setPosition(5, 5);
-        puller.setPosition(6, 6);
+        cell.setPosition(5, -5);
+        puller.setPosition(6, -6);
 
         puller.addForceToCell();
 
-        assertNetForce(1, 1, cell);
+        assertNetForce(1, -1, cell);
     }
 
     @Test
     public void testAddForceToCell_PullForceFactor() {
-        cell.setPosition(5, 5);
-        puller.setPosition(6, 6);
+        cell.setPosition(5, -5);
+        puller.setPosition(6, -6);
 
         double defaultForceFactor = Puller.getPullForceFactor();
         try {
@@ -46,7 +46,7 @@ public class PullerTest {
 
             puller.addForceToCell();
 
-            assertNetForce(2, 2, cell);
+            assertNetForce(2, -2, cell);
         } finally {
             Puller.setPullForceFactor(defaultForceFactor);
         }

@@ -13,8 +13,7 @@ public class Buoyancy extends EnvironmentalInfluence {
     public void addForcesToCell(Cell cell) {
         double cellWeight = cell.getMass() * gravity;
         double displacedFluidWeight = fluidDensity * cell.getArea() * gravity;
-        // y increases with depth (concession to screen coordinates)
-        cell.addForce(0, cellWeight - displacedFluidWeight);
+        cell.addForce(0, displacedFluidWeight - cellWeight);
     }
 
     //=========================================================================

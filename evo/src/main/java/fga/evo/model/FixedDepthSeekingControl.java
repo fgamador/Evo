@@ -1,19 +1,23 @@
 package fga.evo.model;
 
 /**
- * A simple, hard-coded control that seeks a specified depth (y) by adjusting the size of the float ring.
+ * A simple, hard-coded control that seeks a specified depth by adjusting the size of the float ring.
  *
  * @author Franz Amador
  */
 public class FixedDepthSeekingControl implements CellControl {
-    private double y;
+    private double depth;
 
-    public FixedDepthSeekingControl(double y) {
-        this.y = y;
+    public FixedDepthSeekingControl(double depth) {
+        if (depth <= 0) {
+            throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
+        }
+
+        this.depth = depth;
     }
 
     @Override
     public void allocateEnergy(ControlApi cell) {
-        cell.requestFloatAreaResize(cell.getCenterY() - y);
+        cell.requestFloatAreaResize(-(depth + cell.getCenterY()));
     }
 }

@@ -134,20 +134,20 @@ public class CellTest_Physics {
 
     @Test
     public void testCalcLowYWallCollisionForce() {
-        cell.setPosition(0, 5);
+        cell.setPosition(0, -5);
 
-        assertEquals(0, cell.calcLowYWallCollisionForce(0), 0); // no contact
-        assertEquals(0, cell.calcLowYWallCollisionForce(4), 0); // just touching
-        assertEquals(0.5, cell.calcLowYWallCollisionForce(4.5), 0); // overlap by 0.5
+        assertEquals(0, cell.calcLowYWallCollisionForce(-10), 0); // no contact
+        assertEquals(0, cell.calcLowYWallCollisionForce(-6), 0); // just touching
+        assertEquals(0.5, cell.calcLowYWallCollisionForce(-5.5), 0); // overlap by 0.5
     }
 
     @Test
     public void testCalcHighYWallCollisionForce() {
-        cell.setPosition(0, 5);
+        cell.setPosition(0, -5);
 
-        assertEquals(0, cell.calcHighYWallCollisionForce(10), 0); // no contact
-        assertEquals(0, cell.calcHighYWallCollisionForce(6), 0); // just touching
-        assertEquals(-0.5, cell.calcHighYWallCollisionForce(5.5), 0); // overlap by 0.5
+        assertEquals(0, cell.calcHighYWallCollisionForce(0), 0); // no contact
+        assertEquals(0, cell.calcHighYWallCollisionForce(-4), 0); // just touching
+        assertEquals(-0.5, cell.calcHighYWallCollisionForce(-4.5), 0); // overlap by 0.5
     }
 
     @Test
@@ -172,7 +172,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_NotInCollision() {
-        cell2.setPosition(3, 3);
+        cell2.setPosition(3, -3);
 
         cell.addInterCellForces(cell2);
 
@@ -182,22 +182,22 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_DiagonalCollision() {
-        cell2.setPosition(1 / SQRT_2, 1 / SQRT_2);
+        cell2.setPosition(1 / SQRT_2, -1 / SQRT_2);
 
         cell.addInterCellForces(cell2);
 
-        assertNetForce(-SQRT_2 / 2, -SQRT_2 / 2, cell);
-        assertNetForce(SQRT_2 / 2, SQRT_2 / 2, cell2);
+        assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, cell);
+        assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, cell2);
     }
 
     @Test
     public void testAddInterCellForces_ReverseDiagonalCollision() {
-        cell2.setPosition(1 / SQRT_2, 1 / SQRT_2);
+        cell2.setPosition(1 / SQRT_2, -1 / SQRT_2);
 
         cell2.addInterCellForces(cell);
 
-        assertNetForce(-SQRT_2 / 2, -SQRT_2 / 2, cell);
-        assertNetForce(SQRT_2 / 2, SQRT_2 / 2, cell2);
+        assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, cell);
+        assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, cell2);
     }
 
     @Test
@@ -274,11 +274,11 @@ public class CellTest_Physics {
     @Test
     public void testAddInterCellForces_Bonded_YTension() {
         cell.addBond(cell2);
-        cell2.setPosition(0, 3);
+        cell2.setPosition(0, -3);
 
         cell.addInterCellForces(cell2);
 
-        assertNetForce(0, 1, cell);
-        assertNetForce(0, -1, cell2);
+        assertNetForce(0, -1, cell);
+        assertNetForce(0, 1, cell2);
     }
 }

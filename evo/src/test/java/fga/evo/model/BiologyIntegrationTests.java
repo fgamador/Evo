@@ -12,7 +12,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
         Cell cell = addCell(1, c -> c.requestPhotoAreaResize(1000));
-        cell.setPosition(5, 5);
+        cell.setPosition(5, -5);
 
         world.tick();
 
@@ -26,22 +26,22 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
         cell.addEnergy(100);
 
-        cell.setPosition(100, 100);
+        cell.setPosition(100, -100);
         world.tick();
 
         assertEquals(0, cell.getVelocityY(), 0.01);
 
-        cell.setPosition(100, 101);
+        cell.setPosition(100, -101);
         world.tick();
 
         double velocityY_101 = cell.getVelocityY();
-        assertTrue(velocityY_101 < 0);
+        assertTrue(velocityY_101 > 0);
 
-        cell.setPosition(100, 102);
+        cell.setPosition(100, -102);
         world.tick();
 
         double velocityY_102 = cell.getVelocityY();
-        assertTrue(velocityY_102 < velocityY_101);
+        assertTrue(velocityY_102 > velocityY_101);
     }
 
     @Test
@@ -50,21 +50,21 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
         cell.addEnergy(100);
 
-        cell.setPosition(100, 100);
+        cell.setPosition(100, -100);
         world.tick();
 
         assertEquals(0, cell.getVelocityY(), 0.01);
 
-        cell.setPosition(100, 99);
+        cell.setPosition(100, -99);
         world.tick();
 
         double velocityY_99 = cell.getVelocityY();
-        assertTrue(velocityY_99 > 0);
+        assertTrue(velocityY_99 < 0);
 
-        cell.setPosition(100, 98);
+        cell.setPosition(100, -98);
         world.tick();
 
         double velocityY_98 = cell.getVelocityY();
-        assertTrue(velocityY_98 > velocityY_99);
+        assertTrue(velocityY_98 < velocityY_99);
     }
 }

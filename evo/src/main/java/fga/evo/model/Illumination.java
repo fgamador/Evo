@@ -8,10 +8,14 @@ package fga.evo.model;
 public class Illumination extends EnvironmentalInfluence {
     private static double MAX_INTENSITY = 2;
 
-    private double height;
+    private double depth;
 
-    public Illumination(final double height) {
-        this.height = height;
+    public Illumination(final double depth) {
+        if (depth <= 0) {
+            throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
+        }
+
+        this.depth = depth;
     }
 
     @Override
@@ -20,7 +24,8 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     public final double calcLightIntensity(double y) {
-        return MAX_INTENSITY * (height - y) / height;
+        assert y <= 0 : y;
+        return MAX_INTENSITY * (depth + y) / depth;
     }
 
     //=========================================================================

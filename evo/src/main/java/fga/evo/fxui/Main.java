@@ -77,7 +77,7 @@ public class Main extends Application {
 
     private void populate() {
         Cell cell = new Cell(10, new FixedDepthSeekingControl(100));
-        cell.setPosition(250, 100);
+        cell.setPosition(250, -100);
         world.addCell(cell);
 
 //        ControlApi cell2 = new ControlApi(10);
@@ -144,7 +144,7 @@ public class Main extends Application {
 
     private void onCellPressed(CellCircle cellCircle, MouseEvent e) {
         world.startPull(cellCircle.getCell());
-        world.setPullPoint(e.getSceneX(), e.getSceneY());
+        world.setPullPoint(e.getSceneX(), -e.getSceneY());
 //        if (pulledCellCircle != selectedCellCircle) {
 //            onCellClicked(cellCircle);
 //        }
@@ -152,7 +152,7 @@ public class Main extends Application {
 
     private void onMouseDragged(MouseEvent e) {
         if (world.isPulling()) {
-            world.setPullPoint(e.getSceneX(), e.getSceneY());
+            world.setPullPoint(e.getSceneX(), -e.getSceneY());
         }
     }
 

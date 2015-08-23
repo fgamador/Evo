@@ -34,12 +34,12 @@ public class CellCircle extends Group {
         getChildren().add(floatRingCircle);
 
         setTranslateX(cell.getCenterX());
-        setTranslateY(cell.getCenterY());
+        setTranslateY(-cell.getCenterY());
     }
 
     void update() {
         setTranslateX(cell.getCenterX());
-        setTranslateY(cell.getCenterY());
+        setTranslateY(-cell.getCenterY());
 
         photoRingCircle.setRadius(cell.getPhotoRingOuterRadius());
         floatRingCircle.setRadius(cell.getFloatRingOuterRadius());
