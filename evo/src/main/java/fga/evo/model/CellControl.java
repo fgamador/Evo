@@ -10,7 +10,7 @@ public interface CellControl {
     interface ControlApi {
         double getRadius();
         double getArea();
-        //double getCenterX(); TODO how would it sense this?
+        // No getCenterX(). No way for cell to sense this.
         double getCenterY();
         double getVelocityX();
         double getVelocityY();
@@ -19,7 +19,7 @@ public interface CellControl {
         double getFloatArea();
         double getPhotoArea();
 
-        void requestFloatAreaResize(double deltaArea);
-        void requestPhotoAreaResize(double deltaArea);
+        void requestFloatAreaResize(double area);
+        void requestPhotoAreaResize(double area);
     }
 }

@@ -29,16 +29,16 @@ public class TissueRingTest {
 
         ring.requestResize(5);
 
-        assertEquals(5 * TestRing.parameters.getGrowthCost(), ring.getRequestedEnergy(), 0);
+        assertEquals((5 - Math.PI) * TestRing.parameters.getGrowthCost(), ring.getRequestedEnergy(), 0);
     }
 
     @Test
     public void testRequestResize_Shrinkage() {
         TestRing ring = new TestRing(1, 0);
 
-        ring.requestResize(-2);
+        ring.requestResize(2);
 
-        assertEquals(-2 * TestRing.parameters.getShrinkageYield(), ring.getRequestedEnergy(), 0);
+        assertEquals((2 - Math.PI) * TestRing.parameters.getShrinkageYield(), ring.getRequestedEnergy(), 0);
     }
 
     @Test
@@ -53,11 +53,11 @@ public class TissueRingTest {
     @Test
     public void testScaleResizeRequest() {
         TestRing ring = new TestRing(1, 0);
-        ring.requestResize(10);
+        ring.requestResize(100);
 
-        ring.scaleResizeRequest(0.5);
+        ring.scaleResizeRequest(0.1);
 
-        assertEquals(5 * TestRing.parameters.getGrowthCost(), ring.getRequestedEnergy(), 0);
+        assertEquals(0.1 * (100 - Math.PI) * TestRing.parameters.getGrowthCost(), ring.getRequestedEnergy(), 0);
     }
 
     @Test
@@ -67,18 +67,27 @@ public class TissueRingTest {
 
         ring.resize();
 
-        assertEquals(Math.PI + 5, ring.getArea(), 0);
+        assertEquals(5, ring.getArea(), 0);
     }
 
     @Test
-    public void testResize_ClearRequest() {
+    public void testResize_NoRequest() {
+        TestRing ring = new TestRing(1, 0);
+
+        ring.resize();
+
+        assertEquals(Math.PI, ring.getArea(), 0);
+    }
+
+    @Test
+    public void testResize_RetainRequest() {
         TestRing ring = new TestRing(1, 0);
         ring.requestResize(5);
         ring.resize();
 
         ring.resize();
 
-        assertEquals(Math.PI + 5, ring.getArea(), 0);
+        assertEquals(5, ring.getArea(), 0);
     }
 
     @Test
@@ -94,7 +103,7 @@ public class TissueRingTest {
     @Test
     public void testUpdateFromArea() {
         TestRing ring = new TestRing(1, 0);
-        ring.requestResize(3 * Math.PI);
+        ring.requestResize(4 * Math.PI);
         ring.resize();
 
         ring.updateFromArea(0);
@@ -107,7 +116,7 @@ public class TissueRingTest {
     public void testUpdateFromAreaAsOuterRing() {
         TestRing innerRing = new TestRing(1, 0);
         TestRing ring = new TestRing(2, innerRing.getArea());
-        ring.requestResize(5 * Math.PI);
+        ring.requestResize(8 * Math.PI);
         ring.resize();
 
         ring.updateFromArea(innerRing.getOuterRadius());

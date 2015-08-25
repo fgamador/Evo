@@ -139,21 +139,21 @@ public class Cell implements CellControl.ControlApi {
     }
 
     /**
-     * Records a request that the cell's float-ring area change by a specified (additive) amount.
+     * Records a request that the cell's float-ring area change to a specified value.
      *
-     * @param deltaArea the amount to add to the current area (negative shrinks the area)
+     * @param area the desired new area
      */
-    public void requestFloatAreaResize(double deltaArea) {
-        floatRing.requestResize(deltaArea);
+    public void requestFloatAreaResize(double area) {
+        floatRing.requestResize(area);
     }
 
     /**
-     * Records a request that the cell's photo-ring area change by a specified (additive) amount.
+     * Records a request that the cell's photo-ring area change to a specified value.
      *
-     * @param deltaArea the amount to add to the current area (negatives shrinks the area)
+     * @param area the desired new area
      */
-    public void requestPhotoAreaResize(double deltaArea) {
-        photoRing.requestResize(deltaArea);
+    public void requestPhotoAreaResize(double area) {
+        photoRing.requestResize(area);
     }
 
     public double getFloatRingOuterRadius() {

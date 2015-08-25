@@ -18,10 +18,10 @@ public class FixedDepthSeekingControl implements CellControl {
 
     @Override
     public void allocateEnergy(ControlApi cell) {
-        double depthBuoyancyDelta = Math.min(-(depth + cell.getCenterY()), 5);
-        double velocityBuoyancyDelta = -cell.getVelocityY();
-        // TODO need to request absolute area, not delta
-        cell.requestFloatAreaResize(depthBuoyancyDelta + 10 * velocityBuoyancyDelta);
+//        double depthBuoyancyDelta = Math.min(-(depth + cell.getCenterY()), 5);
+//        double velocityBuoyancyDelta = -cell.getVelocityY();
+//        cell.requestFloatAreaResize(depthBuoyancyDelta + 10 * velocityBuoyancyDelta);
+        cell.requestFloatAreaResize(-(depth + cell.getCenterY()));
     }
 
     // http://stackoverflow.com/questions/2887815/speeding-up-math-calculations-in-java

@@ -39,7 +39,7 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_PhotoRingGrowth() {
-        Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(2));
+        Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(Math.PI + 2));
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
         cell.addEnergy(100);
 
@@ -51,7 +51,7 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_PhotoRingShrinkage() {
-        Cell cell = new Cell(2, c -> c.requestPhotoAreaResize(-Math.PI));
+        Cell cell = new Cell(2, c -> c.requestPhotoAreaResize(3 * Math.PI));
         assertEquals(4 * Math.PI, cell.getPhotoArea(), 0);
 
         cell.useEnergy();
@@ -76,7 +76,7 @@ public class CellTest_Biology {
     public void testUseEnergy_FloatAndPhotoRingGrowth() {
         Cell cell = new Cell(1, c -> {
             c.requestFloatAreaResize(3);
-            c.requestPhotoAreaResize(2);
+            c.requestPhotoAreaResize(Math.PI + 2);
         });
         assertEquals(0, cell.getFloatArea(), 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
@@ -94,7 +94,7 @@ public class CellTest_Biology {
     public void testUseEnergy_OffsettingRequests() {
         Cell cell = new Cell(1, c -> {
             c.requestFloatAreaResize(2);
-            c.requestPhotoAreaResize(-2);
+            c.requestPhotoAreaResize(Math.PI - 2);
         });
         assertEquals(0, cell.getFloatArea(), 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
@@ -131,7 +131,7 @@ public class CellTest_Biology {
     public void testUseEnergy_FloatRingGrowth2() {
         Cell cell = new Cell(1, c -> c.requestFloatAreaResize(1000)); // use all energy
         double oldPhotoRingArea = cell.getPhotoArea();
-//        double oldPhotoRingMass = cell.getPhotoRing().getMass();
+//        double oldPhotoRingMass = cell.getPhotoRingMass();
         cell.addEnergy(1);
 
         cell.useEnergy();
@@ -145,9 +145,9 @@ public class CellTest_Biology {
         assertTrue(cell.getPhotoRingOuterRadius() > cell.getFloatRingOuterRadius());
         assertEquals(cell.getPhotoRingOuterRadius(), cell.getRadius(), 0);
 
-//        assertTrue(cell.getFloatRing().getMass() > 0);
-//        assertEquals(oldPhotoRingMass, cell.getPhotoRing().getMass(), 0);
-//        assertEquals(cell.getFloatRing().getMass() + cell.getPhotoRing().getMass(), cell.getMass(), 0.00001);
+//        assertTrue(cell.getFloatRingMass() > 0);
+//        assertEquals(oldPhotoRingMass, cell.getPhotoRingMass(), 0);
+//        assertEquals(cell.getFloatRingMass() + cell.getPhotoRingMass(), cell.getMass(), 0.00001);
 
         assertEquals(cell.getFloatArea() * FloatRing.parameters.getTissueDensity()
                         + cell.getPhotoArea() * PhotoRing.parameters.getTissueDensity(),
