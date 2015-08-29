@@ -12,8 +12,20 @@ public class Buoyancy extends EnvironmentalInfluence {
     @Override
     public void addForcesToCell(Cell cell) {
         double cellWeight = cell.getMass() * gravity;
-        double displacedFluidWeight = fluidDensity * cell.getArea() * gravity;
+        double displacedFluidWeight = fluidDensity * getDisplacement(cell) * gravity;
         cell.addForce(0, displacedFluidWeight - cellWeight);
+    }
+
+    private double getDisplacement(Cell cell) {
+        if (cell.getCenterY() <= -cell.getRadius()) {
+            return cell.getArea();
+        } else if (cell.getCenterY() > cell.getRadius()) {
+            return 0;
+        } else {
+            double fractionSubmerged = (cell.getRadius() - cell.getCenterY()) / (2 * cell.getRadius());
+            // TODO use the real equation?
+            return fractionSubmerged * cell.getArea(); // linear approximation
+        }
     }
 
     //=========================================================================

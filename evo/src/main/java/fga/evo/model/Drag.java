@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import static fga.evo.model.Util.sqr;
+
 /**
  * Drag caused by the fluid medium in which the cells live.
  *
@@ -10,10 +12,11 @@ public class Drag extends EnvironmentalInfluence {
 
     @Override
     public void addForcesToCell(final Cell cell) {
+        // TODO if the cell is not wholly submerged, drag will be reduced, but it depends on what direction the cell is moving
         double dragX = -Math.signum(cell.getVelocityX()) * dragFactor * cell.getRadius()
-                * sqr(cell.getVelocityX());
+            * sqr(cell.getVelocityX());
         double dragY = -Math.signum(cell.getVelocityY()) * dragFactor * cell.getRadius()
-                * sqr(cell.getVelocityY());
+            * sqr(cell.getVelocityY());
         cell.addForce(dragX, dragY);
     }
 
@@ -41,10 +44,6 @@ public class Drag extends EnvironmentalInfluence {
 //    final double getCurrentY(double x, double y) {
 //        return -Math.sin(2 * Math.PI * x / width) * Math.sin(Math.PI * y / height);
 //    }
-
-    private static double sqr(final double value) {
-        return value * value;
-    }
 
     //=========================================================================
     // Parameters

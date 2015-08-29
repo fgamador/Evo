@@ -24,8 +24,7 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     public final double calcLightIntensity(double y) {
-        assert y <= 0 : y;
-        return MAX_INTENSITY * (depth + y) / depth;
+        return (y >= 0) ? MAX_INTENSITY : MAX_INTENSITY * (depth + y) / depth;
     }
 
     //=========================================================================

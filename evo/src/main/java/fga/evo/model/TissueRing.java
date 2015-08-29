@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import static fga.evo.model.Util.sqr;
+
 /**
  * Base class for the cell's rings of tissue.
  */
@@ -75,10 +77,6 @@ public abstract class TissueRing {
 
     public final double getMass() {
         return mass;
-    }
-
-    protected static double sqr(double val) {
-        return val * val;
     }
 
     public static class Parameters {

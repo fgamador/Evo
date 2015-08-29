@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static fga.evo.model.Util.sqr;
+
 /**
  * The basic living unit in evo. A circular entity that can move and grow and reproduce.
  * Cells can also bond together to form larger organisms.
@@ -180,7 +182,7 @@ public class Cell implements CellControl.ControlApi {
      * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
      */
     public final void setPosition(final double centerX, final double centerY) {
-        assert centerX >= 0 && centerY <= 0;
+        assert centerX >= 0;
         this.centerX = centerX;
         this.centerY = centerY;
     }
@@ -391,11 +393,6 @@ public class Cell implements CellControl.ControlApi {
 
     public final double getNetForceY() {
         return netForceY;
-    }
-
-    // TODO move to Util
-    public static double sqr(double val) {
-        return val * val;
     }
 
     //=========================================================================

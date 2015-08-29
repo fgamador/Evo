@@ -17,6 +17,7 @@ public class IlluminationTest {
 
     @Test
     public void testCalcLightIntensity() {
+        assertEquals(2, lighting.calcLightIntensity(50), 0);
         assertEquals(2, lighting.calcLightIntensity(0), 0);
         assertEquals(1, lighting.calcLightIntensity(-50), 0);
         assertEquals(0, lighting.calcLightIntensity(-100), 0);
