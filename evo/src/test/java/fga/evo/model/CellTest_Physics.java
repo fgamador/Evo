@@ -118,36 +118,36 @@ public class CellTest_Physics {
     public void testCalcLowXWallCollisionForce() {
         cell.setPosition(5, 0);
 
-        assertEquals(0, cell.calcLowXWallCollisionForce(0), 0); // no contact
-        assertEquals(0, cell.calcLowXWallCollisionForce(4), 0); // just touching
-        assertEquals(0.5, cell.calcLowXWallCollisionForce(4.5), 0); // overlap by 0.5
+        assertEquals(0, cell.calcMinXWallCollisionForce(0), 0); // no contact
+        assertEquals(0, cell.calcMinXWallCollisionForce(4), 0); // just touching
+        assertEquals(0.5, cell.calcMinXWallCollisionForce(4.5), 0); // overlap by 0.5
     }
 
     @Test
     public void testCalcHighXWallCollisionForce() {
         cell.setPosition(5, 0);
 
-        assertEquals(0, cell.calcHighXWallCollisionForce(10), 0); // no contact
-        assertEquals(0, cell.calcHighXWallCollisionForce(6), 0); // just touching
-        assertEquals(-0.5, cell.calcHighXWallCollisionForce(5.5), 0); // overlap by 0.5
+        assertEquals(0, cell.calcMaxXWallCollisionForce(10), 0); // no contact
+        assertEquals(0, cell.calcMaxXWallCollisionForce(6), 0); // just touching
+        assertEquals(-0.5, cell.calcMaxXWallCollisionForce(5.5), 0); // overlap by 0.5
     }
 
     @Test
     public void testCalcLowYWallCollisionForce() {
         cell.setPosition(0, -5);
 
-        assertEquals(0, cell.calcLowYWallCollisionForce(-10), 0); // no contact
-        assertEquals(0, cell.calcLowYWallCollisionForce(-6), 0); // just touching
-        assertEquals(0.5, cell.calcLowYWallCollisionForce(-5.5), 0); // overlap by 0.5
+        assertEquals(0, cell.calcMinYWallCollisionForce(-10), 0); // no contact
+        assertEquals(0, cell.calcMinYWallCollisionForce(-6), 0); // just touching
+        assertEquals(0.5, cell.calcMinYWallCollisionForce(-5.5), 0); // overlap by 0.5
     }
 
     @Test
     public void testCalcHighYWallCollisionForce() {
         cell.setPosition(0, -5);
 
-        assertEquals(0, cell.calcHighYWallCollisionForce(0), 0); // no contact
-        assertEquals(0, cell.calcHighYWallCollisionForce(-4), 0); // just touching
-        assertEquals(-0.5, cell.calcHighYWallCollisionForce(-4.5), 0); // overlap by 0.5
+        assertEquals(0, cell.calcMaxYWallCollisionForce(0), 0); // no contact
+        assertEquals(0, cell.calcMaxYWallCollisionForce(-4), 0); // just touching
+        assertEquals(-0.5, cell.calcMaxYWallCollisionForce(-4.5), 0); // overlap by 0.5
     }
 
     @Test

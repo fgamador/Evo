@@ -69,7 +69,7 @@ public class Main extends Application {
     }
 
     private void addInfluences() {
-        world.addEnvironmentalInfluence(new Walls(WIDTH, HEIGHT));
+        world.addEnvironmentalInfluence(new Walls(0, WIDTH, -HEIGHT, 0));
         world.addEnvironmentalInfluence(new Drag());
         world.addEnvironmentalInfluence(new Buoyancy());
         world.addEnvironmentalInfluence(new Illumination(HEIGHT));

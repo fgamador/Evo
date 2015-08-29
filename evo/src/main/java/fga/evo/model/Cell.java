@@ -242,7 +242,7 @@ public class Cell implements CellControl.ControlApi {
      * @param wallX x-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public final double calcLowXWallCollisionForce(final double wallX) {
+    public final double calcMinXWallCollisionForce(final double wallX) {
         final double overlap = radius - (centerX - wallX);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
@@ -253,7 +253,7 @@ public class Cell implements CellControl.ControlApi {
      * @param wallX x-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public final double calcHighXWallCollisionForce(final double wallX) {
+    public final double calcMaxXWallCollisionForce(final double wallX) {
         final double overlap = centerX + radius - wallX;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
@@ -264,7 +264,7 @@ public class Cell implements CellControl.ControlApi {
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public final double calcLowYWallCollisionForce(final double wallY) {
+    public final double calcMinYWallCollisionForce(final double wallY) {
         final double overlap = radius - (centerY - wallY);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
@@ -275,7 +275,7 @@ public class Cell implements CellControl.ControlApi {
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public final double calcHighYWallCollisionForce(final double wallY) {
+    public final double calcMaxYWallCollisionForce(final double wallY) {
         final double overlap = centerY + radius - wallY;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }

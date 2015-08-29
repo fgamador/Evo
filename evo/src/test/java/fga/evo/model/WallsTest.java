@@ -11,7 +11,7 @@ public class WallsTest {
 
     @Before
     public void setUp() {
-        walls = new Walls(10, 10);
+        walls = new Walls(0, 10, -10, 0);
         cell = new Cell(1);
     }
 
@@ -40,5 +40,15 @@ public class WallsTest {
         walls.addForcesToCell(cell);
 
         assertNetForce(-0.5, 0.5, cell);
+    }
+
+    @Test
+    public void testAddCollisionForcesToCell_HighCeiling() {
+        walls = new Walls(-5, 5, -5, 5);
+        cell.setPosition(0, 0);
+
+        walls.addForcesToCell(cell);
+
+        assertNetForce(0, 0, cell);
     }
 }
