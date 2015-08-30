@@ -22,8 +22,9 @@ import java.io.IOException;
  * Evo's UI application class.
  */
 public class Main extends Application {
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    public static final int WIDTH = 500;
+    public static final int AIR_HEIGHT = 50;
+    public static final int WATER_DEPTH = 500;
 
     private World world;
     private Group cellCircles;
@@ -37,13 +38,16 @@ public class Main extends Application {
         populate();
 
         Group root = new Group();
-        Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        Scene scene = new Scene(root, WIDTH, AIR_HEIGHT + WATER_DEPTH, Color.BLACK);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Evo");
 
-        Rectangle water = new Rectangle(scene.getWidth(), scene.getHeight(),
+        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT, Color.color(0.8, 0.95, 1));
+        root.getChildren().add(air);
+        Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
                 new LinearGradient(0.5, 0, 0.5, 1, true, CycleMethod.NO_CYCLE,
                         new Stop(0, Color.web("#111199")), new Stop(1, Color.BLACK)));
+        water.setY(toSceneY(0));
         root.getChildren().add(water);
 
         cellCircles = new Group();
@@ -69,15 +73,15 @@ public class Main extends Application {
     }
 
     private void addInfluences() {
-        world.addEnvironmentalInfluence(new Walls(0, WIDTH, -HEIGHT, 0));
+        world.addEnvironmentalInfluence(new Walls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
         world.addEnvironmentalInfluence(new Buoyancy());
-        world.addEnvironmentalInfluence(new Illumination(HEIGHT));
+        world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));
     }
 
     private void populate() {
         Cell cell = new Cell(10, new FixedDepthSeekingControl(100));
-        cell.setPosition(250, -100);
+        cell.setPosition(WIDTH / 2, -100);
         world.addCell(cell);
 
 //        ControlApi cell2 = new ControlApi(10);
@@ -144,7 +148,7 @@ public class Main extends Application {
 
     private void onCellPressed(CellCircle cellCircle, MouseEvent e) {
         world.startPull(cellCircle.getCell());
-        world.setPullPoint(e.getSceneX(), -e.getSceneY());
+        world.setPullPoint(toWorldX(e.getSceneX()), toWorldY(e.getSceneY()));
 //        if (pulledCellCircle != selectedCellCircle) {
 //            onCellClicked(cellCircle);
 //        }
@@ -152,7 +156,7 @@ public class Main extends Application {
 
     private void onMouseDragged(MouseEvent e) {
         if (world.isPulling()) {
-            world.setPullPoint(e.getSceneX(), -e.getSceneY());
+            world.setPullPoint(toWorldX(e.getSceneX()), toWorldY(e.getSceneY()));
         }
     }
 
@@ -175,6 +179,22 @@ public class Main extends Application {
 //    void resume() {
 //        timeline.play();
 //    }
+
+    public static double toSceneX(final double worldX) {
+        return worldX;
+    }
+
+    public static double toWorldX(final double sceneX) {
+        return sceneX;
+    }
+
+    public static double toSceneY(final double worldY) {
+        return AIR_HEIGHT - worldY;
+    }
+
+    public static double toWorldY(final double sceneY) {
+        return AIR_HEIGHT - sceneY;
+    }
 
     // -- main --
 

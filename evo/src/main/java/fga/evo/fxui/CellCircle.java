@@ -33,13 +33,11 @@ public class CellCircle extends Group {
         floatRingCircle = new Circle(cell.getFloatRingOuterRadius(), floatCircleColor);
         getChildren().add(floatRingCircle);
 
-        setTranslateX(cell.getCenterX());
-        setTranslateY(-cell.getCenterY());
+        setPosition(cell);
     }
 
     void update() {
-        setTranslateX(cell.getCenterX());
-        setTranslateY(-cell.getCenterY());
+        setPosition(cell);
 
         photoRingCircle.setRadius(cell.getPhotoRingOuterRadius());
         floatRingCircle.setRadius(cell.getFloatRingOuterRadius());
@@ -61,6 +59,11 @@ public class CellCircle extends Group {
 //        }
     }
 
+    private void setPosition(Cell cell) {
+        setTranslateX(Main.toSceneX(cell.getCenterX()));
+        setTranslateY(Main.toSceneY(cell.getCenterY()));
+    }
+
     Cell getCell() {
         return cell;
     }
@@ -80,4 +83,3 @@ public class CellCircle extends Group {
 //        }
 //    }
 }
-
