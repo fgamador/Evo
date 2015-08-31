@@ -22,7 +22,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testBuoyancyControl_Deeper() {
-        world.addEnvironmentalInfluence(new Buoyancy());
+        world.addEnvironmentalInfluence(new Weight());
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
         cell.addEnergy(100);
 
@@ -46,7 +46,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testBuoyancyControl_Shallower() {
-        world.addEnvironmentalInfluence(new Buoyancy());
+        world.addEnvironmentalInfluence(new Weight());
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
         cell.addEnergy(100);
 

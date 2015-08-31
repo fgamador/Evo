@@ -42,6 +42,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Evo");
 
+        // TODO gradient from sky blue down to whitish blue
         Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT, Color.color(0.8, 0.95, 1));
         root.getChildren().add(air);
         Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
@@ -75,7 +76,7 @@ public class Main extends Application {
     private void addInfluences() {
         world.addEnvironmentalInfluence(new Walls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
-        world.addEnvironmentalInfluence(new Buoyancy());
+        world.addEnvironmentalInfluence(new Weight());
         world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));
     }
 

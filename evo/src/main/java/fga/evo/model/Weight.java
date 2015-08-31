@@ -1,11 +1,11 @@
 package fga.evo.model;
 
 /**
- * Buoyancy of the cells in their fluid medium.
+ * The general effects of gravity, including cell weight and buoyancy.
  *
  * @author Franz Amador
  */
-public class Buoyancy extends EnvironmentalInfluence {
+public class Weight extends EnvironmentalInfluence {
     private static double gravity = 0.1; // acceleration
     private static double fluidDensity = 0.01; // mass per area
 

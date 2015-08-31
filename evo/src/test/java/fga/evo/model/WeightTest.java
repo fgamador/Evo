@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 
-public class BuoyancyTest {
-    private Buoyancy buoyancy;
+public class WeightTest {
+    private Weight weight;
     private Cell cell;
     private double maxDisplacement;
 
     @Before
     public void setUp() {
-        buoyancy = new Buoyancy();
+        weight = new Weight();
         cell = new Cell(10);
         cell.setPosition(0, -100);
         maxDisplacement = cell.getArea();
@@ -23,10 +23,10 @@ public class BuoyancyTest {
     public void testNeutralBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Buoyancy.getFluidDensity() * maxDisplacement;
+            result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
-        buoyancy.addForcesToCell(cell);
+        weight.addForcesToCell(cell);
 
         assertNetForce(0, 0, cell);
     }
@@ -38,32 +38,32 @@ public class BuoyancyTest {
             result = 0;
         }};
 
-        buoyancy.addForcesToCell(cell);
+        weight.addForcesToCell(cell);
 
-        assertNetForce(0, Buoyancy.getGravity() * Math.PI, cell);
+        assertNetForce(0, Weight.getGravity() * Math.PI, cell);
     }
 
     @Test
     public void testSinking() {
         new Expectations(cell) {{
             cell.getMass();
-            result = 2 * Buoyancy.getFluidDensity() * maxDisplacement;
+            result = 2 * Weight.getFluidDensity() * maxDisplacement;
         }};
 
-        buoyancy.addForcesToCell(cell);
+        weight.addForcesToCell(cell);
 
-        assertNetForce(0, -Buoyancy.getGravity() * Math.PI, cell);
+        assertNetForce(0, -Weight.getGravity() * Math.PI, cell);
     }
 
     @Test
     public void testBarelySubmergedBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Buoyancy.getFluidDensity() * maxDisplacement;
+            result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
         cell.setPosition(0, -cell.getRadius());
-        buoyancy.addForcesToCell(cell);
+        weight.addForcesToCell(cell);
 
         assertNetForce(0, 0, cell);
     }
@@ -72,25 +72,25 @@ public class BuoyancyTest {
     public void testFullyEmergedBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Buoyancy.getFluidDensity() * maxDisplacement;
+            result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
         cell.setPosition(0, cell.getRadius());
-        buoyancy.addForcesToCell(cell);
+        weight.addForcesToCell(cell);
 
-        assertNetForce(0, -cell.getMass() * Buoyancy.getGravity(), cell);
+        assertNetForce(0, -cell.getMass() * Weight.getGravity(), cell);
     }
 
     @Test
     public void testHalfEmergedBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Buoyancy.getFluidDensity() * maxDisplacement;
+            result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
         cell.setPosition(0, 0);
-        buoyancy.addForcesToCell(cell);
+        weight.addForcesToCell(cell);
 
-        assertNetForce(0, -cell.getMass() * Buoyancy.getGravity() / 2, cell);
+        assertNetForce(0, -cell.getMass() * Weight.getGravity() / 2, cell);
     }
 }
