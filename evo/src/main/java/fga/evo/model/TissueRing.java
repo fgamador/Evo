@@ -11,13 +11,12 @@ public abstract class TissueRing {
     protected double outerRadius;
     protected double area;
     protected double mass;
-    private double requestedArea;
+    private double requestedDeltaArea;
 
     protected TissueRing(Parameters parameters, double outerRadius, double innerArea) {
         this.parameters = parameters;
         this.outerRadius = outerRadius;
         updateFromOuterRadius(innerArea);
-        requestedArea = area;
     }
 
     // New thinkings:
@@ -31,26 +30,30 @@ public abstract class TissueRing {
     // 3) Do all the growth, scaled as necessary per the available energy.
 
     /**
-     * Records a request that the ring's area change to a specified value.
+     * Records a request that the ring's area grow or shrink using a specified amount of energy.
      *
-     * @param area the desired new area
+     * @param growthEnergy the amount of energy available for growth; negative to shrink
      */
-    public void requestResize(double area) {
-        requestedArea = Math.max(area, 0);
+    public void requestResize(double growthEnergy) {
+        if (growthEnergy >= 0) {
+            requestedDeltaArea = growthEnergy / parameters.getGrowthCost();
+        } else {
+            requestedDeltaArea = Math.max(-area, growthEnergy / parameters.getShrinkageYield());
+        }
     }
 
     public double getRequestedEnergy() {
-        double requestedDeltaArea = requestedArea - area;
         return requestedDeltaArea *
                 ((requestedDeltaArea >= 0) ? parameters.getGrowthCost() : parameters.getShrinkageYield());
     }
 
     public void scaleResizeRequest(double ratio) {
-        requestedArea = area + ratio * (requestedArea - area);
+        requestedDeltaArea *= ratio;
     }
 
     public void resize() {
-        area = requestedArea;
+        area += requestedDeltaArea;
+        requestedDeltaArea = 0;
     }
 
     public final double getMaintenanceEnergy() {

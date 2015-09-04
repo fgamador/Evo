@@ -3,6 +3,7 @@ package fga.evo.model;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
+import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -27,37 +28,42 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_FloatRingGrowth() {
-        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(2));
+        final double growthEnergy = 2;
+        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(growthEnergy));
         assertEquals(0, cell.getFloatArea(), 0);
         cell.addEnergy(100);
 
         cell.useEnergy();
 
-        assertEquals(2, cell.getFloatArea(), 0);
-        assertEquals(100 - 2 * FloatRing.parameters.getGrowthCost(), cell.getEnergy(), 0);
+        assertEquals(growthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
+        assertEquals(100 - growthEnergy, cell.getEnergy(), 0);
     }
 
     @Test
     public void testUseEnergy_PhotoRingGrowth() {
-        Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(Math.PI + 2));
+        final double growthEnergy = 2;
+        Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(growthEnergy));
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
         cell.addEnergy(100);
 
         cell.useEnergy();
 
-        assertEquals(Math.PI + 2, cell.getPhotoArea(), 0);
-        assertEquals(100 - 2 * PhotoRing.parameters.getGrowthCost(), cell.getEnergy(), 0);
+        assertEquals(Math.PI + growthEnergy / PhotoRing.parameters.getGrowthCost(), cell.getPhotoArea(), 0);
+        assertEquals(100 - growthEnergy, cell.getEnergy(), 0);
     }
 
     @Test
     public void testUseEnergy_PhotoRingShrinkage() {
-        Cell cell = new Cell(2, c -> c.requestPhotoAreaResize(3 * Math.PI));
-        assertEquals(4 * Math.PI, cell.getPhotoArea(), 0);
+        final double radius = 2;
+        final double shrinkageEnergy = 0.1;
+        Cell cell = new Cell(radius, c -> c.requestPhotoAreaResize(-shrinkageEnergy));
+        final double area = Math.PI * sqr(radius);
+        assertEquals(area, cell.getPhotoArea(), 0);
 
         cell.useEnergy();
 
-        assertEquals(3 * Math.PI, cell.getPhotoArea(), 0);
-        assertEquals(Math.PI * PhotoRing.parameters.getShrinkageYield(), cell.getEnergy(), 0);
+        assertEquals(area - shrinkageEnergy / PhotoRing.parameters.getShrinkageYield(), cell.getPhotoArea(), 0);
+        assertEquals(shrinkageEnergy, cell.getEnergy(), 0);
     }
 
     @Test
@@ -74,9 +80,11 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_FloatAndPhotoRingGrowth() {
+        final double floatGrowthEnergy = 3;
+        final double photoGrowthEnergy = 2;
         Cell cell = new Cell(1, c -> {
-            c.requestFloatAreaResize(3);
-            c.requestPhotoAreaResize(Math.PI + 2);
+            c.requestFloatAreaResize(floatGrowthEnergy);
+            c.requestPhotoAreaResize(photoGrowthEnergy);
         });
         assertEquals(0, cell.getFloatArea(), 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
@@ -84,27 +92,27 @@ public class CellTest_Biology {
 
         cell.useEnergy();
 
-        assertEquals(3, cell.getFloatArea(), 0);
-        assertEquals(Math.PI + 2, cell.getPhotoArea(), 0);
-        assertEquals(100 - 3 * FloatRing.parameters.getGrowthCost() - 2 * PhotoRing.parameters.getGrowthCost(),
-                cell.getEnergy(), 0);
+        assertEquals(floatGrowthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
+        assertEquals(Math.PI + photoGrowthEnergy / PhotoRing.parameters.getGrowthCost(), cell.getPhotoArea(), 0);
+        assertEquals(100 - (floatGrowthEnergy + photoGrowthEnergy), cell.getEnergy(), 0);
     }
 
     @Test
     public void testUseEnergy_OffsettingRequests() {
+        final double floatGrowthEnergy = 0.1;
+        final double photoShrinkageEnergy = 0.1;
         Cell cell = new Cell(1, c -> {
-            c.requestFloatAreaResize(2);
-            c.requestPhotoAreaResize(Math.PI - 2);
+            c.requestFloatAreaResize(floatGrowthEnergy);
+            c.requestPhotoAreaResize(-photoShrinkageEnergy);
         });
         assertEquals(0, cell.getFloatArea(), 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
 
         cell.useEnergy();
 
-        assertEquals(2, cell.getFloatArea(), 0);
-        assertEquals(Math.PI - 2, cell.getPhotoArea(), 0);
-        assertEquals(2 * PhotoRing.parameters.getShrinkageYield() - 2 * FloatRing.parameters.getGrowthCost(),
-                cell.getEnergy(), 0);
+        assertEquals(floatGrowthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
+        assertEquals(Math.PI - photoShrinkageEnergy / PhotoRing.parameters.getShrinkageYield(), cell.getPhotoArea(), 0);
+        assertEquals(floatGrowthEnergy - photoShrinkageEnergy, cell.getEnergy(), 0);
     }
 
     // TODO is this useful? need to work out the numbers

@@ -19,7 +19,7 @@ public interface CellControl {
         double getFloatArea();
         double getPhotoArea();
 
-        void requestFloatAreaResize(double area);
-        void requestPhotoAreaResize(double area);
+        void requestFloatAreaResize(double growthEnergy);
+        void requestPhotoAreaResize(double growthEnergy);
     }
 }
