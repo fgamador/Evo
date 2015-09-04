@@ -100,28 +100,31 @@ public class Cell implements CellControl.ControlApi {
 
         double requestedEnergy = 0;
         for (TissueRing ring : tissueRings) {
-            requestedEnergy += ring.getRequestedEnergy();
+            final double ringRequestedEnergy = ring.getRequestedEnergy();
+            if (ringRequestedEnergy > 0) {
+                requestedEnergy += ringRequestedEnergy;
+            } else {
+                energy += -ringRequestedEnergy;
+            }
         }
         if (requestedEnergy > energy) {
             for (TissueRing ring : tissueRings) {
-                ring.scaleResizeRequest(energy / requestedEnergy);
+                if (ring.getRequestedEnergy() > 0) {
+                    ring.scaleResizeRequest(energy / requestedEnergy);
+                }
             }
         }
+
         for (TissueRing ring : tissueRings) {
             ring.resize();
         }
-        if (requestedEnergy > energy) {
-            energy = 0;
-        } else {
-            energy -= requestedEnergy;
-        }
+        energy -= Math.min(requestedEnergy, energy);
 
         double innerRadius = 0;
         for (TissueRing ring : tissueRings) {
             ring.updateFromArea(innerRadius);
             innerRadius = ring.getOuterRadius();
         }
-
         updateFromRings();
     }
 

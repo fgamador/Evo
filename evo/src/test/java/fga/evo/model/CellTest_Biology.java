@@ -112,28 +112,29 @@ public class CellTest_Biology {
 
         assertEquals(floatGrowthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
         assertEquals(Math.PI - photoShrinkageEnergy / PhotoRing.parameters.getShrinkageYield(), cell.getPhotoArea(), 0);
-        assertEquals(floatGrowthEnergy - photoShrinkageEnergy, cell.getEnergy(), 0);
+        assertEquals(0, cell.getEnergy(), 0);
     }
 
-    // TODO is this useful? need to work out the numbers
-//    @Test
-//    public void testUseEnergy_FloatAndPhotoRingGrowth_ExcessiveRequest() {
-//        ControlApi cell = new ControlApi(1, c -> { // use all energy
-//            c.requestFloatAreaResize(1000);
-//            c.requestPhotoAreaResize(1000);
-//        });
-//        assertEquals(0, cell.getFloatArea(), 0);
-//        assertEquals(Math.PI, cell.getPhotoArea(), 0);
-//        cell.addEnergy(2);
-//
-//        cell.useEnergy();
-//
-//        assertEquals(1 / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
-//        assertEquals(Math.PI + 1 / PhotoRing.parameters.getGrowthCost(), cell.getPhotoArea(), 0);
-//        assertEnergy(0, cell);
-//    }
+    @Test
+    public void testUseEnergy_ScaledOffsettingRequests() {
+        final double floatGrowthEnergy = 2;
+        final double photoShrinkageEnergy = 0.1;
+        final double availableEnergy = 1;
+        Cell cell = new Cell(1, c -> {
+            c.requestFloatAreaResize(floatGrowthEnergy);
+            c.requestPhotoAreaResize(-photoShrinkageEnergy);
+        });
+        assertEquals(0, cell.getFloatArea(), 0);
+        assertEquals(Math.PI, cell.getPhotoArea(), 0);
+        cell.addEnergy(availableEnergy);
 
-    // TODO test shrinkage
+        cell.useEnergy();
+
+        final double scaledFloatGrowthEnergy = availableEnergy + photoShrinkageEnergy;
+        assertEquals(scaledFloatGrowthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0.00001);
+        assertEquals(Math.PI - photoShrinkageEnergy / PhotoRing.parameters.getShrinkageYield(), cell.getPhotoArea(), 0);
+        assertEquals(0, cell.getEnergy(), 0);
+    }
 
     @Test
     public void testUseEnergy_FloatRingGrowth2() {
