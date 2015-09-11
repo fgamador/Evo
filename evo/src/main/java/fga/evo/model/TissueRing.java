@@ -19,16 +19,6 @@ public abstract class TissueRing {
         updateFromOuterRadius(innerArea);
     }
 
-    // New thinkings:
-    //    double getGrowthCost(double growthFraction)
-    //    void grow(double growthFraction)
-    //    double shrink(double shrinkageFraction)
-    // The neural net decides to grow some rings and shrink some rings by some fraction.
-    // The control handles this as follows:
-    // 1) Do all the shrinkage and add the returned energy to the pot.
-    // 2) Ask about the total cost of all the growth.
-    // 3) Do all the growth, scaled as necessary per the available energy.
-
     /**
      * Records a request that the ring's area grow or shrink using a specified amount of energy.
      *
@@ -36,7 +26,8 @@ public abstract class TissueRing {
      */
     public void requestResize(double growthEnergy) {
         if (growthEnergy >= 0) {
-            requestedDeltaArea = growthEnergy / parameters.getGrowthCost();
+            final double maxDeltaArea = Math.max(area, 1) * parameters.getMaxGrowthRate();
+            requestedDeltaArea = Math.min(growthEnergy / parameters.getGrowthCost(), maxDeltaArea);
         } else {
             requestedDeltaArea = Math.max(-area, growthEnergy / parameters.getShrinkageYield());
         }
@@ -87,6 +78,7 @@ public abstract class TissueRing {
         private double growthCost; // energy per area
         private double maintenanceCost; // energy per area
         private double shrinkageYield; // energy per area
+        private double maxGrowthRate; // fraction of current area
 
         public final double getTissueDensity() {
             return tissueDensity;
@@ -118,6 +110,14 @@ public abstract class TissueRing {
 
         public final void setShrinkageYield(double val) {
             shrinkageYield = val;
+        }
+
+        public final double getMaxGrowthRate() {
+            return maxGrowthRate;
+        }
+
+        public final void setMaxGrowthRate(double val) {
+            this.maxGrowthRate = val;
         }
     }
 }

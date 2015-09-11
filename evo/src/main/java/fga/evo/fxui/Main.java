@@ -43,11 +43,16 @@ public class Main extends Application {
         primaryStage.setTitle("Evo");
 
         // TODO gradient from sky blue down to whitish blue
-        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT, Color.color(0.8, 0.95, 1));
+//        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT, Color.color(0.8, 0.95, 1));
+        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT,
+            new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.color(0.75, 0.9, 1)),
+                new Stop(1, Color.color(0.9, 0.98, 1))));
         root.getChildren().add(air);
         Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
-                new LinearGradient(0.5, 0, 0.5, 1, true, CycleMethod.NO_CYCLE,
-                        new Stop(0, Color.web("#111199")), new Stop(1, Color.BLACK)));
+            new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.color(0.1, 0.26, 0.55)), // Color.web("#111199")),
+                new Stop(1, Color.BLACK)));
         water.setY(toSceneY(0));
         root.getChildren().add(water);
 
@@ -81,8 +86,9 @@ public class Main extends Application {
     }
 
     private void populate() {
-        Cell cell = new Cell(10, new FixedDepthSeekingControl(100));
-        cell.setPosition(WIDTH / 2, -100);
+//        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
+        Cell cell = new Cell(10, new DuckweedControl());
+        cell.setPosition(WIDTH / 2, -WATER_DEPTH / 2);
         world.addCell(cell);
 
 //        ControlApi cell2 = new ControlApi(10);
