@@ -100,28 +100,31 @@ public class Cell implements CellControl.ControlApi {
 
         double requestedEnergy = 0;
         for (TissueRing ring : tissueRings) {
-            requestedEnergy += ring.getRequestedEnergy();
+            final double ringRequestedEnergy = ring.getRequestedEnergy();
+            if (ringRequestedEnergy > 0) {
+                requestedEnergy += ringRequestedEnergy;
+            } else {
+                energy += -ringRequestedEnergy;
+            }
         }
         if (requestedEnergy > energy) {
             for (TissueRing ring : tissueRings) {
-                ring.scaleResizeRequest(energy / requestedEnergy);
+                if (ring.getRequestedEnergy() > 0) {
+                    ring.scaleResizeRequest(energy / requestedEnergy);
+                }
             }
         }
+
         for (TissueRing ring : tissueRings) {
             ring.resize();
         }
-        if (requestedEnergy > energy) {
-            energy = 0;
-        } else {
-            energy -= requestedEnergy;
-        }
+        energy -= Math.min(requestedEnergy, energy);
 
         double innerRadius = 0;
         for (TissueRing ring : tissueRings) {
             ring.updateFromArea(innerRadius);
             innerRadius = ring.getOuterRadius();
         }
-
         updateFromRings();
     }
 
@@ -143,19 +146,19 @@ public class Cell implements CellControl.ControlApi {
     /**
      * Records a request that the cell's float-ring area change to a specified value.
      *
-     * @param area the desired new area
+     * @param growthEnergy the desired new area
      */
-    public void requestFloatAreaResize(double area) {
-        floatRing.requestResize(area);
+    public void requestFloatAreaResize(double growthEnergy) {
+        floatRing.requestResize(growthEnergy);
     }
 
     /**
      * Records a request that the cell's photo-ring area change to a specified value.
      *
-     * @param area the desired new area
+     * @param growthEnergy the desired new area
      */
-    public void requestPhotoAreaResize(double area) {
-        photoRing.requestResize(area);
+    public void requestPhotoAreaResize(double growthEnergy) {
+        photoRing.requestResize(growthEnergy);
     }
 
     public double getFloatRingOuterRadius() {

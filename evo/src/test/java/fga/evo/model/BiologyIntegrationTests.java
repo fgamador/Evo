@@ -33,15 +33,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         cell.setPosition(100, -101);
         world.tick();
+        world.tick();
+        world.tick();
+        world.tick();
 
         double velocityY_101 = cell.getVelocityY();
         assertTrue(velocityY_101 > 0);
-
-        cell.setPosition(100, -102);
-        world.tick();
-
-        double velocityY_102 = cell.getVelocityY();
-        assertTrue(velocityY_102 > velocityY_101);
     }
 
     @Test
@@ -57,14 +54,11 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         cell.setPosition(100, -99);
         world.tick();
+        world.tick();
+        world.tick();
+        world.tick();
 
         double velocityY_99 = cell.getVelocityY();
         assertTrue(velocityY_99 < 0);
-
-        cell.setPosition(100, -98);
-        world.tick();
-
-        double velocityY_98 = cell.getVelocityY();
-        assertTrue(velocityY_98 < velocityY_99);
     }
 }

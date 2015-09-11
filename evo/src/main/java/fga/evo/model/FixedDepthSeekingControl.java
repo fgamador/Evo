@@ -9,7 +9,7 @@ public class FixedDepthSeekingControl implements CellControl {
     private double depth;
 
     public FixedDepthSeekingControl(double depth) {
-        if (depth <= 0) {
+        if (depth < 0) {
             throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
         }
 
@@ -18,9 +18,14 @@ public class FixedDepthSeekingControl implements CellControl {
 
     @Override
     public void allocateEnergy(ControlApi cell) {
+        final double desiredVelocityY = -(depth + cell.getCenterY()) / 100;
+        final double desiredDeltaVY = desiredVelocityY - cell.getVelocityY();
+        cell.requestFloatAreaResize(desiredDeltaVY / 10);
+
 //        double depthBuoyancyDelta = Math.min(-(depth + cell.getCenterY()), 5);
 //        double velocityBuoyancyDelta = -cell.getVelocityY();
 //        cell.requestFloatAreaResize(depthBuoyancyDelta + 10 * velocityBuoyancyDelta);
-        cell.requestFloatAreaResize(-(depth + cell.getCenterY()));
+
+//        cell.requestFloatAreaResize(-(depth + cell.getCenterY()));
     }
 }
