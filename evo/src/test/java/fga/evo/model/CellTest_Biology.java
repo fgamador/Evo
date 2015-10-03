@@ -185,29 +185,62 @@ public class CellTest_Biology {
     public void testUseEnergy_SpawnChild() {
         final double totalEnergy = 100;
         final double donatedEnergy = 2;
-        Cell cell = new Cell(10, c -> {
-            if (c.getRadius() > 5) {
-                c.requestChildDonation(donatedEnergy);
-            }
-        });
+        Cell cell = new Cell(10, new InheritedControl(donatedEnergy));
         cell.addEnergy(totalEnergy);
 
         Cell child = cell.useEnergy();
 
         assertNotNull(child);
+        assertEquals(child, cell.getChild());
         assertBonded(cell, child);
         assertEquals(cell.getControl(), child.getControl());
         assertEquals(donatedEnergy / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
-        assertEquals(totalEnergy - donatedEnergy, cell.getEnergy(), 0);
+        assertEnergy(totalEnergy - donatedEnergy, cell);
         assertEquals(child.getPhotoRingOuterRadius(), child.getRadius(), 0);
         assertCenterSeparation(cell.getRadius() + child.getRadius(), cell, child, 0);
     }
 
-    // TODO random angle
+    @Test
+    public void testUseEnergy_GrowChild() {
+        final double totalEnergy = 100;
+        final double donatedEnergy = 2;
+        Cell cell = new Cell(10, new InheritedControl(donatedEnergy));
+        cell.addEnergy(totalEnergy);
+        Cell child = cell.useEnergy();
 
-    // TODO no new child if already have one
+        Cell child2 = cell.useEnergy();
+        Cell grandchild = child.useEnergy();
+
+        assertNull(child2);
+        assertNull(grandchild);
+        assertEquals(child, cell.getChild());
+        assertBonded(cell, child);
+        assertEquals(2 * donatedEnergy / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
+        assertEnergy(totalEnergy - 2 * donatedEnergy, cell);
+    }
+
+    // TODO random angle
 
     // TODO scale donation energy with other requests
 
     // TODO release child on negative donation
+
+    private class InheritedControl implements CellControl {
+        private double donationRequest;
+
+        public InheritedControl(double donationRequest) {
+            this.donationRequest = donationRequest;
+        }
+
+        @Override
+        public void allocateEnergy(ControlApi cell) {
+            if (cell.getRadius() > 5) {
+                // run by parent
+                cell.requestChildDonation(donationRequest);
+            } else {
+                // run by child
+                cell.requestPhotoAreaResize(cell.getEnergy());
+            }
+        }
+    }
 }

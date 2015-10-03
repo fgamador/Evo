@@ -17,6 +17,7 @@ public class Cell implements CellControl.ControlApi {
     private int physics = 1; // TODO temp
 
     private Set<Cell> bondedCells = new HashSet<>();
+    private Cell child;
     private double mass; // cached sum of ring masses
     private double radius; // cached outer radius of outer ring
     private double area; // cached sum of ring areas
@@ -29,9 +30,11 @@ public class Cell implements CellControl.ControlApi {
     private PhotoRing photoRing;
     private CellControl control;
     private double requestedChildDonation;
+//    private double donatedEnergy;
 
     public Cell(final double radius) {
-        this(radius, c -> {});
+        this(radius, c -> {
+        });
     }
 
     public Cell(final double radius, final CellControl control) {
@@ -140,17 +143,22 @@ public class Cell implements CellControl.ControlApi {
         updateFromRings();
 
         if (requestedChildDonation > 0) {
-            return spawn();
-        } else {
-            return null;
+            if (child == null) {
+                return spawn();
+            } else {
+                //child.setDonatedEnergy(requestedChildDonation);
+                child.addEnergy(requestedChildDonation);
+                energy -= requestedChildDonation; // TODO prevent over-request
+            }
         }
+
+        return null;
     }
 
     private Cell spawn() {
-        Cell child = new Cell(0, control);
+        child = new Cell(0, control);
         addBond(child);
-        child.addEnergy(requestedChildDonation);
-        child.requestPhotoAreaResize(requestedChildDonation);
+        child.addEnergy(requestedChildDonation); // setDonatedEnergy?
         child.useEnergy();
         energy -= requestedChildDonation; // TODO prevent over-request
         child.setPosition(centerX + radius + child.radius, centerY);
@@ -200,6 +208,10 @@ public class Cell implements CellControl.ControlApi {
     public void requestChildDonation(double donationEnergy) {
         this.requestedChildDonation = donationEnergy;
     }
+
+//    public final void setDonatedEnergy(double val) {
+//        donatedEnergy = val;
+//    }
 
 //    final double randomAngle() {
 //        return random.nextDouble() * 2 * Math.PI;
@@ -262,6 +274,10 @@ public class Cell implements CellControl.ControlApi {
 
     public final double getPhotoArea() {
         return photoRing.getArea();
+    }
+
+    public final Cell getChild() {
+        return child;
     }
 
     //=========================================================================
