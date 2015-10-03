@@ -4,11 +4,10 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
 import static fga.evo.model.Util.sqr;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CellTest_Biology {
-//    public static final double SQRT_2 = Math.sqrt(2);
+    //    public static final double SQRT_2 = Math.sqrt(2);
 
     // TODO dup?
     @Test
@@ -28,28 +27,30 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_FloatRingGrowth() {
+        final double totalEnergy = 100;
         final double growthEnergy = 2;
         Cell cell = new Cell(1, c -> c.requestFloatAreaResize(growthEnergy));
         assertEquals(0, cell.getFloatArea(), 0);
-        cell.addEnergy(100);
+        cell.addEnergy(totalEnergy);
 
         cell.useEnergy();
 
         assertEquals(growthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
-        assertEquals(100 - growthEnergy, cell.getEnergy(), 0);
+        assertEquals(totalEnergy - growthEnergy, cell.getEnergy(), 0);
     }
 
     @Test
     public void testUseEnergy_PhotoRingGrowth() {
+        final double totalEnergy = 100;
         final double growthEnergy = 2;
         Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(growthEnergy));
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
-        cell.addEnergy(100);
+        cell.addEnergy(totalEnergy);
 
         cell.useEnergy();
 
         assertEquals(Math.PI + growthEnergy / PhotoRing.parameters.getGrowthCost(), cell.getPhotoArea(), 0);
-        assertEquals(100 - growthEnergy, cell.getEnergy(), 0);
+        assertEquals(totalEnergy - growthEnergy, cell.getEnergy(), 0);
     }
 
     @Test
@@ -80,6 +81,7 @@ public class CellTest_Biology {
 
     @Test
     public void testUseEnergy_FloatAndPhotoRingGrowth() {
+        final double totalEnergy = 100;
         final double floatGrowthEnergy = 3;
         final double photoGrowthEnergy = 2;
         Cell cell = new Cell(1, c -> {
@@ -88,13 +90,13 @@ public class CellTest_Biology {
         });
         assertEquals(0, cell.getFloatArea(), 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
-        cell.addEnergy(100);
+        cell.addEnergy(totalEnergy);
 
         cell.useEnergy();
 
         assertEquals(floatGrowthEnergy / FloatRing.parameters.getGrowthCost(), cell.getFloatArea(), 0);
         assertEquals(Math.PI + photoGrowthEnergy / PhotoRing.parameters.getGrowthCost(), cell.getPhotoArea(), 0);
-        assertEquals(100 - (floatGrowthEnergy + photoGrowthEnergy), cell.getEnergy(), 0);
+        assertEquals(totalEnergy - (floatGrowthEnergy + photoGrowthEnergy), cell.getEnergy(), 0);
     }
 
     @Test
@@ -164,4 +166,48 @@ public class CellTest_Biology {
 
         assertEnergy(0, cell);
     }
+
+    @Test
+    public void testUseEnergy_NoDonatedEnergyNoChild() {
+        Cell cell = new Cell(10, c -> {
+            if (c.getRadius() > 5) {
+                c.requestChildDonation(0);
+            }
+        });
+        cell.addEnergy(100);
+
+        Cell child = cell.useEnergy();
+
+        assertNull(child);
+    }
+
+    @Test
+    public void testUseEnergy_SpawnChild() {
+        final double totalEnergy = 100;
+        final double donatedEnergy = 2;
+        Cell cell = new Cell(10, c -> {
+            if (c.getRadius() > 5) {
+                c.requestChildDonation(donatedEnergy);
+            }
+        });
+        cell.addEnergy(totalEnergy);
+
+        Cell child = cell.useEnergy();
+
+        assertNotNull(child);
+        assertBonded(cell, child);
+        assertEquals(cell.getControl(), child.getControl());
+        assertEquals(donatedEnergy / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
+        assertEquals(totalEnergy - donatedEnergy, cell.getEnergy(), 0);
+        assertEquals(child.getPhotoRingOuterRadius(), child.getRadius(), 0);
+        assertCenterSeparation(cell.getRadius() + child.getRadius(), cell, child, 0);
+    }
+
+    // TODO random angle
+
+    // TODO no new child if already have one
+
+    // TODO scale donation energy with other requests
+
+    // TODO release child on negative donation
 }

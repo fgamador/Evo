@@ -21,5 +21,7 @@ public interface CellControl {
 
         void requestFloatAreaResize(double growthEnergy);
         void requestPhotoAreaResize(double growthEnergy);
+
+        void requestChildDonation(double donatedEnergy);
     }
 }

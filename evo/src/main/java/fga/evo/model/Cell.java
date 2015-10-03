@@ -1,9 +1,6 @@
 package fga.evo.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static fga.evo.model.Util.sqr;
 
@@ -31,6 +28,7 @@ public class Cell implements CellControl.ControlApi {
     private FloatRing floatRing;
     private PhotoRing photoRing;
     private CellControl control;
+    private double requestedChildDonation;
 
     public Cell(final double radius) {
         this(radius, c -> {});
@@ -42,6 +40,21 @@ public class Cell implements CellControl.ControlApi {
         this.control = control;
         updateFromRings();
     }
+
+//    /** Creates a child cell. */
+//    private Cell(Cell parent, double angle) {
+//        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
+//                CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
+//        this.parent = parent;
+//    }
+//
+//    private double getSpawningX(double angle, double childRadius) {
+//        return centerX + (radius + childRadius) * Math.cos(angle);
+//    }
+//
+//    private double getSpawningY(double angle, double childRadius) {
+//        return centerY + (radius + childRadius) * Math.sin(angle);
+//    }
 
     public final void addBond(Cell cell2) {
         bondedCells.add(cell2);
@@ -69,9 +82,8 @@ public class Cell implements CellControl.ControlApi {
     }
 
     public void subtractMaintenanceEnergy() {
+        // TODO all rings
         addEnergy(-photoRing.getMaintenanceEnergy());
-//        double fatCost = fatCostFactor * fatArea;
-        //addEnergy(-photoRingCost); // TODO - fatCost;
     }
 
     // TODO basic energy-balance idea:
@@ -95,7 +107,7 @@ public class Cell implements CellControl.ControlApi {
     /**
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
-    public void useEnergy() {
+    public Cell useEnergy() {
         control.allocateEnergy(this);
 
         double requestedEnergy = 0;
@@ -126,6 +138,23 @@ public class Cell implements CellControl.ControlApi {
             innerRadius = ring.getOuterRadius();
         }
         updateFromRings();
+
+        if (requestedChildDonation > 0) {
+            return spawn();
+        } else {
+            return null;
+        }
+    }
+
+    private Cell spawn() {
+        Cell child = new Cell(0, control);
+        addBond(child);
+        child.addEnergy(requestedChildDonation);
+        child.requestPhotoAreaResize(requestedChildDonation);
+        child.useEnergy();
+        energy -= requestedChildDonation; // TODO prevent over-request
+        child.setPosition(centerX + radius + child.radius, centerY);
+        return child;
     }
 
     /**
@@ -144,36 +173,94 @@ public class Cell implements CellControl.ControlApi {
     }
 
     /**
-     * Records a request that the cell's float-ring area change to a specified value.
+     * Records a request that the cell's float-ring area grow using a specified amount of energy.
      *
-     * @param growthEnergy the desired new area
+     * @param growthEnergy the desired amount of energy to spend on growth
      */
     public void requestFloatAreaResize(double growthEnergy) {
         floatRing.requestResize(growthEnergy);
     }
 
     /**
-     * Records a request that the cell's photo-ring area change to a specified value.
+     * Records a request that the cell's photo-ring area grow using a specified amount of energy.
      *
-     * @param growthEnergy the desired new area
+     * @param growthEnergy the desired amount of energy to spend on growth
      */
     public void requestPhotoAreaResize(double growthEnergy) {
         photoRing.requestResize(growthEnergy);
     }
 
-    public double getFloatRingOuterRadius() {
+    /**
+     * Records a request that the cell's donate a specified amount of energy to its child cell.
+     * If it has no child cell, one will be created. If the energy is negative, the child cell
+     * will be released to fend for itself.
+     *
+     * @param donationEnergy the desired amount of energy to donate to the child; negative releases the child
+     */
+    public void requestChildDonation(double donationEnergy) {
+        this.requestedChildDonation = donationEnergy;
+    }
+
+//    final double randomAngle() {
+//        return random.nextDouble() * 2 * Math.PI;
+//    }
+
+//    private double reproduce(double growthEnergy, Set<Cell> newCells) {
+//        child = new Cell(this, world.randomAngle());
+//        newCells.add(child);
+//        //child.pretick();
+//        growthEnergy = donateEnergy(child, growthEnergy);
+//        child.balanceEnergy(newCells);
+//        return growthEnergy;
+//    }
+//
+//    double donateEnergy(Cell child, double growthEnergy) {
+//        double donatedEnergy = Math.min(growthEnergy, child.getMaxUsableGrowthEnergy());
+//        child.donatedEnergy += donatedEnergy;
+//        growthEnergy -= donatedEnergy;
+//        return growthEnergy;
+//    }
+//
+//    private double supportChild(double growthEnergy) {
+//        if (child.radius < MAX_CHILD_RADIUS) {
+//            return donateEnergy(child, growthEnergy);
+//        } else {
+//            releaseChild();
+//            return growthEnergy;
+//        }
+//    }
+//
+//    private void releaseChild() {
+//        child.parent = null;
+//        child = null;
+//    }
+
+//    private void die() {
+//        if (child != null)
+//            releaseChild();
+//        if (parent != null)
+//            parent.releaseChild();
+//        thruster = ZeroThruster.INSTANCE;
+//        alive = false;
+//    }
+
+    public final CellControl getControl() {
+        return control;
+    }
+
+    public final double getFloatRingOuterRadius() {
         return floatRing.getOuterRadius();
     }
 
-    public double getPhotoRingOuterRadius() {
+    public final double getPhotoRingOuterRadius() {
         return photoRing.getOuterRadius();
     }
 
-    public double getFloatArea() {
+    public final double getFloatArea() {
         return floatRing.getArea();
     }
 
-    public double getPhotoArea() {
+    public final double getPhotoArea() {
         return photoRing.getArea();
     }
 
@@ -396,6 +483,10 @@ public class Cell implements CellControl.ControlApi {
 
     public final double getNetForceY() {
         return netForceY;
+    }
+
+    public final Set<Cell> getBondedCells() {
+        return Collections.unmodifiableSet(bondedCells);
     }
 
     //=========================================================================

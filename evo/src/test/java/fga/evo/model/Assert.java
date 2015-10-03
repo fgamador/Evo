@@ -1,6 +1,8 @@
 package fga.evo.model;
 
+import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Additional evo-specific assertions.
@@ -11,6 +13,18 @@ public class Assert {
 //    public static void assertEquals(double expected, double actual) {
 //        assertEquals(expected, actual, DEFAULT_DELTA);
 //    }
+
+    public static void assertBonded(Cell cell1, Cell cell2) {
+        assertTrue(cell1.getBondedCells().contains(cell2));
+        assertTrue(cell2.getBondedCells().contains(cell1));
+    }
+
+    public static void assertCenterSeparation(double expected, Cell cell1, Cell cell2, double delta) {
+        final double relativeCenterX = cell1.getCenterX() - cell2.getCenterX();
+        final double relativeCenterY = cell1.getCenterY() - cell2.getCenterY();
+        final double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
+        assertEquals(expected, centerSeparation, delta);
+    }
 
     public static void assertEnergy(double energy, Cell cell) {
         assertEnergy(energy, cell, DEFAULT_DELTA);
