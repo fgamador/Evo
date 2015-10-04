@@ -53,6 +53,7 @@ public class World {
         for (EnvironmentalInfluence influence : environmentalInfluences) {
             influence.addEnergyToCell(cell);
         }
+        // TODO cell.addDonatedEnergy();
     }
 
     private void addForcesToCell(final int index) {

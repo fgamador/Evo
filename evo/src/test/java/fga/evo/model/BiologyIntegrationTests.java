@@ -61,4 +61,6 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         double velocityY_99 = cell.getVelocityY();
         assertTrue(velocityY_99 < 0);
     }
+
+    // TODO test reproduction and child growth
 }

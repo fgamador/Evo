@@ -184,8 +184,8 @@ public class CellTest_Biology {
     @Test
     public void testUseEnergy_SpawnChild() {
         final double totalEnergy = 100;
-        final double donatedEnergy = 2;
-        Cell cell = new Cell(10, new InheritedControl(donatedEnergy));
+        final double donation = 2;
+        Cell cell = new Cell(10, new InheritedControl(donation));
         cell.addEnergy(totalEnergy);
 
         Cell child = cell.useEnergy();
@@ -194,30 +194,41 @@ public class CellTest_Biology {
         assertEquals(child, cell.getChild());
         assertBonded(cell, child);
         assertEquals(cell.getControl(), child.getControl());
-        assertEquals(donatedEnergy / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
-        assertEnergy(totalEnergy - donatedEnergy, cell);
-        assertEquals(child.getPhotoRingOuterRadius(), child.getRadius(), 0);
-        assertCenterSeparation(cell.getRadius() + child.getRadius(), cell, child, 0);
-    }
+        assertEquals(0, child.getPhotoArea(), 0);
+        assertEquals(0, child.getRadius(), 0);
+        assertEnergy(totalEnergy - donation, cell);
+        assertCenterSeparation(cell.getRadius(), cell, child, 0);
 
-    @Test
-    public void testUseEnergy_GrowChild() {
-        final double totalEnergy = 100;
-        final double donatedEnergy = 2;
-        Cell cell = new Cell(10, new InheritedControl(donatedEnergy));
-        cell.addEnergy(totalEnergy);
-        Cell child = cell.useEnergy();
-
-        Cell child2 = cell.useEnergy();
+        child.addDonatedEnergy();
         Cell grandchild = child.useEnergy();
 
-        assertNull(child2);
         assertNull(grandchild);
-        assertEquals(child, cell.getChild());
-        assertBonded(cell, child);
-        assertEquals(2 * donatedEnergy / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
-        assertEnergy(totalEnergy - 2 * donatedEnergy, cell);
+        assertEquals(donation / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
+        assertEquals(child.getPhotoRingOuterRadius(), child.getRadius(), 0);
     }
+
+    // TODO is this test useful any more?
+//    @Test
+//    public void testUseEnergy_GrowChild() {
+//        final double totalEnergy = 100;
+//        final double donation = 2;
+//        Cell cell = new Cell(10, new InheritedControl(donation));
+//        cell.addEnergy(totalEnergy);
+//        Cell child = cell.useEnergy();
+//        child.addDonatedEnergy();
+//        child.useEnergy();
+//
+//        child.addDonatedEnergy();
+//        Cell child2 = cell.useEnergy();
+//        Cell grandchild = child.useEnergy();
+//
+//        assertNull(child2);
+//        assertNull(grandchild);
+//        assertEquals(child, cell.getChild());
+//        assertBonded(cell, child);
+//        assertEquals(2 * donation / PhotoRing.parameters.getGrowthCost(), child.getPhotoArea(), 0);
+//        assertEnergy(totalEnergy - 2 * donation, cell);
+//    }
 
     // TODO random angle
 
@@ -226,17 +237,17 @@ public class CellTest_Biology {
     // TODO release child on negative donation
 
     private class InheritedControl implements CellControl {
-        private double donationRequest;
+        private double donation;
 
-        public InheritedControl(double donationRequest) {
-            this.donationRequest = donationRequest;
+        public InheritedControl(double donation) {
+            this.donation = donation;
         }
 
         @Override
         public void allocateEnergy(ControlApi cell) {
             if (cell.getRadius() > 5) {
                 // run by parent
-                cell.requestChildDonation(donationRequest);
+                cell.requestChildDonation(donation);
             } else {
                 // run by child
                 cell.requestPhotoAreaResize(cell.getEnergy());

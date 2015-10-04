@@ -30,7 +30,7 @@ public class Cell implements CellControl.ControlApi {
     private PhotoRing photoRing;
     private CellControl control;
     private double requestedChildDonation;
-//    private double donatedEnergy;
+    private double donatedEnergy;
 
     public Cell(final double radius) {
         this(radius, c -> {
@@ -84,6 +84,12 @@ public class Cell implements CellControl.ControlApi {
         addEnergy(photoRing.photosynthesize(lightIntensity));
     }
 
+    // TODO call from World.tick
+    public void addDonatedEnergy() {
+        addEnergy(donatedEnergy);
+        // TODO donatedEnergy = 0;
+    }
+
     public void subtractMaintenanceEnergy() {
         // TODO all rings
         addEnergy(-photoRing.getMaintenanceEnergy());
@@ -111,8 +117,10 @@ public class Cell implements CellControl.ControlApi {
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
     public Cell useEnergy() {
+        // TODO break up this method - too long
         control.allocateEnergy(this);
 
+        // TODO include requestedChildDonation
         double requestedEnergy = 0;
         for (TissueRing ring : tissueRings) {
             final double ringRequestedEnergy = ring.getRequestedEnergy();
@@ -158,10 +166,9 @@ public class Cell implements CellControl.ControlApi {
     private Cell spawn() {
         child = new Cell(0, control);
         addBond(child);
-        child.addEnergy(requestedChildDonation); // setDonatedEnergy?
-        child.useEnergy();
+        child.setDonatedEnergy(requestedChildDonation);
         energy -= requestedChildDonation; // TODO prevent over-request
-        child.setPosition(centerX + radius + child.radius, centerY);
+        child.setPosition(centerX + radius, centerY); // TODO random angle
         return child;
     }
 
@@ -209,9 +216,9 @@ public class Cell implements CellControl.ControlApi {
         this.requestedChildDonation = donationEnergy;
     }
 
-//    public final void setDonatedEnergy(double val) {
-//        donatedEnergy = val;
-//    }
+    public final void setDonatedEnergy(double val) {
+        donatedEnergy = val;
+    }
 
 //    final double randomAngle() {
 //        return random.nextDouble() * 2 * Math.PI;
