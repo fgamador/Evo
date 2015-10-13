@@ -64,6 +64,11 @@ public class Cell implements CellControl.ControlApi {
         cell2.bondedCells.add(this);
     }
 
+    public final void removeBond(Cell cell2) {
+        bondedCells.remove(cell2);
+        cell2.bondedCells.remove(this);
+    }
+
     //=========================================================================
     // Biology
     //=========================================================================
@@ -87,7 +92,7 @@ public class Cell implements CellControl.ControlApi {
     // TODO call from World.tick
     public void addDonatedEnergy() {
         addEnergy(donatedEnergy);
-        // TODO donatedEnergy = 0;
+        donatedEnergy = 0;
     }
 
     public void subtractMaintenanceEnergy() {
@@ -117,11 +122,15 @@ public class Cell implements CellControl.ControlApi {
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
     public Cell useEnergy() {
-        // TODO break up this method - too long
         control.allocateEnergy(this);
+        balanceEnergy();
+        resizeRings();
+        return manageChild();
+    }
 
-        // TODO include requestedChildDonation
-        double requestedEnergy = 0;
+    private void balanceEnergy() {
+        double requestedEnergy = Math.max(requestedChildDonation, 0);
+
         for (TissueRing ring : tissueRings) {
             final double ringRequestedEnergy = ring.getRequestedEnergy();
             if (ringRequestedEnergy > 0) {
@@ -130,7 +139,9 @@ public class Cell implements CellControl.ControlApi {
                 energy += -ringRequestedEnergy;
             }
         }
+
         if (requestedEnergy > energy) {
+            requestedChildDonation *= energy / requestedEnergy;
             for (TissueRing ring : tissueRings) {
                 if (ring.getRequestedEnergy() > 0) {
                     ring.scaleResizeRequest(energy / requestedEnergy);
@@ -138,38 +149,52 @@ public class Cell implements CellControl.ControlApi {
             }
         }
 
+        energy -= Math.min(requestedEnergy, energy);
+    }
+
+    private void resizeRings() {
         for (TissueRing ring : tissueRings) {
             ring.resize();
         }
-        energy -= Math.min(requestedEnergy, energy);
 
         double innerRadius = 0;
         for (TissueRing ring : tissueRings) {
             ring.updateFromArea(innerRadius);
             innerRadius = ring.getOuterRadius();
         }
-        updateFromRings();
 
+        updateFromRings();
+    }
+
+    private Cell manageChild() {
         if (requestedChildDonation > 0) {
             if (child == null) {
                 return spawn();
             } else {
-                //child.setDonatedEnergy(requestedChildDonation);
-                child.addEnergy(requestedChildDonation);
-                energy -= requestedChildDonation; // TODO prevent over-request
+                child.setDonatedEnergy(requestedChildDonation);
+                return null;
             }
+        } else if (requestedChildDonation < 0) {
+            if (child != null) {
+                releaseChild();
+            }
+            return null;
+        } else {
+            return null;
         }
-
-        return null;
     }
 
     private Cell spawn() {
         child = new Cell(0, control);
         addBond(child);
         child.setDonatedEnergy(requestedChildDonation);
-        energy -= requestedChildDonation; // TODO prevent over-request
         child.setPosition(centerX + radius, centerY); // TODO random angle
         return child;
+    }
+
+    private void releaseChild() {
+        removeBond(child);
+        child = null;
     }
 
     /**
@@ -214,6 +239,10 @@ public class Cell implements CellControl.ControlApi {
      */
     public void requestChildDonation(double donationEnergy) {
         this.requestedChildDonation = donationEnergy;
+    }
+
+    public final double getDonatedEnergy() {
+        return donatedEnergy;
     }
 
     public final void setDonatedEnergy(double val) {
