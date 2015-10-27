@@ -205,6 +205,7 @@ public class CellTest_Biology {
         assertEquals(0, child.getRadius(), 0);
         assertEnergy(totalEnergy - donation, cell);
         assertCenterSeparation(cell.getRadius(), cell, child, 0);
+        // TODO random angle
 
         // second tick
         child.addDonatedEnergy();
@@ -275,6 +276,4 @@ public class CellTest_Biology {
         assertNotBonded(cell, child);
         assertEnergy(totalEnergy - donation, cell);
     }
-
-    // TODO random angle
 }
