@@ -22,28 +22,39 @@ public class World {
 
     /**
      * Propagates a simulation clock tick through the model.
+     * TODO parallelize the loops
      */
     public void tick() {
-        if (puller != null) {
-            puller.addForceToCell();
-        }
+        tickBiology();
+        tickPhysics();
+    }
 
-        // TODO should be easily parallelizeable
+    private void tickBiology() {
         for (Cell cell : cells) {
             addEnergyToCell(cell);
         }
 
-        // TODO should be easily parallelizeable
+        Collection<Cell> newCells = new ArrayList<>();
+
         for (Cell cell : cells) {
-            cell.useEnergy();
+            Cell newChild = cell.useEnergy();
+            if (newChild != null) {
+                newCells.add(newChild);
+            }
         }
 
-        // TODO should be easily parallelizeable
+        cells.addAll(newCells);
+    }
+
+    private void tickPhysics() {
+        if (puller != null) {
+            puller.addForceToCell();
+        }
+
         for (int i = 0; i < cells.size(); i++) {
             addForcesToCell(i);
         }
 
-        // TODO should be easily parallelizeable
         for (Cell cell : cells) {
             cell.move();
         }
@@ -53,7 +64,7 @@ public class World {
         for (EnvironmentalInfluence influence : environmentalInfluences) {
             influence.addEnergyToCell(cell);
         }
-        // TODO cell.addDonatedEnergy();
+        cell.addDonatedEnergy();
     }
 
     private void addForcesToCell(final int index) {

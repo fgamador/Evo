@@ -3,9 +3,7 @@ package fga.evo.model;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
@@ -62,5 +60,21 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         assertTrue(velocityY_99 < 0);
     }
 
-    // TODO test reproduction and child growth
+    @Test
+    public void testReproduction() {
+        final double donation = 2;
+        Cell cell = addCell(10, new ParentChildControl(donation));
+        cell.setPosition(5, -5);
+        cell.addEnergy(10);
+
+        world.tick();
+
+        assertEquals(2, world.getCells().size());
+        Cell child = cell.getChild();
+        assertEquals(0, child.getRadius(), 0);
+
+        world.tick();
+
+        assertNotEquals(0, child.getRadius(), 0);
+    }
 }

@@ -10,7 +10,7 @@ import static fga.evo.model.Util.sqr;
  *
  * @author Franz Amador
  */
-public class Cell implements CellControl.ControlApi {
+public class Cell implements ControlApi {
     private static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
@@ -89,15 +89,15 @@ public class Cell implements CellControl.ControlApi {
         addEnergy(photoRing.photosynthesize(lightIntensity));
     }
 
-    // TODO call from World.tick
     public void addDonatedEnergy() {
         addEnergy(donatedEnergy);
         donatedEnergy = 0;
     }
 
     public void subtractMaintenanceEnergy() {
-        // TODO all rings
-        addEnergy(-photoRing.getMaintenanceEnergy());
+        for (TissueRing ring : tissueRings) {
+            addEnergy(-ring.getMaintenanceEnergy());
+        }
     }
 
     // TODO basic energy-balance idea:
@@ -251,36 +251,6 @@ public class Cell implements CellControl.ControlApi {
 
 //    final double randomAngle() {
 //        return random.nextDouble() * 2 * Math.PI;
-//    }
-
-//    private double reproduce(double growthEnergy, Set<Cell> newCells) {
-//        child = new Cell(this, world.randomAngle());
-//        newCells.add(child);
-//        //child.pretick();
-//        growthEnergy = donateEnergy(child, growthEnergy);
-//        child.balanceEnergy(newCells);
-//        return growthEnergy;
-//    }
-//
-//    double donateEnergy(Cell child, double growthEnergy) {
-//        double donatedEnergy = Math.min(growthEnergy, child.getMaxUsableGrowthEnergy());
-//        child.donatedEnergy += donatedEnergy;
-//        growthEnergy -= donatedEnergy;
-//        return growthEnergy;
-//    }
-//
-//    private double supportChild(double growthEnergy) {
-//        if (child.radius < MAX_CHILD_RADIUS) {
-//            return donateEnergy(child, growthEnergy);
-//        } else {
-//            releaseChild();
-//            return growthEnergy;
-//        }
-//    }
-//
-//    private void releaseChild() {
-//        child.parent = null;
-//        child = null;
 //    }
 
 //    private void die() {

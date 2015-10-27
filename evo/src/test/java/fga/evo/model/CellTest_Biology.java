@@ -7,9 +7,6 @@ import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.*;
 
 public class CellTest_Biology {
-    //    public static final double SQRT_2 = Math.sqrt(2);
-
-    // TODO dup?
     @Test
     public void testPhotosynthesize() {
         Cell cell = new Cell(3);
@@ -17,12 +14,28 @@ public class CellTest_Biology {
         assertEnergy(4.5, cell);
     }
 
-    // TODO dup?
     @Test
-    public void testSubtractMaintenanceEnergy() {
+    public void testSubtractMaintenanceEnergy_PhotoRing() {
         Cell cell = new Cell(3);
         cell.subtractMaintenanceEnergy();
-        assertEnergy(-Math.PI * 9 * PhotoRing.parameters.getMaintenanceCost(), cell);
+        assertEnergy(-cell.getPhotoArea() * PhotoRing.parameters.getMaintenanceCost(), cell);
+    }
+
+    @Test
+    public void testSubtractMaintenanceEnergy_PhotoAndFloatRings() {
+        final double totalEnergy = 100;
+        final double growthEnergy = 2;
+        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(growthEnergy));
+        cell.addEnergy(totalEnergy);
+        cell.useEnergy();
+        final double remainingEnergy = cell.getEnergy();
+
+        cell.subtractMaintenanceEnergy();
+
+        final double expectedMaintenanceEnergy = remainingEnergy
+                - cell.getPhotoArea() * PhotoRing.parameters.getMaintenanceCost()
+                - cell.getFloatArea() * FloatRing.parameters.getMaintenanceCost();
+        assertEnergy(expectedMaintenanceEnergy, cell);
     }
 
     @Test
@@ -166,7 +179,7 @@ public class CellTest_Biology {
     public void testUseEnergy_NoDonatedEnergyNoChild() {
         final double totalEnergy = 100;
         final double donation = 0;
-        Cell cell = new Cell(10, new InheritedControl(donation));
+        Cell cell = new Cell(10, new ParentChildControl(donation));
         cell.addEnergy(totalEnergy);
 
         Cell child = cell.useEnergy();
@@ -178,7 +191,7 @@ public class CellTest_Biology {
     public void testUseEnergy_SpawnChild() {
         final double totalEnergy = 100;
         final double donation = 2;
-        Cell cell = new Cell(10, new InheritedControl(donation));
+        Cell cell = new Cell(10, new ParentChildControl(donation));
         cell.addEnergy(totalEnergy);
 
         // first tick
@@ -225,7 +238,7 @@ public class CellTest_Biology {
     public void testUseEnergy_MaintainChild() {
         final double totalEnergy = 100;
         final double donation = 2;
-        Cell cell = new Cell(10, new InheritedControl(donation));
+        Cell cell = new Cell(10, new ParentChildControl(donation));
         cell.addEnergy(totalEnergy);
 
         // first tick
@@ -246,7 +259,7 @@ public class CellTest_Biology {
     public void testUseEnergy_ReleaseChild() {
         final double totalEnergy = 100;
         final double donation = 2;
-        final InheritedControl control = new InheritedControl(donation);
+        final ParentChildControl control = new ParentChildControl(donation);
         Cell cell = new Cell(10, control);
         cell.addEnergy(totalEnergy);
 
@@ -256,7 +269,7 @@ public class CellTest_Biology {
         assertEnergy(totalEnergy - donation, cell);
 
         // second tick
-        control.donation = -1;
+        control.setDonation(-1);
         cell.useEnergy();
         assertNull(cell.getChild());
         assertNotBonded(cell, child);
@@ -264,23 +277,4 @@ public class CellTest_Biology {
     }
 
     // TODO random angle
-
-    private class InheritedControl implements CellControl {
-        private double donation;
-
-        public InheritedControl(double donation) {
-            this.donation = donation;
-        }
-
-        @Override
-        public void allocateEnergy(ControlApi cell) {
-            if (cell.getRadius() > 5) {
-                // run by parent
-                cell.requestChildDonation(donation);
-            } else {
-                // run by child
-                cell.requestPhotoAreaResize(cell.getEnergy());
-            }
-        }
-    }
 }
