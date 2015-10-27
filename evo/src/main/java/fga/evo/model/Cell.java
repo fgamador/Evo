@@ -14,8 +14,6 @@ public class Cell implements ControlApi {
     private static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
-    private int physics = 1; // TODO temp
-
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
     private double mass; // cached sum of ring masses
@@ -405,11 +403,7 @@ public class Cell implements ControlApi {
 
         if (centerSeparation != 0) {
             if (bondedCells.contains(cell2)) {
-                if (physics == 1) {
-                    addBondForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
-                } else {
-                    addBondForces2(cell2, relativeCenterX, relativeCenterY, centerSeparation);
-                }
+                addBondForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
             } else {
                 addCollisionForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
             }
@@ -428,16 +422,16 @@ public class Cell implements ControlApi {
      * Experimental. Adds forces to the cells that, in the absence of other forces, will restore the
      * gap/overlap to zero on the next call to {@link #move()}.
      */
-    private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
-        final double relativeVelocityX = velocityX - cell2.velocityX;
-        final double relativeVelocityY = velocityY - cell2.velocityY;
-        final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
-        final double massFactor = (1 / mass) + (1 / cell2.mass);
-        final double forceX = ((compressionFactor * relativeCenterX) - relativeVelocityX) / massFactor;
-        final double forceY = ((compressionFactor * relativeCenterY) - relativeVelocityY) / massFactor;
-        addForce(forceX, forceY);
-        cell2.addForce(-forceX, -forceY);
-    }
+//    private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
+//        final double relativeVelocityX = velocityX - cell2.velocityX;
+//        final double relativeVelocityY = velocityY - cell2.velocityY;
+//        final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
+//        final double massFactor = (1 / mass) + (1 / cell2.mass);
+//        final double forceX = ((compressionFactor * relativeCenterX) - relativeVelocityX) / massFactor;
+//        final double forceY = ((compressionFactor * relativeCenterY) - relativeVelocityY) / massFactor;
+//        addForce(forceX, forceY);
+//        cell2.addForce(-forceX, -forceY);
+//    }
 
     /**
      * Adds forces to the cells that will push them away from one another.
@@ -459,16 +453,6 @@ public class Cell implements ControlApi {
 
     public static double calcOverlapForce(final double overlap) {
         return overlapForceFactor * overlap;
-    }
-
-    // TODO temp
-    public final int getPhysics() {
-        return physics;
-    }
-
-    // TODO temp
-    public final void setPhysics(final int val) {
-        physics = val;
     }
 
     public final double getMass() {

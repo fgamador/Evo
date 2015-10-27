@@ -25,7 +25,7 @@ public class CellCircle extends Group {
     CellCircle(Cell cell) {
         this.cell = cell;
 
-        Color photoRingColor = (cell.getPhysics() == 1) ? Color.web("#99ff00", 0.7) : Color.web("#22aa00", 0.7);
+        Color photoRingColor = Color.web("#99ff00", 0.7);
         photoRingCircle = new Circle(cell.getPhotoRingOuterRadius(), photoRingColor);
         getChildren().add(photoRingCircle);
 

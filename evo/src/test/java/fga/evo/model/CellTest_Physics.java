@@ -234,31 +234,31 @@ public class CellTest_Physics {
         assertNetForce(0, 0, cell2);
     }
 
-    @Test
-    public void testAddInterCellForces_Bonded_TouchingMovingIntoCompression() {
-        cell.setPhysics(2);
-        cell.addBond(cell2);
-        cell2.setPosition(2, 0);
-        cell.setVelocity(1, 0);
+//    @Test
+//    public void testAddInterCellForces_Bonded_TouchingMovingIntoCompression() {
+//        cell.setPhysics(2);
+//        cell.addBond(cell2);
+//        cell2.setPosition(2, 0);
+//        cell.setVelocity(1, 0);
+//
+//        cell.addInterCellForces(cell2);
+//
+//        assertNetForce(-0.5, 0, cell);
+//        assertNetForce(0.5, 0, cell2);
+//    }
 
-        cell.addInterCellForces(cell2);
-
-        assertNetForce(-0.5, 0, cell);
-        assertNetForce(0.5, 0, cell2);
-    }
-
-    @Test
-    public void testAddInterCellForces_Bonded_TouchingMovingIntoTension() {
-        cell.setPhysics(2);
-        cell.addBond(cell2);
-        cell2.setPosition(2, 0);
-        cell2.setVelocity(1, 0);
-
-        cell.addInterCellForces(cell2);
-
-        assertNetForce(0.5, 0, cell);
-        assertNetForce(-0.5, 0, cell2);
-    }
+//    @Test
+//    public void testAddInterCellForces_Bonded_TouchingMovingIntoTension() {
+//        cell.setPhysics(2);
+//        cell.addBond(cell2);
+//        cell2.setPosition(2, 0);
+//        cell2.setVelocity(1, 0);
+//
+//        cell.addInterCellForces(cell2);
+//
+//        assertNetForce(0.5, 0, cell);
+//        assertNetForce(-0.5, 0, cell2);
+//    }
 
     @Test
     public void testAddInterCellForces_Bonded_XCollision() {
