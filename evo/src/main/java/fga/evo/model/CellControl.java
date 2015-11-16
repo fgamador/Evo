@@ -4,7 +4,6 @@ package fga.evo.model;
  * @author Franz Amador
  */
 public interface CellControl {
-    // TODO rename: requestChanges? makeRequests?
     void allocateEnergy(CellControl.Cell cell);
 
     /**
@@ -15,7 +14,8 @@ public interface CellControl {
 
         double getArea();
 
-        // No getCenterX(). No way for cell to sense this.
+        // There is no getCenterX() because there is no way for a cell to sense this.
+
         double getCenterY();
 
         double getVelocityX();
