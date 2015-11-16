@@ -91,28 +91,28 @@ public class Main extends Application {
         cell.setPosition(WIDTH / 2, -WATER_DEPTH / 2);
         world.addCell(cell);
 
-//        ControlApi cell2 = new ControlApi(10);
+//        Cell cell2 = new Cell(10);
 //        cell2.setPosition(230, 250);
 //        world.addCell(cell2);
 //
-//        ControlApi cell3 = new ControlApi(10);
+//        Cell cell3 = new Cell(10);
 //        cell3.setPosition(210, 250);
 //        world.addCell(cell3);
 //
 //        cell.addBond(cell2);
 //        cell2.addBond(cell3);
 //
-//        ControlApi cell4 = new ControlApi(10);
+//        Cell cell4 = new Cell(10);
 //        cell4.setPhysics(2);
 //        cell4.setPosition(100, 100);
 //        world.addCell(cell4);
 //
-//        ControlApi cell5 = new ControlApi(10);
+//        Cell cell5 = new Cell(10);
 //        cell5.setPhysics(2);
 //        cell5.setPosition(80, 100);
 //        world.addCell(cell5);
 //
-//        ControlApi cell6 = new ControlApi(10);
+//        Cell cell6 = new Cell(10);
 //        cell6.setPhysics(2);
 //        cell6.setPosition(60, 100);
 //        world.addCell(cell6);
@@ -123,8 +123,8 @@ public class Main extends Application {
 
     void tick() {
         world.tick();
-//        Set<ControlApi> newCells = world.tick();
-//        for (ControlApi cell : newCells) {
+//        Set<Cell> newCells = world.tick();
+//        for (Cell cell : newCells) {
 //            addCell(cell);
 //        }
         for (Node circle : cellCircles.getChildren()) {

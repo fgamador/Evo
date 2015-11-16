@@ -1,8 +1,5 @@
 package fga.evo.model;
 
-/**
- * Created by Franz on 10/25/2015.
- */
 class ParentChildControl implements CellControl {
     private double donation;
 
@@ -15,7 +12,7 @@ class ParentChildControl implements CellControl {
     }
 
     @Override
-    public void allocateEnergy(ControlApi cell) {
+    public void allocateEnergy(CellControl.Cell cell) {
         if (cell.getRadius() > 5) {
             // run by parent
             cell.requestChildDonation(donation);

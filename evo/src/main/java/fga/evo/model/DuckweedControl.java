@@ -11,7 +11,7 @@ public class DuckweedControl extends FixedDepthSeekingControl {
     }
 
     @Override
-    public void allocateEnergy(ControlApi cell) {
+    public void allocateEnergy(CellControl.Cell cell) {
         super.allocateEnergy(cell);
         // grow photo area up to TODO
         final double desiredPhotoArea = 500 * Math.PI;
