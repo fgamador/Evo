@@ -20,7 +20,7 @@ public class Cell implements CellControl.CellApi {
     private double mass; // cached sum of ring masses
     private double radius; // cached outer radius of outer ring
     private double area; // cached sum of ring areas
-    double centerX, centerY;
+    private double centerX, centerY;
     private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
@@ -292,7 +292,8 @@ public class Cell implements CellControl.CellApi {
      * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
      */
     public final void setPosition(final double centerX, final double centerY) {
-        cellPhysics.setPosition(centerX, centerY);
+        this.centerX = centerX;
+        this.centerY = centerY;
     }
 
     /**

@@ -14,18 +14,12 @@ public class CellPhysics {
         this.cell = cell;
     }
 
-    void setPosition(final double centerX, final double centerY) {
-        assert centerX >= 0;
-        cell.centerX = centerX;
-        cell.centerY = centerY;
-    }
-
     void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
     }
 
-    void addForce(final double forceX, final double forceY) {
+    void addForce(double forceX, double forceY) {
         netForceX += forceX;
         netForceY += forceY;
     }
@@ -49,8 +43,7 @@ public class CellPhysics {
         }
 
         // the position at the end of this time interval
-        cell.centerX += velocityX;
-        cell.centerY += velocityY;
+        cell.setPosition(cell.getCenterX() + velocityX, cell.getCenterY() + velocityY);
 
         // clear the forces
         netForceX = netForceY = 0;
