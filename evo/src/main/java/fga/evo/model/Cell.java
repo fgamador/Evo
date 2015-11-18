@@ -11,7 +11,6 @@ import static fga.evo.model.Util.sqr;
  * @author Franz Amador
  */
 public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
-    static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
     private CellPhysics cellPhysics;
@@ -473,14 +472,6 @@ public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
     //=========================================================================
     // Parameters
     //=========================================================================
-
-    public static double getSpeedLimit() {
-        return speedLimit;
-    }
-
-    public static void setSpeedLimit(final double val) {
-        speedLimit = val;
-    }
 
     public static double getOverlapForceFactor() {
         return overlapForceFactor;

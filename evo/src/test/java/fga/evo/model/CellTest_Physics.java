@@ -99,7 +99,7 @@ public class CellTest_Physics {
 
         cell.move();
 
-        assertEquals(4, Cell.getSpeedLimit(), 0);
+        assertEquals(4, CellPhysics.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, cell);
     }
 
