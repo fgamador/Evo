@@ -10,7 +10,7 @@ import static fga.evo.model.Util.sqr;
  *
  * @author Franz Amador
  */
-public class Cell implements CellControl.Cell {
+public class Cell implements CellControl.CellApi {
     private static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 

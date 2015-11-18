@@ -4,12 +4,12 @@ package fga.evo.model;
  * @author Franz Amador
  */
 public interface CellControl {
-    void allocateEnergy(CellControl.Cell cell);
+    void allocateEnergy(CellApi cell);
 
     /**
      * The API that a CellControl uses to control a Cell.
      */
-    interface Cell {
+    interface CellApi {
         double getRadius();
 
         double getArea();

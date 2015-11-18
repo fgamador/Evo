@@ -12,7 +12,7 @@ class ParentChildControl implements CellControl {
     }
 
     @Override
-    public void allocateEnergy(CellControl.Cell cell) {
+    public void allocateEnergy(CellApi cell) {
         if (cell.getRadius() > 5) {
             // run by parent
             cell.requestChildDonation(donation);
