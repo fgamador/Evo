@@ -7,6 +7,8 @@ import static fga.evo.model.Util.sqr;
  */
 public class CellPhysics {
     private Cell cell; // TODO CellPhysics.CellApi
+    private double velocityX, velocityY;
+    private double netForceX, netForceY;
 
     public CellPhysics(Cell cell) {
         this.cell = cell;
@@ -19,38 +21,54 @@ public class CellPhysics {
     }
 
     void setVelocity(double velocityX, double velocityY) {
-        cell.velocityX = velocityX;
-        cell.velocityY = velocityY;
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
     }
 
     void addForce(final double forceX, final double forceY) {
-        cell.netForceX += forceX;
-        cell.netForceY += forceY;
+        netForceX += forceX;
+        netForceY += forceY;
     }
 
     void move() {
         // the acceleration to apply instantaneously at the beginning this time interval
-        final double accelerationX = cell.netForceX / cell.mass;
-        final double accelerationY = cell.netForceY / cell.mass;
+        final double accelerationX = netForceX / cell.getMass();
+        final double accelerationY = netForceY / cell.getMass();
 
         // the velocity during this time interval
-        cell.velocityX += accelerationX;
-        cell.velocityY += accelerationY;
+        velocityX += accelerationX;
+        velocityY += accelerationY;
 
         // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
         // numerical/discretization problems can cause extreme velocities; cap them
-        final double speedSquared = sqr(cell.velocityX) + sqr(cell.velocityY);
+        final double speedSquared = sqr(velocityX) + sqr(velocityY);
         if (speedSquared > sqr(Cell.speedLimit)) {
             final double throttling = Cell.speedLimit / Math.sqrt(speedSquared);
-            cell.velocityX *= throttling;
-            cell.velocityY *= throttling;
+            velocityX *= throttling;
+            velocityY *= throttling;
         }
 
         // the position at the end of this time interval
-        cell.centerX += cell.velocityX;
-        cell.centerY += cell.velocityY;
+        cell.centerX += velocityX;
+        cell.centerY += velocityY;
 
         // clear the forces
-        cell.netForceX = cell.netForceY = 0;
+        netForceX = netForceY = 0;
+    }
+
+    final double getVelocityX() {
+        return velocityX;
+    }
+
+    final double getVelocityY() {
+        return velocityY;
+    }
+
+    final double getNetForceX() {
+        return netForceX;
+    }
+
+    final double getNetForceY() {
+        return netForceY;
     }
 }

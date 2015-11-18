@@ -17,12 +17,10 @@ public class Cell implements CellControl.CellApi {
     private CellPhysics cellPhysics;
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
-    double mass; // cached sum of ring masses
+    private double mass; // cached sum of ring masses
     private double radius; // cached outer radius of outer ring
     private double area; // cached sum of ring areas
     double centerX, centerY;
-    double velocityX, velocityY;
-    double netForceX, netForceY;
     private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
@@ -300,7 +298,7 @@ public class Cell implements CellControl.CellApi {
     /**
      * Sets the cell's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
      */
-    public final void setVelocity(double velocityX, double velocityY) {
+    final void setVelocity(double velocityX, double velocityY) {
         cellPhysics.setVelocity(velocityX, velocityY);
     }
 
@@ -311,14 +309,14 @@ public class Cell implements CellControl.CellApi {
      * @param forceX X-component of the force
      * @param forceY Y-component of the force
      */
-    public final void addForce(final double forceX, final double forceY) {
+    final void addForce(final double forceX, final double forceY) {
         cellPhysics.addForce(forceX, forceY);
     }
 
     /**
      * Updates the cell's velocity and position per the forces currently on it, then clears the forces.
      */
-    public final void move() {
+    final void move() {
         cellPhysics.move();
     }
 
@@ -452,19 +450,19 @@ public class Cell implements CellControl.CellApi {
     }
 
     public final double getVelocityX() {
-        return velocityX;
+        return cellPhysics.getVelocityX();
     }
 
     public final double getVelocityY() {
-        return velocityY;
+        return cellPhysics.getVelocityY();
     }
 
     public final double getNetForceX() {
-        return netForceX;
+        return cellPhysics.getNetForceX();
     }
 
     public final double getNetForceY() {
-        return netForceY;
+        return cellPhysics.getNetForceY();
     }
 
     public final Set<Cell> getBondedCells() {
