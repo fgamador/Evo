@@ -11,17 +11,18 @@ import static fga.evo.model.Util.sqr;
  * @author Franz Amador
  */
 public class Cell implements CellControl.CellApi {
-    private static double speedLimit = 4;
+    static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
+    private CellPhysics cellPhysics;
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
-    private double mass; // cached sum of ring masses
+    double mass; // cached sum of ring masses
     private double radius; // cached outer radius of outer ring
     private double area; // cached sum of ring areas
-    private double centerX, centerY;
-    private double velocityX, velocityY;
-    private double netForceX, netForceY;
+    double centerX, centerY;
+    double velocityX, velocityY;
+    double netForceX, netForceY;
     private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
@@ -36,6 +37,7 @@ public class Cell implements CellControl.CellApi {
     }
 
     public Cell(final double radius, final CellControl control) {
+        cellPhysics = new CellPhysics(this);
         tissueRings.add(floatRing = new FloatRing(0, 0));
         tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
         this.control = control;
@@ -292,58 +294,32 @@ public class Cell implements CellControl.CellApi {
      * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
      */
     public final void setPosition(final double centerX, final double centerY) {
-        assert centerX >= 0;
-        this.centerX = centerX;
-        this.centerY = centerY;
+        cellPhysics.setPosition(centerX, centerY);
     }
 
     /**
      * Sets the cell's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
      */
     public final void setVelocity(double velocityX, double velocityY) {
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
+        cellPhysics.setVelocity(velocityX, velocityY);
     }
 
     /**
      * Adds a force on the cell that will be used by the next call to {@link #move()}. This is the only way to
      * influence the cell's motion (after setting its initial position and possibly velocity).
      *
-     * @param x X-component of the force
-     * @param y Y-component of the force
+     * @param forceX X-component of the force
+     * @param forceY Y-component of the force
      */
-    public final void addForce(final double x, final double y) {
-        netForceX += x;
-        netForceY += y;
+    public final void addForce(final double forceX, final double forceY) {
+        cellPhysics.addForce(forceX, forceY);
     }
 
     /**
      * Updates the cell's velocity and position per the forces currently on it, then clears the forces.
      */
     public final void move() {
-        // the acceleration to apply instantaneously at the beginning this time interval
-        final double accelerationX = netForceX / mass;
-        final double accelerationY = netForceY / mass;
-
-        // the velocity during this time interval
-        velocityX += accelerationX;
-        velocityY += accelerationY;
-
-        // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
-        // numerical/discretization problems can cause extreme velocities; cap them
-        final double speedSquared = sqr(velocityX) + sqr(velocityY);
-        if (speedSquared > sqr(speedLimit)) {
-            final double throttling = speedLimit / Math.sqrt(speedSquared);
-            velocityX *= throttling;
-            velocityY *= throttling;
-        }
-
-        // the position at the end of this time interval
-        centerX += velocityX;
-        centerY += velocityY;
-
-        // clear the forces
-        netForceX = netForceY = 0;
+        cellPhysics.move();
     }
 
     /**
