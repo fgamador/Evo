@@ -6,11 +6,11 @@ import static fga.evo.model.Util.sqr;
  * Forces and motion for a cell.
  */
 public class CellPhysics {
-    private Cell cell; // TODO CellPhysics.CellApi
+    private CellApi cell;
     private double velocityX, velocityY;
     private double netForceX, netForceY;
 
-    public CellPhysics(Cell cell) {
+    public CellPhysics(CellApi cell) {
         this.cell = cell;
     }
 
@@ -63,5 +63,12 @@ public class CellPhysics {
 
     final double getNetForceY() {
         return netForceY;
+    }
+
+    interface CellApi {
+        double getMass();
+        double getCenterX();
+        double getCenterY();
+        void setPosition(double centerX, double centerY);
     }
 }
