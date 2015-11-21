@@ -22,6 +22,12 @@ public class BallTest {
     }
 
     @Test
+    public void testGetArea() {
+        Ball bigBall = new Ball(5);
+        assertEquals(Math.PI * 25, bigBall.getArea(), 0);
+    }
+
+    @Test
     public void testMove_NoForces() {
         ball.move();
 

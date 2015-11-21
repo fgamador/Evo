@@ -15,7 +15,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
-    private double area; // cached sum of ring areas
     private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
@@ -181,7 +180,7 @@ public class Cell extends Ball implements CellControl.CellApi {
         child = new Cell(0, control);
         addBond(child);
         child.setDonatedEnergy(requestedChildDonation);
-        child.setCenterPosition(centerX + radius, centerY); // TODO random angle
+        child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
         return child;
     }
 
@@ -200,9 +199,8 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     private void updateFromRings() {
-        radius = photoRing.getOuterRadius();
-        mass = floatRing.getMass() + photoRing.getMass();
-        area = Math.PI * sqr(radius);
+        setRadius(photoRing.getOuterRadius());
+        setMass(floatRing.getMass() + photoRing.getMass());
     }
 
     /**
@@ -290,7 +288,7 @@ public class Cell extends Ball implements CellControl.CellApi {
      * @return the collision force or zero if not in collision
      */
     public final double calcMinXWallCollisionForce(final double wallX) {
-        final double overlap = radius - (centerX - wallX);
+        final double overlap = getRadius() - (getCenterX() - wallX);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
 
@@ -301,7 +299,7 @@ public class Cell extends Ball implements CellControl.CellApi {
      * @return the collision force or zero if not in collision
      */
     public final double calcMaxXWallCollisionForce(final double wallX) {
-        final double overlap = centerX + radius - wallX;
+        final double overlap = getCenterX() + getRadius() - wallX;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
@@ -312,7 +310,7 @@ public class Cell extends Ball implements CellControl.CellApi {
      * @return the collision force or zero if not in collision
      */
     public final double calcMinYWallCollisionForce(final double wallY) {
-        final double overlap = radius - (centerY - wallY);
+        final double overlap = getRadius() - (getCenterY() - wallY);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
 
@@ -323,7 +321,7 @@ public class Cell extends Ball implements CellControl.CellApi {
      * @return the collision force or zero if not in collision
      */
     public final double calcMaxYWallCollisionForce(final double wallY) {
-        final double overlap = centerY + radius - wallY;
+        final double overlap = getCenterY() + getRadius() - wallY;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
@@ -334,8 +332,8 @@ public class Cell extends Ball implements CellControl.CellApi {
      * @param cell2 the other cell
      */
     public void addInterCellForces(final Cell cell2) {
-        final double relativeCenterX = centerX - cell2.centerX;
-        final double relativeCenterY = centerY - cell2.centerY;
+        final double relativeCenterX = getCenterX() - cell2.getCenterX();
+        final double relativeCenterY = getCenterY() - cell2.getCenterY();
         final double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
 
         if (centerSeparation != 0) {
@@ -351,7 +349,7 @@ public class Cell extends Ball implements CellControl.CellApi {
      * Adds forces to the cells that will move them back toward just touching one another.
      */
     private void addBondForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
-        final double overlap = radius + cell2.radius - centerSeparation;
+        final double overlap = getRadius() + cell2.getRadius() - centerSeparation;
         addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
     }
 
@@ -374,7 +372,7 @@ public class Cell extends Ball implements CellControl.CellApi {
      * Adds forces to the cells that will push them away from one another.
      */
     private void addCollisionForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
-        final double overlap = radius + cell2.radius - centerSeparation;
+        final double overlap = getRadius() + cell2.getRadius() - centerSeparation;
         if (overlap > 0) {
             addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
         }
@@ -390,10 +388,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public static double calcOverlapForce(final double overlap) {
         return overlapForceFactor * overlap;
-    }
-
-    public double getArea() {
-        return area;
     }
 
     public final Set<Cell> getBondedCells() {

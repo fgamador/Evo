@@ -32,12 +32,6 @@ public class CellTest_Physics {
     }
 
     @Test
-    public void testGetArea() {
-        Cell bigCell = new Cell(5);
-        assertEquals(Math.PI * 25, bigCell.getArea(), 0);
-    }
-
-    @Test
     public void testGetMass() {
         assertEquals(PhotoRing.parameters.getTissueDensity() * Math.PI, new Cell(1).getMass(), 0);
     }

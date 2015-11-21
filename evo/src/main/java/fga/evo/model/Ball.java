@@ -9,15 +9,16 @@ import static fga.evo.model.Util.sqr;
 public class Ball {
     private static double speedLimit = 4;
 
-    // TODO private?
-    protected double mass; // cached sum of ring masses
-    protected double radius; // cached outer radius of outer ring
-    protected double centerX, centerY;
+    private double mass;
+    private double radius;
+    private double area; // cached area derived from radius
+    private double centerX;
+    private double centerY;
     private double velocityX, velocityY;
     private double netForceX, netForceY;
 
     Ball(double radius) {
-        this.radius = radius;
+        setRadius(radius);
     }
 
     /**
@@ -68,12 +69,13 @@ public class Ball {
         netForceX = netForceY = 0;
     }
 
-    public void setRadius(double val) {
-        radius = val;
-    }
-
     public void setMass(double val) {
         mass = val;
+    }
+
+    public void setRadius(double val) {
+        radius = val;
+        area = Math.PI * sqr(radius);
     }
 
     public void setCenterPosition(double centerX, double centerY) {
@@ -87,6 +89,10 @@ public class Ball {
 
     public double getRadius() {
         return radius;
+    }
+
+    public double getArea() {
+        return area;
     }
 
     public double getCenterX() {
@@ -123,5 +129,17 @@ public class Ball {
 
     public static void setSpeedLimit(final double val) {
         speedLimit = val;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
+    }
+
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
+    }
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
     }
 }
