@@ -88,4 +88,40 @@ public class BallTest {
         assertEquals(4, Ball.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
     }
+
+    @Test
+    public void testCalcLowXWallCollisionForce() {
+        ball.setCenterPosition(5, 0);
+
+        assertEquals(0, ball.calcMinXWallCollisionForce(0), 0); // no contact
+        assertEquals(0, ball.calcMinXWallCollisionForce(4), 0); // just touching
+        assertEquals(0.5, ball.calcMinXWallCollisionForce(4.5), 0); // overlap by 0.5
+    }
+
+    @Test
+    public void testCalcHighXWallCollisionForce() {
+        ball.setCenterPosition(5, 0);
+
+        assertEquals(0, ball.calcMaxXWallCollisionForce(10), 0); // no contact
+        assertEquals(0, ball.calcMaxXWallCollisionForce(6), 0); // just touching
+        assertEquals(-0.5, ball.calcMaxXWallCollisionForce(5.5), 0); // overlap by 0.5
+    }
+
+    @Test
+    public void testCalcLowYWallCollisionForce() {
+        ball.setCenterPosition(0, -5);
+
+        assertEquals(0, ball.calcMinYWallCollisionForce(-10), 0); // no contact
+        assertEquals(0, ball.calcMinYWallCollisionForce(-6), 0); // just touching
+        assertEquals(0.5, ball.calcMinYWallCollisionForce(-5.5), 0); // overlap by 0.5
+    }
+
+    @Test
+    public void testCalcHighYWallCollisionForce() {
+        ball.setCenterPosition(0, -5);
+
+        assertEquals(0, ball.calcMaxYWallCollisionForce(0), 0); // no contact
+        assertEquals(0, ball.calcMaxYWallCollisionForce(-4), 0); // just touching
+        assertEquals(-0.5, ball.calcMaxYWallCollisionForce(-4.5), 0); // overlap by 0.5
+    }
 }

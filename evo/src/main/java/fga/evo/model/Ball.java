@@ -8,6 +8,7 @@ import static fga.evo.model.Util.sqr;
  */
 public class Ball {
     private static double speedLimit = 4;
+    private static double overlapForceFactor = 1;
 
     private double mass;
     private double radius;
@@ -21,8 +22,25 @@ public class Ball {
         setRadius(radius);
     }
 
+    public void setMass(double val) {
+        mass = val;
+    }
+
+    public void setRadius(double val) {
+        radius = val;
+        area = Math.PI * sqr(radius);
+    }
+
     /**
-     * Sets the cell's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
+     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #move()}.
+     */
+    public void setCenterPosition(double centerX, double centerY) {
+        this.centerX = centerX;
+        this.centerY = centerY;
+    }
+
+    /**
+     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
      */
     void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
@@ -30,8 +48,8 @@ public class Ball {
     }
 
     /**
-     * Adds a force on the cell that will be used by the next call to {@link #move()}. This is the only way to
-     * influence the cell's motion (after setting its initial position and possibly velocity).
+     * Adds a force on the ball that will be used by the next call to {@link #move()}. This is the only way to
+     * influence the ball's motion (after setting its initial position and possibly velocity).
      *
      * @param forceX X-component of the force
      * @param forceY Y-component of the force
@@ -42,7 +60,7 @@ public class Ball {
     }
 
     /**
-     * Updates the cell's velocity and position per the forces currently on it, then clears the forces.
+     * Updates the ball's velocity and position per the forces currently on it, then clears the forces.
      */
     void move() {
         // the acceleration to apply instantaneously at the beginning this time interval
@@ -67,20 +85,6 @@ public class Ball {
 
         // clear the forces
         netForceX = netForceY = 0;
-    }
-
-    public void setMass(double val) {
-        mass = val;
-    }
-
-    public void setRadius(double val) {
-        radius = val;
-        area = Math.PI * sqr(radius);
-    }
-
-    public void setCenterPosition(double centerX, double centerY) {
-        this.centerX = centerX;
-        this.centerY = centerY;
     }
 
     public double getMass() {
@@ -119,6 +123,54 @@ public class Ball {
         return netForceY;
     }
 
+    /**
+     * Returns the force exerted on the ball if it is in collision with a wall to its left (smaller x position).
+     *
+     * @param wallX x-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public double calcMinXWallCollisionForce(final double wallX) {
+        double overlap = getRadius() - (getCenterX() - wallX);
+        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
+    }
+
+    /**
+     * Returns the force exerted on the ball if it is in collision with a wall to its right (larger x position).
+     *
+     * @param wallX x-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public double calcMaxXWallCollisionForce(final double wallX) {
+        double overlap = getCenterX() + getRadius() - wallX;
+        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
+    }
+
+    /**
+     * Returns the force exerted on the ball if it is in collision with a wall below it (smaller y position).
+     *
+     * @param wallY y-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public double calcMinYWallCollisionForce(final double wallY) {
+        double overlap = getRadius() - (getCenterY() - wallY);
+        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
+    }
+
+    /**
+     * Returns the force exerted on the ball if it is in collision with a wall above it (larger y position).
+     *
+     * @param wallY y-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public double calcMaxYWallCollisionForce(final double wallY) {
+        double overlap = getCenterY() + getRadius() - wallY;
+        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
+    }
+
+    public static double calcOverlapForce(final double overlap) {
+        return overlapForceFactor * overlap;
+    }
+
     //=========================================================================
     // Parameters
     //=========================================================================
@@ -131,15 +183,11 @@ public class Ball {
         speedLimit = val;
     }
 
-    public void setArea(double area) {
-        this.area = area;
+    public static double getOverlapForceFactor() {
+        return overlapForceFactor;
     }
 
-    public void setCenterX(double centerX) {
-        this.centerX = centerX;
-    }
-
-    public void setCenterY(double centerY) {
-        this.centerY = centerY;
+    public static void setOverlapForceFactor(final double val) {
+        overlapForceFactor = val;
     }
 }

@@ -11,8 +11,6 @@ import static fga.evo.model.Util.sqr;
  * @author Franz Amador
  */
 public class Cell extends Ball implements CellControl.CellApi {
-    private static double overlapForceFactor = 1;
-
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
     private double energy; // TODO rename as availableEnergy?
@@ -282,50 +280,6 @@ public class Cell extends Ball implements CellControl.CellApi {
     //=========================================================================
 
     /**
-     * Returns the force exerted on the cell if it is in collision with a wall to its left (smaller x position).
-     *
-     * @param wallX x-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    public final double calcMinXWallCollisionForce(final double wallX) {
-        final double overlap = getRadius() - (getCenterX() - wallX);
-        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
-    }
-
-    /**
-     * Returns the force exerted on the cell if it is in collision with a wall to its right (larger x position).
-     *
-     * @param wallX x-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    public final double calcMaxXWallCollisionForce(final double wallX) {
-        final double overlap = getCenterX() + getRadius() - wallX;
-        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
-    }
-
-    /**
-     * Returns the force exerted on the cell if it is in collision with a wall below it (smaller y position).
-     *
-     * @param wallY y-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    public final double calcMinYWallCollisionForce(final double wallY) {
-        final double overlap = getRadius() - (getCenterY() - wallY);
-        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
-    }
-
-    /**
-     * Returns the force exerted on the cell if it is in collision with a wall above it (larger y position).
-     *
-     * @param wallY y-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    public final double calcMaxYWallCollisionForce(final double wallY) {
-        final double overlap = getCenterY() + getRadius() - wallY;
-        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
-    }
-
-    /**
      * Adds the forces due to the interaction of this cell with another cell, such as a collision or a bond.
      * Updates the forces on both of the cells. Call this only once for any particular pair of cells.
      *
@@ -386,23 +340,7 @@ public class Cell extends Ball implements CellControl.CellApi {
         cell2.addForce(-forceX, -forceY);
     }
 
-    public static double calcOverlapForce(final double overlap) {
-        return overlapForceFactor * overlap;
-    }
-
     public final Set<Cell> getBondedCells() {
         return Collections.unmodifiableSet(bondedCells);
-    }
-
-    //=========================================================================
-    // Parameters
-    //=========================================================================
-
-    public static double getOverlapForceFactor() {
-        return overlapForceFactor;
-    }
-
-    public static void setOverlapForceFactor(final double val) {
-        overlapForceFactor = val;
     }
 }

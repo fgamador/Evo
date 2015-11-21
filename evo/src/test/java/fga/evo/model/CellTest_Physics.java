@@ -48,42 +48,6 @@ public class CellTest_Physics {
     }
 
     @Test
-    public void testCalcLowXWallCollisionForce() {
-        cell.setCenterPosition(5, 0);
-
-        assertEquals(0, cell.calcMinXWallCollisionForce(0), 0); // no contact
-        assertEquals(0, cell.calcMinXWallCollisionForce(4), 0); // just touching
-        assertEquals(0.5, cell.calcMinXWallCollisionForce(4.5), 0); // overlap by 0.5
-    }
-
-    @Test
-    public void testCalcHighXWallCollisionForce() {
-        cell.setCenterPosition(5, 0);
-
-        assertEquals(0, cell.calcMaxXWallCollisionForce(10), 0); // no contact
-        assertEquals(0, cell.calcMaxXWallCollisionForce(6), 0); // just touching
-        assertEquals(-0.5, cell.calcMaxXWallCollisionForce(5.5), 0); // overlap by 0.5
-    }
-
-    @Test
-    public void testCalcLowYWallCollisionForce() {
-        cell.setCenterPosition(0, -5);
-
-        assertEquals(0, cell.calcMinYWallCollisionForce(-10), 0); // no contact
-        assertEquals(0, cell.calcMinYWallCollisionForce(-6), 0); // just touching
-        assertEquals(0.5, cell.calcMinYWallCollisionForce(-5.5), 0); // overlap by 0.5
-    }
-
-    @Test
-    public void testCalcHighYWallCollisionForce() {
-        cell.setCenterPosition(0, -5);
-
-        assertEquals(0, cell.calcMaxYWallCollisionForce(0), 0); // no contact
-        assertEquals(0, cell.calcMaxYWallCollisionForce(-4), 0); // just touching
-        assertEquals(-0.5, cell.calcMaxYWallCollisionForce(-4.5), 0); // overlap by 0.5
-    }
-
-    @Test
     public void testAddInterCellForces_XRestLength() {
         cell2.setCenterPosition(2, 0);
 
