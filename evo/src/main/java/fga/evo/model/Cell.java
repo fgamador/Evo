@@ -10,16 +10,12 @@ import static fga.evo.model.Util.sqr;
  *
  * @author Franz Amador
  */
-public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
+public class Cell extends Ball implements CellControl.CellApi {
     private static double overlapForceFactor = 1;
 
-    private CellPhysics cellPhysics;
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
-    private double mass; // cached sum of ring masses
-    private double radius; // cached outer radius of outer ring
     private double area; // cached sum of ring areas
-    private double centerX, centerY;
     private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
@@ -34,7 +30,7 @@ public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
     }
 
     public Cell(final double radius, final CellControl control) {
-        cellPhysics = new CellPhysics(this);
+        super(radius);
         tissueRings.add(floatRing = new FloatRing(0, 0));
         tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
         this.control = control;
@@ -185,7 +181,7 @@ public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
         child = new Cell(0, control);
         addBond(child);
         child.setDonatedEnergy(requestedChildDonation);
-        child.setPosition(centerX + radius, centerY); // TODO random angle
+        child.setCenterPosition(centerX + radius, centerY); // TODO random angle
         return child;
     }
 
@@ -286,39 +282,6 @@ public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
     //=========================================================================
     // Physics
     //=========================================================================
-
-    /**
-     * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
-     */
-    public final void setPosition(final double centerX, final double centerY) {
-        this.centerX = centerX;
-        this.centerY = centerY;
-    }
-
-    /**
-     * Sets the cell's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
-     */
-    final void setVelocity(double velocityX, double velocityY) {
-        cellPhysics.setVelocity(velocityX, velocityY);
-    }
-
-    /**
-     * Adds a force on the cell that will be used by the next call to {@link #move()}. This is the only way to
-     * influence the cell's motion (after setting its initial position and possibly velocity).
-     *
-     * @param forceX X-component of the force
-     * @param forceY Y-component of the force
-     */
-    final void addForce(final double forceX, final double forceY) {
-        cellPhysics.addForce(forceX, forceY);
-    }
-
-    /**
-     * Updates the cell's velocity and position per the forces currently on it, then clears the forces.
-     */
-    final void move() {
-        cellPhysics.move();
-    }
 
     /**
      * Returns the force exerted on the cell if it is in collision with a wall to its left (smaller x position).
@@ -429,40 +392,8 @@ public class Cell implements CellControl.CellApi, CellPhysics.CellApi {
         return overlapForceFactor * overlap;
     }
 
-    public final double getMass() {
-        return mass;
-    }
-
-    public final double getRadius() {
-        return radius;
-    }
-
     public double getArea() {
         return area;
-    }
-
-    public final double getCenterX() {
-        return centerX;
-    }
-
-    public final double getCenterY() {
-        return centerY;
-    }
-
-    public final double getVelocityX() {
-        return cellPhysics.getVelocityX();
-    }
-
-    public final double getVelocityY() {
-        return cellPhysics.getVelocityY();
-    }
-
-    public final double getNetForceX() {
-        return cellPhysics.getNetForceX();
-    }
-
-    public final double getNetForceY() {
-        return cellPhysics.getNetForceY();
     }
 
     public final Set<Cell> getBondedCells() {

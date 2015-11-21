@@ -23,7 +23,7 @@ public class CellTest_Physics {
         PhotoRing.parameters.setTissueDensity(1 / Math.PI);
         cell = new Cell(1);
         cell2 = new Cell(1);
-        cell.setPosition(0, 0);
+        cell.setCenterPosition(0, 0);
     }
 
     @After
@@ -99,7 +99,7 @@ public class CellTest_Physics {
 
         cell.move();
 
-        assertEquals(4, CellPhysics.getSpeedLimit(), 0);
+        assertEquals(4, Ball.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, cell);
     }
 
@@ -116,7 +116,7 @@ public class CellTest_Physics {
 
     @Test
     public void testCalcLowXWallCollisionForce() {
-        cell.setPosition(5, 0);
+        cell.setCenterPosition(5, 0);
 
         assertEquals(0, cell.calcMinXWallCollisionForce(0), 0); // no contact
         assertEquals(0, cell.calcMinXWallCollisionForce(4), 0); // just touching
@@ -125,7 +125,7 @@ public class CellTest_Physics {
 
     @Test
     public void testCalcHighXWallCollisionForce() {
-        cell.setPosition(5, 0);
+        cell.setCenterPosition(5, 0);
 
         assertEquals(0, cell.calcMaxXWallCollisionForce(10), 0); // no contact
         assertEquals(0, cell.calcMaxXWallCollisionForce(6), 0); // just touching
@@ -134,7 +134,7 @@ public class CellTest_Physics {
 
     @Test
     public void testCalcLowYWallCollisionForce() {
-        cell.setPosition(0, -5);
+        cell.setCenterPosition(0, -5);
 
         assertEquals(0, cell.calcMinYWallCollisionForce(-10), 0); // no contact
         assertEquals(0, cell.calcMinYWallCollisionForce(-6), 0); // just touching
@@ -143,7 +143,7 @@ public class CellTest_Physics {
 
     @Test
     public void testCalcHighYWallCollisionForce() {
-        cell.setPosition(0, -5);
+        cell.setCenterPosition(0, -5);
 
         assertEquals(0, cell.calcMaxYWallCollisionForce(0), 0); // no contact
         assertEquals(0, cell.calcMaxYWallCollisionForce(-4), 0); // just touching
@@ -152,7 +152,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_XRestLength() {
-        cell2.setPosition(2, 0);
+        cell2.setCenterPosition(2, 0);
 
         cell.addInterCellForces(cell2);
 
@@ -162,7 +162,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_XCollision() {
-        cell2.setPosition(1, 0);
+        cell2.setCenterPosition(1, 0);
 
         cell.addInterCellForces(cell2);
 
@@ -172,7 +172,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_NotInCollision() {
-        cell2.setPosition(3, -3);
+        cell2.setCenterPosition(3, -3);
 
         cell.addInterCellForces(cell2);
 
@@ -182,7 +182,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_DiagonalCollision() {
-        cell2.setPosition(1 / SQRT_2, -1 / SQRT_2);
+        cell2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
         cell.addInterCellForces(cell2);
 
@@ -192,7 +192,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_ReverseDiagonalCollision() {
-        cell2.setPosition(1 / SQRT_2, -1 / SQRT_2);
+        cell2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
         cell2.addInterCellForces(cell);
 
@@ -202,7 +202,7 @@ public class CellTest_Physics {
 
     @Test
     public void testAddInterCellForces_FullOverlap() {
-        cell2.setPosition(0, 0);
+        cell2.setCenterPosition(0, 0);
 
         cell.addInterCellForces(cell2);
 
@@ -213,7 +213,7 @@ public class CellTest_Physics {
     @Test
     public void testAddInterCellForces_Bonded_TouchingAtRest() {
         cell.addBond(cell2);
-        cell2.setPosition(2, 0);
+        cell2.setCenterPosition(2, 0);
 
         cell.addInterCellForces(cell2);
 
@@ -224,7 +224,7 @@ public class CellTest_Physics {
     @Test
     public void testAddInterCellForces_Bonded_TouchingMovingTogether() {
         cell.addBond(cell2);
-        cell2.setPosition(2, 0);
+        cell2.setCenterPosition(2, 0);
         cell.setVelocity(1, 0);
         cell2.setVelocity(1, 0);
 
@@ -238,7 +238,7 @@ public class CellTest_Physics {
 //    public void testAddInterCellForces_Bonded_TouchingMovingIntoCompression() {
 //        cell.setPhysics(2);
 //        cell.addBond(cell2);
-//        cell2.setPosition(2, 0);
+//        cell2.setCenterPosition(2, 0);
 //        cell.setVelocity(1, 0);
 //
 //        cell.addInterCellForces(cell2);
@@ -251,7 +251,7 @@ public class CellTest_Physics {
 //    public void testAddInterCellForces_Bonded_TouchingMovingIntoTension() {
 //        cell.setPhysics(2);
 //        cell.addBond(cell2);
-//        cell2.setPosition(2, 0);
+//        cell2.setCenterPosition(2, 0);
 //        cell2.setVelocity(1, 0);
 //
 //        cell.addInterCellForces(cell2);
@@ -263,7 +263,7 @@ public class CellTest_Physics {
     @Test
     public void testAddInterCellForces_Bonded_XCollision() {
         cell.addBond(cell2);
-        cell2.setPosition(1, 0);
+        cell2.setCenterPosition(1, 0);
 
         cell.addInterCellForces(cell2);
 
@@ -274,7 +274,7 @@ public class CellTest_Physics {
     @Test
     public void testAddInterCellForces_Bonded_YTension() {
         cell.addBond(cell2);
-        cell2.setPosition(0, -3);
+        cell2.setCenterPosition(0, -3);
 
         cell.addInterCellForces(cell2);
 
