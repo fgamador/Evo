@@ -40,30 +40,30 @@ public class Assert {
         assertEquals("Energy", energy, cell.getEnergy(), delta);
     }
 
-    public static void assertNetForce(double forceX, double forceY, Cell cell) {
-        assertNetForce(forceX, forceY, cell, DEFAULT_DELTA);
+    public static void assertPosition(double centerX, double centerY, Ball ball) {
+        assertPosition(centerX, centerY, ball, DEFAULT_DELTA);
     }
 
-    public static void assertNetForce(double forceX, double forceY, Cell cell, double delta) {
-        assertEquals("Force X", forceX, cell.getNetForceX(), delta);
-        assertEquals("Force Y", forceY, cell.getNetForceY(), delta);
+    public static void assertPosition(double centerX, double centerY, Ball ball, double delta) {
+        assertEquals("Center X", centerX, ball.getCenterX(), delta);
+        assertEquals("Center Y", centerY, ball.getCenterY(), delta);
     }
 
-    public static void assertPosition(double centerX, double centerY, Cell cell) {
-        assertPosition(centerX, centerY, cell, DEFAULT_DELTA);
+    public static void assertVelocity(double velocityX, double velocityY, Ball ball) {
+        assertVelocity(velocityX, velocityY, ball, DEFAULT_DELTA);
     }
 
-    public static void assertPosition(double centerX, double centerY, Cell cell, double delta) {
-        assertEquals("Center X", centerX, cell.getCenterX(), delta);
-        assertEquals("Center Y", centerY, cell.getCenterY(), delta);
+    public static void assertVelocity(double velocityX, double velocityY, Ball ball, double delta) {
+        assertEquals("Velocity X", velocityX, ball.getVelocityX(), delta);
+        assertEquals("Velocity Y", velocityY, ball.getVelocityY(), delta);
     }
 
-    public static void assertVelocity(double velocityX, double velocityY, Cell cell) {
-        assertVelocity(velocityX, velocityY, cell, DEFAULT_DELTA);
+    public static void assertNetForce(double forceX, double forceY, Ball ball) {
+        assertNetForce(forceX, forceY, ball, DEFAULT_DELTA);
     }
 
-    public static void assertVelocity(double velocityX, double velocityY, Cell cell, double delta) {
-        assertEquals("Velocity X", velocityX, cell.getVelocityX(), delta);
-        assertEquals("Velocity Y", velocityY, cell.getVelocityY(), delta);
+    public static void assertNetForce(double forceX, double forceY, Ball ball, double delta) {
+        assertEquals("Force X", forceX, ball.getNetForceX(), delta);
+        assertEquals("Force Y", forceY, ball.getNetForceY(), delta);
     }
 }

@@ -68,6 +68,14 @@ public class Ball {
         netForceX = netForceY = 0;
     }
 
+    public void setRadius(double val) {
+        radius = val;
+    }
+
+    public void setMass(double val) {
+        mass = val;
+    }
+
     public void setCenterPosition(double centerX, double centerY) {
         this.centerX = centerX;
         this.centerY = centerY;
