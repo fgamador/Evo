@@ -42,67 +42,6 @@ public class CellTest_Physics {
         assertEquals(PhotoRing.parameters.getTissueDensity() * Math.PI, new Cell(1).getMass(), 0);
     }
 
-//    @Test
-//    public void testMove_NoForces() {
-//        cell.move();
-//
-//        assertVelocity(0, 0, cell);
-//        assertPosition(0, 0, cell);
-//    }
-//
-//    @Test
-//    public void testMove_OneForce() {
-//        cell.addForce(0.5, -1);
-//
-//        cell.move();
-//
-//        assertVelocity(0.5, -1, cell);
-//        assertPosition(0.5, -1, cell);
-//    }
-//
-//    @Test
-//    public void testMove_TwoForces() {
-//        cell.addForce(0.5, -1);
-//        cell.addForce(1.5, 2);
-//
-//        cell.move();
-//
-//        assertVelocity(2, 1, cell);
-//        assertPosition(2, 1, cell);
-//    }
-//
-//    @Test
-//    public void testMove_Coasting() {
-//        cell.addForce(0.5, -1);
-//        cell.move();
-//
-//        cell.move();
-//
-//        assertVelocity(0.5, -1, cell);
-//        assertPosition(1, -2, cell);
-//    }
-//
-//    @Test
-//    public void testMove_DoubleMass() {
-//        Cell heavyCell = new Cell(SQRT_2);
-//        heavyCell.addForce(1, -2);
-//
-//        heavyCell.move();
-//
-//        assertVelocity(0.5, -1, heavyCell);
-//        assertPosition(0.5, -1, heavyCell);
-//    }
-//
-//    @Test
-//    public void testMove_SpeedLimit() {
-//        cell.setVelocity(8 / SQRT_2, -8 / SQRT_2);
-//
-//        cell.move();
-//
-//        assertEquals(4, Ball.getSpeedLimit(), 0);
-//        assertVelocity(4 / SQRT_2, -4 / SQRT_2, cell);
-//    }
-
     @Test
     public void testCalcOverlapForce() {
         double defaultOverlapForceFactor = Cell.getOverlapForceFactor();
