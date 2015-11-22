@@ -1,5 +1,9 @@
 package fga.evo.model;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import static fga.evo.model.Util.sqr;
 
 /**
@@ -13,6 +17,7 @@ public abstract class Ball {
     private double centerY;
     private double velocityX, velocityY;
     private double netForceX, netForceY;
+    private Set<Ball> bondedBalls = new HashSet<>();
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #move()}.
@@ -68,6 +73,20 @@ public abstract class Ball {
 
         // clear the forces
         netForceX = netForceY = 0;
+    }
+
+    public void addBond(Ball ball) {
+        bondedBalls.add(ball);
+        ball.bondedBalls.add(this);
+    }
+
+    public void removeBond(Ball ball) {
+        bondedBalls.remove(ball);
+        ball.bondedBalls.remove(this);
+    }
+
+    public boolean isBondedTo(Ball ball) {
+        return bondedBalls.contains(ball);
     }
 
     public abstract double getMass();

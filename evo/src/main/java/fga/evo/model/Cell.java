@@ -14,15 +14,14 @@ public class Cell extends Ball implements CellControl.CellApi {
     private double mass;
     private double radius;
     private double area; // cached area derived from radius
-    private Set<Cell> bondedCells = new HashSet<>();
-    private Cell child;
     private double energy; // TODO rename as availableEnergy?
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
-    private CellControl control;
     private double requestedChildDonation;
     private double donatedEnergy;
+    private CellControl control;
+    private Cell child;
 
     public Cell(final double radius) {
         this(radius, c -> {
@@ -60,20 +59,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 //    private double getSpawningY(double angle, double childRadius) {
 //        return centerY + (radius + childRadius) * Math.sin(angle);
 //    }
-
-    public void addBond(Cell cell2) {
-        bondedCells.add(cell2);
-        cell2.bondedCells.add(this);
-    }
-
-    public void removeBond(Cell cell2) {
-        bondedCells.remove(cell2);
-        cell2.bondedCells.remove(this);
-    }
-
-    public boolean isBondedTo(Cell cell2) {
-        return bondedCells.contains(cell2);
-    }
 
     public double getMass() {
         return mass;
@@ -301,13 +286,5 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public final Cell getChild() {
         return child;
-    }
-
-    //=========================================================================
-    // Physics
-    //=========================================================================
-
-    public Set<Cell> getBondedCells() {
-        return Collections.unmodifiableSet(bondedCells);
     }
 }

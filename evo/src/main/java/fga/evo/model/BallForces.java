@@ -5,7 +5,7 @@ import static fga.evo.model.Util.sqr;
 /**
  * Collision and bond forces for balls.
  */
-public class InteractionForces {
+public class BallForces {
     static double overlapForceFactor = 1;
 
     /**
@@ -57,22 +57,22 @@ public class InteractionForces {
     }
 
     /**
-     * Adds the forces due to the interaction of one cell with another cell, such as a collision or a bond.
-     * Updates the forces on both of the cells. Call this only once for any particular pair of cells.
+     * Adds the forces due to the interaction of one ball with another ball, such as a collision or a bond.
+     * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
      *
-     * @param cell1 a cell
-     * @param cell2 another cell
+     * @param ball1 a ball
+     * @param ball2 another ball
      */
-    static void addInterCellForces(Cell cell1, Cell cell2) {
-        double relativeCenterX = cell1.getCenterX() - cell2.getCenterX();
-        double relativeCenterY = cell1.getCenterY() - cell2.getCenterY();
+    static void addInterBallForces(Ball ball1, Ball ball2) {
+        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
+        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
         double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
 
         if (centerSeparation != 0) {
-            if (cell1.isBondedTo(cell2)) {
-                addBondForces(cell1, cell2, relativeCenterX, relativeCenterY, centerSeparation);
+            if (ball1.isBondedTo(ball2)) {
+                addBondForces(ball1, ball2, relativeCenterX, relativeCenterY, centerSeparation);
             } else {
-                addCollisionForces(cell1, cell2, relativeCenterX, relativeCenterY, centerSeparation);
+                addCollisionForces(ball1, ball2, relativeCenterX, relativeCenterY, centerSeparation);
             }
         }
     }

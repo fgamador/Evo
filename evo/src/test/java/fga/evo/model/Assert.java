@@ -16,13 +16,13 @@ public class Assert {
 //    }
 
     public static void assertBonded(Cell cell1, Cell cell2) {
-        assertTrue(cell1.getBondedCells().contains(cell2));
-        assertTrue(cell2.getBondedCells().contains(cell1));
+        assertTrue(cell1.isBondedTo(cell2));
+        assertTrue(cell2.isBondedTo(cell1));
     }
 
     public static void assertNotBonded(Cell cell1, Cell cell2) {
-        assertFalse(cell1.getBondedCells().contains(cell2));
-        assertFalse(cell2.getBondedCells().contains(cell1));
+        assertFalse(cell1.isBondedTo(cell2));
+        assertFalse(cell2.isBondedTo(cell1));
     }
 
     public static void assertCenterSeparation(double expected, Cell cell1, Cell cell2, double delta) {
