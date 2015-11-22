@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static fga.evo.model.Util.sqr;
 
@@ -11,15 +12,15 @@ import static fga.evo.model.Util.sqr;
  * @author Franz Amador
  */
 public class Cell extends Ball implements CellControl.CellApi {
-    private double mass;
-    private double radius;
+    private double mass; // cached total ring mass
+    private double radius; // cached outer-ring radius
     private double area; // cached area derived from radius
     private double energy; // TODO rename as availableEnergy?
+    private double requestedChildDonation;
+    private double donatedEnergy;
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
-    private double requestedChildDonation;
-    private double donatedEnergy;
     private CellControl control;
     private Cell child;
 
@@ -29,20 +30,10 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public Cell(final double radius, final CellControl control) {
-        setRadius(radius);
         tissueRings.add(floatRing = new FloatRing(0, 0));
         tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
-        this.control = control;
         updateFromRings();
-    }
-
-    private void setMass(double val) {
-        mass = val;
-    }
-
-    private void setRadius(double val) {
-        radius = val;
-        area = Math.PI * sqr(radius);
+        this.control = control;
     }
 
 //    /** Creates a child cell. */
@@ -210,8 +201,12 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     private void updateFromRings() {
-        setRadius(photoRing.getOuterRadius());
-        setMass(floatRing.getMass() + photoRing.getMass());
+        radius = tissueRings.get(tissueRings.size() - 1).getOuterRadius();
+        area = Math.PI * sqr(radius);
+        mass = 0;
+        for (TissueRing ring : tissueRings) {
+            mass += ring.getMass();
+        }
     }
 
     /**
