@@ -46,7 +46,7 @@ public class CellTest_Physics {
     public void testAddInterCellForces_XRestLength() {
         cell2.setCenterPosition(2, 0);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(0, 0, cell);
         assertNetForce(0, 0, cell2);
@@ -56,7 +56,7 @@ public class CellTest_Physics {
     public void testAddInterCellForces_XCollision() {
         cell2.setCenterPosition(1, 0);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(-1, 0, cell);
         assertNetForce(1, 0, cell2);
@@ -66,7 +66,7 @@ public class CellTest_Physics {
     public void testAddInterCellForces_NotInCollision() {
         cell2.setCenterPosition(3, -3);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(0, 0, cell);
         assertNetForce(0, 0, cell2);
@@ -76,7 +76,7 @@ public class CellTest_Physics {
     public void testAddInterCellForces_DiagonalCollision() {
         cell2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, cell);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, cell2);
@@ -86,7 +86,7 @@ public class CellTest_Physics {
     public void testAddInterCellForces_ReverseDiagonalCollision() {
         cell2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
-        cell2.addInterCellForces(cell);
+        InteractionForces.addInterCellForces(cell2, cell);
 
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, cell);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, cell2);
@@ -96,7 +96,7 @@ public class CellTest_Physics {
     public void testAddInterCellForces_FullOverlap() {
         cell2.setCenterPosition(0, 0);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(0, 0, cell);
         assertNetForce(0, 0, cell2);
@@ -107,7 +107,7 @@ public class CellTest_Physics {
         cell.addBond(cell2);
         cell2.setCenterPosition(2, 0);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(0, 0, cell);
         assertNetForce(0, 0, cell2);
@@ -120,7 +120,7 @@ public class CellTest_Physics {
         cell.setVelocity(1, 0);
         cell2.setVelocity(1, 0);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(0, 0, cell);
         assertNetForce(0, 0, cell2);
@@ -157,7 +157,7 @@ public class CellTest_Physics {
         cell.addBond(cell2);
         cell2.setCenterPosition(1, 0);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(-1, 0, cell);
         assertNetForce(1, 0, cell2);
@@ -168,7 +168,7 @@ public class CellTest_Physics {
         cell.addBond(cell2);
         cell2.setCenterPosition(0, -3);
 
-        cell.addInterCellForces(cell2);
+        InteractionForces.addInterCellForces(cell, cell2);
 
         assertNetForce(0, -1, cell);
         assertNetForce(0, 1, cell2);

@@ -61,14 +61,18 @@ public class Cell extends Ball implements CellControl.CellApi {
 //        return centerY + (radius + childRadius) * Math.sin(angle);
 //    }
 
-    public final void addBond(Cell cell2) {
+    public void addBond(Cell cell2) {
         bondedCells.add(cell2);
         cell2.bondedCells.add(this);
     }
 
-    public final void removeBond(Cell cell2) {
+    public void removeBond(Cell cell2) {
         bondedCells.remove(cell2);
         cell2.bondedCells.remove(this);
+    }
+
+    public boolean isBondedTo(Cell cell2) {
+        return bondedCells.contains(cell2);
     }
 
     public double getMass() {
@@ -303,68 +307,7 @@ public class Cell extends Ball implements CellControl.CellApi {
     // Physics
     //=========================================================================
 
-    /**
-     * Adds the forces due to the interaction of this cell with another cell, such as a collision or a bond.
-     * Updates the forces on both of the cells. Call this only once for any particular pair of cells.
-     *
-     * @param cell2 the other cell
-     */
-    public void addInterCellForces(final Cell cell2) {
-        final double relativeCenterX = getCenterX() - cell2.getCenterX();
-        final double relativeCenterY = getCenterY() - cell2.getCenterY();
-        final double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
-
-        if (centerSeparation != 0) {
-            if (bondedCells.contains(cell2)) {
-                addBondForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
-            } else {
-                addCollisionForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
-            }
-        }
-    }
-
-    /**
-     * Adds forces to the cells that will move them back toward just touching one another.
-     */
-    private void addBondForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
-        final double overlap = getRadius() + cell2.getRadius() - centerSeparation;
-        addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
-    }
-
-    /**
-     * Experimental. Adds forces to the cells that, in the absence of other forces, will restore the
-     * gap/overlap to zero on the next call to {@link #move()}.
-     */
-//    private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
-//        final double relativeVelocityX = velocityX - cell2.velocityX;
-//        final double relativeVelocityY = velocityY - cell2.velocityY;
-//        final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
-//        final double massFactor = (1 / mass) + (1 / cell2.mass);
-//        final double forceX = ((compressionFactor * relativeCenterX) - relativeVelocityX) / massFactor;
-//        final double forceY = ((compressionFactor * relativeCenterY) - relativeVelocityY) / massFactor;
-//        addForce(forceX, forceY);
-//        cell2.addForce(-forceX, -forceY);
-//    }
-
-    /**
-     * Adds forces to the cells that will push them away from one another.
-     */
-    private void addCollisionForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
-        final double overlap = getRadius() + cell2.getRadius() - centerSeparation;
-        if (overlap > 0) {
-            addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
-        }
-    }
-
-    private void addOverlapForces(Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation, double overlap) {
-        final double force = InteractionForces.calcOverlapForce(overlap);
-        final double forceX = (relativeCenterX / centerSeparation) * force;
-        final double forceY = (relativeCenterY / centerSeparation) * force;
-        addForce(forceX, forceY);
-        cell2.addForce(-forceX, -forceY);
-    }
-
-    public final Set<Cell> getBondedCells() {
+    public Set<Cell> getBondedCells() {
         return Collections.unmodifiableSet(bondedCells);
     }
 }
