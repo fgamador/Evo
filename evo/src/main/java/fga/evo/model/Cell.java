@@ -357,7 +357,7 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     private void addOverlapForces(Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation, double overlap) {
-        final double force = calcOverlapForce(overlap);
+        final double force = InteractionForces.calcOverlapForce(overlap);
         final double forceX = (relativeCenterX / centerSeparation) * force;
         final double forceY = (relativeCenterY / centerSeparation) * force;
         addForce(forceX, forceY);

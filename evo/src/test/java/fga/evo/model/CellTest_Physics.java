@@ -43,17 +43,6 @@ public class CellTest_Physics {
     }
 
     @Test
-    public void testCalcOverlapForce() {
-        double defaultOverlapForceFactor = Cell.getOverlapForceFactor();
-        try {
-            Cell.setOverlapForceFactor(2);
-            assertEquals(2, Cell.calcOverlapForce(1), 0);
-        } finally {
-            Cell.setOverlapForceFactor(defaultOverlapForceFactor);
-        }
-    }
-
-    @Test
     public void testAddInterCellForces_XRestLength() {
         cell2.setCenterPosition(2, 0);
 

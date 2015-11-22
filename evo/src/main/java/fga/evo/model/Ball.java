@@ -8,7 +8,6 @@ import static fga.evo.model.Util.sqr;
  */
 public abstract class Ball {
     private static double speedLimit = 4;
-    private static double overlapForceFactor = 1;
 
     private double centerX;
     private double centerY;
@@ -99,10 +98,6 @@ public abstract class Ball {
         return netForceY;
     }
 
-    static double calcOverlapForce(final double overlap) {
-        return overlapForceFactor * overlap;
-    }
-
     //=========================================================================
     // Parameters
     //=========================================================================
@@ -113,13 +108,5 @@ public abstract class Ball {
 
     public static void setSpeedLimit(final double val) {
         speedLimit = val;
-    }
-
-    public static double getOverlapForceFactor() {
-        return overlapForceFactor;
-    }
-
-    public static void setOverlapForceFactor(final double val) {
-        overlapForceFactor = val;
     }
 }

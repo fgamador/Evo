@@ -16,6 +16,17 @@ public class InteractionForcesTest {
     }
 
     @Test
+    public void testCalcOverlapForce() {
+        double defaultOverlapForceFactor = InteractionForces.getOverlapForceFactor();
+        try {
+            InteractionForces.setOverlapForceFactor(2);
+            assertEquals(2, InteractionForces.calcOverlapForce(1), 0);
+        } finally {
+            InteractionForces.setOverlapForceFactor(defaultOverlapForceFactor);
+        }
+    }
+
+    @Test
     public void testCalcLowXWallCollisionForce() {
         ball.setCenterPosition(5, 0);
 
