@@ -10,7 +10,7 @@ import static fga.evo.model.Util.sqr;
  *
  * @author Franz Amador
  */
-public class Cell extends AbstractBall implements CellControl.CellApi {
+public class Cell extends Ball implements CellControl.CellApi {
     private double mass;
     private double radius;
     private double area; // cached area derived from radius

@@ -6,7 +6,7 @@ import static fga.evo.model.Util.sqr;
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
  * to honor the Single Responsibility Principle, but could be Needless Complexity...
  */
-public abstract class AbstractBall {
+public abstract class Ball {
     private static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
@@ -97,50 +97,6 @@ public abstract class AbstractBall {
 
     public double getNetForceY() {
         return netForceY;
-    }
-
-    /**
-     * Returns the force exerted on the ball if it is in collision with a wall to its left (smaller x position).
-     *
-     * @param wallX x-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    double calcMinXWallCollisionForce(final double wallX) {
-        double overlap = getRadius() - (getCenterX() - wallX);
-        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
-    }
-
-    /**
-     * Returns the force exerted on the ball if it is in collision with a wall to its right (larger x position).
-     *
-     * @param wallX x-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    double calcMaxXWallCollisionForce(final double wallX) {
-        double overlap = getCenterX() + getRadius() - wallX;
-        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
-    }
-
-    /**
-     * Returns the force exerted on the ball if it is in collision with a wall below it (smaller y position).
-     *
-     * @param wallY y-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    double calcMinYWallCollisionForce(final double wallY) {
-        double overlap = getRadius() - (getCenterY() - wallY);
-        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
-    }
-
-    /**
-     * Returns the force exerted on the ball if it is in collision with a wall above it (larger y position).
-     *
-     * @param wallY y-position of the wall
-     * @return the collision force or zero if not in collision
-     */
-    double calcMaxYWallCollisionForce(final double wallY) {
-        double overlap = getCenterY() + getRadius() - wallY;
-        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
     static double calcOverlapForce(final double overlap) {

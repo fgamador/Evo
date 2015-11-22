@@ -5,10 +5,9 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
-import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 
-public class AbstractBallTest {
+public class BallTest {
     public static final double SQRT_2 = Math.sqrt(2);
 
     private SimpleBall ball; //, ball2;
@@ -80,47 +79,11 @@ public class AbstractBallTest {
 
         ball.move();
 
-        assertEquals(4, AbstractBall.getSpeedLimit(), 0);
+        assertEquals(4, Ball.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
     }
 
-    @Test
-    public void testCalcLowXWallCollisionForce() {
-        ball.setCenterPosition(5, 0);
-
-        assertEquals(0, ball.calcMinXWallCollisionForce(0), 0); // no contact
-        assertEquals(0, ball.calcMinXWallCollisionForce(4), 0); // just touching
-        assertEquals(0.5, ball.calcMinXWallCollisionForce(4.5), 0); // overlap by 0.5
-    }
-
-    @Test
-    public void testCalcHighXWallCollisionForce() {
-        ball.setCenterPosition(5, 0);
-
-        assertEquals(0, ball.calcMaxXWallCollisionForce(10), 0); // no contact
-        assertEquals(0, ball.calcMaxXWallCollisionForce(6), 0); // just touching
-        assertEquals(-0.5, ball.calcMaxXWallCollisionForce(5.5), 0); // overlap by 0.5
-    }
-
-    @Test
-    public void testCalcLowYWallCollisionForce() {
-        ball.setCenterPosition(0, -5);
-
-        assertEquals(0, ball.calcMinYWallCollisionForce(-10), 0); // no contact
-        assertEquals(0, ball.calcMinYWallCollisionForce(-6), 0); // just touching
-        assertEquals(0.5, ball.calcMinYWallCollisionForce(-5.5), 0); // overlap by 0.5
-    }
-
-    @Test
-    public void testCalcHighYWallCollisionForce() {
-        ball.setCenterPosition(0, -5);
-
-        assertEquals(0, ball.calcMaxYWallCollisionForce(0), 0); // no contact
-        assertEquals(0, ball.calcMaxYWallCollisionForce(-4), 0); // just touching
-        assertEquals(-0.5, ball.calcMaxYWallCollisionForce(-4.5), 0); // overlap by 0.5
-    }
-
-    private static class SimpleBall extends AbstractBall {
+    static class SimpleBall extends Ball {
         private double mass;
         private double radius;
 

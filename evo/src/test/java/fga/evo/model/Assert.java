@@ -40,29 +40,29 @@ public class Assert {
         assertEquals("Energy", energy, cell.getEnergy(), delta);
     }
 
-    public static void assertPosition(double centerX, double centerY, AbstractBall ball) {
+    public static void assertPosition(double centerX, double centerY, Ball ball) {
         assertPosition(centerX, centerY, ball, DEFAULT_DELTA);
     }
 
-    public static void assertPosition(double centerX, double centerY, AbstractBall ball, double delta) {
+    public static void assertPosition(double centerX, double centerY, Ball ball, double delta) {
         assertEquals("Center X", centerX, ball.getCenterX(), delta);
         assertEquals("Center Y", centerY, ball.getCenterY(), delta);
     }
 
-    public static void assertVelocity(double velocityX, double velocityY, AbstractBall ball) {
+    public static void assertVelocity(double velocityX, double velocityY, Ball ball) {
         assertVelocity(velocityX, velocityY, ball, DEFAULT_DELTA);
     }
 
-    public static void assertVelocity(double velocityX, double velocityY, AbstractBall ball, double delta) {
+    public static void assertVelocity(double velocityX, double velocityY, Ball ball, double delta) {
         assertEquals("Velocity X", velocityX, ball.getVelocityX(), delta);
         assertEquals("Velocity Y", velocityY, ball.getVelocityY(), delta);
     }
 
-    public static void assertNetForce(double forceX, double forceY, AbstractBall ball) {
+    public static void assertNetForce(double forceX, double forceY, Ball ball) {
         assertNetForce(forceX, forceY, ball, DEFAULT_DELTA);
     }
 
-    public static void assertNetForce(double forceX, double forceY, AbstractBall ball, double delta) {
+    public static void assertNetForce(double forceX, double forceY, Ball ball, double delta) {
         assertEquals("Force X", forceX, ball.getNetForceX(), delta);
         assertEquals("Force Y", forceY, ball.getNetForceY(), delta);
     }
