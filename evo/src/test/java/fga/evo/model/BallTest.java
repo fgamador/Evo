@@ -82,29 +82,4 @@ public class BallTest {
         assertEquals(4, Ball.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
     }
-
-    static class SimpleBall extends Ball {
-        private double mass;
-        private double radius;
-
-        SimpleBall(double radius) {
-            setRadius(radius);
-        }
-
-        public void setMass(double val) {
-            mass = val;
-        }
-
-        public void setRadius(double val) {
-            radius = val;
-        }
-
-        public double getMass() {
-            return mass;
-        }
-
-        public double getRadius() {
-            return radius;
-        }
-    }
 }
