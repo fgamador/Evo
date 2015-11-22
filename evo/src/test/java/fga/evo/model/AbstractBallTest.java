@@ -5,26 +5,21 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
+import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 
-public class BallTest {
+public class AbstractBallTest {
     public static final double SQRT_2 = Math.sqrt(2);
 
-    private Ball ball, ball2;
+    private SimpleBall ball; //, ball2;
 
     @Before
     public void setUp() {
-        ball = new Ball(1);
+        ball = new SimpleBall(1);
         ball.setMass(1);
-        ball2 = new Ball(1);
-        ball2.setMass(1);
         ball.setCenterPosition(0, 0);
-    }
-
-    @Test
-    public void testGetArea() {
-        Ball bigBall = new Ball(5);
-        assertEquals(Math.PI * 25, bigBall.getArea(), 0);
+//        ball2 = new SimpleBall(1);
+//        ball2.setMass(1);
     }
 
     @Test
@@ -69,14 +64,14 @@ public class BallTest {
 
     @Test
     public void testMove_DoubleMass() {
-        Cell heavyCell = new Cell(SQRT_2);
-        heavyCell.setMass(2);
-        heavyCell.addForce(1, -2);
+        SimpleBall heavyBall = new SimpleBall(SQRT_2);
+        heavyBall.setMass(2);
+        heavyBall.addForce(1, -2);
 
-        heavyCell.move();
+        heavyBall.move();
 
-        assertVelocity(0.5, -1, heavyCell);
-        assertPosition(0.5, -1, heavyCell);
+        assertVelocity(0.5, -1, heavyBall);
+        assertPosition(0.5, -1, heavyBall);
     }
 
     @Test
@@ -85,7 +80,7 @@ public class BallTest {
 
         ball.move();
 
-        assertEquals(4, Ball.getSpeedLimit(), 0);
+        assertEquals(4, AbstractBall.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
     }
 
@@ -123,5 +118,30 @@ public class BallTest {
         assertEquals(0, ball.calcMaxYWallCollisionForce(0), 0); // no contact
         assertEquals(0, ball.calcMaxYWallCollisionForce(-4), 0); // just touching
         assertEquals(-0.5, ball.calcMaxYWallCollisionForce(-4.5), 0); // overlap by 0.5
+    }
+
+    private static class SimpleBall extends AbstractBall {
+        private double mass;
+        private double radius;
+
+        SimpleBall(double radius) {
+            setRadius(radius);
+        }
+
+        public void setMass(double val) {
+            mass = val;
+        }
+
+        public void setRadius(double val) {
+            radius = val;
+        }
+
+        public double getMass() {
+            return mass;
+        }
+
+        public double getRadius() {
+            return radius;
+        }
     }
 }

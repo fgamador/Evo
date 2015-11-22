@@ -10,7 +10,10 @@ import static fga.evo.model.Util.sqr;
  *
  * @author Franz Amador
  */
-public class Cell extends Ball implements CellControl.CellApi {
+public class Cell extends AbstractBall implements CellControl.CellApi {
+    private double mass;
+    private double radius;
+    private double area; // cached area derived from radius
     private Set<Cell> bondedCells = new HashSet<>();
     private Cell child;
     private double energy; // TODO rename as availableEnergy?
@@ -27,11 +30,20 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public Cell(final double radius, final CellControl control) {
-        super(radius);
+        setRadius(radius);
         tissueRings.add(floatRing = new FloatRing(0, 0));
         tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
         this.control = control;
         updateFromRings();
+    }
+
+    private void setMass(double val) {
+        mass = val;
+    }
+
+    private void setRadius(double val) {
+        radius = val;
+        area = Math.PI * sqr(radius);
     }
 
 //    /** Creates a child cell. */
@@ -57,6 +69,18 @@ public class Cell extends Ball implements CellControl.CellApi {
     public final void removeBond(Cell cell2) {
         bondedCells.remove(cell2);
         cell2.bondedCells.remove(this);
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getArea() {
+        return area;
     }
 
     //=========================================================================

@@ -37,6 +37,12 @@ public class CellTest_Physics {
     }
 
     @Test
+    public void testGetArea() {
+        Cell bigCell = new Cell(5);
+        assertEquals(Math.PI * 25, bigCell.getArea(), 0);
+    }
+
+    @Test
     public void testCalcOverlapForce() {
         double defaultOverlapForceFactor = Cell.getOverlapForceFactor();
         try {

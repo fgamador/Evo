@@ -3,33 +3,17 @@ package fga.evo.model;
 import static fga.evo.model.Util.sqr;
 
 /**
- * A circular body subject to Newtonian motion physics. Base class for a Cell to honor the Separation of
- * Responsibilities Principle, but could be unnecessary complexity...
+ * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
+ * to honor the Single Responsibility Principle, but could be Needless Complexity...
  */
-public class Ball {
+public abstract class AbstractBall {
     private static double speedLimit = 4;
     private static double overlapForceFactor = 1;
 
-    private double mass;
-    private double radius;
-    private double area; // cached area derived from radius
     private double centerX;
     private double centerY;
     private double velocityX, velocityY;
     private double netForceX, netForceY;
-
-    Ball(double radius) {
-        setRadius(radius);
-    }
-
-    public void setMass(double val) {
-        mass = val;
-    }
-
-    public void setRadius(double val) {
-        radius = val;
-        area = Math.PI * sqr(radius);
-    }
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #move()}.
@@ -64,8 +48,8 @@ public class Ball {
      */
     void move() {
         // the acceleration to apply instantaneously at the beginning this time interval
-        final double accelerationX = netForceX / mass;
-        final double accelerationY = netForceY / mass;
+        final double accelerationX = netForceX / getMass();
+        final double accelerationY = netForceY / getMass();
 
         // the velocity during this time interval
         velocityX += accelerationX;
@@ -87,17 +71,9 @@ public class Ball {
         netForceX = netForceY = 0;
     }
 
-    public double getMass() {
-        return mass;
-    }
+    public abstract double getMass();
 
-    public double getRadius() {
-        return radius;
-    }
-
-    public double getArea() {
-        return area;
-    }
+    public abstract double getRadius();
 
     public double getCenterX() {
         return centerX;
@@ -129,7 +105,7 @@ public class Ball {
      * @param wallX x-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public double calcMinXWallCollisionForce(final double wallX) {
+    double calcMinXWallCollisionForce(final double wallX) {
         double overlap = getRadius() - (getCenterX() - wallX);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
@@ -140,7 +116,7 @@ public class Ball {
      * @param wallX x-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public double calcMaxXWallCollisionForce(final double wallX) {
+    double calcMaxXWallCollisionForce(final double wallX) {
         double overlap = getCenterX() + getRadius() - wallX;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
@@ -151,7 +127,7 @@ public class Ball {
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public double calcMinYWallCollisionForce(final double wallY) {
+    double calcMinYWallCollisionForce(final double wallY) {
         double overlap = getRadius() - (getCenterY() - wallY);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
@@ -162,12 +138,12 @@ public class Ball {
      * @param wallY y-position of the wall
      * @return the collision force or zero if not in collision
      */
-    public double calcMaxYWallCollisionForce(final double wallY) {
+    double calcMaxYWallCollisionForce(final double wallY) {
         double overlap = getCenterY() + getRadius() - wallY;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
-    public static double calcOverlapForce(final double overlap) {
+    static double calcOverlapForce(final double overlap) {
         return overlapForceFactor * overlap;
     }
 
