@@ -223,7 +223,7 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     /**
-     * Records a request that the cell's donate a specified amount of energy to its child cell.
+     * Records a request that the cell donate a specified amount of energy to its child cell.
      * If it has no child cell, one will be created. If the energy is negative, the child cell
      * will be released to fend for itself.
      *

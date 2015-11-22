@@ -52,8 +52,8 @@ public abstract class Ball {
      */
     void move() {
         // the acceleration to apply instantaneously at the beginning this time interval
-        final double accelerationX = netForceX / getMass();
-        final double accelerationY = netForceY / getMass();
+        double accelerationX = netForceX / getMass();
+        double accelerationY = netForceY / getMass();
 
         // the velocity during this time interval
         velocityX += accelerationX;
@@ -61,9 +61,9 @@ public abstract class Ball {
 
         // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
         // numerical/discretization problems can cause extreme velocities; cap them
-        final double speedSquared = sqr(velocityX) + sqr(velocityY);
+        double speedSquared = sqr(velocityX) + sqr(velocityY);
         if (speedSquared > sqr(speedLimit)) {
-            final double throttling = speedLimit / Math.sqrt(speedSquared);
+            double throttling = speedLimit / Math.sqrt(speedSquared);
             velocityX *= throttling;
             velocityY *= throttling;
         }
@@ -125,7 +125,7 @@ public abstract class Ball {
         return speedLimit;
     }
 
-    public static void setSpeedLimit(final double val) {
+    public static void setSpeedLimit(double val) {
         speedLimit = val;
     }
 }
