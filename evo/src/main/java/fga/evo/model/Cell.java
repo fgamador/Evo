@@ -24,12 +24,12 @@ public class Cell extends Ball implements CellControl.CellApi {
     private CellControl control;
     private Cell child;
 
-    public Cell(final double radius) {
+    public Cell(double radius) {
         this(radius, c -> {
         });
     }
 
-    public Cell(final double radius, final CellControl control) {
+    public Cell(double radius, CellControl control) {
         tissueRings.add(floatRing = new FloatRing(0, 0));
         tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
         updateFromRings();
@@ -63,14 +63,10 @@ public class Cell extends Ball implements CellControl.CellApi {
         return area;
     }
 
-    //=========================================================================
-    // Biology
-    //=========================================================================
-
     /**
      * Adds to the cell's available energy.
      */
-    public final void addEnergy(final double energy) {
+    public void addEnergy(double energy) {
         this.energy += energy;
     }
 
@@ -126,7 +122,7 @@ public class Cell extends Ball implements CellControl.CellApi {
         double requestedEnergy = Math.max(requestedChildDonation, 0);
 
         for (TissueRing ring : tissueRings) {
-            final double ringRequestedEnergy = ring.getRequestedEnergy();
+            double ringRequestedEnergy = ring.getRequestedEnergy();
             if (ringRequestedEnergy > 0) {
                 requestedEnergy += ringRequestedEnergy;
             } else {
@@ -191,18 +187,17 @@ public class Cell extends Ball implements CellControl.CellApi {
         child = null;
     }
 
-    /**
-     * Returns the cell's current energy budget.
-     *
-     * @return the total energy available for growth, secretion, donation, thruster, etc.
-     */
-    public final double getEnergy() {
-        return energy;
+    private void updateFromRings() {
+        updateRadiusAndArea();
+        updateMass();
     }
 
-    private void updateFromRings() {
+    private void updateRadiusAndArea() {
         radius = tissueRings.get(tissueRings.size() - 1).getOuterRadius();
         area = Math.PI * sqr(radius);
+    }
+
+    private void updateMass() {
         mass = 0;
         for (TissueRing ring : tissueRings) {
             mass += ring.getMass();
@@ -238,15 +233,24 @@ public class Cell extends Ball implements CellControl.CellApi {
         this.requestedChildDonation = donationEnergy;
     }
 
-    public final double getDonatedEnergy() {
+    /**
+     * Returns the cell's current energy budget.
+     *
+     * @return the total energy available for growth, secretion, donation, thruster, etc.
+     */
+    public double getEnergy() {
+        return energy;
+    }
+
+    public double getDonatedEnergy() {
         return donatedEnergy;
     }
 
-    public final void setDonatedEnergy(double val) {
+    public void setDonatedEnergy(double val) {
         donatedEnergy = val;
     }
 
-//    final double randomAngle() {
+//     double randomAngle() {
 //        return random.nextDouble() * 2 * Math.PI;
 //    }
 
@@ -259,27 +263,27 @@ public class Cell extends Ball implements CellControl.CellApi {
 //        alive = false;
 //    }
 
-    public final CellControl getControl() {
-        return control;
-    }
-
-    public final double getFloatRingOuterRadius() {
+    public double getFloatRingOuterRadius() {
         return floatRing.getOuterRadius();
     }
 
-    public final double getPhotoRingOuterRadius() {
+    public double getPhotoRingOuterRadius() {
         return photoRing.getOuterRadius();
     }
 
-    public final double getFloatArea() {
+    public double getFloatArea() {
         return floatRing.getArea();
     }
 
-    public final double getPhotoArea() {
+    public double getPhotoArea() {
         return photoRing.getArea();
     }
 
-    public final Cell getChild() {
+    public CellControl getControl() {
+        return control;
+    }
+
+    public Cell getChild() {
         return child;
     }
 }

@@ -10,15 +10,13 @@ import static org.junit.Assert.assertEquals;
 public class BallTest {
     public static final double SQRT_2 = Math.sqrt(2);
 
-    private SimpleBall ball; //, ball2;
+    private SimpleBall ball;
 
     @Before
     public void setUp() {
         ball = new SimpleBall(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
-//        ball2 = new SimpleBall(1);
-//        ball2.setMass(1);
     }
 
     @Test

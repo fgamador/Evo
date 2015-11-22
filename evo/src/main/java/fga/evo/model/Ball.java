@@ -8,7 +8,7 @@ import static fga.evo.model.Util.sqr;
 
 /**
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
- * to honor the Single Responsibility Principle, but could be Needless Complexity...
+ * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
 public abstract class Ball {
     private static double speedLimit = 4;

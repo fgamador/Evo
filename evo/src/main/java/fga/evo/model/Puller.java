@@ -24,6 +24,10 @@ public class Puller {
         cell.addForce(pullForceFactor * (x - cell.getCenterX()), pullForceFactor * (y - cell.getCenterY()));
     }
 
+    //=========================================================================
+    // Parameters
+    //=========================================================================
+
     public static double getPullForceFactor() {
         return pullForceFactor;
     }
