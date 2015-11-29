@@ -1,375 +1,470 @@
 package fga.evo.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class Cell {
-    static final double PULL_SPRING_CONSTANT = 1;
-    // costs and yields are all energy per area
-    static final double FAT_GROWTH_COST = 1;
-    static final double FAT_MAINTENANCE_COST = 0.005;
-    static final double FAT_BURN_YIELD = 0.9;
-    static final double PHOTOSYNTHETIC_RING_GROWTH_COST = 1.1;
-    static final double PHOTOSYNTHETIC_RING_MAINTENANCE_COST = 0.005;
-    static final double MAX_PHOTOSYNTHETIC_RING_EFFICIENCY = 0.9;
-    static final double MIN_REPRODUCTION_RADIUS = 50;
-    static final double MIN_REPRODUCTION_ENERGY = 10;
-    static final double CHILD_START_RADIUS = 1;
-    static final double MAX_CHILD_RADIUS = 20;
-    static final double MAX_TOTAL_OVERLAP = 0.1;
-    static final double MASS_PER_AREA = 0.01;
-    static double USABLE_GROWTH_ENERGY_PER_MASS = 10;
-    static double MAX_SPEED = 4;
+import static fga.evo.model.Util.sqr;
 
-    private final World world;
-    private Thruster thruster;
-    private double radius;
-    private double photosyntheticRingOuterRadius;
-    private double photosyntheticRingArea;
-    private double fatRadius;
-    private double fatArea;
-    private double mass;
+/**
+ * The basic living unit in evo. A circular entity that can move and grow and reproduce.
+ * Cells can also bond together to form larger organisms.
+ *
+ * @author Franz Amador
+ */
+public class Cell implements CellControl.CellApi {
+    private static double speedLimit = 4;
+    private static double overlapForceFactor = 1;
+
+    private Set<Cell> bondedCells = new HashSet<>();
+    private Cell child;
+    private double mass; // cached sum of ring masses
+    private double radius; // cached outer radius of outer ring
+    private double area; // cached sum of ring areas
     private double centerX, centerY;
-    private double velocityX = 0, velocityY = 0;
-    private double forceX = 0, forceY = 0;
-    private double pullPointX = 0, pullPointY = 0;
-    private List<CellCellInteraction> interactingPairs = new ArrayList<>();
-    private boolean alive = true;
-    private boolean pulled = false;
-    private Cell parent = null;
-    private Cell child = null;
+    private double velocityX, velocityY;
+    private double netForceX, netForceY;
+    private double energy; // TODO rename as availableEnergy?
+    private List<TissueRing> tissueRings = new ArrayList<>();
+    private FloatRing floatRing;
+    private PhotoRing photoRing;
+    private CellControl control;
+    private double requestedChildDonation;
     private double donatedEnergy;
-    private double totalOverlap = 0;
-    private List<Force> forces = null;
 
-    /** Creates an original, spontaneously generated cell. */
-    Cell(World world, Thruster thruster, double radius, double centerX, double centerY) {
-        this.world = world;
-        this.thruster = thruster;
-        setRadius(radius);
-        this.centerX = centerX;
-        this.centerY = centerY;
-        fatRadius = 0.9 * radius; // TODO param
-        photosyntheticRingOuterRadius = radius;
-        radiiToAreas();
+    public Cell(final double radius) {
+        this(radius, c -> {
+        });
     }
 
-    /** Creates a child cell. */
-    private Cell(Cell parent, double angle) {
-        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
-            CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
-        this.parent = parent;
+    public Cell(final double radius, final CellControl control) {
+        tissueRings.add(floatRing = new FloatRing(0, 0));
+        tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
+        this.control = control;
+        updateFromRings();
     }
 
-    private double getSpawningX(double angle, double childRadius) {
-        return centerX + (radius + childRadius) * Math.cos(angle);
+//    /** Creates a child cell. */
+//    private Cell(Cell parent, double angle) {
+//        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
+//                CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
+//        this.parent = parent;
+//    }
+//
+//    private double getSpawningX(double angle, double childRadius) {
+//        return centerX + (radius + childRadius) * Math.cos(angle);
+//    }
+//
+//    private double getSpawningY(double angle, double childRadius) {
+//        return centerY + (radius + childRadius) * Math.sin(angle);
+//    }
+
+    public final void addBond(Cell cell2) {
+        bondedCells.add(cell2);
+        cell2.bondedCells.add(this);
     }
 
-    private double getSpawningY(double angle, double childRadius) {
-        return centerY + (radius + childRadius) * Math.sin(angle);
+    public final void removeBond(Cell cell2) {
+        bondedCells.remove(cell2);
+        cell2.bondedCells.remove(this);
     }
 
-    /** Housekeeping before all the cell ticks. */
-    void pretick() {
-        interactingPairs.clear();
+    //=========================================================================
+    // Biology
+    //=========================================================================
+
+    /**
+     * Adds to the cell's available energy.
+     */
+    public final void addEnergy(final double energy) {
+        this.energy += energy;
     }
 
-    /** Records that this cell is interacting with another cell. */
-    void addInteraction(CellCellInteraction pair) {
-        interactingPairs.add(pair);
+    /**
+     * Converts incoming light into energy.
+     *
+     * @param lightIntensity incoming light intensity, as energy per width
+     */
+    public void photosynthesize(double lightIntensity) {
+        addEnergy(photoRing.photosynthesize(lightIntensity));
     }
 
-    // -- energy, growth, reproduction --
-
-    void balanceEnergy(Set<Cell> newCells) {
-        if (!alive) {
-            return;
-        }
-
-        double availableEnergy = donatedEnergy() + photosynthesis() - maintenance();
-        double growthEnergy = availableEnergy - thruster.getEnergy();
-        if (growthEnergy > 0) {
-            energySurplus(growthEnergy, newCells);
-        } else if (growthEnergy < 0) {
-            energyDeficit(growthEnergy);
-        }
-    }
-
-    private double donatedEnergy() {
-        double energy = donatedEnergy;
+    public void addDonatedEnergy() {
+        addEnergy(donatedEnergy);
         donatedEnergy = 0;
-        return energy;
     }
 
-    private double photosynthesis() {
-        return world.getLightIntensity(centerY) * radius * getPhotoRingEfficiency();
-    }
-
-    private double maintenance() {
-        double phRingCost = PHOTOSYNTHETIC_RING_MAINTENANCE_COST * photosyntheticRingArea;
-        double fatCost = FAT_MAINTENANCE_COST * fatArea;
-        return phRingCost + fatCost;
-    }
-
-    private void energySurplus(double growthEnergy, Set<Cell> newCells) {
-        if (child != null) {
-            growthEnergy = supportChild(growthEnergy);
-        } else if (radius >= MIN_REPRODUCTION_RADIUS && growthEnergy >= MIN_REPRODUCTION_ENERGY) {
-            growthEnergy = reproduce(growthEnergy, newCells);
-        }
-        if (totalOverlap < MAX_TOTAL_OVERLAP) { // don't grow if too crowded
-            grow(growthEnergy);
+    public void subtractMaintenanceEnergy() {
+        for (TissueRing ring : tissueRings) {
+            addEnergy(-ring.getMaintenanceEnergy());
         }
     }
 
-    private double supportChild(double growthEnergy) {
-        if (child.radius < MAX_CHILD_RADIUS) {
-            return donateEnery(child, growthEnergy);
+    // TODO basic energy-balance idea:
+    // 1) start with any energy carried over from last tick
+    // 2) add energy from photosynthesis (and absorption/digestion,
+    //    which suggests that secreted clouds persist from last tick)
+    // 3) subtract energy from tissue maintenance;
+    //    we now know our total budget for this tick
+    // 4) delegate to control unit (brains), which treats
+    //    energy budget as one of its inputs
+    // 5) control unit outputs (-inf..inf) signals to tissues,
+    //    which cost energy (growth, secretion) or yield energy
+    //    (shrinkage); can also donate energy to other bonded
+    //    cells (or to whole-organism pool?)
+    // 6) if we end up in the black, carry over to next tick
+    //    (subject to possible max)
+    //    if we end up in the red, we die
+    //    (probably will need to start with a lot of cells
+    //    so some survive the initial few ticks)
+
+    /**
+     * Uses the cell's currently available energy to grow, reproduce, etc.
+     */
+    public Cell useEnergy() {
+        control.allocateEnergy(this);
+        balanceEnergy();
+        resizeRings();
+        return manageChild();
+    }
+
+    private void balanceEnergy() {
+        double requestedEnergy = Math.max(requestedChildDonation, 0);
+
+        for (TissueRing ring : tissueRings) {
+            final double ringRequestedEnergy = ring.getRequestedEnergy();
+            if (ringRequestedEnergy > 0) {
+                requestedEnergy += ringRequestedEnergy;
+            } else {
+                energy += -ringRequestedEnergy;
+            }
+        }
+
+        if (requestedEnergy > energy) {
+            requestedChildDonation *= energy / requestedEnergy;
+            for (TissueRing ring : tissueRings) {
+                if (ring.getRequestedEnergy() > 0) {
+                    ring.scaleResizeRequest(energy / requestedEnergy);
+                }
+            }
+        }
+
+        energy -= Math.min(requestedEnergy, energy);
+    }
+
+    private void resizeRings() {
+        for (TissueRing ring : tissueRings) {
+            ring.resize();
+        }
+
+        double innerRadius = 0;
+        for (TissueRing ring : tissueRings) {
+            ring.updateFromArea(innerRadius);
+            innerRadius = ring.getOuterRadius();
+        }
+
+        updateFromRings();
+    }
+
+    private Cell manageChild() {
+        if (requestedChildDonation > 0) {
+            if (child == null) {
+                return spawn();
+            } else {
+                child.setDonatedEnergy(requestedChildDonation);
+                return null;
+            }
+        } else if (requestedChildDonation < 0) {
+            if (child != null) {
+                releaseChild();
+            }
+            return null;
         } else {
-            releaseChild();
-            return growthEnergy;
+            return null;
         }
+    }
+
+    private Cell spawn() {
+        child = new Cell(0, control);
+        addBond(child);
+        child.setDonatedEnergy(requestedChildDonation);
+        child.setPosition(centerX + radius, centerY); // TODO random angle
+        return child;
     }
 
     private void releaseChild() {
-        child.parent = null;
+        removeBond(child);
         child = null;
     }
 
-    private double reproduce(double growthEnergy, Set<Cell> newCells) {
-        child = new Cell(this, world.randomAngle());
-        newCells.add(child);
-        //child.pretick();
-        growthEnergy = donateEnery(child, growthEnergy);
-        child.balanceEnergy(newCells);
-        return growthEnergy;
+    /**
+     * Returns the cell's current energy budget.
+     *
+     * @return the total energy available for growth, secretion, donation, thruster, etc.
+     */
+    public final double getEnergy() {
+        return energy;
     }
 
-    double donateEnery(Cell child, double growthEnergy) {
-        double donatedEnergy = Math.min(growthEnergy, child.getMaxUsableGrowthEnergy());
-        child.donatedEnergy += donatedEnergy;
-        growthEnergy -= donatedEnergy;
-        return growthEnergy;
+    private void updateFromRings() {
+        radius = photoRing.getOuterRadius();
+        mass = floatRing.getMass() + photoRing.getMass();
+        area = Math.PI * sqr(radius);
     }
 
-    private double getMaxUsableGrowthEnergy() {
-        return USABLE_GROWTH_ENERGY_PER_MASS * mass;
+    /**
+     * Records a request that the cell's float-ring area grow using a specified amount of energy.
+     *
+     * @param growthEnergy the desired amount of energy to spend on growth
+     */
+    public void requestFloatAreaResize(double growthEnergy) {
+        floatRing.requestResize(growthEnergy);
     }
 
-    private void grow(double growthEnergy) {
-        growthEnergy = growPhotoRing(growthEnergy);
-        growFatCircle(growthEnergy);
-        areasToRadii();
+    /**
+     * Records a request that the cell's photo-ring area grow using a specified amount of energy.
+     *
+     * @param growthEnergy the desired amount of energy to spend on growth
+     */
+    public void requestPhotoAreaResize(double growthEnergy) {
+        photoRing.requestResize(growthEnergy);
     }
 
-    private double growPhotoRing(double growthEnergy) {
-        double thickness = photosyntheticRingOuterRadius - fatRadius;
-        if (thickness >= getTargetPhotoRingThickness()) {
-            return growthEnergy;
-        } else {
-            photosyntheticRingArea += growthEnergy / PHOTOSYNTHETIC_RING_GROWTH_COST;
-            return 0;
-        }
+    /**
+     * Records a request that the cell's donate a specified amount of energy to its child cell.
+     * If it has no child cell, one will be created. If the energy is negative, the child cell
+     * will be released to fend for itself.
+     *
+     * @param donationEnergy the desired amount of energy to donate to the child; negative releases the child
+     */
+    public void requestChildDonation(double donationEnergy) {
+        this.requestedChildDonation = donationEnergy;
     }
 
-    private void growFatCircle(double growthEnergy) {
-        fatArea += growthEnergy / FAT_GROWTH_COST;
+    public final double getDonatedEnergy() {
+        return donatedEnergy;
     }
 
-    private double getPhotoRingEfficiency() {
-        // efficiency ranges from 0 to 1, asymptotic
-        double thickness = photosyntheticRingOuterRadius - fatRadius;
-        return 1 - (1 / (thickness + 1));
+    public final void setDonatedEnergy(double val) {
+        donatedEnergy = val;
     }
 
-    private double getTargetPhotoRingThickness() {
-        // derived from efficiency equation
-        return (1 / (1 - MAX_PHOTOSYNTHETIC_RING_EFFICIENCY)) - 1;
+//    final double randomAngle() {
+//        return random.nextDouble() * 2 * Math.PI;
+//    }
+
+//    private void die() {
+//        if (child != null)
+//            releaseChild();
+//        if (parent != null)
+//            parent.releaseChild();
+//        thruster = ZeroThruster.INSTANCE;
+//        alive = false;
+//    }
+
+    public final CellControl getControl() {
+        return control;
     }
 
-    private void energyDeficit(double growthEnergy) {
-        growthEnergy += burnFat(-growthEnergy);
-        if (growthEnergy < 0) {
-            //                if (-growthEnergy >= thruster.getEnergy())
-            //                    ; // TODO reduce thrust by growthEnergy
-            //                else
-            die();
-        }
+    public final double getFloatRingOuterRadius() {
+        return floatRing.getOuterRadius();
     }
 
-    private double burnFat(double energyRequired) {
-        double energyYield;
-        double areaRequired = energyRequired / FAT_BURN_YIELD;
-        if (areaRequired <= fatArea) {
-            energyYield = energyRequired;
-            fatArea -= areaRequired;
-        } else {
-            energyYield = fatArea * FAT_BURN_YIELD;
-            fatArea = 0;
-        }
-        areasToRadii();
-        return energyYield;
+    public final double getPhotoRingOuterRadius() {
+        return photoRing.getOuterRadius();
     }
 
-    private void die() {
-        if (child != null)
-            releaseChild();
-        if (parent != null)
-            parent.releaseChild();
-        thruster = ZeroThruster.INSTANCE;
-        alive = false;
+    public final double getFloatArea() {
+        return floatRing.getArea();
     }
 
-    // -- forces and motion --
-
-    void calculateForces() {
-        forceX = forceY = 0;
-        if (forces != null) {
-            forces.clear();
-        }
-        totalOverlap = 0;
-
-        // if (alive) {
-        //        forceX += thruster.getForceX();
-        //        forceY += thruster.getForceY();
-        // }
-
-        if (pulled) {
-            pullForce();
-        }
-        fluidResistanceForce();
-        wallCollisionForces();
-        pairInteractionForces();
+    public final double getPhotoArea() {
+        return photoRing.getArea();
     }
 
-    private void pullForce() {
-        double pullX = PULL_SPRING_CONSTANT * (pullPointX - centerX);
-        double pullY = PULL_SPRING_CONSTANT * (pullPointY - centerY);
-        forceX += pullX;
-        forceY += pullY;
-        if (forces != null) {
-            forces.add(new Force(0, 0, pullX, pullY));
-        }
+    public final Cell getChild() {
+        return child;
     }
 
-    private void fluidResistanceForce() {
-        double relativeVelocityX = velocityX - world.getCurrentX(centerX, centerY);
-        double relativeVelocityY = velocityY - world.getCurrentY(centerX, centerY);
-        double dragX = -Math.signum(relativeVelocityX) * World.FLUID_RESISTANCE * radius
-            * sqr(relativeVelocityX);
-        double dragY = -Math.signum(relativeVelocityY) * World.FLUID_RESISTANCE * radius
-            * sqr(relativeVelocityY);
-        forceX += dragX;
-        forceY += dragY;
-        if (forces != null) {
-            forces.add(new Force(0, 0, dragX, dragY));
-        }
+    //=========================================================================
+    // Physics
+    //=========================================================================
+
+    /**
+     * Sets the cell's initial position. All subsequent updates to position should be done by {@link #move()}.
+     */
+    public final void setPosition(final double centerX, final double centerY) {
+        assert centerX >= 0;
+        this.centerX = centerX;
+        this.centerY = centerY;
     }
 
-    private void wallCollisionForces() {
-        double leftOverlap = radius - centerX;
-        if (leftOverlap > 0) {
-            double wallForce = CellCellCollision.SPRING_CONSTANT * leftOverlap;
-            forceX += wallForce;
-            if (forces != null) {
-                forces.add(new Force(0 /*-radius*/, 0, wallForce, 0));
-            }
-            totalOverlap += leftOverlap;
-        }
-
-        double rightOverlap = centerX + radius - world.getWidth();
-        if (rightOverlap > 0) {
-            double wallForce = -CellCellCollision.SPRING_CONSTANT * rightOverlap;
-            forceX += wallForce;
-            if (forces != null) {
-                forces.add(new Force(0 /* radius */, 0, wallForce, 0));
-            }
-            totalOverlap += rightOverlap;
-        }
-
-        double topOverlap = radius - centerY;
-        if (topOverlap > 0) {
-            double wallForce = CellCellCollision.SPRING_CONSTANT * topOverlap;
-            forceY += wallForce;
-            if (forces != null) {
-                forces.add(new Force(0, 0 /*-radius*/, 0, wallForce));
-            }
-            totalOverlap += topOverlap;
-        }
-
-        double bottomOverlap = centerY + radius - world.getHeight();
-        if (bottomOverlap > 0) {
-            double wallForce = -CellCellCollision.SPRING_CONSTANT * bottomOverlap;
-            forceY += wallForce;
-            if (forces != null) {
-                forces.add(new Force(0, 0 /* radius */, 0, wallForce));
-            }
-            totalOverlap += bottomOverlap;
-        }
+    /**
+     * Sets the cell's initial velocity. All subsequent updates to velocity should be done by {@link #move()}.
+     */
+    public final void setVelocity(double velocityX, double velocityY) {
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
     }
 
-    private void pairInteractionForces() {
-        for (CellCellInteraction pair : interactingPairs) {
-            if (this == pair.getCell1()) {
-                forceX -= pair.getForceX();
-                forceY -= pair.getForceY();
-                if (forces != null) {
-                    forces.add(new Force(0, 0, -pair.getForceX(), -pair.getForceY()));
-                }
-            } else {
-                forceX += pair.getForceX();
-                forceY += pair.getForceY();
-                if (forces != null) {
-                    forces.add(new Force(0, 0, pair.getForceX(), pair.getForceY()));
-                }
-            }
-            totalOverlap += pair.getOverlap();
-        }
+    /**
+     * Adds a force on the cell that will be used by the next call to {@link #move()}. This is the only way to
+     * influence the cell's motion (after setting its initial position and possibly velocity).
+     *
+     * @param x X-component of the force
+     * @param y Y-component of the force
+     */
+    public final void addForce(final double x, final double y) {
+        netForceX += x;
+        netForceY += y;
     }
 
-    void move() {
-        velocityX += forceX / mass;
-        velocityY += forceY / mass;
+    /**
+     * Updates the cell's velocity and position per the forces currently on it, then clears the forces.
+     */
+    public final void move() {
+        // the acceleration to apply instantaneously at the beginning this time interval
+        final double accelerationX = netForceX / mass;
+        final double accelerationY = netForceY / mass;
+
+        // the velocity during this time interval
+        velocityX += accelerationX;
+        velocityY += accelerationY;
 
         // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
-        double speedSquared = sqr(velocityX) + sqr(velocityY);
-        if (speedSquared > sqr(MAX_SPEED)) {
-            double speed = Math.sqrt(speedSquared);
-            velocityX *= MAX_SPEED / speed;
-            velocityY *= MAX_SPEED / speed;
+        // numerical/discretization problems can cause extreme velocities; cap them
+        final double speedSquared = sqr(velocityX) + sqr(velocityY);
+        if (speedSquared > sqr(speedLimit)) {
+            final double throttling = speedLimit / Math.sqrt(speedSquared);
+            velocityX *= throttling;
+            velocityY *= throttling;
         }
 
+        // the position at the end of this time interval
         centerX += velocityX;
         centerY += velocityY;
+
+        // clear the forces
+        netForceX = netForceY = 0;
     }
 
-    // -- util --
-
-    private void radiiToAreas() {
-        fatArea = Math.PI * sqr(fatRadius);
-        photosyntheticRingArea = Math.PI * sqr(photosyntheticRingOuterRadius) - fatArea;
+    /**
+     * Returns the force exerted on the cell if it is in collision with a wall to its left (smaller x position).
+     *
+     * @param wallX x-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public final double calcMinXWallCollisionForce(final double wallX) {
+        final double overlap = radius - (centerX - wallX);
+        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
 
-    private void areasToRadii() {
-        fatRadius = Math.sqrt(fatArea / Math.PI);
-        photosyntheticRingOuterRadius = Math.sqrt(sqr(fatRadius) + photosyntheticRingArea / Math.PI);
-        setRadius(photosyntheticRingOuterRadius);
+    /**
+     * Returns the force exerted on the cell if it is in collision with a wall to its right (larger x position).
+     *
+     * @param wallX x-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public final double calcMaxXWallCollisionForce(final double wallX) {
+        final double overlap = centerX + radius - wallX;
+        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
-    private void setRadius(double value) {
-        radius = value;
-        mass = MASS_PER_AREA * Math.PI * sqr(radius);
+    /**
+     * Returns the force exerted on the cell if it is in collision with a wall below it (smaller y position).
+     *
+     * @param wallY y-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public final double calcMinYWallCollisionForce(final double wallY) {
+        final double overlap = radius - (centerY - wallY);
+        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
 
-    private static double sqr(double value) {
-        return value * value;
+    /**
+     * Returns the force exerted on the cell if it is in collision with a wall above it (larger y position).
+     *
+     * @param wallY y-position of the wall
+     * @return the collision force or zero if not in collision
+     */
+    public final double calcMaxYWallCollisionForce(final double wallY) {
+        final double overlap = centerY + radius - wallY;
+        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
-    // -- accessors --
+    /**
+     * Adds the forces due to the interaction of this cell with another cell, such as a collision or a bond.
+     * Updates the forces on both of the cells. Call this only once for any particular pair of cells.
+     *
+     * @param cell2 the other cell
+     */
+    public void addInterCellForces(final Cell cell2) {
+        final double relativeCenterX = centerX - cell2.centerX;
+        final double relativeCenterY = centerY - cell2.centerY;
+        final double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
+
+        if (centerSeparation != 0) {
+            if (bondedCells.contains(cell2)) {
+                addBondForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
+            } else {
+                addCollisionForces(cell2, relativeCenterX, relativeCenterY, centerSeparation);
+            }
+        }
+    }
+
+    /**
+     * Adds forces to the cells that will move them back toward just touching one another.
+     */
+    private void addBondForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
+        final double overlap = radius + cell2.radius - centerSeparation;
+        addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
+    }
+
+    /**
+     * Experimental. Adds forces to the cells that, in the absence of other forces, will restore the
+     * gap/overlap to zero on the next call to {@link #move()}.
+     */
+//    private void addBondForces2(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
+//        final double relativeVelocityX = velocityX - cell2.velocityX;
+//        final double relativeVelocityY = velocityY - cell2.velocityY;
+//        final double compressionFactor = ((radius + cell2.radius) / centerSeparation) - 1;
+//        final double massFactor = (1 / mass) + (1 / cell2.mass);
+//        final double forceX = ((compressionFactor * relativeCenterX) - relativeVelocityX) / massFactor;
+//        final double forceY = ((compressionFactor * relativeCenterY) - relativeVelocityY) / massFactor;
+//        addForce(forceX, forceY);
+//        cell2.addForce(-forceX, -forceY);
+//    }
+
+    /**
+     * Adds forces to the cells that will push them away from one another.
+     */
+    private void addCollisionForces(final Cell cell2, final double relativeCenterX, final double relativeCenterY, final double centerSeparation) {
+        final double overlap = radius + cell2.radius - centerSeparation;
+        if (overlap > 0) {
+            addOverlapForces(cell2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
+        }
+    }
+
+    private void addOverlapForces(Cell cell2, double relativeCenterX, double relativeCenterY, double centerSeparation, double overlap) {
+        final double force = calcOverlapForce(overlap);
+        final double forceX = (relativeCenterX / centerSeparation) * force;
+        final double forceY = (relativeCenterY / centerSeparation) * force;
+        addForce(forceX, forceY);
+        cell2.addForce(-forceX, -forceY);
+    }
+
+    public static double calcOverlapForce(final double overlap) {
+        return overlapForceFactor * overlap;
+    }
+
+    public final double getMass() {
+        return mass;
+    }
 
     public final double getRadius() {
         return radius;
+    }
+
+    public double getArea() {
+        return area;
     }
 
     public final double getCenterX() {
@@ -380,36 +475,43 @@ public class Cell {
         return centerY;
     }
 
-    public final double getFatRadius() {
-        return fatRadius;
+    public final double getVelocityX() {
+        return velocityX;
     }
 
-    public final double getPhotosyntheticRingOuterRadius() {
-        return photosyntheticRingOuterRadius;
+    public final double getVelocityY() {
+        return velocityY;
     }
 
-    public final boolean isAlive() {
-        return alive;
+    public final double getNetForceX() {
+        return netForceX;
     }
 
-    public final Cell getChild() {
-        return child;
+    public final double getNetForceY() {
+        return netForceY;
     }
 
-    public final void setRecordForces(boolean value) {
-        forces = value ? new ArrayList<>() : null;
+    public final Set<Cell> getBondedCells() {
+        return Collections.unmodifiableSet(bondedCells);
     }
 
-    public final List<Force> getForces() {
-        return forces;
+    //=========================================================================
+    // Parameters
+    //=========================================================================
+
+    public static double getSpeedLimit() {
+        return speedLimit;
     }
 
-    public final void setPulled(boolean value) {
-        pulled = value;
+    public static void setSpeedLimit(final double val) {
+        speedLimit = val;
     }
 
-    public final void setPullPoint(double x, double y) {
-        pullPointX = x;
-        pullPointY = y;
+    public static double getOverlapForceFactor() {
+        return overlapForceFactor;
+    }
+
+    public static void setOverlapForceFactor(final double val) {
+        overlapForceFactor = val;
     }
 }
