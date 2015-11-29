@@ -15,7 +15,7 @@ public class WeightTest {
     public void setUp() {
         weight = new Weight();
         cell = new Cell(10);
-        cell.setPosition(0, -100);
+        cell.setCenterPosition(0, -100);
         maxDisplacement = cell.getArea();
     }
 
@@ -62,7 +62,7 @@ public class WeightTest {
             result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
-        cell.setPosition(0, -cell.getRadius());
+        cell.setCenterPosition(0, -cell.getRadius());
         weight.addForcesToCell(cell);
 
         assertNetForce(0, 0, cell);
@@ -75,7 +75,7 @@ public class WeightTest {
             result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
-        cell.setPosition(0, cell.getRadius());
+        cell.setCenterPosition(0, cell.getRadius());
         weight.addForcesToCell(cell);
 
         assertNetForce(0, -cell.getMass() * Weight.getGravity(), cell);
@@ -88,7 +88,7 @@ public class WeightTest {
             result = Weight.getFluidDensity() * maxDisplacement;
         }};
 
-        cell.setPosition(0, 0);
+        cell.setCenterPosition(0, 0);
         weight.addForcesToCell(cell);
 
         assertNetForce(0, -cell.getMass() * Weight.getGravity() / 2, cell);

@@ -6,7 +6,18 @@ import static fga.evo.model.Assert.*;
 import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.*;
 
-public class CellTest_Biology {
+public class CellTest {
+    @Test
+    public void testGetMass() {
+        assertEquals(PhotoRing.parameters.getTissueDensity() * Math.PI, new Cell(1).getMass(), 0);
+    }
+
+    @Test
+    public void testGetArea() {
+        Cell bigCell = new Cell(5);
+        assertEquals(Math.PI * 25, bigCell.getArea(), 0);
+    }
+
     @Test
     public void testPhotosynthesize() {
         Cell cell = new Cell(3);

@@ -80,7 +80,7 @@ public class World {
         // radius. Works for finding shadowing, too.
         for (int j = index + 1; j < cells.size(); j++) {
             Cell cell2 = cells.get(j);
-            cell.addInterCellForces(cell2);
+            BallForces.addInterBallForces(cell, cell2);
         }
     }
 

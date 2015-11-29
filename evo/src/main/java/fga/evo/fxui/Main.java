@@ -88,15 +88,15 @@ public class Main extends Application {
     private void populate() {
 //        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
         Cell cell = new Cell(10, new DuckweedControl());
-        cell.setPosition(WIDTH / 2, -WATER_DEPTH / 2);
+        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
         world.addCell(cell);
 
 //        Cell cell2 = new Cell(10);
-//        cell2.setPosition(230, 250);
+//        cell2.setCenterPosition(230, 250);
 //        world.addCell(cell2);
 //
 //        Cell cell3 = new Cell(10);
-//        cell3.setPosition(210, 250);
+//        cell3.setCenterPosition(210, 250);
 //        world.addCell(cell3);
 //
 //        cell.addBond(cell2);
@@ -104,17 +104,17 @@ public class Main extends Application {
 //
 //        Cell cell4 = new Cell(10);
 //        cell4.setPhysics(2);
-//        cell4.setPosition(100, 100);
+//        cell4.setCenterPosition(100, 100);
 //        world.addCell(cell4);
 //
 //        Cell cell5 = new Cell(10);
 //        cell5.setPhysics(2);
-//        cell5.setPosition(80, 100);
+//        cell5.setCenterPosition(80, 100);
 //        world.addCell(cell5);
 //
 //        Cell cell6 = new Cell(10);
 //        cell6.setPhysics(2);
-//        cell6.setPosition(60, 100);
+//        cell6.setCenterPosition(60, 100);
 //        world.addCell(cell6);
 //
 //        cell4.addBond(cell5);

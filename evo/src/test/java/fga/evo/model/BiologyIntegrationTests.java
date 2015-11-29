@@ -10,7 +10,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
         Cell cell = addCell(1, c -> c.requestPhotoAreaResize(1000));
-        cell.setPosition(5, -5);
+        cell.setCenterPosition(5, -5);
 
         world.tick();
 
@@ -24,12 +24,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
         cell.addEnergy(100);
 
-        cell.setPosition(100, -100);
+        cell.setCenterPosition(100, -100);
         world.tick();
 
         assertEquals(0, cell.getVelocityY(), 0.01);
 
-        cell.setPosition(100, -101);
+        cell.setCenterPosition(100, -101);
         world.tick();
         world.tick();
         world.tick();
@@ -45,12 +45,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         Cell cell = addCell(1, new FixedDepthSeekingControl(100));
         cell.addEnergy(100);
 
-        cell.setPosition(100, -100);
+        cell.setCenterPosition(100, -100);
         world.tick();
 
         assertEquals(0, cell.getVelocityY(), 0.01);
 
-        cell.setPosition(100, -99);
+        cell.setCenterPosition(100, -99);
         world.tick();
         world.tick();
         world.tick();
@@ -64,7 +64,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testReproduction() {
         final double donation = 2;
         Cell cell = addCell(10, new ParentChildControl(donation));
-        cell.setPosition(5, -5);
+        cell.setCenterPosition(5, -5);
         cell.addEnergy(10);
 
         world.tick();

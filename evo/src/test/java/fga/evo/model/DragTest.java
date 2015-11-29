@@ -13,7 +13,7 @@ public class DragTest {
     @Before
     public void setUp() {
         cell = new Cell(2);
-        cell.setPosition(0, -10);
+        cell.setCenterPosition(0, -10);
         drag = new Drag();
     }
 

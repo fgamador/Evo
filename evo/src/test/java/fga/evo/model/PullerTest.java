@@ -17,7 +17,7 @@ public class PullerTest {
 
     @Test
     public void testAddForceToCell_NoPull() {
-        cell.setPosition(5, -5);
+        cell.setCenterPosition(5, -5);
         puller.setPosition(5, -5);
 
         puller.addForceToCell();
@@ -27,7 +27,7 @@ public class PullerTest {
 
     @Test
     public void testAddForceToCell_Pull() {
-        cell.setPosition(5, -5);
+        cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
 
         puller.addForceToCell();
@@ -37,7 +37,7 @@ public class PullerTest {
 
     @Test
     public void testAddForceToCell_PullForceFactor() {
-        cell.setPosition(5, -5);
+        cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
 
         double defaultForceFactor = Puller.getPullForceFactor();
