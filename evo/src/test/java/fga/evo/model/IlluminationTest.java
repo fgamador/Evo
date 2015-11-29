@@ -39,7 +39,7 @@ public class IlluminationTest {
     @Test
     public void testIlluminateCell() {
         Cell cell = new Cell(1);
-        cell.setPosition(50, -50);
+        cell.setCenterPosition(50, -50);
 
         lighting.addEnergyToCell(cell);
 

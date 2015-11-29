@@ -31,8 +31,8 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // no cell or wall overlap
-        cell1.setPosition(3, -3);
-        cell2.setPosition(7, -7);
+        cell1.setCenterPosition(3, -3);
+        cell2.setCenterPosition(7, -7);
 
         world.tick();
 
@@ -48,8 +48,8 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // overlap walls by 0.5
-        cell1.setPosition(0.5, -0.5);
-        cell2.setPosition(499.5, -499.5);
+        cell1.setCenterPosition(0.5, -0.5);
+        cell2.setCenterPosition(499.5, -499.5);
 
         world.tick();
 
@@ -64,7 +64,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         world.addEnvironmentalInfluence(new Walls(0, 500, -500, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
-        cell.setPosition(1, -250); // overlap 0.0, accel 0.0
+        cell.setCenterPosition(1, -250); // overlap 0.0, accel 0.0
 
         world.tick();
 
@@ -92,8 +92,8 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // overlap by 1
-        cell1.setPosition(5, -5);
-        cell2.setPosition(6, -5);
+        cell1.setCenterPosition(5, -5);
+        cell2.setCenterPosition(6, -5);
 
         world.tick();
 
@@ -129,7 +129,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testTick_Pull() {
         Cell cell = addCell(1);
-        cell.setPosition(5, -5);
+        cell.setCenterPosition(5, -5);
         world.startPull(cell);
 
         world.setPullPoint(4, -4);
@@ -164,9 +164,9 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 //        cell1.addBond(cell2);
 //        cell2.addBond(cell3);
 //        // just touching: no bond forces
-//        cell1.setPosition(180, -200);
-//        cell2.setPosition(200, -200);
-//        cell3.setPosition(220, -200);
+//        cell1.setCenterPosition(180, -200);
+//        cell2.setCenterPosition(200, -200);
+//        cell3.setCenterPosition(220, -200);
 //
 //        world.startPull(cell2);
 //        world.setPullPoint(200, -205);
