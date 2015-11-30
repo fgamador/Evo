@@ -8,8 +8,6 @@ import static fga.evo.model.Util.sqr;
 /**
  * The basic living unit in evo. A circular entity that can move and grow and reproduce.
  * Cells can also bond together to form larger organisms.
- *
- * @author Franz Amador
  */
 public class Cell extends Ball implements CellControl.CellApi {
     private double mass; // cached total ring mass

@@ -2,15 +2,13 @@ package fga.evo.model;
 
 /**
  * The light illuminating the cells.
- *
- * @author Franz Amador
  */
 public class Illumination extends EnvironmentalInfluence {
     private static double MAX_INTENSITY = 2;
 
     private double depth;
 
-    public Illumination(final double depth) {
+    public Illumination(double depth) {
         if (depth <= 0) {
             throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
         }
@@ -19,11 +17,11 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     @Override
-    public void addEnergyToCell(final Cell cell) {
+    public void addEnergyToCell(Cell cell) {
         cell.photosynthesize(calcLightIntensity(cell.getCenterY()));
     }
 
-    public final double calcLightIntensity(double y) {
+    public double calcLightIntensity(double y) {
         return (y >= 0) ? MAX_INTENSITY : MAX_INTENSITY * (depth + y) / depth;
     }
 

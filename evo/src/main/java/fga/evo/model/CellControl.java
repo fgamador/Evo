@@ -1,7 +1,7 @@
 package fga.evo.model;
 
 /**
- * @author Franz Amador
+ * The brains and eventually the genome of a cell.
  */
 public interface CellControl {
     void allocateEnergy(CellApi cell);

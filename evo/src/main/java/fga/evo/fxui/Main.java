@@ -37,45 +37,67 @@ public class Main extends Application {
         addInfluences();
         populate();
 
+        createMainWindow(primaryStage);
+
+//        ControlWindow controls = new ControlWindow(primaryStage, this);
+//        controls.show();
+    }
+
+    private void createMainWindow(Stage primaryStage) {
+        Group root = createSceneRoot(primaryStage);
+        addAirRectangle(root);
+        addWaterRectangle(root);
+        addCellCircles(root);
+        addMouseListeners(root);
+        startAnimation();
+        primaryStage.show();
+    }
+
+    private Group createSceneRoot(Stage primaryStage) {
         Group root = new Group();
         Scene scene = new Scene(root, WIDTH, AIR_HEIGHT + WATER_DEPTH, Color.BLACK);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Evo");
+        return root;
+    }
 
-        // TODO gradient from sky blue down to whitish blue
-//        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT, Color.color(0.8, 0.95, 1));
+    private void addAirRectangle(Group root) {
         Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT,
             new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.color(0.75, 0.9, 1)),
                 new Stop(1, Color.color(0.9, 0.98, 1))));
         root.getChildren().add(air);
+    }
+
+    private void addWaterRectangle(Group root) {
         Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
             new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                 new Stop(0, Color.color(0.1, 0.26, 0.55)), // Color.web("#111199")),
                 new Stop(1, Color.BLACK)));
         water.setY(toSceneY(0));
         root.getChildren().add(water);
+    }
 
+    private void addCellCircles(Group root) {
         cellCircles = new Group();
         for (Cell cell : world.getCells()) {
             addCell(cell);
         }
         root.getChildren().add(cellCircles);
+    }
 
+    private void addMouseListeners(Group root) {
         root.setOnMouseDragged(this::onMouseDragged);
 //        root.setOnMouseDragged(e -> onMouseDragged(e));
         root.setOnMouseReleased(e -> onMouseReleased());
+    }
 
+    private void startAnimation() {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
         timeline.getKeyFrames().add(kf);
         timeline.play();
-
-        primaryStage.show();
-
-//        ControlWindow controls = new ControlWindow(primaryStage, this);
-//        controls.show();
     }
 
     private void addInfluences() {

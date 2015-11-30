@@ -115,7 +115,7 @@ public class BallForces {
         return overlapForceFactor;
     }
 
-    public static void setOverlapForceFactor(final double val) {
+    public static void setOverlapForceFactor(double val) {
         overlapForceFactor = val;
     }
 }

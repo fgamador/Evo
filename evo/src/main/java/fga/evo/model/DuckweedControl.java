@@ -2,8 +2,6 @@ package fga.evo.model;
 
 /**
  * A hard-coded control that emulates duckweed, which floats on the surface and reproduces until it fills the surface layer.
- *
- * @author Franz Amador
  */
 public class DuckweedControl extends FixedDepthSeekingControl {
     public DuckweedControl() {

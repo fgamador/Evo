@@ -14,11 +14,11 @@ public class World {
     private List<Cell> cells = new ArrayList<>();
     private Puller puller;
 
-    public final void addEnvironmentalInfluence(final EnvironmentalInfluence influence) {
+    public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);
     }
 
-    public final void addCell(final Cell cell) {
+    public void addCell(Cell cell) {
         cells.add(cell);
     }
 
@@ -64,14 +64,14 @@ public class World {
         }
     }
 
-    private void addEnergyToCell(final Cell cell) {
+    private void addEnergyToCell(Cell cell) {
         for (EnvironmentalInfluence influence : environmentalInfluences) {
             influence.addEnergyToCell(cell);
         }
         cell.addDonatedEnergy();
     }
 
-    private void addForcesToCell(final int index) {
+    private void addForcesToCell(int index) {
         Cell cell = cells.get(index);
 
         for (EnvironmentalInfluence influence : environmentalInfluences) {
@@ -92,11 +92,11 @@ public class World {
         return cells;
     }
 
-    public void startPull(final Cell cell) {
+    public void startPull(Cell cell) {
         puller = new Puller(cell);
     }
 
-    public void setPullPoint(final double x, final double y) {
+    public void setPullPoint(double x, double y) {
         puller.setPosition(x, y);
     }
 
