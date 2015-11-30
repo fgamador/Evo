@@ -6,15 +6,19 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PhysicsIntegrationTests extends WorldIntegrationTests {
     private double defaultTissueDensity;
+    private int defaultSubticksPerTick;
 
     @Before
     public void setUp() {
         defaultTissueDensity = PhotoRing.parameters.getTissueDensity();
+        defaultSubticksPerTick = World.getSubticksPerTick();
+
         // ensure that a cell with radius 1 has mass 1
         // TODO mock the mass
         PhotoRing.parameters.setTissueDensity(1 / Math.PI);
@@ -23,6 +27,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @After
     public void tearDown() {
         PhotoRing.parameters.setTissueDensity(defaultTissueDensity);
+        World.setSubticksPerTick(defaultSubticksPerTick);
     }
 
     @Test
@@ -85,6 +90,26 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
         assertVelocity(1, 0, cell);
         assertPosition(2, -250, cell); // overlap 0, accel 0
+    }
+
+    @Test
+    public void testMultipleWallCollisions_DoubleResolution() {
+        World.setSubticksPerTick(2);
+        world.addEnvironmentalInfluence(new Walls(0, 3, -20, 0));
+        Cell cell = addCell(1);
+        cell.setVelocity(-1, 0);
+        cell.setCenterPosition(1, -10);
+
+        for (int i = 0; i < 1000; i++) {
+            world.tick();
+            if (1 < cell.getCenterX() && cell.getCenterX() < 2) {
+                if (cell.getVelocityX() > 0) {
+                    assertEquals(1, cell.getVelocityX(), 0.05);
+                } else {
+                    assertEquals(-1, cell.getVelocityX(), 0.05);
+                }
+            }
+        }
     }
 
     @Test

@@ -21,7 +21,7 @@ public class BallTest {
 
     @Test
     public void testMove_NoForces() {
-        ball.move();
+        ball.move(1);
 
         assertVelocity(0, 0, ball);
         assertPosition(0, 0, ball);
@@ -31,7 +31,7 @@ public class BallTest {
     public void testMove_OneForce() {
         ball.addForce(0.5, -1);
 
-        ball.move();
+        ball.move(1);
 
         assertVelocity(0.5, -1, ball);
         assertPosition(0.5, -1, ball);
@@ -42,7 +42,7 @@ public class BallTest {
         ball.addForce(0.5, -1);
         ball.addForce(1.5, 2);
 
-        ball.move();
+        ball.move(1);
 
         assertVelocity(2, 1, ball);
         assertPosition(2, 1, ball);
@@ -51,9 +51,9 @@ public class BallTest {
     @Test
     public void testMove_Coasting() {
         ball.addForce(0.5, -1);
-        ball.move();
+        ball.move(1);
 
-        ball.move();
+        ball.move(1);
 
         assertVelocity(0.5, -1, ball);
         assertPosition(1, -2, ball);
@@ -65,7 +65,7 @@ public class BallTest {
         heavyBall.setMass(2);
         heavyBall.addForce(1, -2);
 
-        heavyBall.move();
+        heavyBall.move(1);
 
         assertVelocity(0.5, -1, heavyBall);
         assertPosition(0.5, -1, heavyBall);
@@ -75,9 +75,39 @@ public class BallTest {
     public void testMove_SpeedLimit() {
         ball.setVelocity(8 / SQRT_2, -8 / SQRT_2);
 
-        ball.move();
+        ball.move(1);
 
         assertEquals(4, Ball.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
+    }
+
+    @Test
+    public void testMove_DoubleResolution_ConstantVelocity() {
+        ball.setVelocity(1, 1);
+
+        ball.move(2);
+
+        assertVelocity(1, 1, ball);
+        assertPosition(0.5, 0.5, ball);
+
+        ball.move(2);
+
+        assertVelocity(1, 1, ball);
+        assertPosition(1, 1, ball);
+    }
+
+    @Test
+    public void testMove_DoubleResolution_ConstantForce() {
+        ball.addForce(1, 1);
+        ball.move(2);
+
+        assertVelocity(0.5, 0.5, ball);
+        assertPosition(0.25, 0.25, ball);
+
+        ball.addForce(1, 1);
+        ball.move(2);
+
+        assertVelocity(1, 1, ball);
+        assertPosition(0.75, 0.75, ball);
     }
 }

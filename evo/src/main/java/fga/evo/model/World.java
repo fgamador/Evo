@@ -8,6 +8,8 @@ import java.util.List;
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
 public class World {
+    private static int subticksPerTick = 1;
+
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private Puller puller;
@@ -25,11 +27,13 @@ public class World {
      * TODO parallelize the loops
      */
     public void tick() {
-        tickBiology();
-        tickPhysics();
+        for (int i = 0; i < subticksPerTick; i++) {
+            subtickBiology();
+            subtickPhysics();
+        }
     }
 
-    private void tickBiology() {
+    private void subtickBiology() {
         for (Cell cell : cells) {
             addEnergyToCell(cell);
         }
@@ -46,7 +50,7 @@ public class World {
         cells.addAll(newCells);
     }
 
-    private void tickPhysics() {
+    private void subtickPhysics() {
         if (puller != null) {
             puller.addForceToCell();
         }
@@ -56,7 +60,7 @@ public class World {
         }
 
         for (Cell cell : cells) {
-            cell.move();
+            cell.move(subticksPerTick);
         }
     }
 
@@ -102,5 +106,17 @@ public class World {
 
     public boolean isPulling() {
         return puller != null;
+    }
+
+    //=========================================================================
+    // Parameters
+    //=========================================================================
+
+    public static int getSubticksPerTick() {
+        return subticksPerTick;
+    }
+
+    public static void setSubticksPerTick(int val) {
+        subticksPerTick = val;
     }
 }
