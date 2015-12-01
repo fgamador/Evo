@@ -9,49 +9,49 @@ public class BallForces {
     static double overlapForceFactor = 1;
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a wall to its left (smaller x position).
+     * Returns the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
      *
      * @param ball  the ball
-     * @param wallX x-position of the wall
+     * @param wallX x-position of the barrier
      * @return the collision force or zero if not in collision
      */
-    static double calcMinXWallCollisionForce(Ball ball, double wallX) {
+    static double calcLeftBarrierCollisionForce(Ball ball, double wallX) {
         double overlap = ball.getRadius() - (ball.getCenterX() - wallX);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a wall to its right (larger x position).
+     * Returns the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
      *
      * @param ball  the ball
-     * @param wallX x-position of the wall
+     * @param wallX x-position of the barrier
      * @return the collision force or zero if not in collision
      */
-    static double calcMaxXWallCollisionForce(Ball ball, double wallX) {
+    static double calcRightBarrierCollisionForce(Ball ball, double wallX) {
         double overlap = ball.getCenterX() + ball.getRadius() - wallX;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a wall below it (smaller y position).
+     * Returns the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
      *
      * @param ball  the ball
-     * @param wallY y-position of the wall
+     * @param wallY y-position of the barrier
      * @return the collision force or zero if not in collision
      */
-    static double calcMinYWallCollisionForce(Ball ball, double wallY) {
+    static double calcLowBarrierCollisionForce(Ball ball, double wallY) {
         double overlap = ball.getRadius() - (ball.getCenterY() - wallY);
         return (overlap > 0) ? calcOverlapForce(overlap) : 0;
     }
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a wall above it (larger y position).
+     * Returns the force exerted on the ball if it is in collision with a barrier above it (larger y position).
      *
      * @param ball  the ball
-     * @param wallY y-position of the wall
+     * @param wallY y-position of the barrier
      * @return the collision force or zero if not in collision
      */
-    static double calcMaxYWallCollisionForce(Ball ball, double wallY) {
+    static double calcHighBarrierCollisionForce(Ball ball, double wallY) {
         double overlap = ball.getCenterY() + ball.getRadius() - wallY;
         return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
     }
@@ -64,39 +64,45 @@ public class BallForces {
      * @param ball2 another ball
      */
     static void addInterBallForces(Ball ball1, Ball ball2) {
-        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
-        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
-        double centerSeparation = Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
+        double centerSeparation = calcCenterSeparation(ball1, ball2);
 
         if (centerSeparation != 0) {
             if (ball1.isBondedTo(ball2)) {
-                addBondForces(ball1, ball2, relativeCenterX, relativeCenterY, centerSeparation);
+                addBondForces(ball1, ball2, centerSeparation);
             } else {
-                addCollisionForces(ball1, ball2, relativeCenterX, relativeCenterY, centerSeparation);
+                addCollisionForces(ball1, ball2, centerSeparation);
             }
         }
+    }
+
+    private static double calcCenterSeparation(Ball ball1, Ball ball2) {
+        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
+        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
+        return Math.sqrt(sqr(relativeCenterX) + sqr(relativeCenterY));
     }
 
     /**
      * Adds forces to the balls that will move them back toward just touching one another.
      */
-    private static void addBondForces(Ball ball1, Ball ball2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
+    private static void addBondForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
-        addOverlapForces(ball1, ball2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
+        addOverlapForces(ball1, ball2, centerSeparation, overlap);
     }
 
     /**
      * Adds forces to the balls that will push them away from one another.
      */
-    private static void addCollisionForces(Ball ball1, Ball ball2, double relativeCenterX, double relativeCenterY, double centerSeparation) {
+    private static void addCollisionForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         if (overlap > 0) {
-            addOverlapForces(ball1, ball2, relativeCenterX, relativeCenterY, centerSeparation, overlap);
+            addOverlapForces(ball1, ball2, centerSeparation, overlap);
         }
     }
 
-    private static void addOverlapForces(Ball ball1, Ball ball2, double relativeCenterX, double relativeCenterY, double centerSeparation, double overlap) {
+    private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
         double force = calcOverlapForce(overlap);
+        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
+        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
         double forceX = (relativeCenterX / centerSeparation) * force;
         double forceY = (relativeCenterY / centerSeparation) * force;
         ball1.addForce(forceX, forceY);

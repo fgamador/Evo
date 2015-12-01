@@ -5,13 +5,13 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 
-public class WallsTest {
-    private Walls walls;
+public class SurroundingWallsTest {
+    private SurroundingWalls walls;
     private Cell cell;
 
     @Before
     public void setUp() {
-        walls = new Walls(0, 10, -10, 0);
+        walls = new SurroundingWalls(0, 10, -10, 0);
         cell = new Cell(1);
     }
 
@@ -44,7 +44,7 @@ public class WallsTest {
 
     @Test
     public void testAddCollisionForcesToCell_HighCeiling() {
-        walls = new Walls(-5, 5, -5, 5);
+        walls = new SurroundingWalls(-5, 5, -5, 5);
         cell.setCenterPosition(0, 0);
 
         walls.addForcesToCell(cell);

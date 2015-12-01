@@ -101,7 +101,7 @@ public class Main extends Application {
     }
 
     private void addInfluences() {
-        world.addEnvironmentalInfluence(new Walls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
+        world.addEnvironmentalInfluence(new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
         world.addEnvironmentalInfluence(new Weight());
         world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));

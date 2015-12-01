@@ -32,7 +32,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testNoCollision() {
-        world.addEnvironmentalInfluence(new Walls(0, 10, -10, 0));
+        world.addEnvironmentalInfluence(new SurroundingWalls(0, 10, -10, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // no cell or wall overlap
@@ -49,7 +49,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testBoxCornerCollisions() {
-        world.addEnvironmentalInfluence(new Walls(0, 500, -500, 0));
+        world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // overlap walls by 0.5
@@ -66,7 +66,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testFullWallCollision() {
-        world.addEnvironmentalInfluence(new Walls(0, 500, -500, 0));
+        world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
         cell.setCenterPosition(1, -250); // overlap 0.0, accel 0.0
@@ -95,7 +95,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testMultipleWallCollisions_DoubleResolution() {
         World.setSubticksPerTick(2);
-        world.addEnvironmentalInfluence(new Walls(0, 3, -20, 0));
+        world.addEnvironmentalInfluence(new SurroundingWalls(0, 3, -20, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
         cell.setCenterPosition(1, -10);
