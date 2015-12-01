@@ -128,6 +128,18 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         assertPosition(7, -5, cell2);
     }
 
+//    @Test
+//    public void testCellBond() {
+//        Cell cell1 = addCell(10);
+//        Cell cell2 = addCell(10);
+//        cell1.addBond(cell2);
+//        // overlap by 1
+//        cell1.setCenterPosition(10, 0);
+//        cell2.setCenterPosition(19, 0);
+//
+//        world.tick();
+//    }
+
     @Test
     public void testFluidDrag() {
         world.addEnvironmentalInfluence(new Drag());

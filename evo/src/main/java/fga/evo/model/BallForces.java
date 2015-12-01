@@ -6,7 +6,8 @@ import static fga.evo.model.Util.sqr;
  * Collision and bond forces for balls.
  */
 public class BallForces {
-    static double overlapForceFactor = 1;
+    private static double overlapForceFactor = 1;
+    private static double dampingForceFactor = 1;
 
     /**
      * Returns the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
@@ -87,6 +88,7 @@ public class BallForces {
     private static void addBondForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         addOverlapForces(ball1, ball2, centerSeparation, overlap);
+        addDampingForces(ball1, ball2);
     }
 
     /**
@@ -109,6 +111,16 @@ public class BallForces {
         ball2.addForce(-forceX, -forceY);
     }
 
+    // TODO test
+    private static void addDampingForces(Ball ball1, Ball ball2) {
+        double relativeVelocityX = ball1.getVelocityX() - ball2.getVelocityX();
+        double relativeVelocityY = ball1.getVelocityY() - ball2.getVelocityY();
+        double forceX = -dampingForceFactor * relativeVelocityX;
+        double forceY = -dampingForceFactor * relativeVelocityY;
+        ball1.addForce(forceX, forceY);
+        ball2.addForce(-forceX, -forceY);
+    }
+
     static double calcOverlapForce(double overlap) {
         return overlapForceFactor * overlap;
     }
@@ -123,5 +135,13 @@ public class BallForces {
 
     public static void setOverlapForceFactor(double val) {
         overlapForceFactor = val;
+    }
+
+    public static double getDampingForceFactor() {
+        return dampingForceFactor;
+    }
+
+    public static void setDampingForceFactor(double val) {
+        dampingForceFactor = val;
     }
 }
