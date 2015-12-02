@@ -60,11 +60,18 @@ public class Main extends Application {
 
         Cell cell1 = new Cell(20, new DuckweedControl());
         world.addCell(cell1);
+
         Cell cell2 = new Cell(1, c -> c.requestPhotoAreaResize(1));
         world.addCell(cell2);
         cell1.addBond(cell2);
+
+        Cell cell3 = new Cell(1, c -> c.requestPhotoAreaResize(1));
+        world.addCell(cell3);
+        cell1.addBond(cell3);
+
         cell1.setCenterPosition(250, -250);
         cell2.setCenterPosition(270, -250);
+        cell3.setCenterPosition(230, -250);
     }
 
     private void createMainWindow(Stage primaryStage) {

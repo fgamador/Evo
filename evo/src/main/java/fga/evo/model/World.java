@@ -27,13 +27,13 @@ public class World {
      * TODO parallelize the loops
      */
     public void tick() {
+        tickBiology();
         for (int i = 0; i < subticksPerTick; i++) {
-            subtickBiology();
             subtickPhysics();
         }
     }
 
-    private void subtickBiology() {
+    private void tickBiology() {
         for (Cell cell : cells) {
             addEnergyToCell(cell);
         }
@@ -50,6 +50,13 @@ public class World {
         cells.addAll(newCells);
     }
 
+    private void addEnergyToCell(Cell cell) {
+        for (EnvironmentalInfluence influence : environmentalInfluences) {
+            influence.addEnergyToCell(cell);
+        }
+        cell.addDonatedEnergy();
+    }
+
     private void subtickPhysics() {
         if (puller != null) {
             puller.addForceToCell();
@@ -62,13 +69,6 @@ public class World {
         for (Cell cell : cells) {
             cell.move(subticksPerTick);
         }
-    }
-
-    private void addEnergyToCell(Cell cell) {
-        for (EnvironmentalInfluence influence : environmentalInfluences) {
-            influence.addEnergyToCell(cell);
-        }
-        cell.addDonatedEnergy();
     }
 
     private void addForcesToCell(int index) {
