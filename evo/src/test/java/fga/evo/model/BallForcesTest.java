@@ -172,4 +172,16 @@ public class BallForcesTest {
         assertNetForce(0, -1, ball);
         assertNetForce(0, 1, ball2);
     }
+
+    @Test
+    public void testAddInterBallForces_Bonded_Damping() {
+        ball.addBond(ball2);
+        ball2.setCenterPosition(2, 0);
+        ball2.setVelocity(-1, 0);
+
+        BallForces.addInterBallForces(ball, ball2);
+
+        assertNetForce(-1, 0, ball);
+        assertNetForce(1, 0, ball2);
+    }
 }

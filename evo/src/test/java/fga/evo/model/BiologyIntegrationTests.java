@@ -2,6 +2,8 @@ package fga.evo.model;
 
 import org.junit.Test;
 
+import java.util.Collection;
+
 import static fga.evo.model.Assert.*;
 import static org.junit.Assert.*;
 
@@ -67,14 +69,31 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         cell.setCenterPosition(5, -5);
         cell.addEnergy(10);
 
-        world.tick();
+        Collection<Cell> newCells = world.tick();
 
+        assertEquals(1, newCells.size());
         assertEquals(2, world.getCells().size());
         Cell child = cell.getChild();
         assertEquals(0, child.getRadius(), 0);
+        assertEquals(0, child.getMass(), 0);
+        assertEquals(5, child.getCenterX(), 20);
+        assertEquals(-5, child.getCenterY(), 20);
+    }
+
+    @Test
+    public void testGrowthAfterReproduction() {
+        final double donation = 2;
+        Cell cell = addCell(10, new ParentChildControl(donation));
+        cell.setCenterPosition(5, -5);
+        cell.addEnergy(10);
 
         world.tick();
+        Collection<Cell> newCells = world.tick();
 
-        assertNotEquals(0, child.getRadius(), 0);
+        assertEquals(0, newCells.size());
+        assertEquals(2, world.getCells().size());
+        Cell child = cell.getChild();
+        assertTrue(child.getRadius() > 0);
+        assertTrue(child.getMass() > 0);
     }
 }

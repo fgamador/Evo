@@ -111,7 +111,6 @@ public class BallForces {
         ball2.addForce(-forceX, -forceY);
     }
 
-    // TODO test
     private static void addDampingForces(Ball ball1, Ball ball2) {
         double relativeVelocityX = ball1.getVelocityX() - ball2.getVelocityX();
         double relativeVelocityY = ball1.getVelocityY() - ball2.getVelocityY();

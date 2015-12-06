@@ -2,6 +2,7 @@ package fga.evo.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,28 +27,28 @@ public class World {
      * Propagates a simulation clock tick through the model.
      * TODO parallelize the loops
      */
-    public void tick() {
-        tickBiology();
+    public Collection<Cell> tick() {
+        Collection<Cell> newCells = tickBiology();
         for (int i = 0; i < subticksPerTick; i++) {
             subtickPhysics();
         }
+        cells.addAll(newCells);
+        return newCells;
     }
 
-    private void tickBiology() {
+    private Collection<Cell> tickBiology() {
         for (Cell cell : cells) {
             addEnergyToCell(cell);
         }
 
         Collection<Cell> newCells = new ArrayList<>();
-
         for (Cell cell : cells) {
             Cell newChild = cell.useEnergy();
             if (newChild != null) {
                 newCells.add(newChild);
             }
         }
-
-        cells.addAll(newCells);
+        return newCells;
     }
 
     private void addEnergyToCell(Cell cell) {

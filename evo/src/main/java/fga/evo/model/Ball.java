@@ -59,6 +59,8 @@ public abstract class Ball {
     }
 
     private void updateVelocity(int subticksPerTick) {
+        assert getMass() > 0;
+
         // the acceleration to apply instantaneously at the beginning of this subtick
         double accelerationX = netForceX / getMass();
         double accelerationY = netForceY / getMass();

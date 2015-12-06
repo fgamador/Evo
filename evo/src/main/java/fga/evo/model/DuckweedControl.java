@@ -11,11 +11,12 @@ public class DuckweedControl extends FixedDepthSeekingControl {
     @Override
     public void allocateEnergy(CellApi cell) {
         super.allocateEnergy(cell);
-        // grow photo area up to TODO
-        final double desiredPhotoArea = 500 * Math.PI;
-        final double desiredDeltaPhotoArea = desiredPhotoArea - cell.getPhotoArea();
-        cell.requestPhotoAreaResize(desiredDeltaPhotoArea / 10);
+
+        double desiredPhotoArea = 300 * Math.PI;
+        double desiredDeltaPhotoArea = desiredPhotoArea - cell.getPhotoArea();
+        cell.requestPhotoAreaResize(desiredDeltaPhotoArea / 50);
+
         // TODO how to detach child? how to stop when layer is full?
-        // cell.requestChildDonation(cell.getArea() - 90 * Math.PI);
+        cell.requestChildDonation(5 - desiredDeltaPhotoArea);
     }
 }
