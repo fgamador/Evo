@@ -9,7 +9,7 @@ import java.util.List;
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
 public class World {
-    private static int subticksPerTick = 1;
+    private static int subticksPerTick = 2;
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();

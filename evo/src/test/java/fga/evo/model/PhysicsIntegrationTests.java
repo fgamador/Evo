@@ -49,6 +49,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testBoxCornerCollisions() {
+        World.setSubticksPerTick(1);
         world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
@@ -66,6 +67,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testFullWallCollision() {
+        World.setSubticksPerTick(1);
         world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
@@ -114,6 +116,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testCellCollision() {
+        World.setSubticksPerTick(1);
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // overlap by 1
@@ -165,6 +168,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testTick_Pull() {
+        World.setSubticksPerTick(1);
         Cell cell = addCell(1);
         cell.setCenterPosition(5, -5);
         world.startPull(cell);

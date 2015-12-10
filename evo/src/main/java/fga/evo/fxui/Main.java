@@ -23,7 +23,7 @@ import java.util.Collection;
  * Evo's UI application class.
  */
 public class Main extends Application {
-    public static final int WIDTH = 500;
+    public static final int WIDTH = 1000;
     public static final int AIR_HEIGHT = 50;
     public static final int WATER_DEPTH = 500;
 
@@ -53,26 +53,21 @@ public class Main extends Application {
 
     private void populate() {
 //        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
-//        Cell cell = new Cell(10, new DuckweedControl());
+////        Cell cell = new Cell(10, new DuckweedControl());
 //        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
 //        world.addCell(cell);
 
-        World.setSubticksPerTick(2);
+        for (int i = 0; i < 10; i++) {
+            Cell cell = new Cell(1, new DuckweedControl());
+            world.addCell(cell);
+            cell.setCenterPosition(50 + 50*i, -200 - 30*i);
+        }
 
-        Cell cell1 = new Cell(1, new DuckweedControl());
-        world.addCell(cell1);
-
-//        Cell cell2 = new Cell(1, c -> c.requestPhotoAreaResize(1));
-//        world.addCell(cell2);
-//        cell1.addBond(cell2);
-//
-//        Cell cell3 = new Cell(1, c -> c.requestPhotoAreaResize(1));
-//        world.addCell(cell3);
-//        cell1.addBond(cell3);
-
-        cell1.setCenterPosition(250, -250);
-//        cell2.setCenterPosition(270, -250);
-//        cell3.setCenterPosition(230, -250);
+        for (int i = 9; i >= 0; i--) {
+            Cell cell = new Cell(1, new DuckweedControl());
+            world.addCell(cell);
+            cell.setCenterPosition(950 - 50*i, -200 - 30*i);
+        }
     }
 
     private void createMainWindow(Stage primaryStage) {
