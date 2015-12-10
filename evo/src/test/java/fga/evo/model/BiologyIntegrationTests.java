@@ -64,8 +64,9 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testReproduction() {
-        final double donation = 2;
-        Cell cell = addCell(10, new ParentChildControl(donation));
+        double spawnOdds = 1;
+        double donation = 2;
+        Cell cell = addCell(10, new ParentChildControl(spawnOdds, donation));
         cell.setCenterPosition(5, -5);
         cell.addEnergy(10);
 
@@ -82,8 +83,9 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testGrowthAfterReproduction() {
-        final double donation = 2;
-        Cell cell = addCell(10, new ParentChildControl(donation));
+        double spawnOdds = 1;
+        double donation = 2;
+        Cell cell = addCell(10, new ParentChildControl(spawnOdds, donation));
         cell.setCenterPosition(5, -5);
         cell.addEnergy(10);
 

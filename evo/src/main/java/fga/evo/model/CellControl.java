@@ -33,5 +33,11 @@ public interface CellControl {
         void requestPhotoAreaResize(double growthEnergy);
 
         void requestChildDonation(double donatedEnergy);
+
+        void setSpawnOdds(double odds);
+
+        //void setReleaseChildOdds(double odds);
+
+        //void setReleaseParentOdds(double odds);
     }
 }

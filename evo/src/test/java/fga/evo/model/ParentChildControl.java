@@ -2,8 +2,10 @@ package fga.evo.model;
 
 class ParentChildControl implements CellControl {
     private double donation;
+    private double spawnOdds;
 
-    public ParentChildControl(double donation) {
+    public ParentChildControl(double spawnOdds, double donation) {
+        this.spawnOdds = spawnOdds;
         this.donation = donation;
     }
 
@@ -11,10 +13,15 @@ class ParentChildControl implements CellControl {
         donation = val;
     }
 
+    public final void setSpawnOdds(double val) {
+        spawnOdds = val;
+    }
+
     @Override
     public void allocateEnergy(CellApi cell) {
         if (cell.getRadius() > 5) {
             // run by parent
+            cell.setSpawnOdds(spawnOdds);
             cell.requestChildDonation(donation);
         } else {
             // run by child

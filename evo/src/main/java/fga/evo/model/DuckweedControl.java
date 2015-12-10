@@ -17,6 +17,7 @@ public class DuckweedControl extends FixedDepthSeekingControl {
         cell.requestPhotoAreaResize(desiredDeltaPhotoArea / 50);
 
         // TODO how to detach child? how to stop when layer is full?
+        //cell.setSpawnOdds(TODO);
         cell.requestChildDonation(5 - desiredDeltaPhotoArea);
     }
 }

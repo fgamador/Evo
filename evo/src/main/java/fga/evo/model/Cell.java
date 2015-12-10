@@ -14,6 +14,7 @@ public class Cell extends Ball implements CellControl.CellApi {
     private double radius; // cached outer-ring radius
     private double area; // cached area derived from radius
     private double energy; // TODO rename as availableEnergy?
+    private double spawnOdds;
     private double requestedChildDonation;
     private double donatedEnergy;
     private List<TissueRing> tissueRings = new ArrayList<>();
@@ -156,10 +157,12 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     private Cell manageChild() {
         if (requestedChildDonation > 0) {
-            if (child == null) {
+            if (child != null) {
+                child.setDonatedEnergy(requestedChildDonation);
+                return null;
+            } else if (Odds.passed(spawnOdds)) {
                 return spawn();
             } else {
-                child.setDonatedEnergy(requestedChildDonation);
                 return null;
             }
         } else if (requestedChildDonation < 0) {
@@ -218,6 +221,10 @@ public class Cell extends Ball implements CellControl.CellApi {
      */
     public void requestPhotoAreaResize(double growthEnergy) {
         photoRing.requestResize(growthEnergy);
+    }
+
+    public void setSpawnOdds(double val) {
+        this.spawnOdds = val;
     }
 
     /**
