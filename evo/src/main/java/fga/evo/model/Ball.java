@@ -17,6 +17,7 @@ public abstract class Ball {
     private double velocityX, velocityY;
     private double netForceX, netForceY;
     private Set<Ball> bondedBalls = new HashSet<>();
+    private TouchSensor touchSensor = new TouchSensor();
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #move(int)}.
@@ -130,6 +131,14 @@ public abstract class Ball {
 
     public double getNetForceY() {
         return netForceY;
+    }
+
+    public void addOverlap(double overlap) {
+        touchSensor.addOverlap(overlap);
+    }
+
+    public double getRecentOverlap() {
+        return touchSensor.getRecentOverlap();
     }
 
     //=========================================================================

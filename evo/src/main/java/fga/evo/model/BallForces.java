@@ -86,7 +86,7 @@ public class BallForces {
      * Adds forces to the balls that will move them back toward just touching one another.
      */
     private static void addBondForces(Ball ball1, Ball ball2, double centerSeparation) {
-        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
         addOverlapForces(ball1, ball2, centerSeparation, overlap);
         addDampingForces(ball1, ball2);
     }
@@ -95,10 +95,19 @@ public class BallForces {
      * Adds forces to the balls that will push them away from one another.
      */
     private static void addCollisionForces(Ball ball1, Ball ball2, double centerSeparation) {
-        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
         if (overlap > 0) {
             addOverlapForces(ball1, ball2, centerSeparation, overlap);
         }
+    }
+
+    private static double calcAndRecordOverlap(Ball ball1, Ball ball2, double centerSeparation) {
+        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        if (overlap > 0) {
+            ball1.addOverlap(overlap);
+            ball2.addOverlap(overlap);
+        }
+        return overlap;
     }
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {

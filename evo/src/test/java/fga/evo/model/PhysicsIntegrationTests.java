@@ -20,7 +20,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         defaultSubticksPerTick = World.getSubticksPerTick();
 
         // ensure that a cell with radius 1 has mass 1
-        // TODO mock the mass
+        // TODO mock the mass (or make these ball tests?)
         PhotoRing.parameters.setTissueDensity(1 / Math.PI);
     }
 
@@ -193,33 +193,4 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
         assertPosition(4, -4, cell);
         assertFalse(world.isPulling());
     }
-
-//    @Test
-//    public void testThreeCellChain_PullMiddle() {
-//        Cell cell1 = addCell(1, 10);
-//        cell1.setPhysics(2);
-//        Cell cell2 = addCell(1, 10);
-//        cell2.setPhysics(2);
-//        Cell cell3 = addCell(1, 10);
-//        cell3.setPhysics(2);
-//        cell1.addBond(cell2);
-//        cell2.addBond(cell3);
-//        // just touching: no bond forces
-//        cell1.setCenterPosition(180, -200);
-//        cell2.setCenterPosition(200, -200);
-//        cell3.setCenterPosition(220, -200);
-//
-//        world.startPull(cell2);
-//        world.setPullPoint(200, -205);
-//        world.tick();
-//
-//        assertVelocity(0, 0, cell1);
-//        assertPosition(180, -200, cell1);
-//        assertVelocity(0, -5, cell2);
-//        assertPosition(200, -205, cell2);
-//        assertVelocity(0, 0, cell3);
-//        assertPosition(220, -200, cell3);
-//
-//        // TODO to be continued...
-//    }
 }
