@@ -35,13 +35,13 @@ public class ChanceTest {
     }
 
     @Test
-    public void testConditionalFail_ExactMatch() {
+    public void testExactMatch() {
         Chance.setNextRandom(0.5);
         assertFalse(Chance.success(0.5));
     }
 
     @Test
-    public void testGoodOddsUsuallySuccess() {
+    public void testGoodOddsUsuallySucceed() {
         int numSucceeded = 0;
         for (int i = 0; i < 1000; i++) {
             if (Chance.success(0.8))

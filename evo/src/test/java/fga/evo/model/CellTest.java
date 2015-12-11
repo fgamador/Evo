@@ -200,7 +200,7 @@ public class CellTest {
     }
 
     @Test
-    public void testUseEnergy_PassSpawnOddsSpawnChild() {
+    public void testUseEnergy_SpawnOddsSuccessSpawnChild() {
         double totalEnergy = 100;
         double spawnOdds = 0.5;
         double donation = 2;
@@ -287,20 +287,50 @@ public class CellTest {
 
         // first tick
         Cell child = cell.useEnergy();
+        assertEquals(donation, child.getDonatedEnergy(), 0);
+        assertEnergy(0, child);
 
         // second tick, add-energy phase
         child.addDonatedEnergy();
         assertEquals(0, child.getDonatedEnergy(), 0);
+        assertEnergy(donation, child);
 
         // second tick, use-energy phase
         cell.useEnergy();
 
-        assertEquals(donation, child.getDonatedEnergy(), 0);
         assertEquals(child, cell.getChild());
+        assertEquals(donation, child.getDonatedEnergy(), 0);
     }
 
     @Test
     public void testUseEnergy_ReleaseChild() {
+        double totalEnergy = 100;
+        double spawnOdds = 1;
+        double donation = 2;
+        double releaseOdds = 1;
+        Cell cell = new Cell(10, new ParentChildControl(spawnOdds, donation, releaseOdds));
+        cell.addEnergy(totalEnergy);
+
+        // first tick
+        Cell child = cell.useEnergy();
+        assertEquals(donation, child.getDonatedEnergy(), 0);
+        assertEnergy(0, child);
+
+        // second tick, add-energy phase
+        child.addDonatedEnergy();
+        assertEquals(0, child.getDonatedEnergy(), 0);
+        assertEnergy(donation, child);
+
+        // second tick, use-energy phase
+        cell.useEnergy();
+
+        assertNull(cell.getChild());
+        assertNotBonded(cell, child);
+        assertEquals(donation, child.getDonatedEnergy(), 0);
+    }
+
+    @Test
+    public void testUseEnergy_NegativeDonationDoesNothing() {
         double totalEnergy = 100;
         double spawnOdds = 1;
         double donation = 2;
@@ -316,8 +346,7 @@ public class CellTest {
         // second tick
         control.setDonation(-1);
         cell.useEnergy();
-        assertNull(cell.getChild());
-        assertNotBonded(cell, child);
+        assertEquals(child, cell.getChild());
         assertEnergy(totalEnergy - donation, cell);
     }
 }

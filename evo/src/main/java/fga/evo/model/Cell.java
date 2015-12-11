@@ -14,6 +14,7 @@ public class Cell extends Ball implements CellControl.CellApi {
     private double area; // cached area derived from radius
     private double energy; // TODO rename as availableEnergy?
     private double spawnOdds;
+    private double releaseChildOdds;
     private double requestedChildDonation;
     private double donatedEnergy;
     private List<TissueRing> tissueRings = new ArrayList<>();
@@ -88,24 +89,6 @@ public class Cell extends Ball implements CellControl.CellApi {
         }
     }
 
-    // TODO basic energy-balance idea:
-    // 1) start with any energy carried over from last tick
-    // 2) add energy from photosynthesis (and absorption/digestion,
-    //    which suggests that secreted clouds persist from last tick)
-    // 3) subtract energy from tissue maintenance;
-    //    we now know our total budget for this tick
-    // 4) delegate to control unit (brains), which treats
-    //    energy budget as one of its inputs
-    // 5) control unit outputs (-inf..inf) signals to tissues,
-    //    which cost energy (growth, secretion) or yield energy
-    //    (shrinkage); can also donate energy to other bonded
-    //    cells (or to whole-organism pool?)
-    // 6) if we end up in the black, carry over to next tick
-    //    (subject to possible max)
-    //    if we end up in the red, we die
-    //    (probably will need to start with a lot of cells
-    //    so some survive the initial few ticks)
-
     /**
      * Uses the cell's currently available energy to grow, reproduce, etc.
      */
@@ -155,23 +138,23 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     private Cell manageChild() {
-        if (requestedChildDonation > 0) {
-            if (child != null) {
-                child.setDonatedEnergy(requestedChildDonation);
-                return null;
-            } else if (Chance.success(spawnOdds)) {
-                return spawn();
-            } else {
-                return null;
-            }
-        } else if (requestedChildDonation < 0) {
-            if (child != null) {
+        if (requestedChildDonation <= 0) {
+            return null;
+        }
+
+        if (child != null) {
+            child.setDonatedEnergy(requestedChildDonation);
+            if (Chance.success(releaseChildOdds)) {
                 releaseChild();
             }
             return null;
-        } else {
-            return null;
         }
+
+        if (Chance.success(spawnOdds)) {
+            return spawn();
+        }
+
+        return null;
     }
 
     private Cell spawn() {
@@ -224,6 +207,10 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public void setSpawnOdds(double val) {
         this.spawnOdds = val;
+    }
+
+    public void setReleaseChildOdds(double val) {
+        this.releaseChildOdds = val;
     }
 
     /**

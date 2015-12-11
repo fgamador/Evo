@@ -36,7 +36,7 @@ public interface CellControl {
 
         void setSpawnOdds(double odds);
 
-        //void setReleaseChildOdds(double odds);
+        void setReleaseChildOdds(double odds);
 
         //void setReleaseParentOdds(double odds);
     }
