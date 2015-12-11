@@ -1,9 +1,7 @@
 package fga.evo.model;
 
 /**
- * The general effects of gravity, including cell weight and buoyancy.
- *
- * @author Franz Amador
+ * The effects of gravity, including cell weight and buoyancy.
  */
 public class Weight extends EnvironmentalInfluence {
     private static double gravity = 0.1; // acceleration
@@ -23,8 +21,8 @@ public class Weight extends EnvironmentalInfluence {
             return 0;
         } else {
             double fractionSubmerged = (cell.getRadius() - cell.getCenterY()) / (2 * cell.getRadius());
-            // TODO use the real equation?
-            return fractionSubmerged * cell.getArea(); // linear approximation
+            // linear approximation of the real, hairy equation
+            return fractionSubmerged * cell.getArea();
         }
     }
 

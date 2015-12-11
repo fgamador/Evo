@@ -17,12 +17,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Collection;
 
 /**
  * Evo's UI application class.
  */
 public class Main extends Application {
-    public static final int WIDTH = 500;
+    public static final int WIDTH = 1000;
     public static final int AIR_HEIGHT = 50;
     public static final int WATER_DEPTH = 500;
 
@@ -37,49 +38,14 @@ public class Main extends Application {
         addInfluences();
         populate();
 
-        Group root = new Group();
-        Scene scene = new Scene(root, WIDTH, AIR_HEIGHT + WATER_DEPTH, Color.BLACK);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Evo");
-
-        // TODO gradient from sky blue down to whitish blue
-//        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT, Color.color(0.8, 0.95, 1));
-        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT,
-            new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.color(0.75, 0.9, 1)),
-                new Stop(1, Color.color(0.9, 0.98, 1))));
-        root.getChildren().add(air);
-        Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
-            new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.color(0.1, 0.26, 0.55)), // Color.web("#111199")),
-                new Stop(1, Color.BLACK)));
-        water.setY(toSceneY(0));
-        root.getChildren().add(water);
-
-        cellCircles = new Group();
-        for (Cell cell : world.getCells()) {
-            addCell(cell);
-        }
-        root.getChildren().add(cellCircles);
-
-        root.setOnMouseDragged(this::onMouseDragged);
-//        root.setOnMouseDragged(e -> onMouseDragged(e));
-        root.setOnMouseReleased(e -> onMouseReleased());
-
-        timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-
-        primaryStage.show();
+        createMainWindow(primaryStage);
 
 //        ControlWindow controls = new ControlWindow(primaryStage, this);
 //        controls.show();
     }
 
     private void addInfluences() {
-        world.addEnvironmentalInfluence(new Walls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
+        world.addEnvironmentalInfluence(new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
         world.addEnvironmentalInfluence(new Weight());
         world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));
@@ -87,46 +53,85 @@ public class Main extends Application {
 
     private void populate() {
 //        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
-        Cell cell = new Cell(10, new DuckweedControl());
-        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
-        world.addCell(cell);
+////        Cell cell = new Cell(10, new DuckweedControl());
+//        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
+//        world.addCell(cell);
 
-//        Cell cell2 = new Cell(10);
-//        cell2.setCenterPosition(230, 250);
-//        world.addCell(cell2);
-//
-//        Cell cell3 = new Cell(10);
-//        cell3.setCenterPosition(210, 250);
-//        world.addCell(cell3);
-//
-//        cell.addBond(cell2);
-//        cell2.addBond(cell3);
-//
-//        Cell cell4 = new Cell(10);
-//        cell4.setPhysics(2);
-//        cell4.setCenterPosition(100, 100);
-//        world.addCell(cell4);
-//
-//        Cell cell5 = new Cell(10);
-//        cell5.setPhysics(2);
-//        cell5.setCenterPosition(80, 100);
-//        world.addCell(cell5);
-//
-//        Cell cell6 = new Cell(10);
-//        cell6.setPhysics(2);
-//        cell6.setCenterPosition(60, 100);
-//        world.addCell(cell6);
-//
-//        cell4.addBond(cell5);
-//        cell5.addBond(cell6);
+        for (int i = 0; i < 10; i++) {
+            Cell cell = new Cell(1, new DuckweedControl());
+            world.addCell(cell);
+            cell.setCenterPosition(50 + 50*i, -200 - 30*i);
+        }
+
+        for (int i = 9; i >= 0; i--) {
+            Cell cell = new Cell(1, new DuckweedControl());
+            world.addCell(cell);
+            cell.setCenterPosition(950 - 50*i, -200 - 30*i);
+        }
+    }
+
+    private void createMainWindow(Stage primaryStage) {
+        Group root = createSceneRoot(primaryStage);
+        addAirRectangle(root);
+        addWaterRectangle(root);
+        addCellCircles(root);
+        addMouseListeners(root);
+        startAnimation();
+        primaryStage.show();
+    }
+
+    private Group createSceneRoot(Stage primaryStage) {
+        Group root = new Group();
+        Scene scene = new Scene(root, WIDTH, AIR_HEIGHT + WATER_DEPTH, Color.BLACK);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Evo");
+        return root;
+    }
+
+    private void addAirRectangle(Group root) {
+        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT,
+            new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.color(0.75, 0.9, 1)),
+                new Stop(1, Color.color(0.9, 0.98, 1))));
+        root.getChildren().add(air);
+    }
+
+    private void addWaterRectangle(Group root) {
+        Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
+            new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.color(0.1, 0.26, 0.55)), // Color.web("#111199")),
+                new Stop(1, Color.BLACK)));
+        water.setY(toSceneY(0));
+        root.getChildren().add(water);
+    }
+
+    private void addCellCircles(Group root) {
+        cellCircles = new Group();
+        for (Cell cell : world.getCells()) {
+            addCell(cell);
+        }
+        root.getChildren().add(cellCircles);
+    }
+
+    private void addMouseListeners(Group root) {
+        root.setOnMouseDragged(this::onMouseDragged);
+//        root.setOnMouseDragged(e -> onMouseDragged(e));
+        root.setOnMouseReleased(e -> onMouseReleased());
+    }
+
+    private void startAnimation() {
+        timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
     }
 
     void tick() {
-        world.tick();
-//        Set<Cell> newCells = world.tick();
-//        for (Cell cell : newCells) {
-//            addCell(cell);
-//        }
+        Collection<Cell> newCells = world.tick();
+        for (Cell cell : newCells) {
+            addCell(cell);
+        }
         for (Node circle : cellCircles.getChildren()) {
             ((CellCircle) circle).update();
         }

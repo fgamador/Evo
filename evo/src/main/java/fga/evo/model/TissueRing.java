@@ -26,7 +26,7 @@ public abstract class TissueRing {
      */
     public void requestResize(double growthEnergy) {
         if (growthEnergy >= 0) {
-            final double maxDeltaArea = Math.max(area, 1) * parameters.getMaxGrowthRate();
+            double maxDeltaArea = Math.max(area, 1) * parameters.getMaxGrowthRate();
             requestedDeltaArea = Math.min(growthEnergy / parameters.getGrowthCost(), maxDeltaArea);
         } else {
             requestedDeltaArea = Math.max(-area, growthEnergy / parameters.getShrinkageYield());
@@ -47,7 +47,7 @@ public abstract class TissueRing {
         requestedDeltaArea = 0;
     }
 
-    public final double getMaintenanceEnergy() {
+    public double getMaintenanceEnergy() {
         return area * parameters.maintenanceCost;
     }
 
@@ -56,20 +56,20 @@ public abstract class TissueRing {
         mass = parameters.tissueDensity * area;
     }
 
-    public final void updateFromArea(double innerRadius) {
+    public void updateFromArea(double innerRadius) {
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         mass = parameters.tissueDensity * area;
     }
 
-    public final double getOuterRadius() {
+    public double getOuterRadius() {
         return outerRadius;
     }
 
-    public final double getArea() {
+    public double getArea() {
         return area;
     }
 
-    public final double getMass() {
+    public double getMass() {
         return mass;
     }
 
@@ -80,43 +80,43 @@ public abstract class TissueRing {
         private double shrinkageYield; // energy per area
         private double maxGrowthRate; // fraction of current area
 
-        public final double getTissueDensity() {
+        public double getTissueDensity() {
             return tissueDensity;
         }
 
-        public final void setTissueDensity(double val) {
+        public void setTissueDensity(double val) {
             tissueDensity = val;
         }
 
-        public final double getMaintenanceCost() {
+        public double getMaintenanceCost() {
             return maintenanceCost;
         }
 
-        public final void setMaintenanceCost(double val) {
+        public void setMaintenanceCost(double val) {
             maintenanceCost = val;
         }
 
-        public final double getGrowthCost() {
+        public double getGrowthCost() {
             return growthCost;
         }
 
-        public final void setGrowthCost(double val) {
+        public void setGrowthCost(double val) {
             growthCost = val;
         }
 
-        public final double getShrinkageYield() {
+        public double getShrinkageYield() {
             return shrinkageYield;
         }
 
-        public final void setShrinkageYield(double val) {
+        public void setShrinkageYield(double val) {
             shrinkageYield = val;
         }
 
-        public final double getMaxGrowthRate() {
+        public double getMaxGrowthRate() {
             return maxGrowthRate;
         }
 
-        public final void setMaxGrowthRate(double val) {
+        public void setMaxGrowthRate(double val) {
             this.maxGrowthRate = val;
         }
     }

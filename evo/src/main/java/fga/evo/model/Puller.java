@@ -2,8 +2,6 @@ package fga.evo.model;
 
 /**
  * Created when the user's mouse cursor drags a cell.
- *
- * @author Franz Amador
  */
 public class Puller {
     private static double pullForceFactor = 1;

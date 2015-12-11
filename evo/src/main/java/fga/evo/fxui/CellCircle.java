@@ -11,8 +11,6 @@ import java.util.List;
 
 /**
  * A circle that represents a cell.
- *
- * @author Franz Amador
  */
 public class CellCircle extends Group {
     private Cell cell;

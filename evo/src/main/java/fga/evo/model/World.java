@@ -2,21 +2,24 @@ package fga.evo.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
 public class World {
+    private static int subticksPerTick = 2;
+
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private Puller puller;
 
-    public final void addEnvironmentalInfluence(final EnvironmentalInfluence influence) {
+    public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);
     }
 
-    public final void addCell(final Cell cell) {
+    public void addCell(Cell cell) {
         cells.add(cell);
     }
 
@@ -24,29 +27,38 @@ public class World {
      * Propagates a simulation clock tick through the model.
      * TODO parallelize the loops
      */
-    public void tick() {
-        tickBiology();
-        tickPhysics();
+    public Collection<Cell> tick() {
+        Collection<Cell> newCells = tickBiology();
+        for (int i = 0; i < subticksPerTick; i++) {
+            subtickPhysics();
+        }
+        cells.addAll(newCells);
+        return newCells;
     }
 
-    private void tickBiology() {
+    private Collection<Cell> tickBiology() {
         for (Cell cell : cells) {
             addEnergyToCell(cell);
         }
 
         Collection<Cell> newCells = new ArrayList<>();
-
         for (Cell cell : cells) {
             Cell newChild = cell.useEnergy();
             if (newChild != null) {
                 newCells.add(newChild);
             }
         }
-
-        cells.addAll(newCells);
+        return newCells;
     }
 
-    private void tickPhysics() {
+    private void addEnergyToCell(Cell cell) {
+        for (EnvironmentalInfluence influence : environmentalInfluences) {
+            influence.addEnergyToCell(cell);
+        }
+        cell.addDonatedEnergy();
+    }
+
+    private void subtickPhysics() {
         if (puller != null) {
             puller.addForceToCell();
         }
@@ -56,18 +68,11 @@ public class World {
         }
 
         for (Cell cell : cells) {
-            cell.move();
+            cell.move(subticksPerTick);
         }
     }
 
-    private void addEnergyToCell(final Cell cell) {
-        for (EnvironmentalInfluence influence : environmentalInfluences) {
-            influence.addEnergyToCell(cell);
-        }
-        cell.addDonatedEnergy();
-    }
-
-    private void addForcesToCell(final int index) {
+    private void addForcesToCell(int index) {
         Cell cell = cells.get(index);
 
         for (EnvironmentalInfluence influence : environmentalInfluences) {
@@ -88,11 +93,11 @@ public class World {
         return cells;
     }
 
-    public void startPull(final Cell cell) {
+    public void startPull(Cell cell) {
         puller = new Puller(cell);
     }
 
-    public void setPullPoint(final double x, final double y) {
+    public void setPullPoint(double x, double y) {
         puller.setPosition(x, y);
     }
 
@@ -102,5 +107,17 @@ public class World {
 
     public boolean isPulling() {
         return puller != null;
+    }
+
+    //=========================================================================
+    // Parameters
+    //=========================================================================
+
+    public static int getSubticksPerTick() {
+        return subticksPerTick;
+    }
+
+    public static void setSubticksPerTick(int val) {
+        subticksPerTick = val;
     }
 }

@@ -1,7 +1,7 @@
 package fga.evo.model;
 
 /**
- * Created by Franz on 8/17/2015.
+ * A ring gradient around a cell that affects other cells.
  */
 public abstract class ChemicalHalo {
     // intrusion = haloRadius + cellRadius - centerSeparation;

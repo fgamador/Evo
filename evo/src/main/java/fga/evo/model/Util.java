@@ -1,7 +1,7 @@
 package fga.evo.model;
 
 public class Util {
-    public static double sqr(final double value) {
+    public static double sqr(double value) {
         return value * value;
     }
 

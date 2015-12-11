@@ -23,7 +23,7 @@ public class PhotoRing extends TissueRing {
      *
      * @param lightIntensity incoming light intensity, as energy per width
      */
-    public final double photosynthesize(double lightIntensity) {
+    public double photosynthesize(double lightIntensity) {
         return lightIntensity * outerRadius * calcPhotoAbsorptivity();
     }
 
@@ -34,8 +34,8 @@ public class PhotoRing extends TissueRing {
      *
      * @return the fraction of incident light that gets captured as energy
      */
-    public final double calcPhotoAbsorptivity() {
-        final double thickness = outerRadius - innerRadius;
+    public double calcPhotoAbsorptivity() {
+        double thickness = outerRadius - innerRadius;
         return 1 - (1 / (thickness + 1));
     }
 }
