@@ -1,12 +1,12 @@
 package fga.evo.model;
 
-public class Odds {
+public class Chance {
     private static double nextRandom = Math.random();
 
-    public static boolean passed(double odds) {
-        boolean passed = nextRandom < odds;
+    public static boolean success(double odds) {
+        boolean success = nextRandom < odds;
         nextRandom = Math.random();
-        return passed;
+        return success;
     }
 
     /** For testing. */

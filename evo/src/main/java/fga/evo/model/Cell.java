@@ -1,7 +1,6 @@
 package fga.evo.model;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static fga.evo.model.Util.sqr;
 
@@ -160,7 +159,7 @@ public class Cell extends Ball implements CellControl.CellApi {
             if (child != null) {
                 child.setDonatedEnergy(requestedChildDonation);
                 return null;
-            } else if (Odds.passed(spawnOdds)) {
+            } else if (Chance.success(spawnOdds)) {
                 return spawn();
             } else {
                 return null;

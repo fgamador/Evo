@@ -206,7 +206,7 @@ public class CellTest {
         double donation = 2;
         Cell cell = new Cell(10, new ParentChildControl(spawnOdds, donation));
         cell.addEnergy(totalEnergy);
-        Odds.setNextRandom(0.4);
+        Chance.setNextRandom(0.4);
 
         Cell child = cell.useEnergy();
 
