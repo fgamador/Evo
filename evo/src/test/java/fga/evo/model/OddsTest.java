@@ -11,43 +11,43 @@ import static org.junit.Assert.assertTrue;
 public class OddsTest {
     @Test
     public void testGuaranteedPass() {
-        Odds.setNextRandom(0);
+        Odds.setNextRandom(0.999);
         assertTrue(Odds.passed(1));
         assertTrue(Odds.passed(10));
     }
 
     @Test
     public void testGuaranteedFail() {
-        Odds.setNextRandom(0.999);
+        Odds.setNextRandom(0);
         assertFalse(Odds.passed(0));
         assertFalse(Odds.passed(-10));
     }
 
     @Test
     public void testConditionalPass() {
-        Odds.setNextRandom(0.51);
+        Odds.setNextRandom(0.49);
         assertTrue(Odds.passed(0.5));
     }
 
     @Test
     public void testConditionalPass_ExactMatch() {
         Odds.setNextRandom(0.5);
-        assertTrue(Odds.passed(0.5));
+        assertFalse(Odds.passed(0.5));
     }
 
     @Test
     public void testConditionalFail() {
         Odds.setNextRandom(0.49);
-        assertFalse(Odds.passed(0.5));
+        assertTrue(Odds.passed(0.5));
     }
 
     @Test
-    public void testAboutHalfPassHalfOdds() {
+    public void testGoodOddsUsuallyPass() {
         int numPassed = 0;
         for (int i = 0; i < 1000; i++) {
-            if (Odds.passed(0.5))
+            if (Odds.passed(0.8))
                 numPassed++;
         }
-        assertEquals(500, numPassed, 100);
+        assertEquals(800, numPassed, 100);
     }
 }

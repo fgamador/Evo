@@ -200,13 +200,13 @@ public class CellTest {
     }
 
     @Test
-    public void testUseEnergy_BeatSpawnOddsSpawnChild() {
+    public void testUseEnergy_PassSpawnOddsSpawnChild() {
         double totalEnergy = 100;
         double spawnOdds = 0.5;
         double donation = 2;
         Cell cell = new Cell(10, new ParentChildControl(spawnOdds, donation));
         cell.addEnergy(totalEnergy);
-        Odds.setNextRandom(0.6);
+        Odds.setNextRandom(0.4);
 
         Cell child = cell.useEnergy();
 
