@@ -184,4 +184,14 @@ public class BallForcesTest {
         assertNetForce(-1, 0, ball);
         assertNetForce(1, 0, ball2);
     }
+
+    @Test
+    public void testGetRecentOverlap() {
+        ball2.setCenterPosition(1.5, 0);
+
+        BallForces.addInterBallForces(ball, ball2);
+
+        assertEquals(0.5, ball.getRecentOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentOverlap(), 0);
+    }
 }
