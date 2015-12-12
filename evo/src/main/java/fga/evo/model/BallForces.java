@@ -4,57 +4,66 @@ import static fga.evo.model.Util.sqr;
 
 /**
  * Collision and bond forces for balls.
+ * TODO move these back into Ball?
  */
 public class BallForces {
     private static double overlapForceFactor = 1;
     private static double dampingForceFactor = 1;
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
+     * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
      *
      * @param ball  the ball
      * @param wallX x-position of the barrier
-     * @return the collision force or zero if not in collision
      */
-    static double calcLeftBarrierCollisionForce(Ball ball, double wallX) {
+    static void addLeftBarrierCollisionForce(Ball ball, double wallX) {
         double overlap = ball.getRadius() - (ball.getCenterX() - wallX);
-        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
+        if (overlap > 0) {
+            ball.onOverlap(overlap);
+            ball.addForce(calcOverlapForce(overlap), 0);
+        }
     }
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
+     * Adds the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
      *
      * @param ball  the ball
      * @param wallX x-position of the barrier
-     * @return the collision force or zero if not in collision
      */
-    static double calcRightBarrierCollisionForce(Ball ball, double wallX) {
+    static void addRightBarrierCollisionForce(Ball ball, double wallX) {
         double overlap = ball.getCenterX() + ball.getRadius() - wallX;
-        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
+        if (overlap > 0) {
+            ball.onOverlap(overlap);
+            ball.addForce(-calcOverlapForce(overlap), 0);
+        }
     }
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
+     * Adds the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
      *
      * @param ball  the ball
      * @param wallY y-position of the barrier
-     * @return the collision force or zero if not in collision
      */
-    static double calcLowBarrierCollisionForce(Ball ball, double wallY) {
+    static void addLowBarrierCollisionForce(Ball ball, double wallY) {
         double overlap = ball.getRadius() - (ball.getCenterY() - wallY);
-        return (overlap > 0) ? calcOverlapForce(overlap) : 0;
+        if (overlap > 0) {
+            ball.onOverlap(overlap);
+            ball.addForce(0, calcOverlapForce(overlap));
+        }
     }
 
     /**
-     * Returns the force exerted on the ball if it is in collision with a barrier above it (larger y position).
+     * Adds the force exerted on the ball if it is in collision with a barrier above it (larger y position).
      *
      * @param ball  the ball
      * @param wallY y-position of the barrier
-     * @return the collision force or zero if not in collision
      */
-    static double calcHighBarrierCollisionForce(Ball ball, double wallY) {
+    static void addHighBarrierCollisionForce(Ball ball, double wallY) {
         double overlap = ball.getCenterY() + ball.getRadius() - wallY;
-        return (overlap > 0) ? -calcOverlapForce(overlap) : 0;
+        if (overlap > 0) {
+            ball.onOverlap(overlap);
+            ball.addForce(0, -calcOverlapForce(overlap));
+        }
     }
 
     /**
