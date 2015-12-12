@@ -19,7 +19,7 @@ public abstract class Ball {
     private Set<Ball> bondedBalls = new HashSet<>();
 
     /**
-     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #move(int)}.
+     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtickPhysics(int)}.
      */
     public void setCenterPosition(double centerX, double centerY) {
         this.centerX = centerX;
@@ -27,7 +27,7 @@ public abstract class Ball {
     }
 
     /**
-     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #move(int)}.
+     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #subtickPhysics(int)}.
      */
     void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
@@ -35,7 +35,7 @@ public abstract class Ball {
     }
 
     /**
-     * Adds a force on the ball that will be used by the next call to {@link #move(int)}. This is the only way to
+     * Adds a force on the ball that will be used by the next call to {@link #subtickPhysics(int)}. This is the only way to
      * influence the ball's motion (after setting its initial position and possibly velocity).
      *
      * @param forceX X-component of the force
@@ -51,7 +51,7 @@ public abstract class Ball {
      *
      * @param subticksPerTick time resolution
      */
-    void move(int subticksPerTick) {
+    void subtickPhysics(int subticksPerTick) {
         updateVelocity(subticksPerTick);
         capSpeed();
         updatePosition(subticksPerTick);

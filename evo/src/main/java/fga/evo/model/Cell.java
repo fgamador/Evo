@@ -5,7 +5,7 @@ import java.util.*;
 import static fga.evo.model.Util.sqr;
 
 /**
- * The basic living unit in evo. A circular entity that can move and grow and reproduce.
+ * The basic living unit in evo. A circular entity that can subtickPhysics and grow and reproduce.
  * Cells can also bond together to form larger organisms.
  */
 public class Cell extends Ball implements CellControl.CellApi {
@@ -90,11 +90,13 @@ public class Cell extends Ball implements CellControl.CellApi {
         }
     }
 
-    /**
-     * Uses the cell's currently available energy to grow, reproduce, etc.
-     */
-    public Cell useEnergy() {
+    public Cell tickBiology() {
         control.allocateEnergy(this);
+//        overlapAccumulator.decay();
+        return useEnergy();
+    }
+
+    private Cell useEnergy() {
         balanceEnergy();
         resizeRings();
         return manageChild();

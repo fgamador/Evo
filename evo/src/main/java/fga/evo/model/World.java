@@ -42,7 +42,7 @@ public class World {
 
         Collection<Cell> newCells = new ArrayList<>();
         for (Cell cell : cells) {
-            Cell newChild = cell.useEnergy();
+            Cell newChild = cell.tickBiology();
             if (newChild != null) {
                 newCells.add(newChild);
             }
@@ -67,7 +67,7 @@ public class World {
         }
 
         for (Cell cell : cells) {
-            cell.move(subticksPerTick);
+            cell.subtickPhysics(subticksPerTick);
         }
     }
 

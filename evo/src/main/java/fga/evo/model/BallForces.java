@@ -83,7 +83,7 @@ public class BallForces {
     }
 
     /**
-     * Adds forces to the balls that will move them back toward just touching one another.
+     * Adds forces to the balls that will subtickPhysics them back toward just touching one another.
      */
     private static void addBondForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
