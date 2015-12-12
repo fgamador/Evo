@@ -9,8 +9,8 @@ public class DuckweedControl extends FixedDepthSeekingControl {
     }
 
     @Override
-    public void allocateEnergy(CellApi cell) {
-        super.allocateEnergy(cell);
+    public void exertControl(CellApi cell) {
+        super.exertControl(cell);
 
         double desiredPhotoArea = 300 * Math.PI;
         double desiredDeltaPhotoArea = desiredPhotoArea - cell.getPhotoArea();

@@ -185,13 +185,36 @@ public class BallForcesTest {
         assertNetForce(1, 0, ball2);
     }
 
+    // TODO bond collision and extension, wall collision
     @Test
-    public void testOnOverlap() {
+    public void testOnOverlap_BallCollision() {
         ball2.setCenterPosition(1.5, 0);
 
         BallForces.addInterBallForces(ball, ball2);
 
         assertEquals(0.5, ball.getLastOverlap(), 0);
         assertEquals(0.5, ball2.getLastOverlap(), 0);
+    }
+
+    @Test
+    public void testOnOverlap_BondedBallCollision() {
+        ball.addBond(ball2);
+        ball2.setCenterPosition(1.5, 0);
+
+        BallForces.addInterBallForces(ball, ball2);
+
+        assertEquals(0.5, ball.getLastOverlap(), 0);
+        assertEquals(0.5, ball2.getLastOverlap(), 0);
+    }
+
+    @Test
+    public void testOnOverlap_BondedBallExtension() {
+        ball.addBond(ball2);
+        ball2.setCenterPosition(2.5, 0);
+
+        BallForces.addInterBallForces(ball, ball2);
+
+        assertEquals(0, ball.getLastOverlap(), 0);
+        assertEquals(0, ball2.getLastOverlap(), 0);
     }
 }

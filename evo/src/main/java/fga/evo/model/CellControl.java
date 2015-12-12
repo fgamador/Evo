@@ -4,7 +4,7 @@ package fga.evo.model;
  * The brains and eventually the genome of a cell.
  */
 public interface CellControl {
-    void allocateEnergy(CellApi cell);
+    void exertControl(CellApi cell);
 
     /**
      * The API that a CellControl uses to control a Cell.
@@ -27,6 +27,8 @@ public interface CellControl {
         double getFloatArea();
 
         double getPhotoArea();
+
+        double getRecentTotalOverlap();
 
         void requestFloatAreaResize(double growthEnergy);
 

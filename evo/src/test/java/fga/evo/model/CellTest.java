@@ -351,7 +351,7 @@ public class CellTest {
     }
 
     @Test
-    public void testGetRecentOverlap() {
+    public void testGetRecentTotalOverlap() {
         Cell cell1 = new Cell(1);
         cell1.setCenterPosition(0, 0);
         Cell cell2 = new Cell(1);
@@ -361,5 +361,12 @@ public class CellTest {
 
         assertEquals(0.5, cell1.getRecentTotalOverlap(), 0);
         assertEquals(0.5, cell2.getRecentTotalOverlap(), 0);
+
+        cell1.tickBiology();
+        cell2.tickBiology();
+        BallForces.addInterBallForces(cell1, cell2);
+
+        assertTrue(cell1.getRecentTotalOverlap() < 1);
+        assertEquals(cell1.getRecentTotalOverlap(), cell2.getRecentTotalOverlap(), 0);
     }
 }

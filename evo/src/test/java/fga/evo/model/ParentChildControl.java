@@ -28,7 +28,7 @@ class ParentChildControl implements CellControl {
     }
 
     @Override
-    public void allocateEnergy(CellApi cell) {
+    public void exertControl(CellApi cell) {
         if (cell.getRadius() > 5) {
             // run by parent
             cell.setSpawnOdds(spawnOdds);

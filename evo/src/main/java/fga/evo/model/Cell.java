@@ -91,8 +91,8 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public Cell tickBiology() {
-        control.allocateEnergy(this);
-//        overlapAccumulator.decay();
+        control.exertControl(this);
+        overlapAccumulator.decay();
         return useEnergy();
     }
 
