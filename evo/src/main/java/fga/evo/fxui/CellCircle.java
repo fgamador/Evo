@@ -4,10 +4,6 @@ import fga.evo.model.Cell;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A circle that represents a cell.

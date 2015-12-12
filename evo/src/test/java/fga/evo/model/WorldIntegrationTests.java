@@ -2,9 +2,6 @@ package fga.evo.model;
 
 import org.junit.Before;
 
-import static fga.evo.model.Assert.assertPosition;
-import static fga.evo.model.Assert.assertVelocity;
-
 public abstract class WorldIntegrationTests {
     protected World world;
 

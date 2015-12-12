@@ -1,20 +1,20 @@
 package fga.evo.model;
 
-public class TouchSensor {
+public class DecayingAccumulator {
     private static double retentionRate = 0.9;
 
-    private double recentOverlap;
+    private double total;
 
-    public double getRecentOverlap() {
-        return recentOverlap;
+    public double getTotal() {
+        return total;
     }
 
-    public void addOverlap(double overlap) {
-        recentOverlap += overlap;
+    public void addValue(double value) {
+        total += value;
     }
 
-    public void endTick() {
-        recentOverlap *= retentionRate;
+    public void decay() {
+        total *= retentionRate;
     }
 
     //=========================================================================

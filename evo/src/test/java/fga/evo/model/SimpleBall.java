@@ -1,11 +1,9 @@
 package fga.evo.model;
 
-/**
- * Created by Franz on 11/22/2015.
- */
 class SimpleBall extends Ball {
     private double mass;
     private double radius;
+    private double lastOverlap;
 
     SimpleBall(double radius) {
         setRadius(radius);
@@ -19,11 +17,22 @@ class SimpleBall extends Ball {
         radius = val;
     }
 
+    @Override
     public double getMass() {
         return mass;
     }
 
+    @Override
     public double getRadius() {
         return radius;
+    }
+
+    @Override
+    public void onOverlap(double overlap) {
+        lastOverlap = overlap;
+    }
+
+    public double getLastOverlap() {
+        return lastOverlap;
     }
 }

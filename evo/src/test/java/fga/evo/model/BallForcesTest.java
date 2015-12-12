@@ -186,12 +186,12 @@ public class BallForcesTest {
     }
 
     @Test
-    public void testGetRecentOverlap() {
+    public void testOnOverlap() {
         ball2.setCenterPosition(1.5, 0);
 
         BallForces.addInterBallForces(ball, ball2);
 
-        assertEquals(0.5, ball.getRecentOverlap(), 0);
-        assertEquals(0.5, ball2.getRecentOverlap(), 0);
+        assertEquals(0.5, ball.getLastOverlap(), 0);
+        assertEquals(0.5, ball2.getLastOverlap(), 0);
     }
 }

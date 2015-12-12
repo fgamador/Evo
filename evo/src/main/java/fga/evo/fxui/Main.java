@@ -29,7 +29,7 @@ public class Main extends Application {
 
     private World world;
     private Group cellCircles;
-    private Timeline timeline;
+//    private Timeline timeline;
 //    private CellCircle selectedCellCircle;
 
     @Override
@@ -120,7 +120,7 @@ public class Main extends Application {
     }
 
     private void startAnimation() {
-        timeline = new Timeline();
+        Timeline timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
         timeline.getKeyFrames().add(kf);

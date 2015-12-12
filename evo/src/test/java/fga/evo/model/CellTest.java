@@ -349,4 +349,17 @@ public class CellTest {
         assertEquals(child, cell.getChild());
         assertEnergy(totalEnergy - donation, cell);
     }
+
+    @Test
+    public void testGetRecentOverlap() {
+        Cell cell1 = new Cell(1);
+        cell1.setCenterPosition(0, 0);
+        Cell cell2 = new Cell(1);
+        cell2.setCenterPosition(1.5, 0);
+
+        BallForces.addInterBallForces(cell1, cell2);
+
+        assertEquals(0.5, cell1.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, cell2.getRecentTotalOverlap(), 0);
+    }
 }

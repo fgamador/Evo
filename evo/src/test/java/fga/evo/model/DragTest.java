@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
-import static org.junit.Assert.assertEquals;
 
 public class DragTest {
     private Cell cell;

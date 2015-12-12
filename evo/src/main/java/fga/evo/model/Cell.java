@@ -20,6 +20,7 @@ public class Cell extends Ball implements CellControl.CellApi {
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
+    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator();
     private CellControl control;
     private Cell child;
 
@@ -268,6 +269,15 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public double getPhotoArea() {
         return photoRing.getArea();
+    }
+
+    @Override
+    public void onOverlap(double overlap) {
+        overlapAccumulator.addValue(overlap);
+    }
+
+    public double getRecentTotalOverlap() {
+        return overlapAccumulator.getTotal();
     }
 
     public CellControl getControl() {

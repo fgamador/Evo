@@ -104,8 +104,8 @@ public class BallForces {
     private static double calcAndRecordOverlap(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         if (overlap > 0) {
-            ball1.addOverlap(overlap);
-            ball2.addOverlap(overlap);
+            ball1.onOverlap(overlap);
+            ball2.onOverlap(overlap);
         }
         return overlap;
     }
