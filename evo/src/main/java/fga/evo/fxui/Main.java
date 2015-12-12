@@ -53,21 +53,21 @@ public class Main extends Application {
 
     private void populate() {
 //        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
-////        Cell cell = new Cell(10, new DuckweedControl());
-//        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
-//        world.addCell(cell);
+        Cell cell = new Cell(10, new DuckweedControl());
+        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
+        world.addCell(cell);
 
-        for (int i = 0; i < 10; i++) {
-            Cell cell = new Cell(1, new DuckweedControl());
-            world.addCell(cell);
-            cell.setCenterPosition(50 + 50*i, -200 - 30*i);
-        }
-
-        for (int i = 9; i >= 0; i--) {
-            Cell cell = new Cell(1, new DuckweedControl());
-            world.addCell(cell);
-            cell.setCenterPosition(950 - 50*i, -200 - 30*i);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            Cell cell = new Cell(1, new DuckweedControl());
+//            world.addCell(cell);
+//            cell.setCenterPosition(50 + 50*i, -200 - 30*i);
+//        }
+//
+//        for (int i = 9; i >= 0; i--) {
+//            Cell cell = new Cell(1, new DuckweedControl());
+//            world.addCell(cell);
+//            cell.setCenterPosition(950 - 50*i, -200 - 30*i);
+//        }
     }
 
     private void createMainWindow(Stage primaryStage) {

@@ -20,7 +20,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_NoForces() {
+    public void testSubtickPhysics_NoForces() {
         ball.subtickPhysics(1);
 
         assertVelocity(0, 0, ball);
@@ -28,7 +28,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_OneForce() {
+    public void testSubtickPhysics_OneForce() {
         ball.addForce(0.5, -1);
 
         ball.subtickPhysics(1);
@@ -38,7 +38,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_TwoForces() {
+    public void testSubtickPhysics_TwoForces() {
         ball.addForce(0.5, -1);
         ball.addForce(1.5, 2);
 
@@ -49,7 +49,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_Coasting() {
+    public void testSubtickPhysics_Coasting() {
         ball.addForce(0.5, -1);
         ball.subtickPhysics(1);
 
@@ -60,7 +60,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_DoubleMass() {
+    public void testSubtickPhysics_DoubleMass() {
         SimpleBall heavyBall = new SimpleBall(SQRT_2);
         heavyBall.setMass(2);
         heavyBall.addForce(1, -2);
@@ -72,7 +72,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_SpeedLimit() {
+    public void testSubtickPhysics_SpeedLimit() {
         ball.setVelocity(8 / SQRT_2, -8 / SQRT_2);
 
         ball.subtickPhysics(1);
@@ -82,7 +82,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_DoubleResolution_ConstantVelocity() {
+    public void testSubtickPhysics_DoubleResolution_ConstantVelocity() {
         ball.setVelocity(1, 1);
 
         ball.subtickPhysics(2);
@@ -97,7 +97,7 @@ public class BallTest {
     }
 
     @Test
-    public void testMove_DoubleResolution_ConstantForce() {
+    public void testSubtickPhysics_DoubleResolution_ConstantForce() {
         ball.addForce(1, 1);
         ball.subtickPhysics(2);
 

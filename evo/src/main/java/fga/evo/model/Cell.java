@@ -282,6 +282,11 @@ public class Cell extends Ball implements CellControl.CellApi {
         return overlapAccumulator.getTotal();
     }
 
+    public double getChildNonFloatArea() {
+        // TODO test, generalize
+        return (child == null) ? 0 : child.getPhotoArea();
+    }
+
     public CellControl getControl() {
         return control;
     }

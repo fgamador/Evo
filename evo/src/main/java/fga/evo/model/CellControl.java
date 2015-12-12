@@ -30,6 +30,8 @@ public interface CellControl {
 
         double getRecentTotalOverlap();
 
+        double getChildNonFloatArea();
+
         void requestFloatAreaResize(double growthEnergy);
 
         void requestPhotoAreaResize(double growthEnergy);
