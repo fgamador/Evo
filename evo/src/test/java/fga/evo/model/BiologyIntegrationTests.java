@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
@@ -8,8 +10,21 @@ import static fga.evo.model.Assert.*;
 import static org.junit.Assert.*;
 
 public class BiologyIntegrationTests extends WorldIntegrationTests {
+    private double defaultMaxIntensity;
+
+    @Before
+    public void setUp() {
+        defaultMaxIntensity = Illumination.getMaxIntensity();
+    }
+
+    @After
+    public void tearDown() {
+        Illumination.setMaxIntensity(defaultMaxIntensity);
+    }
+
     @Test
     public void testPhotosyntheticGrowth() {
+        Illumination.setMaxIntensity(2);
         world.addEnvironmentalInfluence(new Illumination(10));
         Cell cell = addCell(1, c -> c.requestPhotoAreaResize(1000));
         cell.setCenterPosition(5, -5);

@@ -16,9 +16,14 @@ public class DuckweedControl extends FixedDepthSeekingControl {
         double desiredDeltaPhotoArea = desiredPhotoArea - cell.getPhotoArea();
         cell.requestPhotoAreaResize(desiredDeltaPhotoArea / 50);
 
-        // TODO how to detach child? how to stop when layer is full?
-        cell.setSpawnOdds(5 - desiredDeltaPhotoArea);
+        // TODO how to stop when layer is full?
+//        cell.setSpawnOdds(1 + cell.getPhotoArea() - desiredDeltaPhotoArea);
+//        cell.setSpawnOdds(20 - cell.getRecentTotalOverlap());
+        double areaFactor = 1 + cell.getPhotoArea() - desiredDeltaPhotoArea;
+        double overlapFactor = 0.5 - cell.getRecentTotalOverlap();
+        cell.setSpawnOdds(areaFactor * overlapFactor);
+
         cell.requestChildDonation(5 - desiredDeltaPhotoArea);
-        cell.setReleaseChildOdds(cell.getChildNonFloatArea() - 200*Math.PI);
+        cell.setReleaseChildOdds(cell.getChildNonFloatArea() - 200 * Math.PI);
     }
 }
