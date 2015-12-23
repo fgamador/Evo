@@ -1,19 +1,23 @@
 package fga.evo.fxui;
 
-import fga.evo.model.*;
+import fga.evo.model.Cell;
+import fga.evo.model.World;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -41,8 +45,9 @@ public abstract class Evo extends Application {
 
         createMainWindow(primaryStage);
 
-        ControlWindow controls = new ControlWindow(primaryStage, this);
-        controls.show();
+        //ControlWindow controls = new ControlWindow(primaryStage, this);
+        //controls.show();
+        showControlDialog(primaryStage);
     }
 
     protected abstract void addInfluences(World world);
@@ -104,6 +109,32 @@ public abstract class Evo extends Application {
         KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
         timeline.getKeyFrames().add(kf);
         timeline.play();
+    }
+
+    private void showControlDialog(Stage primaryStage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ControlDialog.fxml"));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Pane dialog = loader.getRoot();
+
+        // Create the dialog Stage.
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Evo Controls");
+        dialogStage.initModality(Modality.NONE);
+        dialogStage.initOwner(primaryStage);
+        Scene scene = new Scene(dialog);
+        dialogStage.setScene(scene);
+
+        ControlDialogController controller = loader.getController();
+        //controller.setDialogStage(dialogStage);
+        controller.setEvo(this);
+
+        dialogStage.show();
     }
 
     void tick() {
