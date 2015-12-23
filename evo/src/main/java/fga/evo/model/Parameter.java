@@ -1,7 +1,5 @@
 package fga.evo.model;
 
-import java.util.Set;
-
 public class Parameter {
     private Getter getter;
     private Setter setter;

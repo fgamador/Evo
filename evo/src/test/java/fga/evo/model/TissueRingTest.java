@@ -162,7 +162,7 @@ public class TissueRingTest {
     }
 
     public static class TestRing extends TissueRing {
-        public static final Parameters parameters = new Parameters();
+        public static final TissueRingParameters parameters = new TissueRingParameters();
         static {
             parameters.setTissueDensity(0.5);
             parameters.setGrowthCost(0.1);

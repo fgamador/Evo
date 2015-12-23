@@ -6,14 +6,14 @@ import static fga.evo.model.Util.sqr;
  * Base class for the cell's rings of tissue.
  */
 public abstract class TissueRing {
-    private Parameters parameters;
+    private TissueRingParameters parameters;
     protected double innerRadius;
     protected double outerRadius;
     protected double area;
     protected double mass;
     private double requestedDeltaArea;
 
-    protected TissueRing(Parameters parameters, double outerRadius, double innerArea) {
+    protected TissueRing(TissueRingParameters parameters, double outerRadius, double innerArea) {
         this.parameters = parameters;
         this.outerRadius = outerRadius;
         updateFromOuterRadius(innerArea);
@@ -73,7 +73,7 @@ public abstract class TissueRing {
         return mass;
     }
 
-    public static class Parameters {
+    public static class TissueRingParameters {
         private double tissueDensity; // mass per area
         private double growthCost; // energy per area
         private double maintenanceCost; // energy per area

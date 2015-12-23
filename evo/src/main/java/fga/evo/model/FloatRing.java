@@ -4,7 +4,7 @@ package fga.evo.model;
  * A cell's air bubble, which allows it to regulate its buoyancy.
  */
 public class FloatRing extends TissueRing {
-    public static final Parameters parameters = new Parameters();
+    public static final TissueRingParameters parameters = new TissueRingParameters();
 
     static {
         parameters.setTissueDensity(0.0001);
