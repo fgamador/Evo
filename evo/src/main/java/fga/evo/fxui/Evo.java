@@ -112,7 +112,11 @@ public abstract class Evo extends Application {
     }
 
     private void showControlDialog(Stage primaryStage) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ControlDialog.fxml"));
+        showEvoDialog(primaryStage, "ControlDialog.fxml", "Evo Controls");
+    }
+
+    private void showEvoDialog(Stage primaryStage, String fxmlFileName, String title) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
 
         try {
             loader.load();
@@ -120,17 +124,16 @@ public abstract class Evo extends Application {
             throw new RuntimeException(e);
         }
 
-        Pane dialog = loader.getRoot();
-
-        // Create the dialog Stage.
         Stage dialogStage = new Stage();
-        dialogStage.setTitle("Evo Controls");
+        dialogStage.setTitle(title);
         dialogStage.initModality(Modality.NONE);
         dialogStage.initOwner(primaryStage);
+
+        Pane dialog = loader.getRoot();
         Scene scene = new Scene(dialog);
         dialogStage.setScene(scene);
 
-        ControlDialogController controller = loader.getController();
+        EvoDialogController controller = loader.getController();
         //controller.setDialogStage(dialogStage);
         controller.setEvo(this);
 
