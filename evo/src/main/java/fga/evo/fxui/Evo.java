@@ -112,32 +112,11 @@ public abstract class Evo extends Application {
     }
 
     private void showControlDialog(Stage primaryStage) {
-        showEvoDialog(primaryStage, "ControlDialog.fxml", "Evo Controls");
-    }
-
-    private void showEvoDialog(Stage primaryStage, String fxmlFileName, String title) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
-
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Stage dialogStage = new Stage();
-        dialogStage.setTitle(title);
-        dialogStage.initModality(Modality.NONE);
-        dialogStage.initOwner(primaryStage);
-
-        Pane dialog = loader.getRoot();
-        Scene scene = new Scene(dialog);
-        dialogStage.setScene(scene);
-
-        EvoDialogController controller = loader.getController();
-        //controller.setDialogStage(dialogStage);
-        controller.setEvo(this);
-
-        dialogStage.show();
+        new EvoDialogBuilder(primaryStage, this)
+                .setFxmlFileName("ControlDialog.fxml")
+                .setTitle("Evo Controls")
+                .setModality(Modality.NONE)
+                .show();
     }
 
     void tick() {
