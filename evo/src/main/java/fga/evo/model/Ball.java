@@ -57,7 +57,7 @@ public abstract class Ball {
      */
     void subtickPhysics(int subticksPerTick) {
         updateVelocity(subticksPerTick);
-        capSpeed();
+        limitSpeed();
         updatePosition(subticksPerTick);
         clearForces();
     }
@@ -74,9 +74,9 @@ public abstract class Ball {
         velocityY += accelerationY / subticksPerTick;
     }
 
-    private void capSpeed() {
+    // numerical/discretization problems can cause extreme velocities; cap them
+    private void limitSpeed() {
         // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
-        // numerical/discretization problems can cause extreme velocities; cap them
         double speedSquared = sqr(velocityX) + sqr(velocityY);
         if (speedSquared > sqr(speedLimit)) {
             double throttling = speedLimit / Math.sqrt(speedSquared);
