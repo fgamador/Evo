@@ -138,16 +138,4 @@ public abstract class Ball {
 
     public void onOverlap(double overlap) {
     }
-
-    //=========================================================================
-    // Parameters
-    //=========================================================================
-
-    public static double getSpeedLimit() {
-        return speedLimit;
-    }
-
-    public static void setSpeedLimit(double val) {
-        speedLimit = val;
-    }
 }

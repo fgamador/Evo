@@ -1,9 +1,6 @@
 package fga.evo.fxui;
 
 import fga.evo.model.Parameter;
-import fga.evo.model.ParameterAccess;
-import javafx.beans.property.adapter.JavaBeanDoubleProperty;
-import javafx.beans.property.adapter.JavaBeanDoublePropertyBuilder;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;

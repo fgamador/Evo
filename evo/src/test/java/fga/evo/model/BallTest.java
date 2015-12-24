@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,13 +11,22 @@ import static org.junit.Assert.assertEquals;
 public class BallTest {
     public static final double SQRT_2 = Math.sqrt(2);
 
+    private double defaultSpeedLimit;
     private SimpleBall ball;
 
     @Before
     public void setUp() {
+        defaultSpeedLimit = Ball.speedLimitParameter.getValue();
+        Ball.speedLimitParameter.setValue(4);
+
         ball = new SimpleBall(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
+    }
+
+    @After
+    public void tearDown() {
+        Ball.speedLimitParameter.setValue(defaultSpeedLimit);
     }
 
     @Test
@@ -77,7 +87,6 @@ public class BallTest {
 
         ball.subtickPhysics(1);
 
-        assertEquals(4, Ball.getSpeedLimit(), 0);
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
     }
 
