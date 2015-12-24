@@ -7,11 +7,17 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
-public class ControlDialogController extends EvoDialogController {
+public class ControlDialogController {
+    protected Evo evo;
+
     @FXML
     private Button playPauseButton;
     @FXML
     private Button singleStepButton;
+
+    public void setEvo(Evo val) {
+        evo = val;
+    }
 
     @FXML
     private void onPlayPauseButtonClicked() {

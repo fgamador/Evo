@@ -109,23 +109,23 @@ public abstract class Evo extends Application {
     }
 
     private void showControlDialog(Stage primaryStage) {
-        showEvoDialog(primaryStage, "ControlDialog.fxml", "Evo controls");
-    }
-
-    private void showParametersDialog(Stage primaryStage) {
-        showEvoDialog(primaryStage, "ParametersDialog.fxml", "Evo parameters");
-    }
-
-    private void showEvoDialog(Stage primaryStage, String fxmlFileName, String title) {
-        DialogBuilder builder = new DialogBuilder(fxmlFileName)
+        DialogBuilder builder = new DialogBuilder("ControlDialog.fxml")
                 .setParent(primaryStage)
-                .setTitle(title)
+                .setTitle("Evo controls")
                 .setModality(Modality.NONE);
 
-        EvoDialogController controller = builder.getController();
+        ControlDialogController controller = builder.getController();
         controller.setEvo(this);
 
         builder.show();
+    }
+
+    private void showParametersDialog(Stage primaryStage) {
+        new DialogBuilder("ParametersDialog.fxml")
+                .setParent(primaryStage)
+                .setTitle("Evo parameters")
+                .setModality(Modality.NONE)
+                .show();
     }
 
     void tick() {
