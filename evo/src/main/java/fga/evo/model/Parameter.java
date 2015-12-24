@@ -1,6 +1,11 @@
 package fga.evo.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Parameter {
+    private static Map<String, Parameter> registeredParameters = new HashMap<>();
+
     private Getter getter;
     private Setter setter;
 
@@ -9,12 +14,21 @@ public class Parameter {
         this.setter = setter;
     }
 
-    public double get() {
+    public Parameter register(String name) {
+        registeredParameters.put(name, this);
+        return this;
+    }
+
+    public double getValue() {
         return getter.get();
     }
 
-    public void set(double val) {
+    public void setValue(double val) {
         setter.set(val);
+    }
+
+    public static Parameter getRegistered(String name) {
+        return registeredParameters.get(name);
     }
 
     public interface Getter {

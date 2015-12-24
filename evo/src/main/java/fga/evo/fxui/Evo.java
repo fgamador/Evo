@@ -6,12 +6,10 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -48,6 +46,7 @@ public abstract class Evo extends Application {
         //ControlWindow controls = new ControlWindow(primaryStage, this);
         //controls.show();
         showControlDialog(primaryStage);
+        showParametersDialog(primaryStage);
     }
 
     protected abstract void addInfluences(World world);
@@ -112,11 +111,23 @@ public abstract class Evo extends Application {
     }
 
     private void showControlDialog(Stage primaryStage) {
-        new EvoDialogBuilder(primaryStage, this)
-                .setFxmlFileName("ControlDialog.fxml")
-                .setTitle("Evo Controls")
-                .setModality(Modality.NONE)
-                .show();
+        showEvoDialog(primaryStage, "ControlDialog.fxml", "Evo controls");
+    }
+
+    private void showParametersDialog(Stage primaryStage) {
+        showEvoDialog(primaryStage, "ParametersDialog.fxml", "Evo parameters");
+    }
+
+    private void showEvoDialog(Stage primaryStage, String fxmlFileName, String title) {
+        DialogBuilder builder = new DialogBuilder(fxmlFileName)
+                .setParent(primaryStage)
+                .setTitle(title)
+                .setModality(Modality.NONE);
+
+        EvoDialogController controller = builder.getController();
+        controller.setEvo(this);
+
+        builder.show();
     }
 
     void tick() {

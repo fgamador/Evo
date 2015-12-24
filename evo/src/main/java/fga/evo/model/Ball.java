@@ -11,6 +11,10 @@ import static fga.evo.model.Util.sqr;
  */
 public abstract class Ball {
     private static double speedLimit = 4;
+    static Parameter speedLimitParameter = new Parameter(
+            () -> speedLimit,
+            val -> speedLimit = val
+    ).register("speedLimit");
 
     private double centerX;
     private double centerY;

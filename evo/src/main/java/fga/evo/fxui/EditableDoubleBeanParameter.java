@@ -1,19 +1,18 @@
 package fga.evo.fxui;
 
-import fga.evo.model.Parameter;
-import fga.evo.model.ParameterAccess;
 import javafx.beans.property.adapter.JavaBeanDoubleProperty;
 import javafx.beans.property.adapter.JavaBeanDoublePropertyBuilder;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import fga.evo.model.ParameterAccess;
 
-public class EditableDoubleParameter extends Group {
+public class EditableDoubleBeanParameter extends Group {
     private Text text;
     private TextField field;
-    private Parameter parameter;
+    private JavaBeanDoubleProperty parameter;
 
-    public EditableDoubleParameter() {
+    public EditableDoubleBeanParameter() {
         text = new Text();
         text.setOnMouseClicked(e -> onTextClicked());
         getChildren().add(text);
@@ -27,16 +26,24 @@ public class EditableDoubleParameter extends Group {
     }
 
     public String getName() {
-        return "";
+        return parameter.getName();
     }
 
-    public void setName(String name) {
-        parameter = Parameter.getRegistered(name);
-        if (parameter == null) {
-            throw new IllegalArgumentException("No such parameter: " + name);
-        }
-
+    public void setName(String value) {
+        createParameterProperty(value);
         field.setText(String.valueOf(parameter.getValue()));
+        //field.textProperty().bindBidirectional(parameter, new NumberStringConverter());
+    }
+
+    private void createParameterProperty(String name) {
+        try {
+            JavaBeanDoublePropertyBuilder builder = JavaBeanDoublePropertyBuilder.create();
+            builder.bean(ParameterAccess.get());
+            builder.name(name);
+            parameter = builder.build();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void onTextClicked() {

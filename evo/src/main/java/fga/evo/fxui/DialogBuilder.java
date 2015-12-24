@@ -8,31 +8,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class EvoDialogBuilder {
-    private Evo evo;
+public class DialogBuilder {
     private Stage dialogStage;
     private FXMLLoader loader;
 
-    public EvoDialogBuilder(Stage primaryStage, Evo evo) {
-        this.evo = evo;
+    public DialogBuilder(String fxmlFileName) {
         dialogStage = new Stage();
-        dialogStage.initOwner(primaryStage);
-    }
-
-    public EvoDialogBuilder setTitle(String title) {
-        dialogStage.setTitle(title);
-        return this;
-    }
-
-    public EvoDialogBuilder setModality(Modality modality) {
-        dialogStage.initModality(modality);
-        return this;
-    }
-
-    public EvoDialogBuilder setFxmlFileName(String fxmlFileName) {
         loadFxmlFile(fxmlFileName);
         createScene();
-        return this;
     }
 
     private void loadFxmlFile(String fxmlFileName) {
@@ -50,10 +33,26 @@ public class EvoDialogBuilder {
         dialogStage.setScene(scene);
     }
 
+    public DialogBuilder setParent(Stage parentStage) {
+        dialogStage.initOwner(parentStage);
+        return this;
+    }
+
+    public DialogBuilder setTitle(String title) {
+        dialogStage.setTitle(title);
+        return this;
+    }
+
+    public DialogBuilder setModality(Modality modality) {
+        dialogStage.initModality(modality);
+        return this;
+    }
+
+    public <T> T getController() {
+        return loader.getController();
+    }
+
     public void show() {
-        EvoDialogController controller = loader.getController();
-        //controller.setDialogStage(dialogStage);
-        controller.setEvo(evo);
         dialogStage.show();
     }
 }
