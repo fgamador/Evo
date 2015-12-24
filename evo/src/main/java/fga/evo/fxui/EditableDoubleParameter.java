@@ -26,6 +26,7 @@ public class EditableDoubleParameter extends Group {
         text.textProperty().bind(field.textProperty());
     }
 
+    // Probably not called, but needed for JavaFX to recognize 'name' as a bean property.
     public String getName() {
         return "";
     }

@@ -43,8 +43,6 @@ public abstract class Evo extends Application {
 
         createMainWindow(primaryStage);
 
-        //ControlWindow controls = new ControlWindow(primaryStage, this);
-        //controls.show();
         showControlDialog(primaryStage);
         showParametersDialog(primaryStage);
     }
