@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,6 +14,9 @@ public class BallForcesTest {
 
     @Before
     public void setUp() {
+        BallForces.overlapForceFactor.setValue(1);
+        BallForces.dampingForceFactor.setValue(1);
+
         ball = new SimpleBall(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
@@ -20,15 +24,15 @@ public class BallForcesTest {
         ball2.setMass(1);
     }
 
+    @After
+    public void tearDown() {
+        BallForces.overlapForceFactor.revertToDefaultValue();
+    }
+
     @Test
     public void testCalcOverlapForce() {
-        double defaultOverlapForceFactor = BallForces.getOverlapForceFactor();
-        try {
-            BallForces.setOverlapForceFactor(2);
-            assertEquals(2, BallForces.calcOverlapForce(1), 0);
-        } finally {
-            BallForces.setOverlapForceFactor(defaultOverlapForceFactor);
-        }
+        BallForces.overlapForceFactor.setValue(2);
+        assertEquals(2, BallForces.calcOverlapForce(1), 0);
     }
 
     @Test

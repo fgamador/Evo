@@ -15,6 +15,8 @@ public class BallTest {
 
     @Before
     public void setUp() {
+        Ball.speedLimit.setValue(100);
+
         ball = new SimpleBall(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);

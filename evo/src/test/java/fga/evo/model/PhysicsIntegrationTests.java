@@ -151,14 +151,14 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
         world.tick();
 
-        assertVelocity(1 - Drag.getDragFactor(), 0, cell);
+        assertVelocity(1 - Drag.dragFactor.getValue(), 0, cell);
     }
 
     @Test
     public void testBuoyancy_Sinking() {
         PhotoRing.parameters.setTissueDensity(defaultTissueDensity);
         world.addEnvironmentalInfluence(new Weight());
-        assertTrue(PhotoRing.parameters.getTissueDensity() > Weight.getFluidDensity());
+        assertTrue(PhotoRing.parameters.getTissueDensity() > Weight.fluidDensity.getValue());
         Cell cell = addCell(1);
 
         world.tick();

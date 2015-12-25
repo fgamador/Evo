@@ -10,12 +10,21 @@
         <Insets top="25" right="25" bottom="25" left="25"/>
     </padding>
 
-    <!--<Label text="Bond spring stiffness:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>-->
-    <!--<EditableDoubleParameter name="bondSpringConstant" GridPane.rowIndex="0" GridPane.columnIndex="1"/>-->
+    <!--<Label text="Cell spring stiffness:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>-->
+    <!--<EditableDoubleParameter name="overlapForceFactor" GridPane.rowIndex="0" GridPane.columnIndex="1"/>-->
 
-    <!--<Label text="Bond spring damping:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>-->
-    <!--<EditableDoubleParameter name="bondDampingConstant" GridPane.rowIndex="1" GridPane.columnIndex="1"/>-->
+    <!--<Label text="Cell spring damping:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>-->
+    <!--<EditableDoubleParameter name="dampingForceFactor" GridPane.rowIndex="1" GridPane.columnIndex="1"/>-->
 
     <Label text="Max speed:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
     <EditableDoubleParameter name="speedLimit" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Drag force factor:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <EditableDoubleParameter name="dragFactor" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+    <Label text="Gravity:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <EditableDoubleParameter name="gravity" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+    <Label text="Fluid density:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <EditableDoubleParameter name="fluidDensity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 </GridPane>

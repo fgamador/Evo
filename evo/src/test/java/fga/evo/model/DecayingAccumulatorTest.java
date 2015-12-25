@@ -7,16 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DecayingAccumulatorTest {
-    private double defaultRentionRate;
-
-    @Before
-    public void setUp() {
-        defaultRentionRate = DecayingAccumulator.getRetentionRate();
-    }
-
     @After
     public void tearDown() {
-        DecayingAccumulator.setRetentionRate(defaultRentionRate);
+        DecayingAccumulator.retentionRate.revertToDefaultValue();
     }
 
     @Test
@@ -36,7 +29,7 @@ public class DecayingAccumulatorTest {
 
     @Test
     public void testDecay() {
-        DecayingAccumulator.setRetentionRate(0.75);
+        DecayingAccumulator.retentionRate.setValue(0.75);
 
         DecayingAccumulator sensor = new DecayingAccumulator();
         sensor.addValue(2);

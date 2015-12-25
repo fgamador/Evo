@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,9 +12,16 @@ public class DragTest {
 
     @Before
     public void setUp() {
+        Drag.dragFactor.setValue(0.1);
+
         cell = new Cell(2);
         cell.setCenterPosition(0, -10);
         drag = new Drag();
+    }
+
+    @After
+    public void tearDown() {
+        Drag.dragFactor.revertToDefaultValue();
     }
 
     @Test
@@ -29,21 +37,16 @@ public class DragTest {
 
         drag.addForcesToCell(cell);
 
-        assertNetForce(8 * Drag.getDragFactor(), -18 * Drag.getDragFactor(), cell);
+        assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), cell);
     }
 
     @Test
     public void testAddDragForceToCell_DragFactor() {
-        double defaultDragFactor = Drag.getDragFactor();
-        try {
-            Drag.setDragFactor(2);
-            cell.setVelocity(1, 0);
+        Drag.dragFactor.setValue(2);
+        cell.setVelocity(1, 0);
 
-            drag.addForcesToCell(cell);
+        drag.addForcesToCell(cell);
 
-            assertNetForce(-4, 0, cell);
-        } finally {
-            Drag.setDragFactor(defaultDragFactor);
-        }
+        assertNetForce(-4, 0, cell);
     }
 }

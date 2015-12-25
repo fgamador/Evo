@@ -23,7 +23,7 @@ public class WeightTest {
     public void testNeutralBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Weight.getFluidDensity() * maxDisplacement;
+            result = Weight.fluidDensity.getValue() * maxDisplacement;
         }};
 
         weight.addForcesToCell(cell);
@@ -40,26 +40,26 @@ public class WeightTest {
 
         weight.addForcesToCell(cell);
 
-        assertNetForce(0, Weight.getGravity() * Math.PI, cell);
+        assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell);
     }
 
     @Test
     public void testSinking() {
         new Expectations(cell) {{
             cell.getMass();
-            result = 2 * Weight.getFluidDensity() * maxDisplacement;
+            result = 2 * Weight.fluidDensity.getValue() * maxDisplacement;
         }};
 
         weight.addForcesToCell(cell);
 
-        assertNetForce(0, -Weight.getGravity() * Math.PI, cell);
+        assertNetForce(0, -Weight.gravity.getValue() * Math.PI, cell);
     }
 
     @Test
     public void testBarelySubmergedBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Weight.getFluidDensity() * maxDisplacement;
+            result = Weight.fluidDensity.getValue() * maxDisplacement;
         }};
 
         cell.setCenterPosition(0, -cell.getRadius());
@@ -72,25 +72,25 @@ public class WeightTest {
     public void testFullyEmergedBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Weight.getFluidDensity() * maxDisplacement;
+            result = Weight.fluidDensity.getValue() * maxDisplacement;
         }};
 
         cell.setCenterPosition(0, cell.getRadius());
         weight.addForcesToCell(cell);
 
-        assertNetForce(0, -cell.getMass() * Weight.getGravity(), cell);
+        assertNetForce(0, -cell.getMass() * Weight.gravity.getValue(), cell);
     }
 
     @Test
     public void testHalfEmergedBuoyancy() {
         new Expectations(cell) {{
             cell.getMass();
-            result = Weight.getFluidDensity() * maxDisplacement;
+            result = Weight.fluidDensity.getValue() * maxDisplacement;
         }};
 
         cell.setCenterPosition(0, 0);
         weight.addForcesToCell(cell);
 
-        assertNetForce(0, -cell.getMass() * Weight.getGravity() / 2, cell);
+        assertNetForce(0, -cell.getMass() * Weight.gravity.getValue() / 2, cell);
     }
 }
