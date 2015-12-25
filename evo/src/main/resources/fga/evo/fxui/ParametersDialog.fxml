@@ -28,6 +28,12 @@
     <Label text="Fluid density:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
     <EditableDoubleParameter name="fluidDensity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
-    <!--<Label text="Puller force factor:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>-->
-    <!--<EditableDoubleParameter name="pullerForceFactor" GridPane.rowIndex="6" GridPane.columnIndex="1"/>-->
+    <Label text="Illumination intensity:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <EditableDoubleParameter name="maxIntensity" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+    <!--<Label text="Puller force factor:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>-->
+    <!--<EditableDoubleParameter name="pullerForceFactor" GridPane.rowIndex="7" GridPane.columnIndex="1"/>-->
+
+    <Label text="Touch retention:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+    <EditableDoubleParameter name="retentionRate" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 </GridPane>

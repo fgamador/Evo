@@ -10,22 +10,21 @@ import static org.junit.Assert.assertEquals;
 
 public class IlluminationTest {
     private Illumination lighting;
-    private double defaultMaxIntensity;
 
     @Before
     public void setUp() {
-        defaultMaxIntensity = Illumination.getMaxIntensity();
+        Illumination.maxIntensity.setValue(2);
+
         lighting = new Illumination(100);
     }
 
     @After
     public void tearDown() {
-        Illumination.setMaxIntensity(defaultMaxIntensity);
+        Illumination.maxIntensity.revertToDefaultValue();
     }
 
     @Test
     public void testCalcLightIntensity() {
-        Illumination.setMaxIntensity(2);
         assertEquals(2, lighting.calcLightIntensity(50), 0);
         assertEquals(2, lighting.calcLightIntensity(0), 0);
         assertEquals(1, lighting.calcLightIntensity(-50), 0);
@@ -34,7 +33,7 @@ public class IlluminationTest {
 
     @Test
     public void testCalcLightIntensity_MaxIntensity() {
-        Illumination.setMaxIntensity(4);
+        Illumination.maxIntensity.setValue(4);
         assertEquals(4, lighting.calcLightIntensity(0), 0);
         assertEquals(2, lighting.calcLightIntensity(-50), 0);
         assertEquals(0, lighting.calcLightIntensity(-100), 0);
@@ -42,7 +41,6 @@ public class IlluminationTest {
 
     @Test
     public void testIlluminateCell() {
-        Illumination.setMaxIntensity(2);
         Cell cell = new Cell(1);
         cell.setCenterPosition(50, -50);
 

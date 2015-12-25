@@ -10,21 +10,18 @@ import static fga.evo.model.Assert.*;
 import static org.junit.Assert.*;
 
 public class BiologyIntegrationTests extends WorldIntegrationTests {
-    private double defaultMaxIntensity;
-
     @Before
     public void setUp() {
-        defaultMaxIntensity = Illumination.getMaxIntensity();
+        Illumination.maxIntensity.setValue(2);
     }
 
     @After
     public void tearDown() {
-        Illumination.setMaxIntensity(defaultMaxIntensity);
+        Illumination.maxIntensity.revertToDefaultValue();
     }
 
     @Test
     public void testPhotosyntheticGrowth() {
-        Illumination.setMaxIntensity(2);
         world.addEnvironmentalInfluence(new Illumination(10));
         Cell cell = addCell(1, c -> c.requestPhotoAreaResize(1000));
         cell.setCenterPosition(5, -5);

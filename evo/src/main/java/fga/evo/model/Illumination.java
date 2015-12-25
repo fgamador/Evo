@@ -4,7 +4,7 @@ package fga.evo.model;
  * The light illuminating the cells.
  */
 public class Illumination extends EnvironmentalInfluence {
-    private static double MAX_INTENSITY = 1;
+    static DoubleParameter maxIntensity = new DoubleParameter(1).register("maxIntensity");
 
     private double depth;
 
@@ -22,18 +22,6 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     public double calcLightIntensity(double y) {
-        return (y >= 0) ? MAX_INTENSITY : MAX_INTENSITY * (depth + y) / depth;
-    }
-
-    //=========================================================================
-    // Parameters
-    //=========================================================================
-
-    public static double getMaxIntensity() {
-        return MAX_INTENSITY;
-    }
-
-    public static void setMaxIntensity(final double val) {
-        MAX_INTENSITY = val;
+        return (y >= 0) ? maxIntensity.getValue() : maxIntensity.getValue() * (depth + y) / depth;
     }
 }
