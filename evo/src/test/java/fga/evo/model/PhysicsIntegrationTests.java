@@ -16,6 +16,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Before
     public void setUp() {
+        Puller.pullerForceFactor.setValue(1);
         defaultTissueDensity = PhotoRing.parameters.getTissueDensity();
         defaultSubticksPerTick = World.getSubticksPerTick();
 

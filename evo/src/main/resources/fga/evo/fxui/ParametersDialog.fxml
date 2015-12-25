@@ -27,4 +27,7 @@
 
     <Label text="Fluid density:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
     <EditableDoubleParameter name="fluidDensity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+    <!--<Label text="Puller force factor:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>-->
+    <!--<EditableDoubleParameter name="pullerForceFactor" GridPane.rowIndex="6" GridPane.columnIndex="1"/>-->
 </GridPane>

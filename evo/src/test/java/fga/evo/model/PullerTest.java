@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,8 +12,15 @@ public class PullerTest {
 
     @Before
     public void setUp() {
+        Puller.pullerForceFactor.setValue(1);
+
         cell = new Cell(1);
         puller = new Puller(cell);
+    }
+
+    @After
+    public void tearDown() {
+        Puller.pullerForceFactor.revertToDefaultValue();
     }
 
     @Test
@@ -39,16 +47,10 @@ public class PullerTest {
     public void testAddForceToCell_PullForceFactor() {
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
+        Puller.pullerForceFactor.setValue(2);
 
-        double defaultForceFactor = Puller.getPullForceFactor();
-        try {
-            Puller.setPullForceFactor(2);
+        puller.addForceToCell();
 
-            puller.addForceToCell();
-
-            assertNetForce(2, -2, cell);
-        } finally {
-            Puller.setPullForceFactor(defaultForceFactor);
-        }
+        assertNetForce(2, -2, cell);
     }
 }
