@@ -1,6 +1,6 @@
 package fga.evo.fxui;
 
-import fga.evo.model.Parameter;
+import fga.evo.model.DoubleParameter;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 public class EditableDoubleParameter extends Group {
     private Text text;
     private TextField field;
-    private Parameter parameter;
+    private DoubleParameter parameter;
 
     public EditableDoubleParameter() {
         text = new Text();
@@ -29,7 +29,7 @@ public class EditableDoubleParameter extends Group {
     }
 
     public void setName(String name) {
-        parameter = Parameter.getRegistered(name);
+        parameter = DoubleParameter.getRegistered(name);
         if (parameter == null) {
             throw new IllegalArgumentException("No such parameter: " + name);
         }

@@ -11,14 +11,10 @@ import static org.junit.Assert.assertEquals;
 public class BallTest {
     public static final double SQRT_2 = Math.sqrt(2);
 
-    private double defaultSpeedLimit;
     private SimpleBall ball;
 
     @Before
     public void setUp() {
-        defaultSpeedLimit = Ball.speedLimitParameter.getValue();
-        Ball.speedLimitParameter.setValue(4);
-
         ball = new SimpleBall(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
@@ -26,7 +22,7 @@ public class BallTest {
 
     @After
     public void tearDown() {
-        Ball.speedLimitParameter.setValue(defaultSpeedLimit);
+        Ball.speedLimit.revertToDefaultValue();
     }
 
     @Test
@@ -83,6 +79,7 @@ public class BallTest {
 
     @Test
     public void testSubtickPhysics_SpeedLimit() {
+        Ball.speedLimit.setValue(4);
         ball.setVelocity(8 / SQRT_2, -8 / SQRT_2);
 
         ball.subtickPhysics(1);

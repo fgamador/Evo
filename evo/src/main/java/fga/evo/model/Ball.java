@@ -10,11 +10,7 @@ import static fga.evo.model.Util.sqr;
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
 public abstract class Ball {
-    private static double speedLimit = 4;
-    static Parameter speedLimitParameter = new Parameter(
-            () -> speedLimit,
-            val -> speedLimit = val
-    ).register("speedLimit");
+    static DoubleParameter speedLimit = new DoubleParameter(4).register("speedLimit");
 
     private double centerX;
     private double centerY;
@@ -78,8 +74,9 @@ public abstract class Ball {
     private void limitSpeed() {
         // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
         double speedSquared = sqr(velocityX) + sqr(velocityY);
-        if (speedSquared > sqr(speedLimit)) {
-            double throttling = speedLimit / Math.sqrt(speedSquared);
+        double maxSpeed = speedLimit.getValue();
+        if (speedSquared > sqr(maxSpeed)) {
+            double throttling = maxSpeed / Math.sqrt(speedSquared);
             velocityX *= throttling;
             velocityY *= throttling;
         }
