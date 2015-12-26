@@ -110,9 +110,7 @@ public abstract class Evo extends Application {
             contextMenu.show(root, e.getScreenX(), e.getScreenY());
             e.consume();
         });
-        root.setOnMousePressed(e -> {
-            contextMenu.hide();
-        });
+        root.setOnMousePressed(e -> contextMenu.hide());
 
         root.setOnMouseDragged(e -> {
             if (world.isPulling()) {
@@ -137,7 +135,7 @@ public abstract class Evo extends Application {
     private void showControlDialog(Stage primaryStage) {
         DialogBuilder builder = new DialogBuilder("ControlDialog.fxml")
                 .setParent(primaryStage)
-                .setTitle("Evo controls")
+                .setTitle("Time")
                 .setModality(Modality.NONE);
 
         ControlDialogController controller = builder.getController();
@@ -149,7 +147,7 @@ public abstract class Evo extends Application {
     private void showParametersDialog(Stage primaryStage) {
         new DialogBuilder("ParametersDialog.fxml")
                 .setParent(primaryStage)
-                .setTitle("Evo parameters")
+                .setTitle("Parameters")
                 .setModality(Modality.NONE)
                 .show();
     }

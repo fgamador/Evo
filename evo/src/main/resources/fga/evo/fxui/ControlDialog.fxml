@@ -4,10 +4,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <HBox spacing="10" fx:controller="fga.evo.fxui.ControlDialogController" xmlns:fx="http://javafx.com/fxml">
     <padding>
-        <Insets top="10" right="10" bottom="10" left="10"/>
+        <Insets top="10" right="20" bottom="20" left="10"/>
     </padding>
-    <Button fx:id="playPauseButton" text="||" onAction="#onPlayPauseButtonClicked"/>
-    <Button fx:id="singleStepButton" text=">|" disable="true" onAction="#onSingleStepButtonClicked"/>
+    <Button fx:id="playOrPauseButton" onAction="#onPlayOrPauseButtonClicked"/>
+    <Button fx:id="singleStepButton" disable="true" onAction="#onSingleStepButtonClicked">
+        <graphic>
+            <ImageView>
+                <Image url="@4_audio_step_forward.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
 </HBox>
