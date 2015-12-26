@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -105,10 +106,12 @@ public abstract class Evo extends Application {
     }
 
     private void addMouseListeners(final Group root) {
+        root.setOnContextMenuRequested(e -> {
+            contextMenu.show(root, e.getScreenX(), e.getScreenY());
+            e.consume();
+        });
         root.setOnMousePressed(e -> {
-            if (e.getButton() == MouseButton.SECONDARY) {
-                contextMenu.show(root, e.getScreenX(), e.getScreenY());
-            }
+            contextMenu.hide();
         });
 
         root.setOnMouseDragged(e -> {
@@ -116,7 +119,6 @@ public abstract class Evo extends Application {
                 world.setPullPoint(toWorldX(e.getSceneX()), toWorldY(e.getSceneY()));
             }
         });
-
         root.setOnMouseReleased(e -> {
             if (world.isPulling()) {
                 world.endPull();
