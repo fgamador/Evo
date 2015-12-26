@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -14,6 +15,7 @@ public class DialogBuilder {
 
     public DialogBuilder(String fxmlFileName) {
         dialogStage = new Stage();
+        dialogStage.initStyle(StageStyle.UTILITY);
         loadFxmlFile(fxmlFileName);
         createScene();
     }

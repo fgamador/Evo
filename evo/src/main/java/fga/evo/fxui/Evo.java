@@ -9,6 +9,9 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -33,6 +36,7 @@ public abstract class Evo extends Application {
     private World world;
     private Group cellCircles;
     private Timeline timeline;
+    private ContextMenu contextMenu;
 //    private CellCircle selectedCellCircle;
 
     @Override
@@ -40,11 +44,7 @@ public abstract class Evo extends Application {
         world = new World();
         addInfluences(world);
         populate(world);
-
         createMainWindow(primaryStage);
-
-        showControlDialog(primaryStage);
-        showParametersDialog(primaryStage);
     }
 
     protected abstract void addInfluences(World world);
@@ -53,6 +53,7 @@ public abstract class Evo extends Application {
 
     private void createMainWindow(Stage primaryStage) {
         Group root = createSceneRoot(primaryStage);
+        createContextMenu(primaryStage);
         addAirRectangle(root);
         addWaterRectangle(root);
         addCellCircles(root);
@@ -67,6 +68,15 @@ public abstract class Evo extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Evo");
         return root;
+    }
+
+    private void createContextMenu(Stage primaryStage) {
+        contextMenu = new ContextMenu();
+        MenuItem timeItem = new MenuItem("Time...");
+        timeItem.setOnAction(e -> showControlDialog(primaryStage));
+        MenuItem parametersItem = new MenuItem("Parameters...");
+        parametersItem.setOnAction(e -> showParametersDialog(primaryStage));
+        contextMenu.getItems().addAll(timeItem, parametersItem);
     }
 
     private void addAirRectangle(Group root) {
@@ -94,10 +104,24 @@ public abstract class Evo extends Application {
         root.getChildren().add(cellCircles);
     }
 
-    private void addMouseListeners(Group root) {
-        root.setOnMouseDragged(this::onMouseDragged);
-//        root.setOnMouseDragged(e -> onMouseDragged(e));
-        root.setOnMouseReleased(e -> onMouseReleased());
+    private void addMouseListeners(final Group root) {
+        root.setOnMousePressed(e -> {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                contextMenu.show(root, e.getScreenX(), e.getScreenY());
+            }
+        });
+
+        root.setOnMouseDragged(e -> {
+            if (world.isPulling()) {
+                world.setPullPoint(toWorldX(e.getSceneX()), toWorldY(e.getSceneY()));
+            }
+        });
+
+        root.setOnMouseReleased(e -> {
+            if (world.isPulling()) {
+                world.endPull();
+            }
+        });
     }
 
     private void startAnimation() {
@@ -165,18 +189,6 @@ public abstract class Evo extends Application {
 //        if (pulledCellCircle != selectedCellCircle) {
 //            onCellClicked(cellCircle);
 //        }
-    }
-
-    private void onMouseDragged(MouseEvent e) {
-        if (world.isPulling()) {
-            world.setPullPoint(toWorldX(e.getSceneX()), toWorldY(e.getSceneY()));
-        }
-    }
-
-    private void onMouseReleased() {
-        if (world.isPulling()) {
-            world.endPull();
-        }
     }
 
     // -- for control window --

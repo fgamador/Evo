@@ -30,7 +30,7 @@ public class PhotoRing extends TissueRing {
     /**
      * Calculates the cell's efficiency at converting light into energy.
      * This depends on the thickness of the photosynthetic ring and starts
-     * at 0 (no ring) and asymptotically approaches 1 (infinite thickness).
+     * at 0 (no ring) and asymptotically approaches 1 (infinitely thick ring).
      *
      * @return the fraction of incident light that gets captured as energy
      */
