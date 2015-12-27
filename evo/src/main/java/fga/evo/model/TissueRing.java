@@ -48,17 +48,17 @@ public abstract class TissueRing {
     }
 
     public double getMaintenanceEnergy() {
-        return area * parameters.maintenanceCost;
+        return area * parameters.maintenanceCost.getValue();
     }
 
     private void updateFromOuterRadius(double innerArea) {
         area = Math.PI * sqr(outerRadius) - innerArea;
-        mass = parameters.tissueDensity * area;
+        mass = parameters.tissueDensity.getValue() * area;
     }
 
     public void updateFromArea(double innerRadius) {
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
-        mass = parameters.tissueDensity * area;
+        mass = parameters.tissueDensity.getValue() * area;
     }
 
     public double getOuterRadius() {
@@ -74,50 +74,59 @@ public abstract class TissueRing {
     }
 
     public static class TissueRingParameters {
-        private double tissueDensity; // mass per area
-        private double growthCost; // energy per area
-        private double maintenanceCost; // energy per area
-        private double shrinkageYield; // energy per area
-        private double maxGrowthRate; // fraction of current area
+        private DoubleParameter tissueDensity = new DoubleParameter(0); // mass per area
+        private DoubleParameter growthCost = new DoubleParameter(0); // energy per area
+        private DoubleParameter maintenanceCost = new DoubleParameter(0); // energy per area
+        private DoubleParameter shrinkageYield = new DoubleParameter(0); // energy per area
+        private DoubleParameter maxGrowthRate = new DoubleParameter(0); // fraction of current area
 
         public double getTissueDensity() {
-            return tissueDensity;
+            return tissueDensity.getValue();
         }
 
         public void setTissueDensity(double val) {
-            tissueDensity = val;
+            tissueDensity.setValue(val);
         }
 
         public double getMaintenanceCost() {
-            return maintenanceCost;
+            return maintenanceCost.getValue();
         }
 
         public void setMaintenanceCost(double val) {
-            maintenanceCost = val;
+            maintenanceCost.setValue(val);
         }
 
         public double getGrowthCost() {
-            return growthCost;
+            return growthCost.getValue();
         }
 
         public void setGrowthCost(double val) {
-            growthCost = val;
+            growthCost.setValue(val);
         }
 
         public double getShrinkageYield() {
-            return shrinkageYield;
+            return shrinkageYield.getValue();
         }
 
         public void setShrinkageYield(double val) {
-            shrinkageYield = val;
+            shrinkageYield.setValue(val);
         }
 
         public double getMaxGrowthRate() {
-            return maxGrowthRate;
+            return maxGrowthRate.getValue();
         }
 
         public void setMaxGrowthRate(double val) {
-            this.maxGrowthRate = val;
+            this.maxGrowthRate.setValue(val);
+        }
+
+        public TissueRingParameters register(String prefix) {
+            tissueDensity.register(prefix + ".tissueDensity");
+            growthCost.register(prefix + ".growthCost");
+            maintenanceCost.register(prefix + ".maintenanceCost");
+            shrinkageYield.register(prefix + ".shrinkageYield");
+            maxGrowthRate.register(prefix + ".maxGrowthRate");
+            return this;
         }
     }
 }

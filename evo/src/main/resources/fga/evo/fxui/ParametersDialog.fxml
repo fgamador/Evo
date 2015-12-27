@@ -36,4 +36,7 @@
 
     <Label text="Touch retention:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
     <EditableDoubleParameter name="Decay.retentionRate" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+    <Label text="Photo ring density:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+    <EditableDoubleParameter name="PhotoRing.tissueDensity" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
 </GridPane>
