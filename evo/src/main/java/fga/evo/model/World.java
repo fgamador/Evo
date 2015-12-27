@@ -88,6 +88,10 @@ public class World {
         }
     }
 
+    public void restart() {
+        cells.clear();
+    }
+
     public Collection<Cell> getCells() {
         return cells;
     }

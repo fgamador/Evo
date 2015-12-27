@@ -247,6 +247,14 @@ public abstract class Evo extends Application {
         timeline.play();
     }
 
+    public void restart() {
+        for (Node cellCircle : cellCircles.getChildren()) {
+            cellCircle.setVisible(false);
+        }
+        cellCircles.getChildren().clear();
+        world.restart();
+    }
+
     public static double toSceneX(final double worldX) {
         return worldX;
     }

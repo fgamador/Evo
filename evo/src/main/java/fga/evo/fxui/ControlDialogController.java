@@ -18,11 +18,15 @@ public class ControlDialogController {
     private Button playOrPauseButton;
     @FXML
     private Button singleStepButton;
+    @FXML
+    private Button restartButton;
 
     @FXML
     private void initialize() {
         playIcon = new Image(getClass().getResourceAsStream("4_audio_play.png"));
         pauseIcon = new Image(getClass().getResourceAsStream("4_audio_pause.png"));
+        //playButton.managedProperty().bind(playButton.visibleProperty());
+        //pauseButton.managedProperty().bind(pauseButton.visibleProperty());
     }
 
     public void setEvo(Evo val) {
@@ -45,8 +49,15 @@ public class ControlDialogController {
         evo.tick();
     }
 
+    @FXML
+    private void onRestartButtonClicked() {
+        // TODO confirm
+        evo.restart();
+    }
+
     private void updatePerEvoState() {
         playOrPauseButton.setGraphic(new ImageView(evo.isRunning() ? pauseIcon : playIcon));
         singleStepButton.setDisable(evo.isRunning());
+        restartButton.setDisable(evo.isRunning());
     }
 }

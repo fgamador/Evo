@@ -18,4 +18,11 @@
             </ImageView>
         </graphic>
     </Button>
+    <Button fx:id="restartButton" disable="true" onAction="#onRestartButtonClicked">
+        <graphic>
+            <ImageView>
+                <Image url="@4_audio_rewind.png"/>
+            </ImageView>
+        </graphic>
+    </Button>
 </HBox>
