@@ -110,6 +110,7 @@ public abstract class Evo extends Application {
                 .setTitle("Parameters")
                 .setModality(Modality.NONE)
                 .setLocation(screenX, screenY)
+                .setWidth(270)
                 .show();
     }
 

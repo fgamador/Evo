@@ -57,6 +57,11 @@ public class DialogBuilder {
         return this;
     }
 
+    public DialogBuilder setWidth(double width) {
+        dialogStage.setWidth(width);
+        return this;
+    }
+
     public <T> T getController() {
         return loader.getController();
     }

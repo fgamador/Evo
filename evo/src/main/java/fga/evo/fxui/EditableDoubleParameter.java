@@ -16,6 +16,7 @@ public class EditableDoubleParameter extends Group {
         getChildren().add(text);
 
         field = new TextField();
+        field.setPrefWidth(60);
         field.setVisible(false);
         field.setOnAction(e -> onValueEntered());
         getChildren().add(field);
