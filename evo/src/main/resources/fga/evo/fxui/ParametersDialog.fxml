@@ -11,29 +11,29 @@
     </padding>
 
     <!--<Label text="Cell spring stiffness:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>-->
-    <!--<EditableDoubleParameter name="overlapForceFactor" GridPane.rowIndex="0" GridPane.columnIndex="1"/>-->
+    <!--<EditableDoubleParameter name="Ball.overlapForceFactor" GridPane.rowIndex="0" GridPane.columnIndex="1"/>-->
 
     <!--<Label text="Cell spring damping:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>-->
-    <!--<EditableDoubleParameter name="dampingForceFactor" GridPane.rowIndex="1" GridPane.columnIndex="1"/>-->
+    <!--<EditableDoubleParameter name="Ball.dampingForceFactor" GridPane.rowIndex="1" GridPane.columnIndex="1"/>-->
 
     <Label text="Max speed:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-    <EditableDoubleParameter name="speedLimit" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <EditableDoubleParameter name="Ball.speedLimit" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
     <Label text="Drag force factor:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-    <EditableDoubleParameter name="dragFactor" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    <EditableDoubleParameter name="Drag.dragFactor" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
 
     <Label text="Gravity:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-    <EditableDoubleParameter name="gravity" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    <EditableDoubleParameter name="Weight.gravity" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
 
     <Label text="Fluid density:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-    <EditableDoubleParameter name="fluidDensity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+    <EditableDoubleParameter name="Weight.fluidDensity" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
 
     <Label text="Illumination intensity:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
-    <EditableDoubleParameter name="maxIntensity" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+    <EditableDoubleParameter name="Illumination.maxIntensity" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
 
     <!--<Label text="Puller force factor:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>-->
-    <!--<EditableDoubleParameter name="pullerForceFactor" GridPane.rowIndex="7" GridPane.columnIndex="1"/>-->
+    <!--<EditableDoubleParameter name="Puller.forceFactor" GridPane.rowIndex="7" GridPane.columnIndex="1"/>-->
 
     <Label text="Touch retention:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
-    <EditableDoubleParameter name="retentionRate" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+    <EditableDoubleParameter name="Decay.retentionRate" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
 </GridPane>

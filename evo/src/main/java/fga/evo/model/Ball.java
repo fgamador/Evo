@@ -10,7 +10,7 @@ import static fga.evo.model.Util.sqr;
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
 public abstract class Ball {
-    static DoubleParameter speedLimit = new DoubleParameter(4).register("speedLimit");
+    static DoubleParameter speedLimit = new DoubleParameter(4).register("Ball.speedLimit");
 
     private double centerX;
     private double centerY;

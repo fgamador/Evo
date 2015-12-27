@@ -7,8 +7,8 @@ import static fga.evo.model.Util.sqr;
  * TODO move these back into Ball?
  */
 public class BallForces {
-    static DoubleParameter overlapForceFactor = new DoubleParameter(1).register("overlapForceFactor");
-    static DoubleParameter dampingForceFactor = new DoubleParameter(1).register("dampingForceFactor");
+    static DoubleParameter overlapForceFactor = new DoubleParameter(1).register("Ball.overlapForceFactor");
+    static DoubleParameter dampingForceFactor = new DoubleParameter(1).register("Ball.dampingForceFactor");
 
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
