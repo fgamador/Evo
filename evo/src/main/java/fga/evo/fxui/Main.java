@@ -3,6 +3,7 @@ package fga.evo.fxui;
 import fga.evo.model.*;
 
 public class Main extends Evo {
+    @Override
     protected void addInfluences(World world) {
         world.addEnvironmentalInfluence(new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
@@ -10,9 +11,10 @@ public class Main extends Evo {
         world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));
     }
 
+    @Override
     protected void populate(World world) {
 //        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
-        Cell cell = new Cell(10, new DuckweedControl());
+        Cell cell = createCell();
         cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
         world.addCell(cell);
 
@@ -27,6 +29,11 @@ public class Main extends Evo {
 //            world.addCell(cell);
 //            cell.setCenterPosition(950 - 50*i, -200 - 30*i);
 //        }
+    }
+
+    @Override
+    protected Cell createCell() {
+        return new Cell(10, new DuckweedControl());
     }
 
     public static void main(String[] args) {

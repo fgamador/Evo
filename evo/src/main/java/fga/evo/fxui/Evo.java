@@ -73,11 +73,44 @@ public abstract class Evo extends Application {
 
     private void createContextMenu(Stage primaryStage) {
         contextMenu = new ContextMenu();
-        MenuItem timeItem = new MenuItem("Time...");
-        timeItem.setOnAction(e -> showControlDialog(primaryStage));
-        MenuItem parametersItem = new MenuItem("Parameters...");
-        parametersItem.setOnAction(e -> showParametersDialog(primaryStage));
+
+        final MenuItem timeItem = new MenuItem("Time...");
+        timeItem.setOnAction(e -> {
+            double menuX = timeItem.getParentPopup().getX();
+            double menuY = timeItem.getParentPopup().getY();
+            showControlDialog(primaryStage, menuX + 10, menuY + 5);
+        });
+
+        final MenuItem parametersItem = new MenuItem("Parameters...");
+        parametersItem.setOnAction(e -> {
+            double menuX = parametersItem.getParentPopup().getX();
+            double menuY = parametersItem.getParentPopup().getY();
+            showParametersDialog(primaryStage, menuX + 10, menuY + 25);
+        });
+
         contextMenu.getItems().addAll(timeItem, parametersItem);
+    }
+
+    private void showControlDialog(Stage primaryStage, double screenX, double screenY) {
+        DialogBuilder builder = new DialogBuilder("ControlDialog.fxml")
+                .setParent(primaryStage)
+                .setTitle("Time")
+                .setModality(Modality.NONE)
+                .setLocation(screenX, screenY);
+
+        ControlDialogController controller = builder.getController();
+        controller.setEvo(this);
+
+        builder.show();
+    }
+
+    private void showParametersDialog(Stage primaryStage, double screenX, double screenY) {
+        new DialogBuilder("ParametersDialog.fxml")
+                .setParent(primaryStage)
+                .setTitle("Parameters")
+                .setModality(Modality.NONE)
+                .setLocation(screenX, screenY)
+                .show();
     }
 
     private void addAirRectangle(Group root) {
@@ -110,7 +143,12 @@ public abstract class Evo extends Application {
             contextMenu.show(root, e.getScreenX(), e.getScreenY());
             e.consume();
         });
-        root.setOnMousePressed(e -> contextMenu.hide());
+        root.setOnMousePressed(e -> {
+            contextMenu.hide();
+            if (e.getButton() == MouseButton.MIDDLE) {
+                addCell(e.getSceneX(), e.getSceneY());
+            }
+        });
 
         root.setOnMouseDragged(e -> {
             if (world.isPulling()) {
@@ -124,32 +162,21 @@ public abstract class Evo extends Application {
         });
     }
 
+    private void addCell(double sceneX, double sceneY) {
+        Cell cell = createCell();
+        cell.setCenterPosition(toWorldX(sceneX), toWorldY(sceneY));
+        world.addCell(cell);
+        addCell(cell);
+    }
+
+    protected abstract Cell createCell();
+
     private void startAnimation() {
         timeline = new Timeline();
         timeline.setCycleCount(Timeline.INDEFINITE);
         KeyFrame kf = new KeyFrame(Duration.millis(40), e -> tick());
         timeline.getKeyFrames().add(kf);
         timeline.play();
-    }
-
-    private void showControlDialog(Stage primaryStage) {
-        DialogBuilder builder = new DialogBuilder("ControlDialog.fxml")
-                .setParent(primaryStage)
-                .setTitle("Time")
-                .setModality(Modality.NONE);
-
-        ControlDialogController controller = builder.getController();
-        controller.setEvo(this);
-
-        builder.show();
-    }
-
-    private void showParametersDialog(Stage primaryStage) {
-        new DialogBuilder("ParametersDialog.fxml")
-                .setParent(primaryStage)
-                .setTitle("Parameters")
-                .setModality(Modality.NONE)
-                .show();
     }
 
     void tick() {

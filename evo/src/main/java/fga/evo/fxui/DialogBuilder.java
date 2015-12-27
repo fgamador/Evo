@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -47,6 +48,12 @@ public class DialogBuilder {
 
     public DialogBuilder setModality(Modality modality) {
         dialogStage.initModality(modality);
+        return this;
+    }
+
+    public DialogBuilder setLocation(double screenX, double screenY) {
+        dialogStage.setX(screenX);
+        dialogStage.setY(screenY);
         return this;
     }
 
