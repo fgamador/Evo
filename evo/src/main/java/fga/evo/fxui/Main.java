@@ -3,20 +3,24 @@ package fga.evo.fxui;
 import fga.evo.model.*;
 
 public class Main extends Evo {
+    private SurroundingWalls walls;
+    private Illumination light;
+
     @Override
     protected void addInfluences(World world) {
-        world.addEnvironmentalInfluence(new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
+        world.addEnvironmentalInfluence(walls = new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
         world.addEnvironmentalInfluence(new Drag());
         world.addEnvironmentalInfluence(new Weight());
-        world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));
+        world.addEnvironmentalInfluence(light = new Illumination(WATER_DEPTH));
     }
 
     @Override
     protected void populate(World world) {
 //        Cell cell = new Cell(10, new FixedDepthSeekingControl(0));
-        Cell cell = createCell();
-        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
-        world.addCell(cell);
+
+//        Cell cell = createCell();
+//        cell.setCenterPosition(WIDTH / 2, -WATER_DEPTH / 2);
+//        world.addCell(cell);
 
 //        for (int i = 0; i < 10; i++) {
 //            Cell cell = new Cell(1, new DuckweedControl());
@@ -34,6 +38,17 @@ public class Main extends Evo {
     @Override
     protected Cell createCell() {
         return new Cell(10, new DuckweedControl());
+    }
+
+    @Override
+    protected void onWidthChanged(double newWidth) {
+        walls.resizeWidth(newWidth);
+    }
+
+    @Override
+    protected void onHeightChanged(double newHeight) {
+        walls.resizeHeight(newHeight);
+        // TODO light
     }
 
     public static void main(String[] args) {

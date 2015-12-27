@@ -59,6 +59,7 @@ public abstract class Evo extends Application {
         addWaterRectangle(root);
         addCellCircles(root);
         addMouseListeners(root);
+        addResizeListeners(primaryStage);
         startAnimation();
         primaryStage.show();
     }
@@ -171,6 +172,19 @@ public abstract class Evo extends Application {
     }
 
     protected abstract Cell createCell();
+
+    private void addResizeListeners(Stage primaryStage) {
+        primaryStage.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            onWidthChanged(newWidth.doubleValue());
+        });
+        primaryStage.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+            onHeightChanged(newHeight.doubleValue());
+        });
+    }
+
+    protected abstract void onWidthChanged(double newWidth);
+
+    protected abstract void onHeightChanged(double newHeight);
 
     private void startAnimation() {
         timeline = new Timeline();

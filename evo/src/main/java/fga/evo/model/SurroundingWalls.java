@@ -20,4 +20,12 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         BallForces.addLowBarrierCollisionForce(cell, minY);
         BallForces.addHighBarrierCollisionForce(cell, maxY);
     }
+
+    public void resizeWidth(double newWidth) {
+        maxX = minX + newWidth;
+    }
+
+    public void resizeHeight(double newHeight) {
+        minY = maxY - newHeight;
+    }
 }
