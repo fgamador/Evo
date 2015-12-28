@@ -4,8 +4,8 @@ package fga.evo.model;
  * The effects of gravity, including cell weight and buoyancy.
  */
 public class Weight extends EnvironmentalInfluence {
-    static DoubleParameter gravity = new DoubleParameter(0.1).register("Weight.gravity"); // acceleration // 0.5
-    static DoubleParameter fluidDensity = new DoubleParameter(0.01).register("Weight.fluidDensity"); // mass per area // 0.1
+    static DoubleParameter gravity = new DoubleParameter(0.1); // acceleration // TODO 0.5
+    static DoubleParameter fluidDensity = new DoubleParameter(0.01); // mass per area // TODO 0.1
 
     @Override
     public void addForcesToCell(Cell cell) {

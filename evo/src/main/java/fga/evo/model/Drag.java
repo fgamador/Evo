@@ -6,7 +6,7 @@ import static fga.evo.model.Util.sqr;
  * Drag caused by the fluid medium in which the cells live.
  */
 public class Drag extends EnvironmentalInfluence {
-    static DoubleParameter dragFactor = new DoubleParameter(0.001).register("Drag.dragFactor");
+    static DoubleParameter dragFactor = new DoubleParameter(0.001);
 
     @Override
     public void addForcesToCell(Cell cell) {

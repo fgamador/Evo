@@ -4,14 +4,14 @@ package fga.evo.model;
  * A cell's ring of photosynthetic tissue.
  */
 public class PhotoRing extends TissueRing {
-    public static final TissueRingParameters parameters = new TissueRingParameters().register("PhotoRing");
+    public static final TissueRingParameters parameters = new TissueRingParameters();
 
     static {
-        parameters.setTissueDensity(0.011); // 0.1
-        parameters.setGrowthCost(1.1);
-        parameters.setMaintenanceCost(0.005);
-        parameters.setShrinkageYield(0.1);
-        parameters.setMaxGrowthRate(1000);
+        parameters.tissueDensity = new DoubleParameter(0.011); // TODO 0.1
+        parameters.growthCost = new DoubleParameter(1.1);
+        parameters.maintenanceCost = new DoubleParameter(0.005);
+        parameters.shrinkageYield = new DoubleParameter(0.1);
+        parameters.maxGrowthRate = new DoubleParameter(1000);
     }
 
     public PhotoRing(double outerRadius, double innerArea) {

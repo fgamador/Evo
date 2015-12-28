@@ -164,11 +164,11 @@ public class TissueRingTest {
     public static class TestRing extends TissueRing {
         public static final TissueRingParameters parameters = new TissueRingParameters();
         static {
-            parameters.setTissueDensity(0.5);
-            parameters.setGrowthCost(0.1);
-            parameters.setMaintenanceCost(0.05);
-            parameters.setShrinkageYield(0.05);
-            parameters.setMaxGrowthRate(100);
+            parameters.tissueDensity = new DoubleParameter(0.5);
+            parameters.growthCost = new DoubleParameter(0.1);
+            parameters.maintenanceCost = new DoubleParameter(0.05);
+            parameters.shrinkageYield = new DoubleParameter(0.05);
+            parameters.maxGrowthRate = new DoubleParameter(100);
         }
 
         public TestRing(double outerRadius, double innerArea) {

@@ -28,9 +28,4 @@ public class DoubleParameter {
     public double getDefaultValue() {
         return defaultValue;
     }
-
-    public DoubleParameter register(String name) {
-        registeredParameters.put(name, this);
-        return this;
-    }
 }

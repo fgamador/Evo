@@ -2,7 +2,7 @@ package fga.evo.model;
 
 public class DecayingAccumulator {
     // TODO pass this in from client
-    static DoubleParameter retentionRate = new DoubleParameter(0.9).register("Decay.retentionRate");
+    static DoubleParameter retentionRate = new DoubleParameter(0.9);
 
     private double total;
 
