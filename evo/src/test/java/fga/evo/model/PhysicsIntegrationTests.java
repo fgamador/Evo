@@ -11,13 +11,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class PhysicsIntegrationTests extends WorldIntegrationTests {
-    private double defaultTissueDensity;
     private int defaultSubticksPerTick;
 
     @Before
     public void setUp() {
+        Weight.fluidDensity.setValue(0.01);
         Puller.forceFactor.setValue(1);
-        defaultTissueDensity = PhotoRing.parameters.tissueDensity.getValue();
         defaultSubticksPerTick = World.getSubticksPerTick();
 
         // ensure that a cell with radius 1 has mass 1
@@ -27,9 +26,10 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @After
     public void tearDown() {
-        PhotoRing.parameters.tissueDensity.setValue(defaultTissueDensity);
+        PhotoRing.parameters.tissueDensity.revertToDefaultValue();
         World.setSubticksPerTick(defaultSubticksPerTick);
         Puller.forceFactor.revertToDefaultValue();
+        Weight.fluidDensity.revertToDefaultValue();
     }
 
     @Test
@@ -158,7 +158,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testBuoyancy_Sinking() {
-        PhotoRing.parameters.tissueDensity.setValue(defaultTissueDensity);
+        PhotoRing.parameters.tissueDensity.revertToDefaultValue();
         world.addEnvironmentalInfluence(new Weight());
         assertTrue(PhotoRing.parameters.tissueDensity.getValue() > Weight.fluidDensity.getValue());
         Cell cell = addCell(1);

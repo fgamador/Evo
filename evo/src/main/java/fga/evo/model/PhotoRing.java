@@ -7,7 +7,7 @@ public class PhotoRing extends TissueRing {
     public static final TissueRingParameters parameters = new TissueRingParameters();
 
     static {
-        parameters.tissueDensity = new DoubleParameter(0.011); // TODO 0.1
+        parameters.tissueDensity = new DoubleParameter(0.1);
         parameters.growthCost = new DoubleParameter(1.1);
         parameters.maintenanceCost = new DoubleParameter(0.005);
         parameters.shrinkageYield = new DoubleParameter(0.1);

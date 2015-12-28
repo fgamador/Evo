@@ -21,6 +21,14 @@ public class RegisteredParameters {
         register("PhotoRing", PhotoRing.parameters);
     }
 
+    private static void register(String prefix, TissueRingParameters parameters) {
+        register(prefix + ".tissueDensity", parameters.tissueDensity);
+        register(prefix + ".growthCost", parameters.growthCost);
+        register(prefix + ".maintenanceCost", parameters.maintenanceCost);
+        register(prefix + ".shrinkageYield", parameters.shrinkageYield);
+        register(prefix + ".maxGrowthRate", parameters.maxGrowthRate);
+    }
+
     public static void register(String name, DoubleParameter parameter) {
         parameters.put(name, parameter);
     }
@@ -30,16 +38,6 @@ public class RegisteredParameters {
     }
 
     public static void revertToDefaultValues() {
-        for (DoubleParameter parameter : parameters.values()) {
-            parameter.revertToDefaultValue();
-        }
-    }
-
-    public static void register(String prefix, TissueRingParameters parameters) {
-        register(prefix + ".tissueDensity", parameters.tissueDensity);
-        register(prefix + ".growthCost", parameters.growthCost);
-        register(prefix + ".maintenanceCost", parameters.maintenanceCost);
-        register(prefix + ".shrinkageYield", parameters.shrinkageYield);
-        register(prefix + ".maxGrowthRate", parameters.maxGrowthRate);
+        parameters.values().forEach(DoubleParameter::revertToDefaultValue);
     }
 }

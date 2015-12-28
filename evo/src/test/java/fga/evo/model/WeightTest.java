@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import mockit.Expectations;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,10 +14,16 @@ public class WeightTest {
 
     @Before
     public void setUp() {
+        Weight.fluidDensity.setValue(0.01);
         weight = new Weight();
         cell = new Cell(10);
         cell.setCenterPosition(0, -100);
         maxDisplacement = cell.getArea();
+    }
+
+    @After
+    public void tearDown() {
+        Weight.fluidDensity.revertToDefaultValue();
     }
 
     @Test
