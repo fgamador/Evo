@@ -25,12 +25,12 @@ public class DoubleParameter {
         setValue(defaultValue);
     }
 
+    public double getDefaultValue() {
+        return defaultValue;
+    }
+
     public DoubleParameter register(String name) {
         registeredParameters.put(name, this);
         return this;
-    }
-
-    public static DoubleParameter getRegistered(String name) {
-        return registeredParameters.get(name);
     }
 }

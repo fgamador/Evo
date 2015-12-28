@@ -12,7 +12,7 @@ public class PullerTest {
 
     @Before
     public void setUp() {
-        Puller.pullerForceFactor.setValue(1);
+        Puller.forceFactor.setValue(1);
 
         cell = new Cell(1);
         puller = new Puller(cell);
@@ -20,7 +20,7 @@ public class PullerTest {
 
     @After
     public void tearDown() {
-        Puller.pullerForceFactor.revertToDefaultValue();
+        Puller.forceFactor.revertToDefaultValue();
     }
 
     @Test
@@ -47,7 +47,7 @@ public class PullerTest {
     public void testAddForceToCell_PullForceFactor() {
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
-        Puller.pullerForceFactor.setValue(2);
+        Puller.forceFactor.setValue(2);
 
         puller.addForceToCell();
 

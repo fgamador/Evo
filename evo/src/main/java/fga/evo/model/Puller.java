@@ -4,7 +4,7 @@ package fga.evo.model;
  * Created when the user's mouse cursor drags a cell.
  */
 public class Puller {
-    static DoubleParameter pullerForceFactor = new DoubleParameter(1).register("Puller.forceFactor");
+    static DoubleParameter forceFactor = new DoubleParameter(1).register("Puller.forceFactor");
 
     private final Cell cell;
     private double x, y;
@@ -19,7 +19,7 @@ public class Puller {
     }
 
     public void addForceToCell() {
-        double forceFactor = pullerForceFactor.getValue();
-        cell.addForce(forceFactor * (x - cell.getCenterX()), forceFactor * (y - cell.getCenterY()));
+        double factor = forceFactor.getValue();
+        cell.addForce(factor * (x - cell.getCenterX()), factor * (y - cell.getCenterY()));
     }
 }

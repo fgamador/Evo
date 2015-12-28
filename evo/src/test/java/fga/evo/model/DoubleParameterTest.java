@@ -16,6 +16,7 @@ public class DoubleParameterTest {
 
     @Test
     public void testGetDefaultValue() {
+        assertEquals(2.5, param.getDefaultValue(), 0);
         assertEquals(2.5, param.getValue(), 0);
     }
 
@@ -30,11 +31,5 @@ public class DoubleParameterTest {
         param.setValue(3);
         param.revertToDefaultValue();
         assertEquals(2.5, param.getValue(), 0);
-    }
-
-    @Test
-    public void testRegister() {
-        assertSame(param, param.register("Param1"));
-        assertSame(param, DoubleParameter.getRegistered("Param1"));
     }
 }
