@@ -17,17 +17,17 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Before
     public void setUp() {
         Puller.forceFactor.setValue(1);
-        defaultTissueDensity = PhotoRing.parameters.getTissueDensity();
+        defaultTissueDensity = PhotoRing.parameters.tissueDensity.getValue();
         defaultSubticksPerTick = World.getSubticksPerTick();
 
         // ensure that a cell with radius 1 has mass 1
         // TODO mock the mass (or make these ball tests?)
-        PhotoRing.parameters.setTissueDensity(1 / Math.PI);
+        PhotoRing.parameters.tissueDensity.setValue(1 / Math.PI);
     }
 
     @After
     public void tearDown() {
-        PhotoRing.parameters.setTissueDensity(defaultTissueDensity);
+        PhotoRing.parameters.tissueDensity.setValue(defaultTissueDensity);
         World.setSubticksPerTick(defaultSubticksPerTick);
         Puller.forceFactor.revertToDefaultValue();
     }
@@ -158,9 +158,9 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testBuoyancy_Sinking() {
-        PhotoRing.parameters.setTissueDensity(defaultTissueDensity);
+        PhotoRing.parameters.tissueDensity.setValue(defaultTissueDensity);
         world.addEnvironmentalInfluence(new Weight());
-        assertTrue(PhotoRing.parameters.getTissueDensity() > Weight.fluidDensity.getValue());
+        assertTrue(PhotoRing.parameters.tissueDensity.getValue() > Weight.fluidDensity.getValue());
         Cell cell = addCell(1);
 
         world.tick();

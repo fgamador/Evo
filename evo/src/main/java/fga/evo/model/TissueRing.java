@@ -26,16 +26,16 @@ public abstract class TissueRing {
      */
     public void requestResize(double growthEnergy) {
         if (growthEnergy >= 0) {
-            double maxDeltaArea = Math.max(area, 1) * parameters.getMaxGrowthRate();
-            requestedDeltaArea = Math.min(growthEnergy / parameters.getGrowthCost(), maxDeltaArea);
+            double maxDeltaArea = Math.max(area, 1) * parameters.maxGrowthRate.getValue();
+            requestedDeltaArea = Math.min(growthEnergy / parameters.growthCost.getValue(), maxDeltaArea);
         } else {
-            requestedDeltaArea = Math.max(-area, growthEnergy / parameters.getShrinkageYield());
+            requestedDeltaArea = Math.max(-area, growthEnergy / parameters.shrinkageYield.getValue());
         }
     }
 
     public double getRequestedEnergy() {
         return requestedDeltaArea *
-                ((requestedDeltaArea >= 0) ? parameters.getGrowthCost() : parameters.getShrinkageYield());
+                ((requestedDeltaArea >= 0) ? parameters.growthCost.getValue() : parameters.shrinkageYield.getValue());
     }
 
     public void scaleResizeRequest(double ratio) {

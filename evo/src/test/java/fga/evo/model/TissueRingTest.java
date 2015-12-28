@@ -13,7 +13,7 @@ public class TissueRingTest {
         TestRing ring = new TestRing(radius, 0);
 
         assertEquals(Math.PI * sqr(radius), ring.getArea(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.getTissueDensity(), ring.getMass(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
     }
 
     @Test
@@ -22,7 +22,7 @@ public class TissueRingTest {
         TestRing ring = new TestRing(1, innerArea);
 
         assertEquals(Math.PI - innerArea, ring.getArea(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.getTissueDensity(), ring.getMass(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
     }
 
     @Test
@@ -37,12 +37,12 @@ public class TissueRingTest {
 
     @Test
     public void testRequestResize_MaxGrowthRate() {
-        final double defaultMaxGrowthRate = TestRing.parameters.getMaxGrowthRate();
+        final double defaultMaxGrowthRate = TestRing.parameters.maxGrowthRate.getValue();
         try {
-            TestRing.parameters.setMaxGrowthRate(0.1);
+            TestRing.parameters.maxGrowthRate.setValue(0.1);
             TestRing ring = new TestRing(1, 0);
-            final double maxDeltaArea = ring.getArea() * TestRing.parameters.getMaxGrowthRate();
-            final double maxGrowthEnergy = maxDeltaArea * TestRing.parameters.getGrowthCost();
+            final double maxDeltaArea = ring.getArea() * TestRing.parameters.maxGrowthRate.getValue();
+            final double maxGrowthEnergy = maxDeltaArea * TestRing.parameters.growthCost.getValue();
             final double growthEnergy = 100;
 
             ring.requestResize(growthEnergy);
@@ -50,7 +50,7 @@ public class TissueRingTest {
             assertTrue(maxGrowthEnergy < growthEnergy);
             assertEquals(maxGrowthEnergy, ring.getRequestedEnergy(), 0);
         } finally {
-            TestRing.parameters.setMaxGrowthRate(defaultMaxGrowthRate);
+            TestRing.parameters.maxGrowthRate.setValue(defaultMaxGrowthRate);
         }
     }
 
@@ -71,7 +71,7 @@ public class TissueRingTest {
         final double growthEnergy = -5;
         ring.requestResize(growthEnergy);
 
-        assertEquals(-Math.PI * TestRing.parameters.getShrinkageYield(), ring.getRequestedEnergy(), 0);
+        assertEquals(-Math.PI * TestRing.parameters.shrinkageYield.getValue(), ring.getRequestedEnergy(), 0);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class TissueRingTest {
 
         ring.resize();
 
-        assertEquals(Math.PI + growthEnergy / TestRing.parameters.getGrowthCost(), ring.getArea(), 0);
+        assertEquals(Math.PI + growthEnergy / TestRing.parameters.growthCost.getValue(), ring.getArea(), 0);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class TissueRingTest {
 
         ring.resize();
 
-        assertEquals(Math.PI + growthEnergy / TestRing.parameters.getGrowthCost(), ring.getArea(), 0);
+        assertEquals(Math.PI + growthEnergy / TestRing.parameters.growthCost.getValue(), ring.getArea(), 0);
     }
 
     @Test
@@ -131,13 +131,13 @@ public class TissueRingTest {
         TestRing ring = new TestRing(1, 0);
         final double newOuterRadius = 2;
         final double newArea = Math.PI * sqr(newOuterRadius);
-        ring.requestResize((newArea - ring.getArea()) * TestRing.parameters.getGrowthCost());
+        ring.requestResize((newArea - ring.getArea()) * TestRing.parameters.growthCost.getValue());
         ring.resize();
 
         ring.updateFromArea(0);
 
         assertEquals(newOuterRadius, ring.getOuterRadius(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.getTissueDensity(), ring.getMass(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
     }
 
     @Test
@@ -146,19 +146,19 @@ public class TissueRingTest {
         TestRing ring = new TestRing(2, innerRing.getArea());
         final double newOuterRadius = 3;
         final double newArea = Math.PI * sqr(newOuterRadius);
-        ring.requestResize((newArea - (innerRing.getArea() + ring.getArea())) * TestRing.parameters.getGrowthCost());
+        ring.requestResize((newArea - (innerRing.getArea() + ring.getArea())) * TestRing.parameters.growthCost.getValue());
         ring.resize();
 
         ring.updateFromArea(innerRing.getOuterRadius());
 
         assertEquals(3, ring.getOuterRadius(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.getTissueDensity(), ring.getMass(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
     }
 
     @Test
     public void testGetMaintenanceEnergy() {
         TestRing ring = new TestRing(3, 0);
-        assertEquals(Math.PI * 9 * TestRing.parameters.getMaintenanceCost(), ring.getMaintenanceEnergy(), 0);
+        assertEquals(Math.PI * 9 * TestRing.parameters.maintenanceCost.getValue(), ring.getMaintenanceEnergy(), 0);
     }
 
     public static class TestRing extends TissueRing {
