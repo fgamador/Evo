@@ -175,9 +175,11 @@ public abstract class Evo extends Application {
 
     private void addResizeListeners(Stage primaryStage) {
         primaryStage.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            // TODO update water and air rectangles
             onWidthChanged(newWidth.doubleValue());
         });
         primaryStage.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+            // TODO update water rectangle
             onHeightChanged(newHeight.doubleValue());
         });
     }
