@@ -34,7 +34,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         world.tick();
 
-        assertEquals(Math.PI + 0.5 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0);
+        double initialPhotoRingArea = Math.PI;
+        double addedLightEnergy = 0.5;
+        double photoRingMaintenanceEnergy = initialPhotoRingArea * PhotoRing.parameters.maintenanceCost.getValue();
+        double energyBudget = addedLightEnergy - photoRingMaintenanceEnergy;
+        double addedPhotoRingArea = energyBudget / PhotoRing.parameters.growthCost.getValue();
+        assertEquals(initialPhotoRingArea + addedPhotoRingArea, cell.getPhotoArea(), 0);
         assertEnergy(0, cell);
     }
 

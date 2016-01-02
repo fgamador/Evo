@@ -55,6 +55,7 @@ public class World {
             influence.addEnergyToCell(cell);
         }
         cell.addDonatedEnergy();
+        cell.subtractMaintenanceEnergy();
     }
 
     private void subtickPhysics() {
