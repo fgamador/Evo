@@ -239,6 +239,7 @@ public class CellTest {
 
         assertNotNull(child);
         assertEquals(child, cell.getChild());
+        assertEquals(cell, child.getParent());
         assertBonded(cell, child);
         assertEquals(cell.getControl(), child.getControl());
         assertEquals(0, child.getPhotoArea(), 0);
@@ -325,6 +326,7 @@ public class CellTest {
         cell.tickBiology();
 
         assertNull(cell.getChild());
+        assertNull(child.getParent());
         assertNotBonded(cell, child);
         assertEquals(donation, child.getDonatedEnergy(), 0);
     }
@@ -368,5 +370,41 @@ public class CellTest {
 
         assertTrue(cell1.getRecentTotalOverlap() < 1);
         assertEquals(cell1.getRecentTotalOverlap(), cell2.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
+    public void testDie() {
+        Cell cell = new Cell(1);
+        assertTrue(cell.isAlive());
+
+        cell.die();
+
+        assertFalse(cell.isAlive());
+    }
+
+    @Test
+    public void testDie_Parent() {
+        Cell cell = new Cell(10, new ParentChildControl(1, 2));
+        cell.addEnergy(100);
+        Cell child = cell.tickBiology();
+
+        cell.die();
+
+        assertNull(cell.getChild());
+        assertNull(child.getParent());
+        assertNotBonded(cell, child);
+    }
+
+    @Test
+    public void testDie_Child() {
+        Cell cell = new Cell(10, new ParentChildControl(1, 2));
+        cell.addEnergy(100);
+        Cell child = cell.tickBiology();
+
+        child.die();
+
+        assertNull(cell.getChild());
+        assertNull(child.getParent());
+        assertNotBonded(cell, child);
     }
 }

@@ -23,6 +23,8 @@ public class Cell extends Ball implements CellControl.CellApi {
     private DecayingAccumulator overlapAccumulator = new DecayingAccumulator();
     private CellControl control;
     private Cell child;
+    private Cell parent;
+    private boolean alive = true;
 
     public Cell(double radius) {
         this(radius, c -> {
@@ -50,18 +52,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 //    private double getSpawningY(double angle, double childRadius) {
 //        return centerY + (radius + childRadius) * Math.sin(angle);
 //    }
-
-    public double getMass() {
-        return mass;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public double getArea() {
-        return area;
-    }
 
     /**
      * Adds to the cell's available energy.
@@ -162,6 +152,7 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     private Cell spawn() {
         child = new Cell(0, control);
+        child.parent = this;
         addBond(child);
         child.setDonatedEnergy(requestedChildDonation);
         child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
@@ -170,6 +161,7 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     private void releaseChild() {
         removeBond(child);
+        child.parent = null;
         child = null;
     }
 
@@ -248,6 +240,15 @@ public class Cell extends Ball implements CellControl.CellApi {
 //        return random.nextDouble() * 2 * Math.PI;
 //    }
 
+    void die() {
+        alive = false;
+        if (child != null) {
+            releaseChild();
+        } else if (parent != null) {
+            parent.releaseChild();
+        }
+    }
+
 //    private void die() {
 //        if (child != null)
 //            releaseChild();
@@ -256,6 +257,22 @@ public class Cell extends Ball implements CellControl.CellApi {
 //        thruster = ZeroThruster.INSTANCE;
 //        alive = false;
 //    }
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getArea() {
+        return area;
+    }
 
     public double getFloatRingOuterRadius() {
         return floatRing.getOuterRadius();
@@ -282,8 +299,8 @@ public class Cell extends Ball implements CellControl.CellApi {
         return overlapAccumulator.getTotal();
     }
 
+    // TODO lose this; child should release parent instead
     public double getChildNonFloatArea() {
-        // TODO test, generalize
         return (child == null) ? 0 : child.getPhotoArea();
     }
 
@@ -293,5 +310,9 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public Cell getChild() {
         return child;
+    }
+
+    public Cell getParent() {
+        return parent;
     }
 }
