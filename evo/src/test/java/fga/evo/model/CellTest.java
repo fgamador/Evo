@@ -384,13 +384,12 @@ public class CellTest {
 
     @Test
     public void testDecay() {
-        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(2));
-        cell.addEnergy(100);
-        cell.tickBiology();
+        Cell cell = new Cell.Builder()
+                .setFloatRingOuterRadius(1)
+                .setPhotoRingOuterRadius(2)
+                .build();
         double initialFloatArea = cell.getFloatArea();
         double initialPhotoArea = cell.getPhotoArea();
-        assertTrue(initialFloatArea > 0);
-        assertTrue(initialPhotoArea > 0);
         cell.die();
 
         cell.decay();

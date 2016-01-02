@@ -136,16 +136,6 @@ public class Cell extends Ball implements CellControl.CellApi {
         updateFromRingAreas();
     }
 
-    private void updateFromRingAreas() {
-        double innerRadius = 0;
-        for (TissueRing ring : tissueRings) {
-            ring.updateFromArea(innerRadius);
-            innerRadius = ring.getOuterRadius();
-        }
-
-        updateFromRings();
-    }
-
     private Cell manageChild() {
         if (requestedChildDonation <= 0) {
             return null;
@@ -179,6 +169,36 @@ public class Cell extends Ball implements CellControl.CellApi {
         removeBond(child);
         child.parent = null;
         child = null;
+    }
+
+    void die() {
+        alive = false;
+        // TODO probably not
+        if (child != null) {
+            releaseChild();
+        } else if (parent != null) {
+            parent.releaseChild();
+        }
+    }
+
+    public void decay() {
+        for (TissueRing ring : tissueRings) {
+            ring.decay();
+        }
+        updateFromRingAreas();
+    }
+
+    private void updateFromRingAreas() {
+        updateRingsFromRingAreas();
+        updateFromRings();
+    }
+
+    private void updateRingsFromRingAreas() {
+        double innerRadius = 0;
+        for (TissueRing ring : tissueRings) {
+            ring.updateFromArea(innerRadius);
+            innerRadius = ring.getOuterRadius();
+        }
     }
 
     private void updateFromRings() {
@@ -256,23 +276,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 //        return random.nextDouble() * 2 * Math.PI;
 //    }
 
-    void die() {
-        alive = false;
-        // TODO probably not
-        if (child != null) {
-            releaseChild();
-        } else if (parent != null) {
-            parent.releaseChild();
-        }
-    }
-
-    public void decay() {
-        for (TissueRing ring : tissueRings) {
-            ring.decay();
-        }
-        updateFromRingAreas();
-    }
-
     public boolean isAlive() {
         return alive;
     }
@@ -332,17 +335,28 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public static class Builder {
-        private double photoRingOuterRadius;
         private double floatRingOuterRadius;
+        private double photoRingOuterRadius;
 
-        public Builder setFloatRingOuterRadius(double val) {
-            floatRingOuterRadius = val;
+        public Builder setFloatRingOuterRadius(double radius) {
+            floatRingOuterRadius = radius;
+            photoRingOuterRadius = Math.max(radius, photoRingOuterRadius);
             return this;
         }
 
-        public Builder setPhotoRingOuterRadius(double val) {
-            photoRingOuterRadius = val;
+        public Builder setFloatRingArea(double area) {
+            return setFloatRingOuterRadius(Math.sqrt(area / Math.PI));
+        }
+
+        public Builder setPhotoRingOuterRadius(double radius) {
+            photoRingOuterRadius = radius;
             return this;
+        }
+
+        // TODO works only if called after FloatRing is defined
+        public Builder setPhotoRingArea(double area) {
+            double floatRingArea = Math.PI * sqr(floatRingOuterRadius);
+            return setPhotoRingOuterRadius(Math.sqrt((area + floatRingArea) / Math.PI));
         }
 
         public Cell build() {
@@ -350,7 +364,6 @@ public class Cell extends Ball implements CellControl.CellApi {
             cell.addFloatRing(new FloatRing(floatRingOuterRadius, 0));
             cell.addPhotoRing(new PhotoRing(photoRingOuterRadius, cell.getFloatArea()));
             cell.updateFromRings();
-//            this.control = control;
             return cell;
         }
     }
