@@ -121,6 +121,10 @@ public class Cell extends Ball implements CellControl.CellApi {
             ring.resize();
         }
 
+        updateFromRingAreas();
+    }
+
+    private void updateFromRingAreas() {
         double innerRadius = 0;
         for (TissueRing ring : tissueRings) {
             ring.updateFromArea(innerRadius);
@@ -242,6 +246,7 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     void die() {
         alive = false;
+        // TODO probably not
         if (child != null) {
             releaseChild();
         } else if (parent != null) {
@@ -249,14 +254,12 @@ public class Cell extends Ball implements CellControl.CellApi {
         }
     }
 
-//    private void die() {
-//        if (child != null)
-//            releaseChild();
-//        if (parent != null)
-//            parent.releaseChild();
-//        thruster = ZeroThruster.INSTANCE;
-//        alive = false;
-//    }
+    public void decay() {
+        for (TissueRing ring : tissueRings) {
+            ring.decay();
+        }
+        updateFromRingAreas();
+    }
 
     public boolean isAlive() {
         return alive;

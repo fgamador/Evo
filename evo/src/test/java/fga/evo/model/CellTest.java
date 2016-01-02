@@ -383,6 +383,28 @@ public class CellTest {
     }
 
     @Test
+    public void testDecay() {
+        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(2));
+        cell.addEnergy(100);
+        cell.tickBiology();
+        double initialFloatArea = cell.getFloatArea();
+        double initialPhotoArea = cell.getPhotoArea();
+        assertTrue(initialFloatArea > 0);
+        assertTrue(initialPhotoArea > 0);
+        cell.die();
+
+        cell.decay();
+
+        double newFloatArea = initialFloatArea * (1 - FloatRing.parameters.decayRate.getValue());
+        assertEquals(newFloatArea, cell.getFloatArea(), 0.001);
+        double newFloatRadius = Math.sqrt(newFloatArea / Math.PI);
+        assertEquals(newFloatRadius, cell.getFloatRingOuterRadius(), 0.001);
+        double newPhotoArea = initialPhotoArea * (1 - PhotoRing.parameters.decayRate.getValue());
+        assertEquals(newPhotoArea, cell.getPhotoArea(), 0.001);
+        assertEquals(newFloatArea + newPhotoArea, cell.getArea(), 0.001);
+    }
+
+    @Test
     public void testDie_Parent() {
         Cell cell = new Cell(10, new ParentChildControl(1, 2));
         cell.addEnergy(100);

@@ -61,6 +61,10 @@ public abstract class TissueRing {
         mass = parameters.tissueDensity.getValue() * area;
     }
 
+    public void decay() {
+        area *= 1 - parameters.decayRate.getValue();
+    }
+
     public double getOuterRadius() {
         return outerRadius;
     }
