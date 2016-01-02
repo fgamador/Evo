@@ -70,6 +70,7 @@ public abstract class TissueRing {
         return area * parameters.maintenanceCost.getValue();
     }
 
+    // TODO sync? syncAreaAndOuterRadius?
     public void updateFromAreaOrOuterRadius(TissueRing innerRing) {
         double innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
         if (area != 0) {
