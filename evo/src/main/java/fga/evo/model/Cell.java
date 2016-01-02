@@ -32,10 +32,22 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public Cell(double radius, CellControl control) {
-        tissueRings.add(floatRing = new FloatRing(0, 0));
-        tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
+        addFloatRing(new FloatRing(0, 0));
+        addPhotoRing(new PhotoRing(radius, floatRing.getArea()));
         updateFromRings();
         this.control = control;
+    }
+
+    // For use only by Builder.
+    private Cell() {
+    }
+
+    private void addPhotoRing(PhotoRing photoRing) {
+        tissueRings.add(this.photoRing = photoRing);
+    }
+
+    private void addFloatRing(FloatRing floatRing) {
+        tissueRings.add(this.floatRing = floatRing);
     }
 
 //    /** Creates a child cell. */
@@ -317,5 +329,29 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public Cell getParent() {
         return parent;
+    }
+
+    public static class Builder {
+        private double photoRingOuterRadius;
+        private double floatRingOuterRadius;
+
+        public Builder setFloatRingOuterRadius(double val) {
+            floatRingOuterRadius = val;
+            return this;
+        }
+
+        public Builder setPhotoRingOuterRadius(double val) {
+            photoRingOuterRadius = val;
+            return this;
+        }
+
+        public Cell build() {
+            Cell cell = new Cell();
+            cell.addFloatRing(new FloatRing(floatRingOuterRadius, 0));
+            cell.addPhotoRing(new PhotoRing(photoRingOuterRadius, cell.getFloatArea()));
+            cell.updateFromRings();
+//            this.control = control;
+            return cell;
+        }
     }
 }
