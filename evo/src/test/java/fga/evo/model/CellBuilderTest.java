@@ -60,11 +60,25 @@ public class CellBuilderTest {
         assertEquals(3 * Math.PI, cell.getPhotoArea(), 0.001);
     }
 
-    @Ignore("TODO: build photo ring before float ring from areas") @Test
+    @Test
     public void testBuild_FloatRingAndPhotoRingAreas_ReverseOrder() {
         Cell cell = new Cell.Builder()
                 .setPhotoRingArea(3 * Math.PI)
                 .setFloatRingArea(Math.PI)
+                .build();
+        assertEquals(2, cell.getRadius(), 0);
+        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
+        assertEquals(2, cell.getPhotoRingOuterRadius(), 0);
+        assertEquals(4 * Math.PI, cell.getArea(), 0.001);
+        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
+        assertEquals(3 * Math.PI, cell.getPhotoArea(), 0.001);
+    }
+
+    @Test
+    public void testBuild_FloatRingAreaAndPhotoRingOuterRadius() {
+        Cell cell = new Cell.Builder()
+                .setFloatRingArea(Math.PI)
+                .setPhotoRingOuterRadius(2)
                 .build();
         assertEquals(2, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);

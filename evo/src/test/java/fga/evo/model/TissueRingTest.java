@@ -26,6 +26,134 @@ public class TissueRingTest {
     }
 
     @Test
+    public void testInitArea() {
+        TestRing ring = new TestRing(0, 0);
+
+        ring.initArea(1);
+
+        assertEquals(1, ring.getArea(), 0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testInitArea_AlreadySet() {
+        TestRing ring = new TestRing(0, 0);
+        ring.initArea(1);
+        ring.initArea(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testInitArea_OuterRadiusAlreadySet() {
+        TestRing ring = new TestRing(0, 0);
+        ring.initOuterRadius(1);
+        ring.initArea(1);
+    }
+
+    @Test
+    public void testOuterRadiusArea() {
+        TestRing ring = new TestRing(0, 0);
+
+        ring.initOuterRadius(1);
+
+        assertEquals(1, ring.getOuterRadius(), 0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testOuterRadius_AlreadySet() {
+        TestRing ring = new TestRing(0, 0);
+        ring.initOuterRadius(1);
+        ring.initOuterRadius(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testOuterRadius_AreaAlreadySet() {
+        TestRing ring = new TestRing(0, 0);
+        ring.initArea(1);
+        ring.initOuterRadius(1);
+    }
+
+    @Test
+    public void testUpdateFromArea() {
+        TestRing ring = new TestRing(1, 0);
+        double newOuterRadius = 2;
+        double newArea = Math.PI * sqr(newOuterRadius);
+        ring.requestResize((newArea - ring.getArea()) * TestRing.parameters.growthCost.getValue());
+        ring.resize();
+
+        ring.updateFromArea(0);
+
+        assertEquals(newOuterRadius, ring.getOuterRadius(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
+    }
+
+    @Test
+    public void testUpdateFromAreaAsOuterRing() {
+        TestRing innerRing = new TestRing(1, 0);
+        TestRing ring = new TestRing(2, innerRing.getArea());
+        double newOuterRadius = 3;
+        double newArea = Math.PI * sqr(newOuterRadius);
+        ring.requestResize((newArea - (innerRing.getArea() + ring.getArea())) * TestRing.parameters.growthCost.getValue());
+        ring.resize();
+
+        ring.updateFromArea(innerRing.getOuterRadius());
+
+        assertEquals(3, ring.getOuterRadius(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
+    }
+
+    @Test
+    public void testUpdateFromAreaOrOuterRadius_Area_NoInnerRing() {
+        TestRing ring = new TestRing(0, 0);
+        ring.initArea(Math.PI);
+
+        ring.updateFromAreaOrOuterRadius(null);
+
+        assertEquals(1, ring.getOuterRadius(), 0.001);
+    }
+
+    @Test
+    public void testUpdateFromAreaOrOuterRadius_Area_InnerRing() {
+        TestRing innerRing = new TestRing(1, 0);
+        TestRing ring = new TestRing(0, 0);
+        ring.initArea(3 * Math.PI);
+
+        ring.updateFromAreaOrOuterRadius(innerRing);
+
+        assertEquals(2, ring.getOuterRadius(), 0.001);
+    }
+
+    @Test
+    public void testUpdateFromAreaOrOuterRadius_OuterRadius_NoInnerRing() {
+        TestRing ring = new TestRing(0, 0);
+        ring.initOuterRadius(1);
+
+        ring.updateFromAreaOrOuterRadius(null);
+
+        assertEquals(Math.PI, ring.getArea(), 0.001);
+    }
+
+    @Test
+    public void testUpdateFromAreaOrOuterRadius_OuterRadius_InnerRing() {
+        TestRing innerRing = new TestRing(1, 0);
+        TestRing ring = new TestRing(0, 0);
+        ring.initOuterRadius(2);
+
+        ring.updateFromAreaOrOuterRadius(innerRing);
+
+        assertEquals(3 * Math.PI, ring.getArea(), 0.001);
+    }
+
+    @Test
+    public void testUpdateFromAreaOrOuterRadius_ZeroOuterRadius_InnerRing() {
+        TestRing innerRing = new TestRing(1, 0);
+        TestRing ring = new TestRing(0, 0);
+
+        ring.updateFromAreaOrOuterRadius(innerRing);
+
+        assertEquals(1, ring.getOuterRadius(), 0.001);
+        assertEquals(0, ring.getArea(), 0.001);
+    }
+
+    @Test
     public void testRequestResize_Grow() {
         TestRing ring = new TestRing(1, 0);
 
@@ -124,35 +252,6 @@ public class TissueRingTest {
         ring.resize();
 
         assertEquals(0, ring.getArea(), 0);
-    }
-
-    @Test
-    public void testUpdateFromArea() {
-        TestRing ring = new TestRing(1, 0);
-        double newOuterRadius = 2;
-        double newArea = Math.PI * sqr(newOuterRadius);
-        ring.requestResize((newArea - ring.getArea()) * TestRing.parameters.growthCost.getValue());
-        ring.resize();
-
-        ring.updateFromArea(0);
-
-        assertEquals(newOuterRadius, ring.getOuterRadius(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
-    }
-
-    @Test
-    public void testUpdateFromAreaAsOuterRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(2, innerRing.getArea());
-        double newOuterRadius = 3;
-        double newArea = Math.PI * sqr(newOuterRadius);
-        ring.requestResize((newArea - (innerRing.getArea() + ring.getArea())) * TestRing.parameters.growthCost.getValue());
-        ring.resize();
-
-        ring.updateFromArea(innerRing.getOuterRadius());
-
-        assertEquals(3, ring.getOuterRadius(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
     }
 
     @Test

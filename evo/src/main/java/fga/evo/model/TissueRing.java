@@ -19,6 +19,25 @@ public abstract class TissueRing {
         updateFromOuterRadius(innerArea);
     }
 
+    public void initArea(double area) {
+        checkAreaAndOuterRadiusAreUnset();
+        this.area = area;
+    }
+
+    public void initOuterRadius(double radius) {
+        checkAreaAndOuterRadiusAreUnset();
+        this.outerRadius = radius;
+    }
+
+    private void checkAreaAndOuterRadiusAreUnset() {
+        if (this.area != 0) {
+            throw new IllegalStateException("Area is already set to " + this.area);
+        }
+        if (this.outerRadius != 0) {
+            throw new IllegalStateException("Outer radius is already set to " + this.outerRadius);
+        }
+    }
+
     /**
      * Records a request that the ring's area grow or shrink using a specified amount of energy.
      *
@@ -49,6 +68,17 @@ public abstract class TissueRing {
 
     public double getMaintenanceEnergy() {
         return area * parameters.maintenanceCost.getValue();
+    }
+
+    public void updateFromAreaOrOuterRadius(TissueRing innerRing) {
+        double innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
+        if (area != 0) {
+            updateFromArea(innerRadius);
+        } else {
+            outerRadius = Math.max(outerRadius, innerRadius);
+            double innerArea = (innerRing != null) ? innerRing.area : 0;
+            updateFromOuterRadius(innerArea);
+        }
     }
 
     private void updateFromOuterRadius(double innerArea) {

@@ -32,25 +32,13 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public Cell(double radius, CellControl control) {
-        addFloatRing(new FloatRing(0, 0));
-        addPhotoRing(new PhotoRing(radius, floatRing.getArea()));
+        tissueRings.add(floatRing = new FloatRing(0, 0));
+        tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
         updateFromRings();
         this.control = control;
     }
 
-    // For use only by Builder.
-    private Cell() {
-    }
-
-    private void addPhotoRing(PhotoRing photoRing) {
-        tissueRings.add(this.photoRing = photoRing);
-    }
-
-    private void addFloatRing(FloatRing floatRing) {
-        tissueRings.add(this.floatRing = floatRing);
-    }
-
-//    /** Creates a child cell. */
+    //    /** Creates a child cell. */
 //    private Cell(Cell parent, double angle) {
 //        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
 //                CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
@@ -186,6 +174,19 @@ public class Cell extends Ball implements CellControl.CellApi {
             ring.decay();
         }
         updateFromRingAreas();
+    }
+
+    private void updateFromRingAreasOrOuterRadii() {
+        updateRingsFromRingAreasOrOuterRadii();
+        updateFromRings();
+    }
+
+    private void updateRingsFromRingAreasOrOuterRadii() {
+        TissueRing innerRing = null;
+        for (TissueRing ring : tissueRings) {
+            ring.updateFromAreaOrOuterRadius(innerRing);
+            innerRing = ring;
+        }
     }
 
     private void updateFromRingAreas() {
@@ -335,35 +336,36 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public static class Builder {
+        private Cell cell;
         private double floatRingOuterRadius;
         private double photoRingOuterRadius;
 
+        public Builder() {
+            cell = new Cell(0);
+        }
+
         public Builder setFloatRingOuterRadius(double radius) {
-            floatRingOuterRadius = radius;
-            photoRingOuterRadius = Math.max(radius, photoRingOuterRadius);
+            cell.floatRing.initOuterRadius(radius);
             return this;
         }
 
         public Builder setFloatRingArea(double area) {
-            return setFloatRingOuterRadius(Math.sqrt(area / Math.PI));
-        }
-
-        public Builder setPhotoRingOuterRadius(double radius) {
-            photoRingOuterRadius = radius;
+            cell.floatRing.initArea(area);
             return this;
         }
 
-        // TODO works only if called after FloatRing is defined
+        public Builder setPhotoRingOuterRadius(double radius) {
+            cell.photoRing.initOuterRadius(radius);
+            return this;
+        }
+
         public Builder setPhotoRingArea(double area) {
-            double floatRingArea = Math.PI * sqr(floatRingOuterRadius);
-            return setPhotoRingOuterRadius(Math.sqrt((area + floatRingArea) / Math.PI));
+            cell.photoRing.initArea(area);
+            return this;
         }
 
         public Cell build() {
-            Cell cell = new Cell();
-            cell.addFloatRing(new FloatRing(floatRingOuterRadius, 0));
-            cell.addPhotoRing(new PhotoRing(photoRingOuterRadius, cell.getFloatArea()));
-            cell.updateFromRings();
+            cell.updateFromRingAreasOrOuterRadii();
             return cell;
         }
     }
