@@ -3,11 +3,9 @@ package fga.evo.model;
 import static fga.evo.model.Util.sqr;
 
 /**
- * Collision and bond forces for balls.
- * TODO move these back into Ball?
+ * Collision and bond forces for pairs of balls. Split out from Ball in honor of the Single Responsibility Principle.
  */
-public class BallForces {
-    static DoubleParameter overlapForceFactor = new DoubleParameter(1);
+public class BallPairForces {
     static DoubleParameter dampingForceFactor = new DoubleParameter(1);
 
     /**
@@ -17,7 +15,7 @@ public class BallForces {
      * @param ball1 a ball
      * @param ball2 another ball
      */
-    static void addInterBallForces(Ball ball1, Ball ball2) {
+    static void addBallPairForces(Ball ball1, Ball ball2) {
         double centerSeparation = calcCenterSeparation(ball1, ball2);
 
         if (centerSeparation != 0) {
@@ -36,7 +34,7 @@ public class BallForces {
     }
 
     /**
-     * Adds forces to the balls that will subtickPhysics them back toward just touching one another.
+     * Adds forces to the balls that will move them back toward just touching one another.
      */
     private static void addBondForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
@@ -64,7 +62,7 @@ public class BallForces {
     }
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
-        double force = calcOverlapForce(overlap);
+        double force = Ball.calcOverlapForce(overlap);
         double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
         double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
         double forceX = (relativeCenterX / centerSeparation) * force;
@@ -82,7 +80,4 @@ public class BallForces {
         ball2.addForce(-forceX, -forceY);
     }
 
-    static double calcOverlapForce(double overlap) {
-        return overlapForceFactor.getValue() * overlap;
-    }
 }

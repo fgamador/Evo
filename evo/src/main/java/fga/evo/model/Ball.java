@@ -11,6 +11,7 @@ import static fga.evo.model.Util.sqr;
  */
 public abstract class Ball {
     static DoubleParameter speedLimit = new DoubleParameter(4);
+    static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
     private double centerX;
@@ -103,7 +104,7 @@ public abstract class Ball {
         double overlap = getRadius() - (getCenterX() - wallX);
         if (overlap > 0) {
             onOverlap(overlap);
-            addForce(BallForces.calcOverlapForce(overlap), 0);
+            addForce(calcOverlapForce(overlap), 0);
         }
     }
 
@@ -116,7 +117,7 @@ public abstract class Ball {
         double overlap = getCenterX() + getRadius() - wallX;
         if (overlap > 0) {
             onOverlap(overlap);
-            addForce(-BallForces.calcOverlapForce(overlap), 0);
+            addForce(-calcOverlapForce(overlap), 0);
         }
     }
 
@@ -129,7 +130,7 @@ public abstract class Ball {
         double overlap = getRadius() - (getCenterY() - wallY);
         if (overlap > 0) {
             onOverlap(overlap);
-            addForce(0, BallForces.calcOverlapForce(overlap));
+            addForce(0, calcOverlapForce(overlap));
         }
     }
 
@@ -142,8 +143,17 @@ public abstract class Ball {
         double overlap = getCenterY() + getRadius() - wallY;
         if (overlap > 0) {
             onOverlap(overlap);
-            addForce(0, -BallForces.calcOverlapForce(overlap));
+            addForce(0, -calcOverlapForce(overlap));
         }
+    }
+    /**
+     * Adds the forces due to the interaction of the ball with another ball, such as a collision or a bond.
+     * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
+     *
+     * @param ball another ball
+     */
+    public void addBallPairForces(Ball ball) {
+        BallPairForces.addBallPairForces(this, ball);
     }
 
     public void addBond(Ball ball) {
@@ -194,5 +204,9 @@ public abstract class Ball {
 
     public double getRecentTotalOverlap() {
         return overlapAccumulator.getTotal();
+    }
+
+    static double calcOverlapForce(double overlap) {
+        return overlapForceFactor.getValue() * overlap;
     }
 }

@@ -8,8 +8,8 @@ public class RegisteredParameters {
 
     static {
         register("Ball.speedLimit", Ball.speedLimit);
-        register("Ball.overlapForceFactor", BallForces.overlapForceFactor);
-        register("Ball.dampingForceFactor", BallForces.dampingForceFactor);
+        register("Ball.overlapForceFactor", Ball.overlapForceFactor);
+        register("Ball.dampingForceFactor", BallPairForces.dampingForceFactor);
         register("Ball.overlapAccumulatorRetentionRate", Ball.overlapAccumulatorRetentionRate);
         register("Drag.dragFactor", Drag.dragFactor);
         register("Illumination.maxIntensity", Illumination.maxIntensity);

@@ -128,14 +128,14 @@ public class BallTest {
         Ball cell2 = new Cell(1);
         cell2.setCenterPosition(1.5, 0);
 
-        BallForces.addInterBallForces(cell1, cell2);
+        cell1.addBallPairForces(cell2);
 
         assertEquals(0.5, cell1.getRecentTotalOverlap(), 0);
         assertEquals(0.5, cell2.getRecentTotalOverlap(), 0);
 
         cell1.subtickPhysics(2);
         cell2.subtickPhysics(2);
-        BallForces.addInterBallForces(cell1, cell2);
+        cell1.addBallPairForces(cell2);
 
         assertTrue(cell1.getRecentTotalOverlap() < 1);
         assertEquals(cell1.getRecentTotalOverlap(), cell2.getRecentTotalOverlap(), 0);
