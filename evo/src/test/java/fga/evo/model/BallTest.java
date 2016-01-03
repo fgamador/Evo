@@ -7,6 +7,7 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class BallTest {
     public static final double SQRT_2 = Math.sqrt(2);
@@ -117,5 +118,25 @@ public class BallTest {
 
         assertVelocity(1, 1, ball);
         assertPosition(0.75, 0.75, ball);
+    }
+
+    @Test
+    public void testGetRecentTotalOverlap() {
+        Ball cell1 = new Cell(1);
+        cell1.setCenterPosition(0, 0);
+        Ball cell2 = new Cell(1);
+        cell2.setCenterPosition(1.5, 0);
+
+        BallForces.addInterBallForces(cell1, cell2);
+
+        assertEquals(0.5, cell1.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, cell2.getRecentTotalOverlap(), 0);
+
+        cell1.subtickPhysics(2);
+        cell2.subtickPhysics(2);
+        BallForces.addInterBallForces(cell1, cell2);
+
+        assertTrue(cell1.getRecentTotalOverlap() < 1);
+        assertEquals(cell1.getRecentTotalOverlap(), cell2.getRecentTotalOverlap(), 0);
     }
 }

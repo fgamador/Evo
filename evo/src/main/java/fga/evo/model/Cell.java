@@ -20,8 +20,6 @@ public class Cell extends Ball implements CellControl.CellApi {
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
-    // TODO move up to Ball
-    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator();
     private CellControl control;
     private Cell child;
     private Cell parent;
@@ -83,7 +81,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public Cell tickBiology() {
         control.exertControl(this);
-        overlapAccumulator.decay();
         return useEnergy();
     }
 
@@ -309,17 +306,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public double getPhotoArea() {
         return photoRing.getArea();
-    }
-
-    // TODO move up to Ball
-    @Override
-    public void onOverlap(double overlap) {
-        overlapAccumulator.addValue(overlap);
-    }
-
-    // TODO move up to Ball
-    public double getRecentTotalOverlap() {
-        return overlapAccumulator.getTotal();
     }
 
     // TODO lose this; child should release parent instead

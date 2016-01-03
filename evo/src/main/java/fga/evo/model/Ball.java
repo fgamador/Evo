@@ -17,6 +17,7 @@ public abstract class Ball {
     private double velocityX, velocityY;
     private double netForceX, netForceY;
     private Set<Ball> bondedBalls = new HashSet<>();
+    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator();
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtickPhysics(int)}.
@@ -56,6 +57,7 @@ public abstract class Ball {
         limitSpeed();
         updatePosition(subticksPerTick);
         clearForces();
+        overlapAccumulator.decay();
     }
 
     private void updateVelocity(int subticksPerTick) {
@@ -134,5 +136,10 @@ public abstract class Ball {
     }
 
     public void onOverlap(double overlap) {
+        overlapAccumulator.addValue(overlap);
+    }
+
+    public double getRecentTotalOverlap() {
+        return overlapAccumulator.getTotal();
     }
 }
