@@ -11,62 +11,6 @@ public class BallForces {
     static DoubleParameter dampingForceFactor = new DoubleParameter(1);
 
     /**
-     * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
-     *
-     * @param ball  the ball
-     * @param wallX x-position of the barrier
-     */
-    static void addLeftBarrierCollisionForce(Ball ball, double wallX) {
-        double overlap = ball.getRadius() - (ball.getCenterX() - wallX);
-        if (overlap > 0) {
-            ball.onOverlap(overlap);
-            ball.addForce(calcOverlapForce(overlap), 0);
-        }
-    }
-
-    /**
-     * Adds the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
-     *
-     * @param ball  the ball
-     * @param wallX x-position of the barrier
-     */
-    static void addRightBarrierCollisionForce(Ball ball, double wallX) {
-        double overlap = ball.getCenterX() + ball.getRadius() - wallX;
-        if (overlap > 0) {
-            ball.onOverlap(overlap);
-            ball.addForce(-calcOverlapForce(overlap), 0);
-        }
-    }
-
-    /**
-     * Adds the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
-     *
-     * @param ball  the ball
-     * @param wallY y-position of the barrier
-     */
-    static void addLowBarrierCollisionForce(Ball ball, double wallY) {
-        double overlap = ball.getRadius() - (ball.getCenterY() - wallY);
-        if (overlap > 0) {
-            ball.onOverlap(overlap);
-            ball.addForce(0, calcOverlapForce(overlap));
-        }
-    }
-
-    /**
-     * Adds the force exerted on the ball if it is in collision with a barrier above it (larger y position).
-     *
-     * @param ball  the ball
-     * @param wallY y-position of the barrier
-     */
-    static void addHighBarrierCollisionForce(Ball ball, double wallY) {
-        double overlap = ball.getCenterY() + ball.getRadius() - wallY;
-        if (overlap > 0) {
-            ball.onOverlap(overlap);
-            ball.addForce(0, -calcOverlapForce(overlap));
-        }
-    }
-
-    /**
      * Adds the forces due to the interaction of one ball with another ball, such as a collision or a bond.
      * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
      *

@@ -94,6 +94,58 @@ public abstract class Ball {
         netForceX = netForceY = 0;
     }
 
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
+     *
+     * @param wallX x-position of the barrier
+     */
+    public void addLeftBarrierCollisionForce(double wallX) {
+        double overlap = getRadius() - (getCenterX() - wallX);
+        if (overlap > 0) {
+            onOverlap(overlap);
+            addForce(BallForces.calcOverlapForce(overlap), 0);
+        }
+    }
+
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
+     *
+     * @param wallX x-position of the barrier
+     */
+    public void addRightBarrierCollisionForce(double wallX) {
+        double overlap = getCenterX() + getRadius() - wallX;
+        if (overlap > 0) {
+            onOverlap(overlap);
+            addForce(-BallForces.calcOverlapForce(overlap), 0);
+        }
+    }
+
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
+     *
+     * @param wallY y-position of the barrier
+     */
+    public void addLowBarrierCollisionForce(double wallY) {
+        double overlap = getRadius() - (getCenterY() - wallY);
+        if (overlap > 0) {
+            onOverlap(overlap);
+            addForce(0, BallForces.calcOverlapForce(overlap));
+        }
+    }
+
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier above it (larger y position).
+     *
+     * @param wallY y-position of the barrier
+     */
+    public void addHighBarrierCollisionForce(double wallY) {
+        double overlap = getCenterY() + getRadius() - wallY;
+        if (overlap > 0) {
+            onOverlap(overlap);
+            addForce(0, -BallForces.calcOverlapForce(overlap));
+        }
+    }
+
     public void addBond(Ball ball) {
         bondedBalls.add(ball);
         ball.bondedBalls.add(this);
