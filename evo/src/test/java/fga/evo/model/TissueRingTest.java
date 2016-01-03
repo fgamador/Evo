@@ -7,70 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TissueRingTest {
-    @Test
-    public void testNewAsInnermostRing() {
-        double radius = 2;
-        TestRing ring = new TestRing(radius, 0);
-
-        assertEquals(Math.PI * sqr(radius), ring.getArea(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
-    }
-
-    @Test
-    public void testNewAsOuterRing() {
-        double innerArea = 0.5;
-        TestRing ring = new TestRing(1, innerArea);
-
-        assertEquals(Math.PI - innerArea, ring.getArea(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
-    }
-
-    @Test
-    public void testInitArea() {
-        TestRing ring = new TestRing(0, 0);
-
-        ring.initArea(1);
-
-        assertEquals(1, ring.getArea(), 0);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testInitArea_AlreadySet() {
-        TestRing ring = new TestRing(0, 0);
-        ring.initArea(1);
-        ring.initArea(1);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testInitArea_OuterRadiusAlreadySet() {
-        TestRing ring = new TestRing(0, 0);
-        ring.initOuterRadius(1);
-        ring.initArea(1);
-    }
-
-    @Test
-    public void testOuterRadiusArea() {
-        TestRing ring = new TestRing(0, 0);
-
-        ring.initOuterRadius(1);
-
-        assertEquals(1, ring.getOuterRadius(), 0);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testOuterRadius_AlreadySet() {
-        TestRing ring = new TestRing(0, 0);
-        ring.initOuterRadius(1);
-        ring.initOuterRadius(1);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testOuterRadius_AreaAlreadySet() {
-        TestRing ring = new TestRing(0, 0);
-        ring.initArea(1);
-        ring.initOuterRadius(1);
-    }
-
+    // TODO do we really need to test the combo of resize and updateFromArea?
     @Test
     public void testUpdateFromArea() {
         TestRing ring = new TestRing(1, 0);
@@ -82,9 +19,10 @@ public class TissueRingTest {
         ring.updateFromArea(0);
 
         assertEquals(newOuterRadius, ring.getOuterRadius(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
+        assertEquals(ring.getArea() * TestRing.parameters.density.getValue(), ring.getMass(), 0);
     }
 
+    // TODO do we really need to test the combo of resize and updateFromArea?
     @Test
     public void testUpdateFromAreaAsOuterRing() {
         TestRing innerRing = new TestRing(1, 0);
@@ -97,60 +35,7 @@ public class TissueRingTest {
         ring.updateFromArea(innerRing.getOuterRadius());
 
         assertEquals(3, ring.getOuterRadius(), 0);
-        assertEquals(ring.getArea() * TestRing.parameters.tissueDensity.getValue(), ring.getMass(), 0);
-    }
-
-    @Test
-    public void testUpdateFromAreaOrOuterRadius_Area_NoInnerRing() {
-        TestRing ring = new TestRing(0, 0);
-        ring.initArea(Math.PI);
-
-        ring.updateFromAreaOrOuterRadius(null);
-
-        assertEquals(1, ring.getOuterRadius(), 0.001);
-    }
-
-    @Test
-    public void testUpdateFromAreaOrOuterRadius_Area_InnerRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(0, 0);
-        ring.initArea(3 * Math.PI);
-
-        ring.updateFromAreaOrOuterRadius(innerRing);
-
-        assertEquals(2, ring.getOuterRadius(), 0.001);
-    }
-
-    @Test
-    public void testUpdateFromAreaOrOuterRadius_OuterRadius_NoInnerRing() {
-        TestRing ring = new TestRing(0, 0);
-        ring.initOuterRadius(1);
-
-        ring.updateFromAreaOrOuterRadius(null);
-
-        assertEquals(Math.PI, ring.getArea(), 0.001);
-    }
-
-    @Test
-    public void testUpdateFromAreaOrOuterRadius_OuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(0, 0);
-        ring.initOuterRadius(2);
-
-        ring.updateFromAreaOrOuterRadius(innerRing);
-
-        assertEquals(3 * Math.PI, ring.getArea(), 0.001);
-    }
-
-    @Test
-    public void testUpdateFromAreaOrOuterRadius_ZeroOuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(0, 0);
-
-        ring.updateFromAreaOrOuterRadius(innerRing);
-
-        assertEquals(1, ring.getOuterRadius(), 0.001);
-        assertEquals(0, ring.getArea(), 0.001);
+        assertEquals(ring.getArea() * TestRing.parameters.density.getValue(), ring.getMass(), 0);
     }
 
     @Test
@@ -274,7 +159,7 @@ public class TissueRingTest {
     public static class TestRing extends TissueRing {
         public static TissueRingParameters parameters = new TissueRingParameters();
         static {
-            parameters.tissueDensity = new DoubleParameter(0.5);
+            parameters.density = new DoubleParameter(0.5);
             parameters.growthCost = new DoubleParameter(0.1);
             parameters.maintenanceCost = new DoubleParameter(0.05);
             parameters.shrinkageYield = new DoubleParameter(0.05);

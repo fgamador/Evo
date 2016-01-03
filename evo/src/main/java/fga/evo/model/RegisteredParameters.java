@@ -22,7 +22,7 @@ public class RegisteredParameters {
     }
 
     private static void register(String prefix, TissueRingParameters parameters) {
-        register(prefix + ".tissueDensity", parameters.tissueDensity);
+        register(prefix + ".density", parameters.density);
         register(prefix + ".growthCost", parameters.growthCost);
         register(prefix + ".maintenanceCost", parameters.maintenanceCost);
         register(prefix + ".shrinkageYield", parameters.shrinkageYield);

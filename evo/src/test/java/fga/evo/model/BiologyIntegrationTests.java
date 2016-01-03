@@ -13,7 +13,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Before
     public void setUp() {
         Illumination.maxIntensity.setValue(2);
-        PhotoRing.parameters.tissueDensity.setValue(0.011);
+        PhotoRing.parameters.density.setValue(0.011);
         Weight.fluidDensity.setValue(0.01);
         Weight.gravity.setValue(0.1);
     }
@@ -21,7 +21,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @After
     public void tearDown() {
         Illumination.maxIntensity.revertToDefaultValue();
-        PhotoRing.parameters.tissueDensity.revertToDefaultValue();
+        PhotoRing.parameters.density.revertToDefaultValue();
         Weight.fluidDensity.revertToDefaultValue();
         Weight.gravity.revertToDefaultValue();
     }

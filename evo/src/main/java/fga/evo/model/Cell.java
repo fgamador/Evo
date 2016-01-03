@@ -8,10 +8,7 @@ import static fga.evo.model.Util.sqr;
  * The basic living unit in evo. A circular entity that can move and grow and reproduce.
  * Cells can also bond together to form larger organisms.
  */
-public class Cell extends Ball implements CellControl.CellApi {
-    private double mass; // cached total ring mass
-    private double radius; // cached outer-ring radius
-    private double area; // cached area derived from radius
+public class Cell extends Onion implements CellControl.CellApi {
     private double energy; // TODO rename as availableEnergy?
     private double spawnOdds;
     private double releaseChildOdds;
@@ -31,10 +28,15 @@ public class Cell extends Ball implements CellControl.CellApi {
     }
 
     public Cell(double radius, CellControl control) {
-        tissueRings.add(floatRing = new FloatRing(0, 0));
-        tissueRings.add(photoRing = new PhotoRing(radius, floatRing.getArea()));
+        addRing(floatRing = new FloatRing(0, 0));
+        addRing(photoRing = new PhotoRing(radius, floatRing.getArea()));
         updateFromRings();
         this.control = control;
+    }
+
+    protected void addRing(TissueRing ring) {
+        super.addRing(ring);
+        tissueRings.add(ring);
     }
 
     //    /** Creates a child cell. */
@@ -174,50 +176,6 @@ public class Cell extends Ball implements CellControl.CellApi {
         updateFromRingAreas();
     }
 
-    private void updateFromRingAreasOrOuterRadii() {
-        updateRingsFromRingAreasOrOuterRadii();
-        updateFromRings();
-    }
-
-    // TODO syncRings?
-    private void updateRingsFromRingAreasOrOuterRadii() {
-        TissueRing innerRing = null;
-        for (TissueRing ring : tissueRings) {
-            ring.updateFromAreaOrOuterRadius(innerRing);
-            innerRing = ring;
-        }
-    }
-
-    private void updateFromRingAreas() {
-        updateRingsFromRingAreas();
-        updateFromRings();
-    }
-
-    private void updateRingsFromRingAreas() {
-        double innerRadius = 0;
-        for (TissueRing ring : tissueRings) {
-            ring.updateFromArea(innerRadius);
-            innerRadius = ring.getOuterRadius();
-        }
-    }
-
-    private void updateFromRings() {
-        updateRadiusAndArea();
-        updateMass();
-    }
-
-    private void updateRadiusAndArea() {
-        radius = tissueRings.get(tissueRings.size() - 1).getOuterRadius();
-        area = Math.PI * sqr(radius);
-    }
-
-    private void updateMass() {
-        mass = 0;
-        for (TissueRing ring : tissueRings) {
-            mass += ring.getMass();
-        }
-    }
-
     /**
      * Records a request that the cell's float-ring area grow using a specified amount of energy.
      *
@@ -278,18 +236,6 @@ public class Cell extends Ball implements CellControl.CellApi {
 
     public boolean isAlive() {
         return alive;
-    }
-
-    public double getMass() {
-        return mass;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public double getArea() {
-        return area;
     }
 
     public double getFloatRingOuterRadius() {

@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class CellTest {
     @Test
     public void testGetMass() {
-        assertEquals(PhotoRing.parameters.tissueDensity.getValue() * Math.PI, new Cell(1).getMass(), 0);
+        assertEquals(PhotoRing.parameters.density.getValue() * Math.PI, new Cell(1).getMass(), 0);
     }
 
     @Test
@@ -179,8 +179,8 @@ public class CellTest {
         assertTrue(cell.getPhotoRingOuterRadius() > cell.getFloatRingOuterRadius());
         assertEquals(cell.getPhotoRingOuterRadius(), cell.getRadius(), 0);
 
-        assertEquals(cell.getFloatArea() * FloatRing.parameters.tissueDensity.getValue()
-                        + cell.getPhotoArea() * PhotoRing.parameters.tissueDensity.getValue(),
+        assertEquals(cell.getFloatArea() * FloatRing.parameters.density.getValue()
+                        + cell.getPhotoArea() * PhotoRing.parameters.density.getValue(),
                 cell.getMass(), 0.00001);
 
         assertEnergy(0, cell);
