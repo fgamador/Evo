@@ -5,6 +5,9 @@ import java.util.List;
 
 import static fga.evo.model.Util.sqr;
 
+/**
+ * A Ball composed of Rings. Manages ring geometry and mass.
+ */
 public abstract class Onion extends Ball {
     protected double mass; // cached total ring mass
     protected double radius; // cached outer-ring radius

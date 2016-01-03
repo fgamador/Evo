@@ -16,16 +16,16 @@ public class Ring {
     }
 
     public void initArea(double area) {
-        checkAreaAndOuterRadiusAreUnset();
+        enforceUnsetAreaAndOuterRadius();
         this.area = area;
     }
 
     public void initOuterRadius(double radius) {
-        checkAreaAndOuterRadiusAreUnset();
+        enforceUnsetAreaAndOuterRadius();
         this.outerRadius = radius;
     }
 
-    private void checkAreaAndOuterRadiusAreUnset() {
+    private void enforceUnsetAreaAndOuterRadius() {
         if (this.area != 0) {
             throw new IllegalStateException("Area is already set to " + this.area);
         }
@@ -46,13 +46,13 @@ public class Ring {
         }
     }
 
-    protected void updateFromOuterRadius(double innerArea) {
-        area = Math.PI * sqr(outerRadius) - innerArea;
+    public void updateFromArea(double innerRadius) {
+        outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         mass = parameters.density.getValue() * area;
     }
 
-    public void updateFromArea(double innerRadius) {
-        outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
+    private void updateFromOuterRadius(double innerArea) {
+        area = Math.PI * sqr(outerRadius) - innerArea;
         mass = parameters.density.getValue() * area;
     }
 
