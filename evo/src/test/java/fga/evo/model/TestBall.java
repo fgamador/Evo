@@ -1,11 +1,11 @@
 package fga.evo.model;
 
-class SimpleBall extends Ball {
+class TestBall extends Ball {
     private double mass;
     private double radius;
     private double lastOverlap;
 
-    SimpleBall(double radius) {
+    TestBall(double radius) {
         setRadius(radius);
     }
 

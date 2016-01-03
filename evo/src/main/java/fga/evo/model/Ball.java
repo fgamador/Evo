@@ -11,13 +11,14 @@ import static fga.evo.model.Util.sqr;
  */
 public abstract class Ball {
     static DoubleParameter speedLimit = new DoubleParameter(4);
+    static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
     private double centerX;
     private double centerY;
     private double velocityX, velocityY;
     private double netForceX, netForceY;
     private Set<Ball> bondedBalls = new HashSet<>();
-    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator();
+    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtickPhysics(int)}.

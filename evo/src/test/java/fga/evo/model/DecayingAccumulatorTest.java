@@ -7,20 +7,22 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class DecayingAccumulatorTest {
+    private DoubleParameter retentionRate = new DoubleParameter(0.95);
+
     @After
     public void tearDown() {
-        DecayingAccumulator.retentionRate.revertToDefaultValue();
+        retentionRate.revertToDefaultValue();
     }
 
     @Test
     public void testNoOverlaps() {
-        DecayingAccumulator sensor = new DecayingAccumulator();
+        DecayingAccumulator sensor = new DecayingAccumulator(retentionRate);
         assertEquals(0, sensor.getTotal(), 0);
     }
 
     @Test
     public void testOverlaps() {
-        DecayingAccumulator sensor = new DecayingAccumulator();
+        DecayingAccumulator sensor = new DecayingAccumulator(retentionRate);
         sensor.addValue(1);
         sensor.addValue(0.5);
 
@@ -29,9 +31,9 @@ public class DecayingAccumulatorTest {
 
     @Test
     public void testDecay() {
-        DecayingAccumulator.retentionRate.setValue(0.75);
+        retentionRate.setValue(0.75);
 
-        DecayingAccumulator sensor = new DecayingAccumulator();
+        DecayingAccumulator sensor = new DecayingAccumulator(retentionRate);
         sensor.addValue(2);
         sensor.decay();
 

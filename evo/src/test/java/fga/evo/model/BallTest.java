@@ -12,13 +12,13 @@ import static org.junit.Assert.assertTrue;
 public class BallTest {
     public static final double SQRT_2 = Math.sqrt(2);
 
-    private SimpleBall ball;
+    private TestBall ball;
 
     @Before
     public void setUp() {
         Ball.speedLimit.setValue(100);
 
-        ball = new SimpleBall(1);
+        ball = new TestBall(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
     }
@@ -70,7 +70,7 @@ public class BallTest {
 
     @Test
     public void testSubtickPhysics_DoubleMass() {
-        SimpleBall heavyBall = new SimpleBall(SQRT_2);
+        TestBall heavyBall = new TestBall(SQRT_2);
         heavyBall.setMass(2);
         heavyBall.addForce(1, -2);
 
