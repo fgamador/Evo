@@ -2,8 +2,6 @@ package fga.evo.model;
 
 import java.util.*;
 
-import static fga.evo.model.Util.sqr;
-
 /**
  * The basic living unit in evo. A circular entity that can move and grow and reproduce.
  * Cells can also bond together to form larger organisms.
@@ -299,7 +297,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public Cell build() {
-            cell.updateFromRingAreasOrOuterRadii();
+            cell.syncFields();
             return cell;
         }
     }

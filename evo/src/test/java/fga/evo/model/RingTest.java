@@ -72,66 +72,60 @@ public class RingTest {
     }
 
     @Test
-    public void testUpdateFromAreaOrOuterRadius_Area_NoInnerRing() {
+    public void testSyncFields_Area_NoInnerRing() {
         TestRing ring = new TestRing(0, 0);
         ring.initArea(Math.PI);
 
-        ring.updateFromAreaOrOuterRadius(null);
+        ring.syncFields(null);
 
         assertEquals(1, ring.getOuterRadius(), 0.001);
+        assertEquals(Math.PI * TestRing.parameters.density.getValue(), ring.getMass(), 0.01);
     }
 
     @Test
-    public void testUpdateFromAreaOrOuterRadius_Area_InnerRing() {
+    public void testSyncFields_Area_InnerRing() {
         TestRing innerRing = new TestRing(1, 0);
         TestRing ring = new TestRing(0, 0);
         ring.initArea(3 * Math.PI);
 
-        ring.updateFromAreaOrOuterRadius(innerRing);
+        ring.syncFields(innerRing);
 
         assertEquals(2, ring.getOuterRadius(), 0.001);
+        assertEquals(3 * Math.PI * TestRing.parameters.density.getValue(), ring.getMass(), 0.01);
     }
 
     @Test
-    public void testUpdateFromAreaOrOuterRadius_OuterRadius_NoInnerRing() {
+    public void testSyncFields_OuterRadius_NoInnerRing() {
         TestRing ring = new TestRing(0, 0);
         ring.initOuterRadius(1);
 
-        ring.updateFromAreaOrOuterRadius(null);
+        ring.syncFields(null);
 
         assertEquals(Math.PI, ring.getArea(), 0.001);
+        assertEquals(Math.PI * TestRing.parameters.density.getValue(), ring.getMass(), 0.01);
     }
 
     @Test
-    public void testUpdateFromAreaOrOuterRadius_OuterRadius_InnerRing() {
+    public void testSyncFields_OuterRadius_InnerRing() {
         TestRing innerRing = new TestRing(1, 0);
         TestRing ring = new TestRing(0, 0);
         ring.initOuterRadius(2);
 
-        ring.updateFromAreaOrOuterRadius(innerRing);
+        ring.syncFields(innerRing);
 
         assertEquals(3 * Math.PI, ring.getArea(), 0.001);
+        assertEquals(3 * Math.PI * TestRing.parameters.density.getValue(), ring.getMass(), 0.01);
     }
 
     @Test
-    public void testUpdateFromAreaOrOuterRadius_ZeroOuterRadius_InnerRing() {
+    public void testSyncFields_ZeroOuterRadius_InnerRing() {
         TestRing innerRing = new TestRing(1, 0);
         TestRing ring = new TestRing(0, 0);
 
-        ring.updateFromAreaOrOuterRadius(innerRing);
+        ring.syncFields(innerRing);
 
         assertEquals(1, ring.getOuterRadius(), 0.001);
         assertEquals(0, ring.getArea(), 0.001);
-    }
-
-    public static class TestRing extends Ring {
-        public static RingParameters parameters = new RingParameters();
-        static {
-            parameters.density = new DoubleParameter(0.5);
-        }
-
-        public TestRing(double outerRadius, double innerArea) {
-            super(parameters, outerRadius, innerArea);
-        }
+        assertEquals(0, ring.getMass(), 0.001);
     }
 }

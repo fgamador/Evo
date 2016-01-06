@@ -9,25 +9,24 @@ import static fga.evo.model.Util.sqr;
  * A Ball composed of Rings. Manages ring geometry and mass.
  */
 public abstract class Onion extends Ball {
-    protected double mass; // cached total ring mass
     protected double radius; // cached outer-ring radius
     protected double area; // cached area derived from radius
+    protected double mass; // cached total ring mass
     private List<Ring> rings = new ArrayList<>();
 
     protected void addRing(Ring ring) {
         rings.add(ring);
     }
 
-    protected void updateFromRingAreasOrOuterRadii() {
-        updateRingsFromRingAreasOrOuterRadii();
+    protected void syncFields() {
+        syncRingFields();
         updateFromRings();
     }
 
-    // TODO syncRings?
-    private void updateRingsFromRingAreasOrOuterRadii() {
+    private void syncRingFields() {
         Ring innerRing = null;
         for (Ring ring : rings) {
-            ring.updateFromAreaOrOuterRadius(innerRing);
+            ring.syncFields(innerRing);
             innerRing = ring;
         }
     }
@@ -62,15 +61,15 @@ public abstract class Onion extends Ball {
         }
     }
 
-    public double getMass() {
-        return mass;
-    }
-
     public double getRadius() {
         return radius;
     }
 
     public double getArea() {
         return area;
+    }
+
+    public double getMass() {
+        return mass;
     }
 }

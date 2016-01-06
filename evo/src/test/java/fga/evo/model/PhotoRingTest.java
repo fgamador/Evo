@@ -9,6 +9,7 @@ public class PhotoRingTest {
     public void testCalcPhotoAbsorptivity() {
         assertEquals(0.5, new PhotoRing(1, 0).calcPhotoAbsorptivity(), 0);
         assertEquals(0.75, new PhotoRing(3, 0).calcPhotoAbsorptivity(), 0);
+        // TODO test with non-zero inner area (will fail!)
     }
 
     @Test

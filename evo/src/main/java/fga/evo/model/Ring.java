@@ -4,13 +4,14 @@ import static fga.evo.model.Util.sqr;
 
 public class Ring {
     private RingParameters parameters;
-    protected double innerRadius;
+    protected double innerRadius; // TODO never gets set!
     protected double outerRadius;
     protected double area;
     protected double mass;
 
     public Ring(RingParameters parameters, double outerRadius, double innerArea) {
         this.parameters = parameters;
+        // TODO do we need these any more?
         this.outerRadius = outerRadius;
         updateFromOuterRadius(innerArea);
     }
@@ -34,23 +35,25 @@ public class Ring {
         }
     }
 
-    // TODO sync? syncAreaAndOuterRadius?
-    public void updateFromAreaOrOuterRadius(Ring innerRing) {
+    public void syncFields(Ring innerRing) {
         double innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
         if (area != 0) {
-            updateFromArea(innerRadius);
+            outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         } else {
             outerRadius = Math.max(outerRadius, innerRadius);
             double innerArea = (innerRing != null) ? innerRing.area : 0;
-            updateFromOuterRadius(innerArea);
+            area = Math.PI * sqr(outerRadius) - innerArea;
         }
+        mass = parameters.density.getValue() * area;
     }
 
+    // TODO lose this
     public void updateFromArea(double innerRadius) {
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         mass = parameters.density.getValue() * area;
     }
 
+    // TODO lose this
     private void updateFromOuterRadius(double innerArea) {
         area = Math.PI * sqr(outerRadius) - innerArea;
         mass = parameters.density.getValue() * area;
