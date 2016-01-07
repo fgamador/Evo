@@ -4,7 +4,7 @@ import static fga.evo.model.Util.sqr;
 
 public class Ring {
     private RingParameters parameters;
-    protected double innerRadius; // TODO never gets set!
+    private double innerRadius;
     private double outerRadius;
     private double area;
     private double mass;
@@ -34,7 +34,7 @@ public class Ring {
     }
 
     public void syncFields(Ring innerRing) {
-        double innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
+        innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
         if (area != 0) {
             outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         } else {
@@ -52,6 +52,10 @@ public class Ring {
 
     public double getOuterRadius() {
         return outerRadius;
+    }
+
+    public double getInnerRadius() {
+        return innerRadius;
     }
 
     public double getArea() {

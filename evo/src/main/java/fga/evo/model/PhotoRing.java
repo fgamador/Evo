@@ -36,7 +36,7 @@ public class PhotoRing extends TissueRing {
      * @return the fraction of incident light that gets captured as energy
      */
     public double calcPhotoAbsorptivity() {
-        double thickness = getOuterRadius() - innerRadius;
+        double thickness = getOuterRadius() - getInnerRadius();
         return 1 - (1 / (thickness + 1));
     }
 }
