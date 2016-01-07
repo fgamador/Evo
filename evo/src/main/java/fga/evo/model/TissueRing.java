@@ -19,10 +19,10 @@ public class TissueRing extends Ring {
      */
     public void requestResize(double growthEnergy) {
         if (growthEnergy >= 0) {
-            double maxDeltaArea = Math.max(area, 1) * parameters.maxGrowthRate.getValue();
+            double maxDeltaArea = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
             requestedDeltaArea = Math.min(growthEnergy / parameters.growthCost.getValue(), maxDeltaArea);
         } else {
-            requestedDeltaArea = Math.max(-area, growthEnergy / parameters.shrinkageYield.getValue());
+            requestedDeltaArea = Math.max(-getArea(), growthEnergy / parameters.shrinkageYield.getValue());
         }
     }
 
@@ -36,15 +36,15 @@ public class TissueRing extends Ring {
     }
 
     public void resize() {
-        area += requestedDeltaArea;
+        setArea(getArea() + requestedDeltaArea);
         requestedDeltaArea = 0;
     }
 
     public double getMaintenanceEnergy() {
-        return area * parameters.maintenanceCost.getValue();
+        return getArea() * parameters.maintenanceCost.getValue();
     }
 
     public void decay() {
-        area *= 1 - parameters.decayRate.getValue();
+        setArea(getArea() * (1 - parameters.decayRate.getValue()));
     }
 }

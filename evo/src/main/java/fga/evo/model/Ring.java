@@ -5,9 +5,9 @@ import static fga.evo.model.Util.sqr;
 public class Ring {
     private RingParameters parameters;
     protected double innerRadius; // TODO never gets set!
-    protected double outerRadius;
-    protected double area;
-    protected double mass;
+    private double outerRadius;
+    private double area;
+    private double mass;
 
     public Ring(RingParameters parameters, double outerRadius) {
         this.parameters = parameters;
@@ -49,6 +49,11 @@ public class Ring {
     public void updateFromArea(double innerRadius) {
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         mass = parameters.density.getValue() * area;
+    }
+
+    public void setArea(double val) {
+        area = val;
+        outerRadius = 0;
     }
 
     public double getOuterRadius() {

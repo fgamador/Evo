@@ -2,13 +2,12 @@ package fga.evo.model;
 
 import org.junit.Test;
 
-import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 
 public class OnionTest {
     @Test
     public void testSyncFields_OneRing() {
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
         ring.initArea(Math.PI);
         TestOnion onion = new TestOnion();
         onion.addRing(ring);
@@ -23,9 +22,9 @@ public class OnionTest {
     }
     @Test
     public void testSyncFields_TwoRings() {
-        TestRing ring1 = new TestRing(0, 0);
+        TestRing ring1 = new TestRing(0);
         ring1.initOuterRadius(1);
-        TestRing ring2 = new TestRing(0, 0);
+        TestRing ring2 = new TestRing(0);
         ring2.initOuterRadius(2);
         TestOnion onion = new TestOnion();
         onion.addRing(ring1);

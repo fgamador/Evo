@@ -118,8 +118,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         for (TissueRing ring : tissueRings) {
             ring.resize();
         }
-
-        updateFromRingAreas();
+        syncFields();
     }
 
     private Cell manageChild() {
@@ -171,7 +170,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         for (TissueRing ring : tissueRings) {
             ring.decay();
         }
-        updateFromRingAreas();
+        syncFields();
     }
 
     /**

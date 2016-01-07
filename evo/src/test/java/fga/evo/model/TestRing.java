@@ -7,7 +7,7 @@ public class TestRing extends Ring {
         parameters.density = new DoubleParameter(0.5);
     }
 
-    public TestRing(double outerRadius, double innerArea) {
+    public TestRing(double outerRadius) {
         super(parameters, outerRadius);
     }
 }

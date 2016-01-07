@@ -10,7 +10,7 @@ public class RingTest {
     @Test
     public void testNewAsInnermostRing() {
         double radius = 2;
-        TestRing ring = new TestRing(radius, 0);
+        TestRing ring = new TestRing(radius);
         ring.syncFields(null);
 
         assertEquals(Math.PI * sqr(radius), ring.getArea(), 0);
@@ -19,8 +19,8 @@ public class RingTest {
 
     @Test
     public void testNewAsOuterRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(2, 0);
+        TestRing innerRing = new TestRing(1);
+        TestRing ring = new TestRing(2);
         innerRing.syncFields(null);
         ring.syncFields(innerRing);
 
@@ -30,7 +30,7 @@ public class RingTest {
 
     @Test
     public void testInitArea() {
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
 
         ring.initArea(1);
 
@@ -39,21 +39,21 @@ public class RingTest {
 
     @Test(expected = IllegalStateException.class)
     public void testInitArea_AlreadySet() {
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
         ring.initArea(1);
         ring.initArea(1);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testInitArea_OuterRadiusAlreadySet() {
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
         ring.initOuterRadius(1);
         ring.initArea(1);
     }
 
     @Test
-    public void testOuterRadiusArea() {
-        TestRing ring = new TestRing(0, 0);
+    public void testInitOuterRadius() {
+        TestRing ring = new TestRing(0);
 
         ring.initOuterRadius(1);
 
@@ -61,22 +61,31 @@ public class RingTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testOuterRadius_AlreadySet() {
-        TestRing ring = new TestRing(0, 0);
+    public void testInitOuterRadius_AlreadySet() {
+        TestRing ring = new TestRing(0);
         ring.initOuterRadius(1);
         ring.initOuterRadius(1);
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testOuterRadius_AreaAlreadySet() {
-        TestRing ring = new TestRing(0, 0);
+    public void testInitOuterRadius_AreaAlreadySet() {
+        TestRing ring = new TestRing(0);
         ring.initArea(1);
         ring.initOuterRadius(1);
     }
 
     @Test
+    public void testSetArea() {
+        TestRing ring = new TestRing(1);
+
+        ring.setArea(Math.PI);
+
+        assertEquals(0, ring.getOuterRadius(), 0);
+    }
+
+    @Test
     public void testSyncFields_Area_NoInnerRing() {
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
         ring.initArea(Math.PI);
 
         ring.syncFields(null);
@@ -87,8 +96,8 @@ public class RingTest {
 
     @Test
     public void testSyncFields_Area_InnerRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(0, 0);
+        TestRing innerRing = new TestRing(1);
+        TestRing ring = new TestRing(0);
         ring.initArea(3 * Math.PI);
 
         ring.syncFields(innerRing);
@@ -99,7 +108,7 @@ public class RingTest {
 
     @Test
     public void testSyncFields_OuterRadius_NoInnerRing() {
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
         ring.initOuterRadius(1);
 
         ring.syncFields(null);
@@ -110,9 +119,9 @@ public class RingTest {
 
     @Test
     public void testSyncFields_OuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1, 0);
+        TestRing innerRing = new TestRing(1);
         innerRing.syncFields(null);
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
         ring.initOuterRadius(2);
 
         ring.syncFields(innerRing);
@@ -123,9 +132,9 @@ public class RingTest {
 
     @Test
     public void testSyncFields_ZeroOuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1, 0);
+        TestRing innerRing = new TestRing(1);
         innerRing.syncFields(null);
-        TestRing ring = new TestRing(0, 0);
+        TestRing ring = new TestRing(0);
 
         ring.syncFields(innerRing);
 
