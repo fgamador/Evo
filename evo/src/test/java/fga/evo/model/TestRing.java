@@ -8,6 +8,6 @@ public class TestRing extends Ring {
     }
 
     public TestRing(double outerRadius, double innerArea) {
-        super(parameters, outerRadius, innerArea);
+        super(parameters, outerRadius);
     }
 }

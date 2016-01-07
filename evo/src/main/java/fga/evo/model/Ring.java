@@ -9,11 +9,9 @@ public class Ring {
     protected double area;
     protected double mass;
 
-    public Ring(RingParameters parameters, double outerRadius, double innerArea) {
+    public Ring(RingParameters parameters, double outerRadius) {
         this.parameters = parameters;
-        // TODO do we need these any more?
         this.outerRadius = outerRadius;
-        updateFromOuterRadius(innerArea);
     }
 
     public void initArea(double area) {
@@ -50,12 +48,6 @@ public class Ring {
     // TODO lose this
     public void updateFromArea(double innerRadius) {
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
-        mass = parameters.density.getValue() * area;
-    }
-
-    // TODO lose this
-    private void updateFromOuterRadius(double innerArea) {
-        area = Math.PI * sqr(outerRadius) - innerArea;
         mass = parameters.density.getValue() * area;
     }
 

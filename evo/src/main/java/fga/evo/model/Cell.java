@@ -26,9 +26,9 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public Cell(double radius, CellControl control) {
-        addRing(floatRing = new FloatRing(0, 0));
-        addRing(photoRing = new PhotoRing(radius, floatRing.getArea()));
-        updateFromRings();
+        addRing(floatRing = new FloatRing(0));
+        addRing(photoRing = new PhotoRing(radius));
+        syncFields();
         this.control = control;
     }
 

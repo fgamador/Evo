@@ -15,7 +15,7 @@ public class FloatRing extends TissueRing {
         parameters.decayRate = new DoubleParameter(0.1);
     }
 
-    public FloatRing(double outerRadius, double innerArea) {
-        super(parameters, outerRadius, innerArea);
+    public FloatRing(double outerRadius) {
+        super(parameters, outerRadius);
     }
 }

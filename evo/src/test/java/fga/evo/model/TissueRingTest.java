@@ -10,7 +10,7 @@ public class TissueRingTest {
     // TODO do we really need to test the combo of resize and updateFromArea?
     @Test
     public void testUpdateFromArea() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
         double newOuterRadius = 2;
         double newArea = Math.PI * sqr(newOuterRadius);
         ring.requestResize((newArea - ring.getArea()) * TestRing.parameters.growthCost.getValue());
@@ -25,8 +25,8 @@ public class TissueRingTest {
     // TODO do we really need to test the combo of resize and updateFromArea?
     @Test
     public void testUpdateFromAreaAsOuterRing() {
-        TestRing innerRing = new TestRing(1, 0);
-        TestRing ring = new TestRing(2, innerRing.getArea());
+        TestRing innerRing = new TestRing(1, null);
+        TestRing ring = new TestRing(2, innerRing);
         double newOuterRadius = 3;
         double newArea = Math.PI * sqr(newOuterRadius);
         ring.requestResize((newArea - (innerRing.getArea() + ring.getArea())) * TestRing.parameters.growthCost.getValue());
@@ -40,7 +40,7 @@ public class TissueRingTest {
 
     @Test
     public void testRequestResize_Grow() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
 
         double growthEnergy = 2;
         ring.requestResize(growthEnergy);
@@ -53,7 +53,7 @@ public class TissueRingTest {
         double defaultMaxGrowthRate = TestRing.parameters.maxGrowthRate.getValue();
         try {
             TestRing.parameters.maxGrowthRate.setValue(0.1);
-            TestRing ring = new TestRing(1, 0);
+            TestRing ring = new TestRing(1, null);
             double maxDeltaArea = ring.getArea() * TestRing.parameters.maxGrowthRate.getValue();
             double maxGrowthEnergy = maxDeltaArea * TestRing.parameters.growthCost.getValue();
             double growthEnergy = 100;
@@ -69,7 +69,7 @@ public class TissueRingTest {
 
     @Test
     public void testRequestResize_Shrink() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
 
         double growthEnergy = -0.1;
         ring.requestResize(growthEnergy);
@@ -79,7 +79,7 @@ public class TissueRingTest {
 
     @Test
     public void testRequestResize_NotBelowZero() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
 
         double growthEnergy = -5;
         ring.requestResize(growthEnergy);
@@ -89,7 +89,7 @@ public class TissueRingTest {
 
     @Test
     public void testScaleResizeRequest() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
 
         ring.requestResize(10);
         ring.scaleResizeRequest(0.1);
@@ -99,7 +99,7 @@ public class TissueRingTest {
 
     @Test
     public void testResize() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
         double growthEnergy = 2;
         ring.requestResize(growthEnergy);
 
@@ -110,7 +110,7 @@ public class TissueRingTest {
 
     @Test
     public void testResize_NoRequest() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
 
         ring.resize();
 
@@ -119,7 +119,7 @@ public class TissueRingTest {
 
     @Test
     public void testResize_DoNotRetainRequest() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
         double growthEnergy = 2;
         ring.requestResize(growthEnergy);
         ring.resize();
@@ -131,7 +131,7 @@ public class TissueRingTest {
 
     @Test
     public void testResize_NotBelowZero() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
         ring.requestResize(-5);
 
         ring.resize();
@@ -141,13 +141,13 @@ public class TissueRingTest {
 
     @Test
     public void testGetMaintenanceEnergy() {
-        TestRing ring = new TestRing(3, 0);
+        TestRing ring = new TestRing(3, null);
         assertEquals(Math.PI * 9 * TestRing.parameters.maintenanceCost.getValue(), ring.getMaintenanceEnergy(), 0);
     }
 
     @Test
     public void testDecay() {
-        TestRing ring = new TestRing(1, 0);
+        TestRing ring = new TestRing(1, null);
         double initialArea = ring.getArea();
 
         ring.decay();
@@ -167,8 +167,9 @@ public class TissueRingTest {
             parameters.decayRate = new DoubleParameter(0.1);
         }
 
-        public TestRing(double outerRadius, double innerArea) {
-            super(parameters, outerRadius, innerArea);
+        public TestRing(double outerRadius, TestRing innerRing) {
+            super(parameters, outerRadius);
+            syncFields(innerRing);
         }
     }
 }

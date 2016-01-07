@@ -11,6 +11,7 @@ public class RingTest {
     public void testNewAsInnermostRing() {
         double radius = 2;
         TestRing ring = new TestRing(radius, 0);
+        ring.syncFields(null);
 
         assertEquals(Math.PI * sqr(radius), ring.getArea(), 0);
         assertEquals(ring.getArea() * TestRing.parameters.density.getValue(), ring.getMass(), 0);
@@ -18,10 +19,12 @@ public class RingTest {
 
     @Test
     public void testNewAsOuterRing() {
-        double innerArea = 0.5;
-        TestRing ring = new TestRing(1, innerArea);
+        TestRing innerRing = new TestRing(1, 0);
+        TestRing ring = new TestRing(2, 0);
+        innerRing.syncFields(null);
+        ring.syncFields(innerRing);
 
-        assertEquals(Math.PI - innerArea, ring.getArea(), 0);
+        assertEquals(3 * Math.PI, ring.getArea(), 0);
         assertEquals(ring.getArea() * TestRing.parameters.density.getValue(), ring.getMass(), 0);
     }
 
@@ -108,6 +111,7 @@ public class RingTest {
     @Test
     public void testSyncFields_OuterRadius_InnerRing() {
         TestRing innerRing = new TestRing(1, 0);
+        innerRing.syncFields(null);
         TestRing ring = new TestRing(0, 0);
         ring.initOuterRadius(2);
 
@@ -120,6 +124,7 @@ public class RingTest {
     @Test
     public void testSyncFields_ZeroOuterRadius_InnerRing() {
         TestRing innerRing = new TestRing(1, 0);
+        innerRing.syncFields(null);
         TestRing ring = new TestRing(0, 0);
 
         ring.syncFields(innerRing);
