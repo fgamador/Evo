@@ -45,12 +45,6 @@ public class Ring {
         mass = parameters.density.getValue() * area;
     }
 
-    // TODO lose this
-    public void updateFromArea(double innerRadius) {
-        outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
-        mass = parameters.density.getValue() * area;
-    }
-
     public void setArea(double val) {
         area = val;
         outerRadius = 0;

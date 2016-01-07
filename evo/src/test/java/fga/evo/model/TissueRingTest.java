@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TissueRingTest {
-    // TODO do we really need to test the combo of resize and updateFromArea?
+    // TODO do we really need to test the combo of resize and syncFields?
     @Test
     public void testUpdateFromArea() {
         TestRing ring = new TestRing(1, null);
@@ -16,13 +16,13 @@ public class TissueRingTest {
         ring.requestResize((newArea - ring.getArea()) * TestRing.parameters.growthCost.getValue());
         ring.resize();
 
-        ring.updateFromArea(0);
+        ring.syncFields(null);
 
         assertEquals(newOuterRadius, ring.getOuterRadius(), 0);
         assertEquals(ring.getArea() * TestRing.parameters.density.getValue(), ring.getMass(), 0);
     }
 
-    // TODO do we really need to test the combo of resize and updateFromArea?
+    // TODO do we really need to test the combo of resize and syncFields?
     @Test
     public void testUpdateFromAreaAsOuterRing() {
         TestRing innerRing = new TestRing(1, null);
@@ -32,7 +32,7 @@ public class TissueRingTest {
         ring.requestResize((newArea - (innerRing.getArea() + ring.getArea())) * TestRing.parameters.growthCost.getValue());
         ring.resize();
 
-        ring.updateFromArea(innerRing.getOuterRadius());
+        ring.syncFields(innerRing);
 
         assertEquals(3, ring.getOuterRadius(), 0);
         assertEquals(ring.getArea() * TestRing.parameters.density.getValue(), ring.getMass(), 0);
