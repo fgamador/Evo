@@ -7,7 +7,7 @@ import java.util.*;
  * Cells can also bond together to form larger organisms.
  */
 public class Cell extends Onion implements CellControl.CellApi {
-    private double energy; // TODO rename as availableEnergy?
+    private double energy;
     private double spawnOdds;
     private double releaseChildOdds;
     private double requestedChildDonation;
@@ -36,21 +36,6 @@ public class Cell extends Onion implements CellControl.CellApi {
         super.addRing(ring);
         tissueRings.add(ring);
     }
-
-    //    /** Creates a child cell. */
-//    private Cell(Cell parent, double angle) {
-//        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
-//                CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
-//        this.parent = parent;
-//    }
-//
-//    private double getSpawningX(double angle, double childRadius) {
-//        return centerX + (radius + childRadius) * Math.cos(angle);
-//    }
-//
-//    private double getSpawningY(double angle, double childRadius) {
-//        return centerY + (radius + childRadius) * Math.sin(angle);
-//    }
 
     /**
      * Adds to the cell's available energy.
@@ -149,6 +134,21 @@ public class Cell extends Onion implements CellControl.CellApi {
         child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
         return child;
     }
+
+    //    /** Creates a child cell. */
+//    private Cell(Cell parent, double angle) {
+//        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
+//                CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
+//        this.parent = parent;
+//    }
+//
+//    private double getSpawningX(double angle, double childRadius) {
+//        return centerX + (radius + childRadius) * Math.cos(angle);
+//    }
+//
+//    private double getSpawningY(double angle, double childRadius) {
+//        return centerY + (radius + childRadius) * Math.sin(angle);
+//    }
 
     private void releaseChild() {
         removeBond(child);

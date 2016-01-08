@@ -123,22 +123,22 @@ public class BallTest {
 
     @Test
     public void testGetRecentTotalOverlap() {
-        Ball cell1 = new Cell(1);
-        cell1.setCenterPosition(0, 0);
-        Ball cell2 = new Cell(1);
-        cell2.setCenterPosition(1.5, 0);
+        Ball ball1 = new Cell(1);
+        ball1.setCenterPosition(0, 0);
+        Ball ball2 = new Cell(1);
+        ball2.setCenterPosition(1.5, 0);
 
-        cell1.addBallPairForces(cell2);
+        ball1.addBallPairForces(ball2);
 
-        assertEquals(0.5, cell1.getRecentTotalOverlap(), 0);
-        assertEquals(0.5, cell2.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
 
-        cell1.subtickPhysics(2);
-        cell2.subtickPhysics(2);
-        cell1.addBallPairForces(cell2);
+        ball1.subtickPhysics(2);
+        ball2.subtickPhysics(2);
+        ball1.addBallPairForces(ball2);
 
-        assertTrue(cell1.getRecentTotalOverlap() < 1);
-        assertEquals(cell1.getRecentTotalOverlap(), cell2.getRecentTotalOverlap(), 0);
+        assertTrue(ball1.getRecentTotalOverlap() < 1);
+        assertEquals(ball1.getRecentTotalOverlap(), ball2.getRecentTotalOverlap(), 0);
     }
 
     @Test

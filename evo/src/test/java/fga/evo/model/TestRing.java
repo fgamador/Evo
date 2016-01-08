@@ -10,4 +10,9 @@ public class TestRing extends Ring {
     public TestRing(double outerRadius) {
         super(parameters, outerRadius);
     }
+
+    public TestRing(double outerRadius, Ring innerRing) {
+        this(outerRadius);
+        syncFields(innerRing);
+    }
 }

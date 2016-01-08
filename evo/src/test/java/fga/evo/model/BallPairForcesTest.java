@@ -8,7 +8,7 @@ import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.assertEquals;
 
 public class BallPairForcesTest {
-    public static final double SQRT_2 = Math.sqrt(2);
+    private static final double SQRT_2 = Math.sqrt(2);
 
     private TestBall ball, ball2;
 
