@@ -14,23 +14,14 @@ public class Ring {
         this.outerRadius = outerRadius;
     }
 
-    public void initArea(double area) {
-        enforceUnsetAreaAndOuterRadius();
-        this.area = area;
+    public void setArea(double val) {
+        area = val;
+        outerRadius = 0;
     }
 
-    public void initOuterRadius(double radius) {
-        enforceUnsetAreaAndOuterRadius();
-        this.outerRadius = radius;
-    }
-
-    private void enforceUnsetAreaAndOuterRadius() {
-        if (this.area != 0) {
-            throw new IllegalStateException("Area is already set to " + this.area);
-        }
-        if (this.outerRadius != 0) {
-            throw new IllegalStateException("Outer radius is already set to " + this.outerRadius);
-        }
+    public void setOuterRadius(double val) {
+        outerRadius = val;
+        area = 0;
     }
 
     public void syncFields(Ring innerRing) {
@@ -43,11 +34,6 @@ public class Ring {
             area = Math.PI * sqr(outerRadius) - innerArea;
         }
         mass = parameters.density.getValue() * area;
-    }
-
-    public void setArea(double val) {
-        area = val;
-        outerRadius = 0;
     }
 
     public double getOuterRadius() {

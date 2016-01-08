@@ -276,28 +276,47 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public Builder setFloatRingOuterRadius(double radius) {
-            cell.floatRing.initOuterRadius(radius);
+            setOuterRadius(cell.floatRing, radius);
             return this;
         }
 
         public Builder setFloatRingArea(double area) {
-            cell.floatRing.initArea(area);
+            setArea(cell.floatRing, area);
             return this;
         }
 
         public Builder setPhotoRingOuterRadius(double radius) {
-            cell.photoRing.initOuterRadius(radius);
+            setOuterRadius(cell.photoRing, radius);
             return this;
         }
 
         public Builder setPhotoRingArea(double area) {
-            cell.photoRing.initArea(area);
+            setArea(cell.photoRing, area);
             return this;
         }
 
         public Cell build() {
             cell.syncFields();
             return cell;
+        }
+
+        private void setArea(Ring ring, double val) {
+            enforceUnsetAreaAndOuterRadius(ring);
+            ring.setArea(val);
+        }
+
+        private void setOuterRadius(Ring ring, double val) {
+            enforceUnsetAreaAndOuterRadius(ring);
+            ring.setOuterRadius(val);
+        }
+
+        private void enforceUnsetAreaAndOuterRadius(Ring ring) {
+            if (ring.getArea() != 0) {
+                throw new IllegalStateException("Area is already set to " + ring.getArea());
+            }
+            if (ring.getOuterRadius() != 0) {
+                throw new IllegalStateException("Outer radius is already set to " + ring.getOuterRadius());
+            }
         }
     }
 }

@@ -6,6 +6,34 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CellBuilderTest {
+    @Test(expected = IllegalStateException.class)
+    public void testBuild_SetAreaTwice() {
+        new Cell.Builder()
+                .setFloatRingArea(Math.PI)
+                .setFloatRingArea(Math.PI);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testBuild_SetOuterRadiusThenArea() {
+        new Cell.Builder()
+                .setFloatRingOuterRadius(1)
+                .setFloatRingArea(Math.PI);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testBuild_SetOuterRadiusTwice() {
+        new Cell.Builder()
+                .setFloatRingOuterRadius(1)
+                .setFloatRingOuterRadius(1);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testBuild_SetAreaThenOuterRadius() {
+        new Cell.Builder()
+                .setFloatRingArea(Math.PI)
+                .setFloatRingOuterRadius(1);
+    }
+
     @Test
     public void testBuild_FloatRingOuterRadius() {
         Cell cell = new Cell.Builder()
