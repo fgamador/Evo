@@ -21,6 +21,7 @@ public class BallPairForcesTest {
         ball.setRadius(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
+
         ball2 = new Ball();
         ball2.setRadius(1);
         ball2.setMass(1);
@@ -39,7 +40,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_XRestLength() {
+    public void testAddBallPairForces_XRestLength() {
         ball2.setCenterPosition(2, 0);
 
         BallPairForces.addBallPairForces(ball, ball2);
@@ -49,7 +50,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_XCollision() {
+    public void testAddBallPairForces_XCollision() {
         ball2.setCenterPosition(1, 0);
 
         BallPairForces.addBallPairForces(ball, ball2);
@@ -59,7 +60,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_NotInCollision() {
+    public void testAddBallPairForces_NotInCollision() {
         ball2.setCenterPosition(3, -3);
 
         BallPairForces.addBallPairForces(ball, ball2);
@@ -69,7 +70,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_DiagonalCollision() {
+    public void testAddBallPairForces_DiagonalCollision() {
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
         BallPairForces.addBallPairForces(ball, ball2);
@@ -79,7 +80,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_ReverseDiagonalCollision() {
+    public void testAddBallPairForces_ReverseDiagonalCollision() {
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
         BallPairForces.addBallPairForces(ball2, ball);
@@ -89,7 +90,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_FullOverlap() {
+    public void testAddBallPairForces_FullOverlap() {
         ball2.setCenterPosition(0, 0);
 
         BallPairForces.addBallPairForces(ball, ball2);
@@ -99,7 +100,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_Bonded_TouchingAtRest() {
+    public void testAddBallPairForces_Bonded_TouchingAtRest() {
         ball.addBond(ball2);
         ball2.setCenterPosition(2, 0);
 
@@ -110,7 +111,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_Bonded_TouchingMovingTogether() {
+    public void testAddBallPairForces_Bonded_TouchingMovingTogether() {
         ball.addBond(ball2);
         ball2.setCenterPosition(2, 0);
         ball.setVelocity(1, 0);
@@ -123,7 +124,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_Bonded_XCollision() {
+    public void testAddBallPairForces_Bonded_XCollision() {
         ball.addBond(ball2);
         ball2.setCenterPosition(1, 0);
 
@@ -134,7 +135,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_Bonded_YTension() {
+    public void testAddBallPairForces_Bonded_YTension() {
         ball.addBond(ball2);
         ball2.setCenterPosition(0, -3);
 
@@ -145,7 +146,7 @@ public class BallPairForcesTest {
     }
 
     @Test
-    public void testAddInterBallForces_Bonded_Damping() {
+    public void testAddBallPairForces_Bonded_Damping() {
         ball.addBond(ball2);
         ball2.setCenterPosition(2, 0);
         ball2.setVelocity(-1, 0);
