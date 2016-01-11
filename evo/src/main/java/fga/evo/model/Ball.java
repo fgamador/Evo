@@ -9,11 +9,14 @@ import static fga.evo.model.Util.sqr;
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
-public abstract class Ball {
+public class Ball {
     static DoubleParameter speedLimit = new DoubleParameter(4);
     static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
+    private double radius; // cached outer-ring radius
+    private double area; // cached area derived from radius
+    private double mass; // cached total ring mass
     private double centerX;
     private double centerY;
     private double velocityX, velocityY;
@@ -170,9 +173,26 @@ public abstract class Ball {
         return bondedBalls.contains(ball);
     }
 
-    public abstract double getMass();
+    public void setRadius(double val) {
+        radius = val;
+        area = Math.PI * sqr(radius);
+    }
 
-    public abstract double getRadius();
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setMass(double val) {
+        mass = val;
+    }
+
+    public double getMass() {
+        return mass;
+    }
 
     public double getCenterX() {
         return centerX;

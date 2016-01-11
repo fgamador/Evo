@@ -10,17 +10,19 @@ import static org.junit.Assert.assertEquals;
 public class BallPairForcesTest {
     private static final double SQRT_2 = Math.sqrt(2);
 
-    private TestBall ball, ball2;
+    private Ball ball, ball2;
 
     @Before
     public void setUp() {
         Ball.overlapForceFactor.setValue(1);
         BallPairForces.dampingForceFactor.setValue(1);
 
-        ball = new TestBall(1);
+        ball = new Ball();
+        ball.setRadius(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
-        ball2 = new TestBall(1);
+        ball2 = new Ball();
+        ball2.setRadius(1);
         ball2.setMass(1);
     }
 
