@@ -7,18 +7,18 @@ import java.util.*;
  * Cells can also bond together to form larger organisms.
  */
 public class Cell extends Onion implements CellControl.CellApi {
+    private List<TissueRing> tissueRings = new ArrayList<>();
+    private FloatRing floatRing;
+    private PhotoRing photoRing;
+    private CellControl control;
+    private boolean alive = true;
     private double energy;
     private double spawnOdds;
     private double releaseChildOdds;
     private double requestedChildDonation;
     private double donatedEnergy;
-    private List<TissueRing> tissueRings = new ArrayList<>();
-    private FloatRing floatRing;
-    private PhotoRing photoRing;
-    private CellControl control;
     private Cell child;
     private Cell parent;
-    private boolean alive = true;
 
     public Cell(double radius) {
         this(radius, c -> {

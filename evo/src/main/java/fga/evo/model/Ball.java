@@ -79,7 +79,6 @@ public class Ball {
 
     // numerical/discretization problems can cause extreme velocities; cap them
     private void limitSpeed() {
-        // TODO simpler check before doing this one? e.g. abs(vx) + abs(vy) > max/2?
         double speedSquared = sqr(velocityX) + sqr(velocityY);
         double maxSpeed = speedLimit.getValue();
         if (speedSquared > sqr(maxSpeed)) {

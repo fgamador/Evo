@@ -16,7 +16,7 @@ public class SurroundingWallsTest {
     }
 
     @Test
-    public void testAddCollisionForcesToCell_JustTouching() {
+    public void testAddForcesToCell_JustTouching() {
         cell.setCenterPosition(1, -1);
 
         walls.addForcesToCell(cell);
@@ -25,7 +25,7 @@ public class SurroundingWallsTest {
     }
 
     @Test
-    public void testAddCollisionForcesToCell_LowXYCollision() {
+    public void testAddForcesToCell_LowXYCollision() {
         cell.setCenterPosition(0.5, -0.5);
 
         walls.addForcesToCell(cell);
@@ -34,7 +34,7 @@ public class SurroundingWallsTest {
     }
 
     @Test
-    public void testAddCollisionForcesToCell_HighXYCollision() {
+    public void testAddForcesToCell_HighXYCollision() {
         cell.setCenterPosition(9.5, -9.5);
 
         walls.addForcesToCell(cell);
@@ -43,7 +43,7 @@ public class SurroundingWallsTest {
     }
 
     @Test
-    public void testAddCollisionForcesToCell_HighCeiling() {
+    public void testAddForcesToCell_HighCeiling() {
         walls = new SurroundingWalls(-5, 5, -5, 5);
         cell.setCenterPosition(0, 0);
 

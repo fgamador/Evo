@@ -39,7 +39,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         double photoRingMaintenanceEnergy = initialPhotoRingArea * PhotoRing.parameters.maintenanceCost.getValue();
         double energyBudget = addedLightEnergy - photoRingMaintenanceEnergy;
         double addedPhotoRingArea = energyBudget / PhotoRing.parameters.growthCost.getValue();
-        assertEquals(initialPhotoRingArea + addedPhotoRingArea, cell.getPhotoArea(), 0);
+        assertEquals(initialPhotoRingArea + addedPhotoRingArea, cell.getPhotoArea(), 0.001);
         assertEnergy(0, cell);
     }
 
@@ -60,8 +60,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         world.tick();
         world.tick();
 
-        double velocityY_101 = cell.getVelocityY();
-        assertTrue(velocityY_101 > 0);
+        assertTrue(cell.getVelocityY() > 0);
     }
 
     @Test
@@ -81,15 +80,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         world.tick();
         world.tick();
 
-        double velocityY_99 = cell.getVelocityY();
-        assertTrue(velocityY_99 < 0);
+        assertTrue(cell.getVelocityY() < 0);
     }
 
     @Test
     public void testReproduction() {
-        double spawnOdds = 1;
-        double donation = 2;
-        Cell cell = addCell(10, new ParentChildControl(spawnOdds, donation));
+        Cell cell = addCell(10, new ParentChildControl(1, 2));
         cell.setCenterPosition(5, -5);
         cell.addEnergy(10);
 
@@ -106,9 +102,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testGrowthAfterReproduction() {
-        double spawnOdds = 1;
-        double donation = 2;
-        Cell cell = addCell(10, new ParentChildControl(spawnOdds, donation));
+        Cell cell = addCell(10, new ParentChildControl(1, 2));
         cell.setCenterPosition(5, -5);
         cell.addEnergy(10);
 

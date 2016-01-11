@@ -20,8 +20,7 @@ public class Drag extends EnvironmentalInfluence {
         return -Math.signum(velocity) * dragFactor.getValue() * radius * sqr(velocity);
     }
 
-    // TODO move to DragWithCurrent subclass?
-    // from old version
+    // From old version with circulating current. Could be in a new DragWithCurrent subclass.
 //    private void fluidResistanceForce() {
 //        double relativeVelocityX = velocityX - world.getCurrentX(centerX, centerY);
 //        double relativeVelocityY = velocityY - world.getCurrentY(centerX, centerY);

@@ -3,8 +3,6 @@ package fga.evo.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fga.evo.model.Util.sqr;
-
 /**
  * A Ball composed of Rings. Manages ring geometry and mass.
  */
