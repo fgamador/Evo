@@ -9,24 +9,22 @@ import static fga.evo.model.Assert.assertNetForce;
 
 public class WeightTest extends EvoTest {
     private Weight weight;
-    private Cell cell;
+    private Ball cell;
     private double maxDisplacement;
 
     @Before
     public void setUp() {
         Weight.fluidDensity.setValue(0.01);
         weight = new Weight();
-        cell = new Cell(10);
+        cell = new Ball();
+        cell.setRadius(10);
         cell.setCenterPosition(0, -100);
         maxDisplacement = cell.getArea();
     }
 
     @Test
     public void testNeutralBuoyancy() {
-        new Expectations(cell) {{
-            cell.getMass();
-            result = Weight.fluidDensity.getValue() * maxDisplacement;
-        }};
+        cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         weight.addForcesToCell(cell);
 
@@ -35,10 +33,7 @@ public class WeightTest extends EvoTest {
 
     @Test
     public void testMaxBuoyancy() {
-        new Expectations(cell) {{
-            cell.getMass();
-            result = 0;
-        }};
+        cell.setMass(0);
 
         weight.addForcesToCell(cell);
 
@@ -47,10 +42,7 @@ public class WeightTest extends EvoTest {
 
     @Test
     public void testSinking() {
-        new Expectations(cell) {{
-            cell.getMass();
-            result = 2 * Weight.fluidDensity.getValue() * maxDisplacement;
-        }};
+        cell.setMass(2 * Weight.fluidDensity.getValue() * maxDisplacement);
 
         weight.addForcesToCell(cell);
 
@@ -59,10 +51,7 @@ public class WeightTest extends EvoTest {
 
     @Test
     public void testBarelySubmergedBuoyancy() {
-        new Expectations(cell) {{
-            cell.getMass();
-            result = Weight.fluidDensity.getValue() * maxDisplacement;
-        }};
+        cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         cell.setCenterPosition(0, -cell.getRadius());
         weight.addForcesToCell(cell);
@@ -72,10 +61,7 @@ public class WeightTest extends EvoTest {
 
     @Test
     public void testFullyEmergedBuoyancy() {
-        new Expectations(cell) {{
-            cell.getMass();
-            result = Weight.fluidDensity.getValue() * maxDisplacement;
-        }};
+        cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         cell.setCenterPosition(0, cell.getRadius());
         weight.addForcesToCell(cell);
@@ -85,10 +71,7 @@ public class WeightTest extends EvoTest {
 
     @Test
     public void testHalfEmergedBuoyancy() {
-        new Expectations(cell) {{
-            cell.getMass();
-            result = Weight.fluidDensity.getValue() * maxDisplacement;
-        }};
+        cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         cell.setCenterPosition(0, 0);
         weight.addForcesToCell(cell);

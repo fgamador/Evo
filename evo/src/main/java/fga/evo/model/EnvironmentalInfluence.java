@@ -5,7 +5,9 @@ package fga.evo.model;
  * TODO split this into force influence/source and energy influence/source
  */
 public abstract class EnvironmentalInfluence {
-    public void addEnergyToCell(final Cell cell) { }
+    public void addEnergyToCell(Cell cell) {
+    }
 
-    public void addForcesToCell(final Cell cell) { }
+    public void addForcesToCell(Ball cell) {
+    }
 }
