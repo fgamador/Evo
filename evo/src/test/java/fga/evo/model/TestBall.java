@@ -26,13 +26,4 @@ class TestBall extends Ball {
     public double getRadius() {
         return radius;
     }
-
-    @Override
-    public void onOverlap(double overlap) {
-        lastOverlap = overlap;
-    }
-
-    public double getLastOverlap() {
-        return lastOverlap;
-    }
 }

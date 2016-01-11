@@ -160,8 +160,8 @@ public class BallPairForcesTest {
 
         BallPairForces.addBallPairForces(ball, ball2);
 
-        assertEquals(0.5, ball.getLastOverlap(), 0);
-        assertEquals(0.5, ball2.getLastOverlap(), 0);
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
     }
 
     @Test
@@ -171,8 +171,8 @@ public class BallPairForcesTest {
 
         BallPairForces.addBallPairForces(ball, ball2);
 
-        assertEquals(0.5, ball.getLastOverlap(), 0);
-        assertEquals(0.5, ball2.getLastOverlap(), 0);
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
     }
 
     @Test
@@ -182,7 +182,7 @@ public class BallPairForcesTest {
 
         BallPairForces.addBallPairForces(ball, ball2);
 
-        assertEquals(0, ball.getLastOverlap(), 0);
-        assertEquals(0, ball2.getLastOverlap(), 0);
+        assertEquals(0, ball.getRecentTotalOverlap(), 0);
+        assertEquals(0, ball2.getRecentTotalOverlap(), 0);
     }
 }

@@ -145,7 +145,7 @@ public class BallTest {
     public void testOnOverlap_LeftWallCollision() {
         ball.addLeftBarrierCollisionForce(-0.5);
 
-        assertEquals(0.5, ball.getLastOverlap(), 0);
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
@@ -167,7 +167,7 @@ public class BallTest {
     public void testOnOverlap_RightWallCollision() {
         ball.addRightBarrierCollisionForce(0.5);
 
-        assertEquals(0.5, ball.getLastOverlap(), 0);
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
@@ -189,7 +189,7 @@ public class BallTest {
     public void testOnOverlap_LowWallCollision() {
         ball.addLowBarrierCollisionForce(-0.5);
 
-        assertEquals(0.5, ball.getLastOverlap(), 0);
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
@@ -211,7 +211,7 @@ public class BallTest {
     public void testOnOverlap_HighWallCollision() {
         ball.addHighBarrierCollisionForce(0.5);
 
-        assertEquals(0.5, ball.getLastOverlap(), 0);
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
