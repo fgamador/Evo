@@ -7,9 +7,7 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.assertEquals;
 
-public class BallPairForcesTest {
-    private static final double SQRT_2 = Math.sqrt(2);
-
+public class BallPairForcesTest extends EvoTest {
     private Ball ball, ball2;
 
     @Before
@@ -25,12 +23,6 @@ public class BallPairForcesTest {
         ball2 = new Ball();
         ball2.setRadius(1);
         ball2.setMass(1);
-    }
-
-    @After
-    public void tearDown() {
-        Ball.overlapForceFactor.revertToDefaultValue();
-        BallPairForces.dampingForceFactor.revertToDefaultValue();
     }
 
     @Test

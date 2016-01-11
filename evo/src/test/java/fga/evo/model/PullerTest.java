@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 
-public class PullerTest {
+public class PullerTest extends EvoTest {
     private Cell cell;
     private Puller puller;
 
@@ -16,11 +16,6 @@ public class PullerTest {
 
         cell = new Cell(1);
         puller = new Puller(cell);
-    }
-
-    @After
-    public void tearDown() {
-        Puller.forceFactor.revertToDefaultValue();
     }
 
     @Test

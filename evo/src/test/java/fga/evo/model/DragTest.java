@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 
-public class DragTest {
+public class DragTest extends EvoTest {
     private Cell cell;
     private Drag drag;
 
@@ -17,11 +17,6 @@ public class DragTest {
         cell = new Cell(2);
         cell.setCenterPosition(0, -10);
         drag = new Drag();
-    }
-
-    @After
-    public void tearDown() {
-        Drag.dragFactor.revertToDefaultValue();
     }
 
     @Test

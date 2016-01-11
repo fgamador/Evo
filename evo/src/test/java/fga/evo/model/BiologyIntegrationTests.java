@@ -18,14 +18,6 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         Weight.gravity.setValue(0.1);
     }
 
-    @After
-    public void tearDown() {
-        Illumination.maxIntensity.revertToDefaultValue();
-        PhotoRing.parameters.density.revertToDefaultValue();
-        Weight.fluidDensity.revertToDefaultValue();
-        Weight.gravity.revertToDefaultValue();
-    }
-
     @Test
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));

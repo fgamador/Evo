@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class PhotoRingTest {
+public class PhotoRingTest extends EvoTest {
     @Test
     public void testCalcPhotoAbsorptivity_NoInnerRing() {
         assertEquals(0.5, new PhotoRing(1).calcPhotoAbsorptivity(), 0);

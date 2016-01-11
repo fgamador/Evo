@@ -6,7 +6,7 @@ import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class RingTest {
+public class RingTest extends EvoTest {
     @Test
     public void testSetArea() {
         TestRing ring = new TestRing(1, null);

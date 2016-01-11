@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 
-public class SurroundingWallsTest {
+public class SurroundingWallsTest extends EvoTest {
     private SurroundingWalls walls;
     private Cell cell;
 

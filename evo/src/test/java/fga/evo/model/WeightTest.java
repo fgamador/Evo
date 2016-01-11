@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 
-public class WeightTest {
+public class WeightTest extends EvoTest {
     private Weight weight;
     private Cell cell;
     private double maxDisplacement;
@@ -19,11 +19,6 @@ public class WeightTest {
         cell = new Cell(10);
         cell.setCenterPosition(0, -100);
         maxDisplacement = cell.getArea();
-    }
-
-    @After
-    public void tearDown() {
-        Weight.fluidDensity.revertToDefaultValue();
     }
 
     @Test

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A Ball composed of Rings. Manages ring geometry and mass.
  */
-public abstract class Onion extends Ball {
+public class Onion extends Ball {
     private List<Ring> rings = new ArrayList<>();
 
     protected void addRing(Ring ring) {

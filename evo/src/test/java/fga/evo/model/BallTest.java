@@ -10,9 +10,7 @@ import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class BallTest {
-    public static final double SQRT_2 = Math.sqrt(2);
-
+public class BallTest extends EvoTest {
     private Ball ball;
 
     @Before
@@ -23,11 +21,6 @@ public class BallTest {
         ball.setRadius(1);
         ball.setMass(1);
         ball.setCenterPosition(0, 0);
-    }
-
-    @After
-    public void tearDown() {
-        Ball.speedLimit.revertToDefaultValue();
     }
 
     @Test

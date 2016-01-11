@@ -26,9 +26,6 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @After
     public void tearDown() {
-        PhotoRing.parameters.density.revertToDefaultValue();
-        Puller.forceFactor.revertToDefaultValue();
-        Weight.fluidDensity.revertToDefaultValue();
         World.setSubticksPerTick(defaultSubticksPerTick);
     }
 

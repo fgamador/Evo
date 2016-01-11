@@ -2,11 +2,11 @@ package fga.evo.model;
 
 import org.junit.Before;
 
-public abstract class WorldIntegrationTests {
+public abstract class WorldIntegrationTests extends EvoTest {
     protected World world;
 
     @Before
-    public void baseSetUp() {
+    public void worldSetUp() {
         world = new World();
     }
 

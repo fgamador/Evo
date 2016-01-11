@@ -8,7 +8,7 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertEnergy;
 import static org.junit.Assert.assertEquals;
 
-public class IlluminationTest {
+public class IlluminationTest extends EvoTest {
     private Illumination lighting;
 
     @Before
@@ -16,11 +16,6 @@ public class IlluminationTest {
         Illumination.maxIntensity.setValue(2);
 
         lighting = new Illumination(100);
-    }
-
-    @After
-    public void tearDown() {
-        Illumination.maxIntensity.revertToDefaultValue();
     }
 
     @Test
