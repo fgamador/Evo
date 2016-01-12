@@ -3,16 +3,12 @@ package fga.evo.model;
 class ParentChildControl implements CellControl {
     private double spawnOdds;
     private double donation;
-    private double releaseOdds;
+    private double releaseChildOdds;
+    private double releaseParentOdds;
 
     public ParentChildControl(double spawnOdds, double donation) {
-        this(spawnOdds, donation, 0);
-    }
-
-    public ParentChildControl(double spawnOdds, double donation, double releaseOdds) {
         this.spawnOdds = spawnOdds;
         this.donation = donation;
-        this.releaseOdds = releaseOdds;
     }
 
     public void setSpawnOdds(double val) {
@@ -23,8 +19,12 @@ class ParentChildControl implements CellControl {
         donation = val;
     }
 
-    public void setReleaseOdds(double val) {
-        releaseOdds = val;
+    public void setReleaseChildOdds(double val) {
+        releaseChildOdds = val;
+    }
+
+    public void setReleaseParentOdds(double val) {
+        releaseParentOdds = val;
     }
 
     @Override
@@ -33,10 +33,11 @@ class ParentChildControl implements CellControl {
             // run by parent
             cell.setSpawnOdds(spawnOdds);
             cell.requestChildDonation(donation);
-            cell.setReleaseChildOdds(releaseOdds);
+            cell.setReleaseChildOdds(releaseChildOdds);
         } else {
             // run by child
             cell.requestPhotoAreaResize(cell.getEnergy());
+            cell.setReleaseParentOdds(releaseParentOdds);
         }
     }
 }

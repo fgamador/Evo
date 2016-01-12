@@ -15,6 +15,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private double energy;
     private double spawnOdds;
     private double releaseChildOdds;
+    private double releaseParentOdds;
     private double requestedChildDonation;
     private double donatedEnergy;
     private Cell child;
@@ -72,6 +73,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private Cell useEnergy() {
         balanceEnergy();
         resizeRings();
+        manageParent();
         return manageChild();
     }
 
@@ -106,6 +108,14 @@ public class Cell extends Onion implements CellControl.CellApi {
         syncFields();
     }
 
+    private void manageParent() {
+        if (parent != null) {
+            if (Chance.success(releaseParentOdds)) {
+                parent.releaseChild();
+            }
+        }
+    }
+
     private Cell manageChild() {
         if (requestedChildDonation <= 0) {
             return null;
@@ -135,19 +145,14 @@ public class Cell extends Onion implements CellControl.CellApi {
         return child;
     }
 
-    //    /** Creates a child cell. */
-//    private Cell(Cell parent, double angle) {
-//        this(parent.world, ZeroThruster.INSTANCE, CHILD_START_RADIUS, parent.getSpawningX(angle,
-//                CHILD_START_RADIUS), parent.getSpawningY(angle, CHILD_START_RADIUS));
-//        this.parent = parent;
-//    }
-//
 //    private double getSpawningX(double angle, double childRadius) {
 //        return centerX + (radius + childRadius) * Math.cos(angle);
 //    }
-//
 //    private double getSpawningY(double angle, double childRadius) {
 //        return centerY + (radius + childRadius) * Math.sin(angle);
+//    }
+//    double randomAngle() {
+//        return random.nextDouble() * 2 * Math.PI;
 //    }
 
     private void releaseChild() {
@@ -199,6 +204,10 @@ public class Cell extends Onion implements CellControl.CellApi {
         this.releaseChildOdds = val;
     }
 
+    public void setReleaseParentOdds(double val) {
+        this.releaseParentOdds = val;
+    }
+
     /**
      * Records a request that the cell donate a specified amount of energy to its child cell.
      * If it has no child cell, one will be created. If the energy is negative, the child cell
@@ -227,10 +236,6 @@ public class Cell extends Onion implements CellControl.CellApi {
         donatedEnergy = val;
     }
 
-//     double randomAngle() {
-//        return random.nextDouble() * 2 * Math.PI;
-//    }
-
     public boolean isAlive() {
         return alive;
     }
@@ -251,9 +256,8 @@ public class Cell extends Onion implements CellControl.CellApi {
         return photoRing.getArea();
     }
 
-    // TODO lose this; child should release parent instead
-    public double getChildNonFloatArea() {
-        return (child == null) ? 0 : child.getPhotoArea();
+    public double getNonFloatArea() {
+        return getArea() - getFloatArea();
     }
 
     public CellControl getControl() {

@@ -28,9 +28,9 @@ public interface CellControl {
 
         double getPhotoArea();
 
-        double getRecentTotalOverlap();
+        double getNonFloatArea();
 
-        double getChildNonFloatArea();
+        double getRecentTotalOverlap();
 
         void requestFloatAreaResize(double growthEnergy);
 
@@ -42,6 +42,6 @@ public interface CellControl {
 
         void setReleaseChildOdds(double odds);
 
-        //void setReleaseParentOdds(double odds);
+        void setReleaseParentOdds(double odds);
     }
 }

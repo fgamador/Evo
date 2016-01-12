@@ -21,6 +21,6 @@ public class DuckweedControl extends FixedDepthSeekingControl {
         cell.setSpawnOdds(areaFactor * overlapFactor);
 
         cell.requestChildDonation(5 - desiredDeltaPhotoArea);
-        cell.setReleaseChildOdds(cell.getChildNonFloatArea() - 200 * Math.PI);
+        cell.setReleaseParentOdds(cell.getNonFloatArea() - 200 * Math.PI);
     }
 }

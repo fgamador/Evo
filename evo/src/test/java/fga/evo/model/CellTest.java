@@ -16,7 +16,16 @@ public class CellTest {
     @Test
     public void testGetArea() {
         Cell bigCell = new Cell(5);
-        assertEquals(Math.PI * 25, bigCell.getArea(), 0.001);
+        assertEquals(25 * Math.PI, bigCell.getArea(), 0.001);
+    }
+
+    @Test
+    public void testGetNonFloatArea() {
+        Cell cell = new Cell.Builder()
+                .setFloatRingArea(Math.PI)
+                .setPhotoRingArea(3 * Math.PI)
+                .build();
+        assertEquals(3 * Math.PI, cell.getNonFloatArea(), 0.001);
     }
 
     @Test
@@ -42,10 +51,10 @@ public class CellTest {
 
         cell.subtractMaintenanceEnergy();
 
-        double expectedMaintenanceEnergy = remainingEnergy
+        double expectedEnergy = remainingEnergy
                 - cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue()
                 - cell.getFloatArea() * FloatRing.parameters.maintenanceCost.getValue();
-        assertEnergy(expectedMaintenanceEnergy, cell);
+        assertEnergy(expectedEnergy, cell);
     }
 
     @Test
@@ -291,21 +300,39 @@ public class CellTest {
     @Test
     public void testTickBiology_ReleaseChild() {
         double donation = 2;
-        Cell cell = new Cell(10, new ParentChildControl(1, donation, 1));
+        ParentChildControl control = new ParentChildControl(1, donation);
+        control.setReleaseChildOdds(1);
+        Cell cell = new Cell(10, control);
         cell.addEnergy(100);
 
         // first tick
         Cell child = cell.tickBiology();
-        assertEquals(donation, child.getDonatedEnergy(), 0);
-        assertEnergy(0, child);
-
         // second tick, add-energy phase
         child.addDonatedEnergy();
-        assertEquals(0, child.getDonatedEnergy(), 0);
-        assertEnergy(donation, child);
-
         // second tick, use-energy phase
         cell.tickBiology();
+
+        assertNull(cell.getChild());
+        assertNull(child.getParent());
+        assertNotBonded(cell, child);
+        assertEquals(donation, child.getDonatedEnergy(), 0);
+    }
+
+    @Test
+    public void testTickBiology_ReleaseParent() {
+        double donation = 2;
+        ParentChildControl control = new ParentChildControl(1, donation);
+        control.setReleaseParentOdds(1);
+        Cell cell = new Cell(10, control);
+        cell.addEnergy(100);
+
+        // first tick
+        Cell child = cell.tickBiology();
+        // second tick, add-energy phase
+        child.addDonatedEnergy();
+        // second tick, use-energy phase
+        cell.tickBiology();
+        child.tickBiology();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
