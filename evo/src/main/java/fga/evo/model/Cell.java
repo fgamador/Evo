@@ -20,6 +20,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private double donatedEnergy;
     private Cell child;
     private Cell parent;
+    private double damage;
 
     public Cell(double radius) {
         this(radius, c -> {
@@ -66,6 +67,10 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public Cell tickBiology() {
+        if (energy < 0) {
+            damage += energy;
+        }
+
         control.exertControl(this);
         return useEnergy();
     }
@@ -266,8 +271,13 @@ public class Cell extends Onion implements CellControl.CellApi {
         return parent;
     }
 
+    public double getDamage() {
+        return damage;
+    }
+
     public static class Builder {
         private Cell cell;
+        private double energy;
 
         public Builder() {
             cell = new Cell(0);
@@ -290,6 +300,11 @@ public class Cell extends Onion implements CellControl.CellApi {
 
         public Builder setPhotoRingArea(double area) {
             setArea(cell.photoRing, area);
+            return this;
+        }
+
+        public Builder setEnergy(double energy) {
+            cell.energy = energy;
             return this;
         }
 

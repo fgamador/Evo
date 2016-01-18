@@ -195,6 +195,32 @@ public class CellTest {
     }
 
     @Test
+    public void testTickBiology_NoDamage() {
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(1)
+                .setEnergy(10)
+                .build();
+
+        cell.subtractMaintenanceEnergy();
+        cell.tickBiology();
+
+        assertEquals(0, cell.getDamage(), 0);
+    }
+
+    @Test
+    public void testTickBiology_Damage() {
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(1)
+                .build();
+
+        cell.subtractMaintenanceEnergy();
+        cell.tickBiology();
+
+        assertEquals(-PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
+                cell.getDamage(), 0.001);
+    }
+
+    @Test
     public void testTickBiology_NoSpawnOddsNoChild() {
         Cell cell = new Cell(10, new ParentChildControl(0, 2));
         cell.addEnergy(100);
