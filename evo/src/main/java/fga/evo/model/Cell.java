@@ -163,12 +163,6 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     void die() {
         alive = false;
-        // TODO probably not
-        if (child != null) {
-            releaseChild();
-        } else if (parent != null) {
-            parent.releaseChild();
-        }
     }
 
     public void decay() {

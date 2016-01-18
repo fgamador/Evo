@@ -390,30 +390,4 @@ public class CellTest {
         assertEquals(newPhotoArea, cell.getPhotoArea(), 0.001);
         assertEquals(newFloatArea + newPhotoArea, cell.getArea(), 0.001);
     }
-
-    @Test
-    public void testDie_Parent() {
-        Cell cell = new Cell(10, new ParentChildControl(1, 2));
-        cell.addEnergy(100);
-        Cell child = cell.tickBiology();
-
-        cell.die();
-
-        assertNull(cell.getChild());
-        assertNull(child.getParent());
-        assertNotBonded(cell, child);
-    }
-
-    @Test
-    public void testDie_Child() {
-        Cell cell = new Cell(10, new ParentChildControl(1, 2));
-        cell.addEnergy(100);
-        Cell child = cell.tickBiology();
-
-        child.die();
-
-        assertNull(cell.getChild());
-        assertNull(child.getParent());
-        assertNotBonded(cell, child);
-    }
 }
