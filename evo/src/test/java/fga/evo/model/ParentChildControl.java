@@ -11,20 +11,24 @@ class ParentChildControl implements CellControl {
         this.donation = donation;
     }
 
-    public void setSpawnOdds(double val) {
+    public ParentChildControl setSpawnOdds(double val) {
         spawnOdds = val;
+        return this;
     }
 
-    public void setDonation(double val) {
+    public ParentChildControl setDonation(double val) {
         donation = val;
+        return this;
     }
 
-    public void setReleaseChildOdds(double val) {
+    public ParentChildControl setReleaseChildOdds(double val) {
         releaseChildOdds = val;
+        return this;
     }
 
-    public void setReleaseParentOdds(double val) {
+    public ParentChildControl setReleaseParentOdds(double val) {
         releaseParentOdds = val;
+        return this;
     }
 
     @Override

@@ -211,10 +211,11 @@ public class CellTest {
 
     @Test
     public void testControlPhase_SpawnChild() {
-        double totalEnergy = 100;
-        double donation = 2;
-        Cell cell = new Cell(10, new ParentChildControl(1, donation));
-        cell.addEnergy(totalEnergy);
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 2))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
 
         // first tick
         Cell child = cell.tickBiology_ControlPhase();
@@ -226,94 +227,107 @@ public class CellTest {
         assertEquals(cell.getControl(), child.getControl());
         assertEquals(0, child.getPhotoArea(), 0);
         assertEquals(0, child.getRadius(), 0);
-        assertEnergy(totalEnergy - donation, cell);
+        assertEnergy(100 - 2, cell);
         assertCenterSeparation(cell.getRadius(), cell, child, 0);
         // TODO random angle
 
         // second tick
-        child.addDonatedEnergy();
+        // TODO second phase of first tick?
+        // TODO split into separate test? testConsequencesPhase_ChildDonation
+        child.tickBiology_ConsequencesPhase();
+
+        assertEnergy(2, child);
+
+        // TODO second tick? yet another test? testControlPhase_NewChild
         Cell grandchild = child.tickBiology_ControlPhase();
 
         assertNull(grandchild);
-        assertEquals(donation / PhotoRing.parameters.growthCost.getValue(), child.getPhotoArea(), 0.001);
+        assertEquals(2 / PhotoRing.parameters.growthCost.getValue(), child.getPhotoArea(), 0.001);
         assertEquals(child.getPhotoRingOuterRadius(), child.getRadius(), 0);
     }
 
     @Test
     public void testControlPhase_ScaleChildDonation() {
-        double donation = 10;
-        Cell cell = new Cell(10, c -> {
-            c.setSpawnOdds(1);
-            c.requestChildDonation(donation);
-            c.requestPhotoAreaResize(donation);
-        });
-        cell.addEnergy(10);
+        Cell cell = new Cell.Builder()
+                .setControl(c -> {
+                    c.setSpawnOdds(1);
+                    c.requestChildDonation(10);
+                    c.requestPhotoAreaResize(10);
+                })
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(10)
+                .build();
         double startPhotoArea = cell.getPhotoArea();
 
         Cell child = cell.tickBiology_ControlPhase();
 
         assertNotNull(child);
-        assertEquals(donation / 2, child.getDonatedEnergy(), 0);
-        assertEquals((donation / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea, 0.001);
+        assertEquals(10 / 2, child.getDonatedEnergy(), 0);
+        assertEquals((10 / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea, 0.001);
         assertEquals(0, cell.getEnergy(), 0);
     }
 
     @Test
     public void testControlPhase_MaintainChild() {
-        double donation = 2;
-        Cell cell = new Cell(10, new ParentChildControl(1, donation));
-        cell.addEnergy(100);
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 2))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
 
         // first tick
         Cell child = cell.tickBiology_ControlPhase();
-        assertEquals(donation, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getDonatedEnergy(), 0);
         assertEnergy(0, child);
 
+        // TODO adjust comments
         // second tick, add-energy phase
-        child.addDonatedEnergy();
+        child.tickBiology_ConsequencesPhase();
         assertEquals(0, child.getDonatedEnergy(), 0);
-        assertEnergy(donation, child);
+        assertEnergy(2, child);
 
         // second tick, use-energy phase
         cell.tickBiology_ControlPhase();
 
         assertEquals(child, cell.getChild());
-        assertEquals(donation, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getDonatedEnergy(), 0);
     }
 
     @Test
     public void testControlPhase_ReleaseChild() {
-        double donation = 2;
-        ParentChildControl control = new ParentChildControl(1, donation);
-        control.setReleaseChildOdds(1);
-        Cell cell = new Cell(10, control);
-        cell.addEnergy(100);
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 2).setReleaseChildOdds(1))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
 
+        // TODO adjust comments
         // first tick
         Cell child = cell.tickBiology_ControlPhase();
         // second tick, add-energy phase
-        child.addDonatedEnergy();
+        child.tickBiology_ConsequencesPhase();
         // second tick, use-energy phase
         cell.tickBiology_ControlPhase();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
         assertNotBonded(cell, child);
-        assertEquals(donation, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getDonatedEnergy(), 0);
     }
 
     @Test
     public void testControlPhase_ReleaseParent() {
-        double donation = 2;
-        ParentChildControl control = new ParentChildControl(1, donation);
-        control.setReleaseParentOdds(1);
-        Cell cell = new Cell(10, control);
-        cell.addEnergy(100);
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 2).setReleaseParentOdds(1))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
 
+        // TODO adjust comments
         // first tick
         Cell child = cell.tickBiology_ControlPhase();
         // second tick, add-energy phase
-        child.addDonatedEnergy();
+        child.tickBiology_ConsequencesPhase();
         // second tick, use-energy phase
         cell.tickBiology_ControlPhase();
         child.tickBiology_ControlPhase();
@@ -321,27 +335,29 @@ public class CellTest {
         assertNull(cell.getChild());
         assertNull(child.getParent());
         assertNotBonded(cell, child);
-        assertEquals(donation, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getDonatedEnergy(), 0);
     }
 
     @Test
     public void testControlPhase_NegativeDonationDoesNothing() {
-        double totalEnergy = 100;
-        double donation = 2;
-        ParentChildControl control = new ParentChildControl(1, donation);
-        Cell cell = new Cell(10, control);
-        cell.addEnergy(totalEnergy);
+        ParentChildControl control = new ParentChildControl(1, 2);
+        Cell cell = new Cell.Builder()
+                .setControl(control)
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
 
+        // TODO adjust comments
         // first tick
         Cell child = cell.tickBiology_ControlPhase();
         assertEquals(child, cell.getChild());
-        assertEnergy(totalEnergy - donation, cell);
+        assertEnergy(100 - 2, cell);
 
         // second tick
         control.setDonation(-1);
         cell.tickBiology_ControlPhase();
         assertEquals(child, cell.getChild());
-        assertEnergy(totalEnergy - donation, cell);
+        assertEnergy(100 - 2, cell);
     }
 
     @Test
@@ -396,8 +412,8 @@ public class CellTest {
     }
 
     @Test
-    public void testDie() {
-        Cell cell = new Cell(1);
+    public void testDie_Aliveness() {
+        Cell cell = new Cell.Builder().build();
         assertTrue(cell.isAlive());
 
         cell.die();

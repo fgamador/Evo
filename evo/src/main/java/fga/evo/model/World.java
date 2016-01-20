@@ -31,13 +31,16 @@ public class World {
         for (int i = 0; i < subticksPerTick; i++) {
             subtickPhysics();
         }
+        // TODO add cells before physics tick?
         cells.addAll(newCells);
         return newCells;
     }
 
     private Collection<Cell> tickBiology() {
+        // TODO move after control phase
+        // TODO apply to new cells?
         for (Cell cell : cells) {
-            addEnergyToCell(cell);
+            tickBiology_ConsequencesPhase(cell);
         }
 
         Collection<Cell> newCells = new ArrayList<>();
@@ -50,12 +53,11 @@ public class World {
         return newCells;
     }
 
-    private void addEnergyToCell(Cell cell) {
+    private void tickBiology_ConsequencesPhase(Cell cell) {
         for (EnvironmentalInfluence influence : environmentalInfluences) {
             influence.addEnergyToCell(cell);
         }
-        cell.addDonatedEnergy();
-        cell.subtractMaintenanceEnergy();
+        cell.tickBiology_ConsequencesPhase();
     }
 
     private void subtickPhysics() {
