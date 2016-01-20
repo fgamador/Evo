@@ -153,14 +153,12 @@ public class Cell extends Onion implements CellControl.CellApi {
         addDamage();
     }
 
-    // TODO private
-    void addDonatedEnergy() {
+    private void addDonatedEnergy() {
         addEnergy(donatedEnergy);
         donatedEnergy = 0;
     }
 
-    // TODO private
-    void subtractMaintenanceEnergy() {
+    private void subtractMaintenanceEnergy() {
         for (TissueRing ring : tissueRings) {
             addEnergy(-ring.getMaintenanceEnergy());
         }
