@@ -9,14 +9,10 @@ import static org.junit.Assert.*;
 public class CellTest {
     @Test
     public void testGetMass() {
-        Cell cell = new Cell(1);
+        Cell cell = new Cell.Builder()
+                .setPhotoRingArea(Math.PI)
+                .build();
         assertEquals(PhotoRing.parameters.density.getValue() * Math.PI, cell.getMass(), 0.001);
-    }
-
-    @Test
-    public void testGetArea() {
-        Cell bigCell = new Cell(5);
-        assertEquals(25 * Math.PI, bigCell.getArea(), 0.001);
     }
 
     @Test
@@ -30,80 +26,62 @@ public class CellTest {
 
     @Test
     public void testPhotosynthesize() {
-        Cell cell = new Cell(3);
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(3)
+                .build();
+
         cell.photosynthesize(2);
+
         assertEnergy(4.5, cell);
     }
 
     @Test
-    public void testSubtractMaintenanceEnergy_PhotoRing() {
-        Cell cell = new Cell(3);
-        cell.subtractMaintenanceEnergy();
-        assertEnergy(-cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), cell);
-    }
-
-    @Test
-    public void testSubtractMaintenanceEnergy_PhotoAndFloatRings() {
-        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(2));
-        cell.addEnergy(100);
-        cell.tickBiology_ControlPhase();
-        double remainingEnergy = cell.getEnergy();
-
-        cell.subtractMaintenanceEnergy();
-
-        double expectedEnergy = remainingEnergy
-                - cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue()
-                - cell.getFloatArea() * FloatRing.parameters.maintenanceCost.getValue();
-        assertEnergy(expectedEnergy, cell);
-    }
-
-    @Test
-    public void testUseEnergy_FloatRingGrowth() {
-        double totalEnergy = 100;
-        double growthEnergy = 2;
-        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(growthEnergy));
-        assertEquals(0, cell.getFloatArea(), 0);
-        cell.addEnergy(totalEnergy);
+    public void testControlPhase_FloatRingGrowth() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestFloatAreaResize(2))
+                .setEnergy(100)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(growthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(totalEnergy - growthEnergy, cell.getEnergy(), 0.001);
+        assertEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
+        assertEquals(100 - 2, cell.getEnergy(), 0.001);
     }
 
     @Test
-    public void testUseEnergy_PhotoRingGrowth() {
-        double totalEnergy = 100;
-        double growthEnergy = 2;
-        Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(growthEnergy));
-        assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
-        cell.addEnergy(totalEnergy);
+    public void testControlPhase_PhotoRingGrowth() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestPhotoAreaResize(2))
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(100)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(Math.PI + growthEnergy / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
-        assertEquals(totalEnergy - growthEnergy, cell.getEnergy(), 0.001);
+        assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
+        assertEquals(100 - 2, cell.getEnergy(), 0.001);
     }
 
     @Test
-    public void testUseEnergy_PhotoRingShrinkage() {
-        double radius = 2;
-        double shrinkageEnergy = 0.1;
-        Cell cell = new Cell(radius, c -> c.requestPhotoAreaResize(-shrinkageEnergy));
-        double area = Math.PI * sqr(radius);
-        assertEquals(area, cell.getPhotoArea(), 0.001);
+    public void testControlPhase_PhotoRingShrinkage() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestPhotoAreaResize(-0.1))
+                .setPhotoRingArea(Math.PI)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(area - shrinkageEnergy / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
-        assertEquals(shrinkageEnergy, cell.getEnergy(), 0.001);
+        assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
+        assertEquals(0.1, cell.getEnergy(), 0.001);
     }
 
     @Test
-    public void testUseEnergy_PhotoRingGrowth_ExcessiveRequest() {
-        Cell cell = new Cell(1, c -> c.requestPhotoAreaResize(1000)); // use all energy
-        assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
-        cell.addEnergy(2);
+    public void testControlPhase_PhotoRingGrowth_ExcessiveRequest() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestPhotoAreaResize(1000))
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(2)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
@@ -112,74 +90,71 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_FloatAndPhotoRingGrowth() {
-        double totalEnergy = 100;
-        double floatGrowthEnergy = 3;
-        double photoGrowthEnergy = 2;
-        Cell cell = new Cell(1, c -> {
-            c.requestFloatAreaResize(floatGrowthEnergy);
-            c.requestPhotoAreaResize(photoGrowthEnergy);
-        });
-        assertEquals(0, cell.getFloatArea(), 0);
-        assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
-        cell.addEnergy(totalEnergy);
+    public void testControlPhase_FloatAndPhotoRingGrowth() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> {
+                    c.requestFloatAreaResize(3);
+                    c.requestPhotoAreaResize(2);
+                })
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(100)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(floatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(Math.PI + photoGrowthEnergy / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
-        assertEquals(totalEnergy - (floatGrowthEnergy + photoGrowthEnergy), cell.getEnergy(), 0.001);
+        assertEquals(3 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
+        assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
+        assertEquals(100 - (3 + 2), cell.getEnergy(), 0.001);
     }
 
     @Test
-    public void testTickBiology_OffsettingRequests() {
-        double floatGrowthEnergy = 0.1;
-        double photoShrinkageEnergy = 0.1;
-        Cell cell = new Cell(1, c -> {
-            c.requestFloatAreaResize(floatGrowthEnergy);
-            c.requestPhotoAreaResize(-photoShrinkageEnergy);
-        });
-        assertEquals(0, cell.getFloatArea(), 0);
-        assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
+    public void testControlPhase_OffsettingRequests() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> {
+                    c.requestFloatAreaResize(0.1);
+                    c.requestPhotoAreaResize(-0.1);
+                })
+                .setPhotoRingArea(Math.PI)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(floatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(Math.PI - photoShrinkageEnergy / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
+        assertEquals(0.1 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
+        assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
         assertEquals(0, cell.getEnergy(), 0);
     }
 
     @Test
-    public void testTickBiology_ScaledOffsettingRequests() {
-        double floatGrowthEnergy = 2;
-        double photoShrinkageEnergy = 0.1;
-        double totalEnergy = 1;
-        Cell cell = new Cell(1, c -> {
-            c.requestFloatAreaResize(floatGrowthEnergy);
-            c.requestPhotoAreaResize(-photoShrinkageEnergy);
-        });
-        assertEquals(0, cell.getFloatArea(), 0);
-        assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
-        cell.addEnergy(totalEnergy);
+    public void testControlPhase_ScaledOffsettingRequests() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> {
+                    c.requestFloatAreaResize(2);
+                    c.requestPhotoAreaResize(-0.1);
+                })
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(1)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
-        double scaledFloatGrowthEnergy = totalEnergy + photoShrinkageEnergy;
+        double scaledFloatGrowthEnergy = 1 + 0.1;
         assertEquals(scaledFloatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(Math.PI - photoShrinkageEnergy / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
+        assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
         assertEquals(0, cell.getEnergy(), 0);
     }
 
     @Test
-    public void testTickBiology_FloatRingGrowth2() {
-        Cell cell = new Cell(1, c -> c.requestFloatAreaResize(1000)); // use all energy
-        double oldPhotoRingArea = cell.getPhotoArea();
-        cell.addEnergy(1);
+    public void testControlPhase_FloatRingGrowthAffectsPhotoRingAndCell() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestFloatAreaResize(1000))
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(1)
+                .build();
 
         cell.tickBiology_ControlPhase();
 
         assertTrue(cell.getFloatArea() > 0);
-        assertEquals(oldPhotoRingArea, cell.getPhotoArea(), 0);
+        assertEquals(Math.PI, cell.getPhotoArea(), 0);
         assertEquals(cell.getFloatArea() + cell.getPhotoArea(), cell.getArea(), 0.001);
 
         assertTrue(cell.getFloatRingOuterRadius() > 0);
@@ -195,35 +170,12 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_NoDamage() {
+    public void testControlPhase_NoSpawnOddsNoChild() {
         Cell cell = new Cell.Builder()
-                .setPhotoRingOuterRadius(1)
-                .setEnergy(10)
+                .setControl(new ParentChildControl(0, 2))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
                 .build();
-
-        cell.tickBiology_ControlPhase();
-        cell.tickBiology_ConsequencesPhase();
-
-        assertEquals(0, cell.getDamage(), 0);
-    }
-
-    @Test
-    public void testTickBiology_Damage() {
-        Cell cell = new Cell.Builder()
-                .setPhotoRingOuterRadius(1)
-                .build();
-
-        cell.tickBiology_ControlPhase();
-        cell.tickBiology_ConsequencesPhase();
-
-        assertEquals(-PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
-                cell.getDamage(), 0.001);
-    }
-
-    @Test
-    public void testTickBiology_NoSpawnOddsNoChild() {
-        Cell cell = new Cell(10, new ParentChildControl(0, 2));
-        cell.addEnergy(100);
 
         Cell child = cell.tickBiology_ControlPhase();
 
@@ -231,9 +183,12 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_SpawnOddsSuccessSpawnChild() {
-        Cell cell = new Cell(10, new ParentChildControl(0.5, 2));
-        cell.addEnergy(100);
+    public void testControlPhase_SpawnOddsSuccessSpawnChild() {
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(0.5, 2))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
         Chance.setNextRandom(0.4);
 
         Cell child = cell.tickBiology_ControlPhase();
@@ -242,9 +197,12 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_NoDonatedEnergyNoChild() {
-        Cell cell = new Cell(10, new ParentChildControl(1, 0));
-        cell.addEnergy(100);
+    public void testControlPhase_NoDonatedEnergyNoChild() {
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 0))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(100)
+                .build();
 
         Cell child = cell.tickBiology_ControlPhase();
 
@@ -252,7 +210,7 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_SpawnChild() {
+    public void testControlPhase_SpawnChild() {
         double totalEnergy = 100;
         double donation = 2;
         Cell cell = new Cell(10, new ParentChildControl(1, donation));
@@ -282,7 +240,7 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_ScaleChildDonation() {
+    public void testControlPhase_ScaleChildDonation() {
         double donation = 10;
         Cell cell = new Cell(10, c -> {
             c.setSpawnOdds(1);
@@ -301,7 +259,7 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_MaintainChild() {
+    public void testControlPhase_MaintainChild() {
         double donation = 2;
         Cell cell = new Cell(10, new ParentChildControl(1, donation));
         cell.addEnergy(100);
@@ -324,7 +282,7 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_ReleaseChild() {
+    public void testControlPhase_ReleaseChild() {
         double donation = 2;
         ParentChildControl control = new ParentChildControl(1, donation);
         control.setReleaseChildOdds(1);
@@ -345,7 +303,7 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_ReleaseParent() {
+    public void testControlPhase_ReleaseParent() {
         double donation = 2;
         ParentChildControl control = new ParentChildControl(1, donation);
         control.setReleaseParentOdds(1);
@@ -367,7 +325,7 @@ public class CellTest {
     }
 
     @Test
-    public void testTickBiology_NegativeDonationDoesNothing() {
+    public void testControlPhase_NegativeDonationDoesNothing() {
         double totalEnergy = 100;
         double donation = 2;
         ParentChildControl control = new ParentChildControl(1, donation);
@@ -384,6 +342,57 @@ public class CellTest {
         cell.tickBiology_ControlPhase();
         assertEquals(child, cell.getChild());
         assertEnergy(totalEnergy - donation, cell);
+    }
+
+    @Test
+    public void testConsequencesPhase_PhotoRingMaintenanceEnergy() {
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(3)
+                .build();
+
+        cell.tickBiology_ConsequencesPhase();
+
+        assertEnergy(-cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), cell);
+    }
+
+    @Test
+    public void testConsequencesPhase_PhotoAndFloatRingMaintenanceEnergy() {
+        Cell cell = new Cell.Builder()
+                .setFloatRingOuterRadius(1)
+                .setPhotoRingOuterRadius(2)
+                .setEnergy(100)
+                .build();
+
+        cell.tickBiology_ConsequencesPhase();
+
+        double expectedEnergy = 100
+                - cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue()
+                - cell.getFloatArea() * FloatRing.parameters.maintenanceCost.getValue();
+        assertEnergy(expectedEnergy, cell);
+    }
+
+    @Test
+    public void testConsequencesPhase_NoDamage() {
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(1)
+                .setEnergy(10)
+                .build();
+
+        cell.tickBiology_ConsequencesPhase();
+
+        assertEquals(0, cell.getDamage(), 0);
+    }
+
+    @Test
+    public void testConsequencesPhase_Damage() {
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(1)
+                .build();
+
+        cell.tickBiology_ConsequencesPhase();
+
+        assertEquals(-PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
+                cell.getDamage(), 0.001);
     }
 
     @Test

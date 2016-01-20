@@ -292,6 +292,11 @@ public class Cell extends Onion implements CellControl.CellApi {
             cell = new Cell(0);
         }
 
+        public Builder setControl(CellControl control) {
+            cell.control = control;
+            return this;
+        }
+
         public Builder setFloatRingOuterRadius(double radius) {
             setOuterRadius(cell.floatRing, radius);
             return this;

@@ -14,9 +14,9 @@ public class Ball {
     static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
-    private double radius; // cached outer-ring radius
-    private double area; // cached area derived from radius
-    private double mass; // cached total ring mass
+    private double radius;
+    private double area;
+    private double mass;
     private double centerX;
     private double centerY;
     private double velocityX, velocityY;

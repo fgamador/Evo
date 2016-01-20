@@ -29,6 +29,12 @@ public class BallTest extends EvoTest {
     }
 
     @Test
+    public void testGetArea() {
+        ball.setRadius(5);
+        assertEquals(25 * Math.PI, ball.getArea(), 0.001);
+    }
+
+    @Test
     public void testSubtickPhysics_NoForces() {
         ball.subtickPhysics(1);
 
