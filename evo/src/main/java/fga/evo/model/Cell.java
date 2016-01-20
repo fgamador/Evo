@@ -55,34 +55,15 @@ public class Cell extends Onion implements CellControl.CellApi {
         addEnergy(photoRing.photosynthesize(lightIntensity));
     }
 
-    public void addDonatedEnergy() {
-        addEnergy(donatedEnergy);
-        donatedEnergy = 0;
-    }
-
-    public void subtractMaintenanceEnergy() {
-        for (TissueRing ring : tissueRings) {
-            addEnergy(-ring.getMaintenanceEnergy());
-        }
-    }
-
-    public Cell tickBiology() {
-        if (energy < 0) {
-            damage += energy;
-        }
-
+    public Cell tickBiology_ControlPhase() {
         control.exertControl(this);
-        return useEnergy();
-    }
-
-    private Cell useEnergy() {
-        balanceEnergy();
+        adjustAndChargeForEnergyRequests();
         resizeRings();
         manageParent();
         return manageChild();
     }
 
-    private void balanceEnergy() {
+    private void adjustAndChargeForEnergyRequests() {
         double requestedEnergy = Math.max(requestedChildDonation, 0);
 
         for (TissueRing ring : tissueRings) {
@@ -164,6 +145,34 @@ public class Cell extends Onion implements CellControl.CellApi {
         removeBond(child);
         child.parent = null;
         child = null;
+    }
+
+    public void tickBiology_ConsequencesPhase() {
+        addDonatedEnergy();
+        subtractMaintenanceEnergy();
+        addDamage();
+    }
+
+    // TODO private
+    void addDonatedEnergy() {
+        addEnergy(donatedEnergy);
+        donatedEnergy = 0;
+    }
+
+    // TODO private
+    void subtractMaintenanceEnergy() {
+        for (TissueRing ring : tissueRings) {
+            addEnergy(-ring.getMaintenanceEnergy());
+        }
+    }
+
+    private void addDamage() {
+        if (energy < 0) {
+            damage += energy;
+        }
+        // if (energy < threshold) {
+        //     die();
+        // }
     }
 
     void die() {

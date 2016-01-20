@@ -46,7 +46,7 @@ public class CellTest {
     public void testSubtractMaintenanceEnergy_PhotoAndFloatRings() {
         Cell cell = new Cell(1, c -> c.requestFloatAreaResize(2));
         cell.addEnergy(100);
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
         double remainingEnergy = cell.getEnergy();
 
         cell.subtractMaintenanceEnergy();
@@ -65,7 +65,7 @@ public class CellTest {
         assertEquals(0, cell.getFloatArea(), 0);
         cell.addEnergy(totalEnergy);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(growthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(totalEnergy - growthEnergy, cell.getEnergy(), 0.001);
@@ -79,7 +79,7 @@ public class CellTest {
         assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
         cell.addEnergy(totalEnergy);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(Math.PI + growthEnergy / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
         assertEquals(totalEnergy - growthEnergy, cell.getEnergy(), 0.001);
@@ -93,7 +93,7 @@ public class CellTest {
         double area = Math.PI * sqr(radius);
         assertEquals(area, cell.getPhotoArea(), 0.001);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(area - shrinkageEnergy / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
         assertEquals(shrinkageEnergy, cell.getEnergy(), 0.001);
@@ -105,7 +105,7 @@ public class CellTest {
         assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
         cell.addEnergy(2);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
         assertEnergy(0, cell);
@@ -124,7 +124,7 @@ public class CellTest {
         assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
         cell.addEnergy(totalEnergy);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(floatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(Math.PI + photoGrowthEnergy / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
@@ -142,7 +142,7 @@ public class CellTest {
         assertEquals(0, cell.getFloatArea(), 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(floatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(Math.PI - photoShrinkageEnergy / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
@@ -162,7 +162,7 @@ public class CellTest {
         assertEquals(Math.PI, cell.getPhotoArea(), 0.001);
         cell.addEnergy(totalEnergy);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         double scaledFloatGrowthEnergy = totalEnergy + photoShrinkageEnergy;
         assertEquals(scaledFloatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
@@ -176,7 +176,7 @@ public class CellTest {
         double oldPhotoRingArea = cell.getPhotoArea();
         cell.addEnergy(1);
 
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertTrue(cell.getFloatArea() > 0);
         assertEquals(oldPhotoRingArea, cell.getPhotoArea(), 0);
@@ -201,8 +201,8 @@ public class CellTest {
                 .setEnergy(10)
                 .build();
 
-        cell.subtractMaintenanceEnergy();
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
+        cell.tickBiology_ConsequencesPhase();
 
         assertEquals(0, cell.getDamage(), 0);
     }
@@ -213,8 +213,8 @@ public class CellTest {
                 .setPhotoRingOuterRadius(1)
                 .build();
 
-        cell.subtractMaintenanceEnergy();
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
+        cell.tickBiology_ConsequencesPhase();
 
         assertEquals(-PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
                 cell.getDamage(), 0.001);
@@ -225,7 +225,7 @@ public class CellTest {
         Cell cell = new Cell(10, new ParentChildControl(0, 2));
         cell.addEnergy(100);
 
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
 
         assertNull(child);
     }
@@ -236,7 +236,7 @@ public class CellTest {
         cell.addEnergy(100);
         Chance.setNextRandom(0.4);
 
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
 
         assertNotNull(child);
     }
@@ -246,7 +246,7 @@ public class CellTest {
         Cell cell = new Cell(10, new ParentChildControl(1, 0));
         cell.addEnergy(100);
 
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
 
         assertNull(child);
     }
@@ -259,7 +259,7 @@ public class CellTest {
         cell.addEnergy(totalEnergy);
 
         // first tick
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
 
         assertNotNull(child);
         assertEquals(child, cell.getChild());
@@ -274,7 +274,7 @@ public class CellTest {
 
         // second tick
         child.addDonatedEnergy();
-        Cell grandchild = child.tickBiology();
+        Cell grandchild = child.tickBiology_ControlPhase();
 
         assertNull(grandchild);
         assertEquals(donation / PhotoRing.parameters.growthCost.getValue(), child.getPhotoArea(), 0.001);
@@ -292,7 +292,7 @@ public class CellTest {
         cell.addEnergy(10);
         double startPhotoArea = cell.getPhotoArea();
 
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
 
         assertNotNull(child);
         assertEquals(donation / 2, child.getDonatedEnergy(), 0);
@@ -307,7 +307,7 @@ public class CellTest {
         cell.addEnergy(100);
 
         // first tick
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
         assertEquals(donation, child.getDonatedEnergy(), 0);
         assertEnergy(0, child);
 
@@ -317,7 +317,7 @@ public class CellTest {
         assertEnergy(donation, child);
 
         // second tick, use-energy phase
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertEquals(child, cell.getChild());
         assertEquals(donation, child.getDonatedEnergy(), 0);
@@ -332,11 +332,11 @@ public class CellTest {
         cell.addEnergy(100);
 
         // first tick
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
         // second tick, add-energy phase
         child.addDonatedEnergy();
         // second tick, use-energy phase
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
@@ -353,12 +353,12 @@ public class CellTest {
         cell.addEnergy(100);
 
         // first tick
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
         // second tick, add-energy phase
         child.addDonatedEnergy();
         // second tick, use-energy phase
-        cell.tickBiology();
-        child.tickBiology();
+        cell.tickBiology_ControlPhase();
+        child.tickBiology_ControlPhase();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
@@ -375,13 +375,13 @@ public class CellTest {
         cell.addEnergy(totalEnergy);
 
         // first tick
-        Cell child = cell.tickBiology();
+        Cell child = cell.tickBiology_ControlPhase();
         assertEquals(child, cell.getChild());
         assertEnergy(totalEnergy - donation, cell);
 
         // second tick
         control.setDonation(-1);
-        cell.tickBiology();
+        cell.tickBiology_ControlPhase();
         assertEquals(child, cell.getChild());
         assertEnergy(totalEnergy - donation, cell);
     }

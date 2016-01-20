@@ -42,7 +42,7 @@ public class World {
 
         Collection<Cell> newCells = new ArrayList<>();
         for (Cell cell : cells) {
-            Cell newChild = cell.tickBiology();
+            Cell newChild = cell.tickBiology_ControlPhase();
             if (newChild != null) {
                 newCells.add(newChild);
             }
