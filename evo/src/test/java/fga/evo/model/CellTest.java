@@ -217,7 +217,6 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        // first tick
         Cell child = cell.tickBiology_ControlPhase();
 
         assertNotNull(child);
@@ -228,22 +227,8 @@ public class CellTest {
         assertEquals(0, child.getPhotoArea(), 0);
         assertEquals(0, child.getRadius(), 0);
         assertEnergy(100 - 2, cell);
-        assertCenterSeparation(cell.getRadius(), cell, child, 0);
-        // TODO random angle
-
-        // second tick
-        // TODO second phase of first tick?
-        // TODO split into separate test? testConsequencesPhase_ChildDonation
-        child.tickBiology_ConsequencesPhase();
-
         assertEnergy(2, child);
-
-        // TODO second tick? yet another test? testControlPhase_NewChild
-        Cell grandchild = child.tickBiology_ControlPhase();
-
-        assertNull(grandchild);
-        assertEquals(2 / PhotoRing.parameters.growthCost.getValue(), child.getPhotoArea(), 0.001);
-        assertEquals(child.getPhotoRingOuterRadius(), child.getRadius(), 0);
+        assertCenterSeparation(cell.getRadius(), cell, child, 0);
     }
 
     @Test
@@ -262,35 +247,35 @@ public class CellTest {
         Cell child = cell.tickBiology_ControlPhase();
 
         assertNotNull(child);
-        assertEquals(10 / 2, child.getDonatedEnergy(), 0);
+        assertEnergy(10 / 2, child);
         assertEquals((10 / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea, 0.001);
         assertEquals(0, cell.getEnergy(), 0);
     }
 
     @Test
-    public void testControlPhase_MaintainChild() {
+    public void testBothPhases_MaintainChild() {
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2))
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
                 .build();
 
-        // first tick
+        // first tick, both phases
         Cell child = cell.tickBiology_ControlPhase();
+        cell.tickBiology_ConsequencesPhase();
+        assertEnergy(2, child);
+
+        // second tick, first phase
+        cell.tickBiology_ControlPhase();
+        child.tickBiology_ControlPhase();
         assertEquals(2, child.getDonatedEnergy(), 0);
         assertEnergy(0, child);
 
-        // TODO adjust comments
-        // second tick, add-energy phase
+        // second tick, second phase
+        cell.tickBiology_ConsequencesPhase();
         child.tickBiology_ConsequencesPhase();
         assertEquals(0, child.getDonatedEnergy(), 0);
-        assertEnergy(2, child);
-
-        // second tick, use-energy phase
-        cell.tickBiology_ControlPhase();
-
-        assertEquals(child, cell.getChild());
-        assertEquals(2, child.getDonatedEnergy(), 0);
+        assertEnergy(2 - child.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), child);
     }
 
     @Test
@@ -301,13 +286,13 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        // TODO adjust comments
-        // first tick
+        // first tick, both phases
         Cell child = cell.tickBiology_ControlPhase();
-        // second tick, add-energy phase
-        child.tickBiology_ConsequencesPhase();
-        // second tick, use-energy phase
+        cell.tickBiology_ConsequencesPhase();
+
+        // second tick, first phase
         cell.tickBiology_ControlPhase();
+        child.tickBiology_ControlPhase();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
@@ -323,12 +308,11 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        // TODO adjust comments
-        // first tick
+        // first tick, both phases
         Cell child = cell.tickBiology_ControlPhase();
-        // second tick, add-energy phase
-        child.tickBiology_ConsequencesPhase();
-        // second tick, use-energy phase
+        cell.tickBiology_ConsequencesPhase();
+
+        // second tick, first phase
         cell.tickBiology_ControlPhase();
         child.tickBiology_ControlPhase();
 
@@ -347,17 +331,15 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        // TODO adjust comments
-        // first tick
+        // first tick, both phases
         Cell child = cell.tickBiology_ControlPhase();
-        assertEquals(child, cell.getChild());
-        assertEnergy(100 - 2, cell);
+        cell.tickBiology_ConsequencesPhase();
 
-        // second tick
+        // second tick, first phase
         control.setDonation(-1);
         cell.tickBiology_ControlPhase();
         assertEquals(child, cell.getChild());
-        assertEnergy(100 - 2, cell);
+        assertEquals(0, child.getDonatedEnergy(), 0);
     }
 
     @Test

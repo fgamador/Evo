@@ -31,18 +31,11 @@ public class World {
         for (int i = 0; i < subticksPerTick; i++) {
             subtickPhysics();
         }
-        // TODO add cells before physics tick?
         cells.addAll(newCells);
         return newCells;
     }
 
     private Collection<Cell> tickBiology() {
-        // TODO move after control phase
-        // TODO apply to new cells?
-        for (Cell cell : cells) {
-            tickBiology_ConsequencesPhase(cell);
-        }
-
         Collection<Cell> newCells = new ArrayList<>();
         for (Cell cell : cells) {
             Cell newChild = cell.tickBiology_ControlPhase();
@@ -50,6 +43,11 @@ public class World {
                 newCells.add(newChild);
             }
         }
+
+        for (Cell cell : cells) {
+            tickBiology_ConsequencesPhase(cell);
+        }
+
         return newCells;
     }
 

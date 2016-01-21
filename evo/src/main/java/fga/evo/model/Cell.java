@@ -126,7 +126,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         child = new Cell(0, control);
         child.parent = this;
         addBond(child);
-        child.setDonatedEnergy(requestedChildDonation);
+        child.addEnergy(requestedChildDonation);
         child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
         return child;
     }
