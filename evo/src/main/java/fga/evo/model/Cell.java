@@ -40,13 +40,6 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     /**
-     * Adds to the cell's available energy.
-     */
-    public void addEnergy(double energy) {
-        this.energy += energy;
-    }
-
-    /**
      * Converts incoming light into energy.
      *
      * @param lightIntensity incoming light intensity, as energy per width
@@ -164,6 +157,10 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
     }
 
+    private void addEnergy(double energy) {
+        this.energy += energy;
+    }
+
     private void addDamage() {
         if (energy < 0) {
             damage += energy;
@@ -173,7 +170,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         // }
     }
 
-    void die() {
+    public void die() {
         alive = false;
     }
 
