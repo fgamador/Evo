@@ -21,25 +21,32 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
-        Cell cell = addCell(1, c -> c.requestPhotoAreaResize(1000));
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestPhotoAreaResize(1000))
+                .setPhotoRingArea(Math.PI)
+                .build();
+        world.addCell(cell);
+
         cell.setCenterPosition(5, -5);
-
         world.tick();
         world.tick();
 
-        double initialPhotoRingArea = Math.PI;
         double addedLightEnergy = 0.5;
-        double photoRingMaintenanceEnergy = initialPhotoRingArea * PhotoRing.parameters.maintenanceCost.getValue();
+        double photoRingMaintenanceEnergy = Math.PI * PhotoRing.parameters.maintenanceCost.getValue();
         double energyBudget = addedLightEnergy - photoRingMaintenanceEnergy;
         double addedPhotoRingArea = energyBudget / PhotoRing.parameters.growthCost.getValue();
-        assertEquals(initialPhotoRingArea + addedPhotoRingArea, cell.getPhotoArea(), 0.001);
+        assertEquals(Math.PI + addedPhotoRingArea, cell.getPhotoArea(), 0.001);
     }
 
     @Test
     public void testBuoyancyControl_Deeper() {
         world.addEnvironmentalInfluence(new Weight());
-        Cell cell = addCell(1, new FixedDepthSeekingControl(100));
-        cell.addEnergy(100);
+        Cell cell = new Cell.Builder()
+                .setControl(new FixedDepthSeekingControl(100))
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(100)
+                .build();
+        world.addCell(cell);
 
         cell.setCenterPosition(100, -100);
         world.tick();
@@ -58,8 +65,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testBuoyancyControl_Shallower() {
         world.addEnvironmentalInfluence(new Weight());
-        Cell cell = addCell(1, new FixedDepthSeekingControl(100));
-        cell.addEnergy(100);
+        Cell cell = new Cell.Builder()
+                .setControl(new FixedDepthSeekingControl(100))
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(100)
+                .build();
+        world.addCell(cell);
 
         cell.setCenterPosition(100, -100);
         world.tick();
@@ -77,9 +88,13 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testReproduction() {
-        Cell cell = addCell(10, new ParentChildControl(1, 2));
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 2))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(10)
+                .build();
+        world.addCell(cell);
         cell.setCenterPosition(5, -5);
-        cell.addEnergy(10);
 
         Collection<Cell> newCells = world.tick();
 
@@ -94,9 +109,13 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void testGrowthAfterReproduction() {
-        Cell cell = addCell(10, new ParentChildControl(1, 2));
+        Cell cell = new Cell.Builder()
+                .setControl(new ParentChildControl(1, 2))
+                .setPhotoRingOuterRadius(10)
+                .setEnergy(10)
+                .build();
+        world.addCell(cell);
         cell.setCenterPosition(5, -5);
-        cell.addEnergy(10);
 
         world.tick();
         Collection<Cell> newCells = world.tick();

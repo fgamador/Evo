@@ -11,13 +11,9 @@ public abstract class WorldIntegrationTests extends EvoTest {
     }
 
     protected Cell addCell(double radius) {
-        Cell cell = new Cell(radius);
-        world.addCell(cell);
-        return cell;
-    }
-
-    protected Cell addCell(double radius, CellControl control) {
-        Cell cell = new Cell(radius, control);
+        Cell cell = new Cell.Builder()
+                .setPhotoRingOuterRadius(radius)
+                .build();
         world.addCell(cell);
         return cell;
     }
