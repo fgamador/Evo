@@ -7,11 +7,14 @@ import java.util.*;
  * Cells can also bond together to form larger organisms.
  */
 public class Cell extends Onion implements CellControl.CellApi {
+    private static final State ALIVE = new Alive();
+    private static final State DEAD = new Dead();
+
     private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
     private CellControl control;
-    private boolean alive = true;
+    private State state = ALIVE;
     private double energy;
     private double spawnOdds;
     private double releaseChildOdds;
@@ -48,11 +51,19 @@ public class Cell extends Onion implements CellControl.CellApi {
         addEnergy(photoRing.photosynthesize(lightIntensity));
     }
 
-    public Cell tickBiology_ControlPhase() {
-        if (!alive) {
-            return null;
-        }
+    public void die() {
+        state = DEAD;
+    }
 
+    public Cell tickBiology_ControlPhase() {
+        return state.controlPhase(this);
+    }
+
+    public void tickBiology_ConsequencesPhase() {
+        state.consequencesPhase(this);
+    }
+
+    private Cell liveControlPhase() {
         control.exertControl(this);
         adjustAndChargeForEnergyRequests();
         resizeRings();
@@ -144,12 +155,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         child = null;
     }
 
-    public void tickBiology_ConsequencesPhase() {
-        if (!alive) {
-            decay();
-            return;
-        }
-
+    private void liveConsequencesPhase() {
         addDonatedEnergy();
         subtractMaintenanceEnergy();
         addDamage();
@@ -179,8 +185,12 @@ public class Cell extends Onion implements CellControl.CellApi {
         // }
     }
 
-    public void die() {
-        alive = false;
+    private Cell deadControlPhase() {
+        return null;
+    }
+
+    private void deadConsequencesPhase() {
+        decay();
     }
 
     public void decay() {
@@ -249,7 +259,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public boolean isAlive() {
-        return alive;
+        return state == ALIVE;
     }
 
     public double getFloatRingOuterRadius() {
@@ -286,6 +296,32 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     public double getDamage() {
         return damage;
+    }
+
+    private interface State {
+        Cell controlPhase(Cell cell);
+
+        void consequencesPhase(Cell cell);
+    }
+
+    private static class Alive implements State {
+        public Cell controlPhase(Cell cell) {
+            return cell.liveControlPhase();
+        }
+
+        public void consequencesPhase(Cell cell) {
+            cell.liveConsequencesPhase();
+        }
+    }
+
+    private static class Dead implements State {
+        public Cell controlPhase(Cell cell) {
+            return cell.deadControlPhase();
+        }
+
+        public void consequencesPhase(Cell cell) {
+            cell.deadConsequencesPhase();
+        }
     }
 
     public static class Builder {
