@@ -49,6 +49,10 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public Cell tickBiology_ControlPhase() {
+        if (!alive) {
+            return null;
+        }
+
         control.exertControl(this);
         adjustAndChargeForEnergyRequests();
         resizeRings();
@@ -141,6 +145,11 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public void tickBiology_ConsequencesPhase() {
+        if (!alive) {
+            decay();
+            return;
+        }
+
         addDonatedEnergy();
         subtractMaintenanceEnergy();
         addDamage();

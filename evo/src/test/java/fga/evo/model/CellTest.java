@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import org.jcp.xml.dsig.internal.MacOutputStream;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
@@ -404,7 +405,22 @@ public class CellTest {
     }
 
     @Test
-    public void testDecay() {
+    public void testControlPhase_Dead() {
+        Cell cell = new Cell.Builder()
+                .setControl(c -> c.requestPhotoAreaResize(1))
+                .setPhotoRingArea(Math.PI)
+                .setEnergy(10)
+                .build();
+        cell.die();
+
+        cell.tickBiology_ControlPhase();
+
+        assertEquals(Math.PI, cell.getPhotoArea(), 0);
+        assertEnergy(10, cell);
+    }
+
+    @Test
+    public void testConsequencesPhase_Dead() {
         Cell cell = new Cell.Builder()
                 .setFloatRingOuterRadius(1)
                 .setPhotoRingOuterRadius(2)
@@ -413,7 +429,7 @@ public class CellTest {
         double initialPhotoArea = cell.getPhotoArea();
         cell.die();
 
-        cell.decay();
+        cell.tickBiology_ConsequencesPhase();
 
         double newFloatArea = initialFloatArea * (1 - FloatRing.parameters.decayRate.getValue());
         assertEquals(newFloatArea, cell.getFloatArea(), 0.001);
