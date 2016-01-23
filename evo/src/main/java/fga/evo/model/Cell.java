@@ -7,6 +7,8 @@ import java.util.*;
  * Cells can also bond together to form larger organisms.
  */
 public class Cell extends Onion implements CellControl.CellApi {
+    public static DoubleParameter maximumSurvivableDamage = new DoubleParameter(10);
+
     private static final State ALIVE = new Alive();
     private static final State DEAD = new Dead();
 
@@ -178,11 +180,11 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     private void addDamage() {
         if (energy < 0) {
-            damage += energy;
+            damage -= energy;
         }
-        // if (energy < threshold) {
-        //     die();
-        // }
+        if (damage > maximumSurvivableDamage.getValue()) {
+            die();
+        }
     }
 
     private Cell deadControlPhase() {

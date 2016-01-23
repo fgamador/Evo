@@ -390,8 +390,21 @@ public class CellTest {
 
         cell.tickBiology_ConsequencesPhase();
 
-        assertEquals(-PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
+        assertTrue(cell.isAlive());
+        assertEquals(PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
                 cell.getDamage(), 0.001);
+    }
+
+    @Test
+    public void testConsequencesPhase_DeadlyDamage() {
+        Cell.maximumSurvivableDamage.setValue(0.1);
+        Cell cell = new Cell.Builder()
+                .setPhotoRingArea(100)
+                .build();
+
+        cell.tickBiology_ConsequencesPhase();
+
+        assertFalse(cell.isAlive());
     }
 
     @Test
