@@ -41,14 +41,16 @@ public class Main extends Evo {
     }
 
     @Override
-    protected void onWidthChanged(double newWidth) {
+    protected void onWidthChanged(double oldWidth, double newWidth) {
+        super.onWidthChanged(oldWidth, newWidth);
         walls.resizeWidth(newWidth);
     }
 
     @Override
-    protected void onHeightChanged(double newHeight) {
+    protected void onHeightChanged(double oldHeight, double newHeight) {
+        super.onHeightChanged(oldHeight, newHeight);
         walls.resizeHeight(newHeight);
-        // TODO light
+        light.setDepth(newHeight);
     }
 
     public static void main(String[] args) {

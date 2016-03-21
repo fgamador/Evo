@@ -9,6 +9,10 @@ public class Illumination extends EnvironmentalInfluence {
     private double depth;
 
     public Illumination(double depth) {
+        setDepth(depth);
+    }
+
+    public void setDepth(double depth) {
         if (depth <= 0) {
             throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
         }
@@ -21,7 +25,7 @@ public class Illumination extends EnvironmentalInfluence {
         cell.photosynthesize(calcLightIntensity(cell.getCenterY()));
     }
 
-    public double calcLightIntensity(double y) {
+    double calcLightIntensity(double y) {
         return (y >= 0) ? maxIntensity.getValue() : maxIntensity.getValue() * (depth + y) / depth;
     }
 }

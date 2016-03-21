@@ -30,12 +30,14 @@ import java.util.Collection;
  * Evo's UI application class.
  */
 public abstract class Evo extends Application {
-    public static final int WIDTH = 1000;
-    public static final int AIR_HEIGHT = 50;
-    public static final int WATER_DEPTH = 500;
+    static final int WIDTH = 1000;
+    static final int AIR_HEIGHT = 50;
+    static final int WATER_DEPTH = 500;
 
     private World world;
     private Group cellCircles;
+    private Rectangle air;
+    private Rectangle water;
     private Timeline timeline;
     private ContextMenu contextMenu;
 //    private CellCircle selectedCellCircle;
@@ -59,9 +61,9 @@ public abstract class Evo extends Application {
         addWaterRectangle(root);
         addCellCircles(root);
         addMouseListeners(root);
-        addResizeListeners(primaryStage);
         startAnimation();
         primaryStage.show();
+        addResizeListeners(primaryStage);
     }
 
     private Group createSceneRoot(Stage primaryStage) {
@@ -75,14 +77,14 @@ public abstract class Evo extends Application {
     private void createContextMenu(Stage primaryStage) {
         contextMenu = new ContextMenu();
 
-        final MenuItem timeItem = new MenuItem("Time...");
+        MenuItem timeItem = new MenuItem("Time...");
         timeItem.setOnAction(e -> {
             double menuX = timeItem.getParentPopup().getX();
             double menuY = timeItem.getParentPopup().getY();
             showControlDialog(primaryStage, menuX + 10, menuY + 5);
         });
 
-        final MenuItem parametersItem = new MenuItem("Parameters...");
+        MenuItem parametersItem = new MenuItem("Parameters...");
         parametersItem.setOnAction(e -> {
             double menuX = parametersItem.getParentPopup().getX();
             double menuY = parametersItem.getParentPopup().getY();
@@ -116,7 +118,7 @@ public abstract class Evo extends Application {
     }
 
     private void addAirRectangle(Group root) {
-        Rectangle air = new Rectangle(WIDTH, AIR_HEIGHT,
+        air = new Rectangle(WIDTH, AIR_HEIGHT,
                 new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                         new Stop(0, Color.color(0.75, 0.9, 1)),
                         new Stop(1, Color.color(0.9, 0.98, 1))));
@@ -124,7 +126,7 @@ public abstract class Evo extends Application {
     }
 
     private void addWaterRectangle(Group root) {
-        Rectangle water = new Rectangle(WIDTH, WATER_DEPTH,
+        water = new Rectangle(WIDTH, WATER_DEPTH,
                 new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
                         new Stop(0, Color.color(0.1, 0.26, 0.55)), // Color.web("#111199")),
                         new Stop(1, Color.BLACK)));
@@ -140,7 +142,7 @@ public abstract class Evo extends Application {
         root.getChildren().add(cellCircles);
     }
 
-    private void addMouseListeners(final Group root) {
+    private void addMouseListeners(Group root) {
         root.setOnContextMenuRequested(e -> {
             contextMenu.show(root, e.getScreenX(), e.getScreenY());
             e.consume();
@@ -175,18 +177,22 @@ public abstract class Evo extends Application {
 
     private void addResizeListeners(Stage primaryStage) {
         primaryStage.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            // TODO update water and air rectangles
-            onWidthChanged(newWidth.doubleValue());
+            onWidthChanged(oldWidth.doubleValue(), newWidth.doubleValue());
         });
         primaryStage.heightProperty().addListener((obs, oldHeight, newHeight) -> {
-            // TODO update water rectangle
-            onHeightChanged(newHeight.doubleValue());
+            onHeightChanged(oldHeight.doubleValue(), newHeight.doubleValue());
         });
     }
 
-    protected abstract void onWidthChanged(double newWidth);
+    protected void onWidthChanged(double oldWidth, double newWidth) {
+        air.setWidth(newWidth);
+        water.setWidth(newWidth);
+    }
 
-    protected abstract void onHeightChanged(double newHeight);
+    protected void onHeightChanged(double oldHeight, double newHeight) {
+        double deltaHeight = newHeight - oldHeight;
+        water.setHeight(water.getHeight() + deltaHeight);
+    }
 
     private void startAnimation() {
         timeline = new Timeline();
@@ -249,7 +255,7 @@ public abstract class Evo extends Application {
         timeline.play();
     }
 
-    public void restart() {
+    void restart() {
         for (Node cellCircle : cellCircles.getChildren()) {
             cellCircle.setVisible(false);
         }
@@ -257,19 +263,19 @@ public abstract class Evo extends Application {
         world.restart();
     }
 
-    public static double toSceneX(final double worldX) {
+    static double toSceneX(double worldX) {
         return worldX;
     }
 
-    public static double toWorldX(final double sceneX) {
+    private static double toWorldX(double sceneX) {
         return sceneX;
     }
 
-    public static double toSceneY(final double worldY) {
+    static double toSceneY(double worldY) {
         return AIR_HEIGHT - worldY;
     }
 
-    public static double toWorldY(final double sceneY) {
+    private static double toWorldY(double sceneY) {
         return AIR_HEIGHT - sceneY;
     }
 }
