@@ -149,7 +149,7 @@ public abstract class Evo extends Application {
         });
         root.setOnMousePressed(e -> {
             contextMenu.hide();
-            if (e.getButton() == MouseButton.MIDDLE) {
+            if (e.getButton() == MouseButton.MIDDLE || e.isControlDown()) {
                 addCell(e.getSceneX(), e.getSceneY());
             }
         });
