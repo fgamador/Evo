@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/evo/evo.iml" filepath="$PROJECT_DIR$/evo/evo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/evo.iml" filepath="$PROJECT_DIR$/.idea/modules/evo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/evo_main.iml" filepath="$PROJECT_DIR$/.idea/modules/evo_main.iml" group="evo" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/evo_test.iml" filepath="$PROJECT_DIR$/.idea/modules/evo_test.iml" group="evo" />
     </modules>
   </component>
 </project>
