@@ -26,10 +26,7 @@ public class Ball extends NewtonianBody {
      * @param subticksPerTick time resolution
      */
     void subtickPhysics(int subticksPerTick) {
-        updateVelocity(subticksPerTick);
-        limitSpeed();
-        updatePosition(subticksPerTick);
-        clearForces();
+        subtick(subticksPerTick);
         overlapAccumulator.decay();
     }
 

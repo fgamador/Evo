@@ -106,4 +106,11 @@ public class NewtonianBody {
     public double getNetForceY() {
         return netForceY;
     }
+
+    public void subtick(int subticksPerTick) {
+        updateVelocity(subticksPerTick);
+        limitSpeed();
+        updatePosition(subticksPerTick);
+        clearForces();
+    }
 }
