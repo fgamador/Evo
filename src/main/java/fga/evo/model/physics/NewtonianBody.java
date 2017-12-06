@@ -43,7 +43,7 @@ public class NewtonianBody {
         netForceY += forceY;
     }
 
-    protected void updateVelocity(int subticksPerTick) {
+    private void updateVelocity(int subticksPerTick) {
         assert getMass() > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick
@@ -56,7 +56,7 @@ public class NewtonianBody {
     }
 
     // numerical/discretization problems can cause extreme velocities; cap them
-    protected void limitSpeed() {
+    private void limitSpeed() {
         double speedSquared = sqr(velocityX) + sqr(velocityY);
         double maxSpeed = speedLimit.getValue();
         if (speedSquared > sqr(maxSpeed)) {
@@ -66,12 +66,12 @@ public class NewtonianBody {
         }
     }
 
-    protected void updatePosition(int subticksPerTick) {
+    private void updatePosition(int subticksPerTick) {
         // the position at the end of this subtick
         setCenterPosition(centerX + (velocityX / subticksPerTick), centerY + (velocityY / subticksPerTick));
     }
 
-    protected void clearForces() {
+    private void clearForces() {
         netForceX = netForceY = 0;
     }
 
