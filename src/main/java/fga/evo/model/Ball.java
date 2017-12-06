@@ -12,7 +12,6 @@ import static fga.evo.model.Util.sqr;
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
 public class Ball extends NewtonianBody {
-    static DoubleParameter speedLimit = new DoubleParameter(4);
     static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 

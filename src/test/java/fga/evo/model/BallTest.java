@@ -1,6 +1,6 @@
 package fga.evo.model;
 
-import org.junit.After;
+import fga.evo.model.physics.NewtonianBody;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class BallTest extends EvoTest {
 
     @Before
     public void setUp() {
-        Ball.speedLimit.setValue(100);
+        NewtonianBody.speedLimit.setValue(100);
 
         ball = new Ball();
         ball.setRadius(1);
@@ -89,7 +89,7 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testSubtickPhysics_SpeedLimit() {
-        Ball.speedLimit.setValue(4);
+        NewtonianBody.speedLimit.setValue(4);
         ball.setVelocity(8 / SQRT_2, -8 / SQRT_2);
 
         ball.subtickPhysics(1);

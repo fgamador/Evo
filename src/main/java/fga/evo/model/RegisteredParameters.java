@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.NewtonianBody;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ public class RegisteredParameters {
     private static Map<String, DoubleParameter> parameters = new HashMap<>();
 
     static {
-        register("Ball.speedLimit", Ball.speedLimit);
+        register("Ball.speedLimit", NewtonianBody.speedLimit);
         register("Ball.overlapForceFactor", Ball.overlapForceFactor);
         register("Ball.dampingForceFactor", BallPairForces.dampingForceFactor);
         register("Ball.overlapAccumulatorRetentionRate", Ball.overlapAccumulatorRetentionRate);
