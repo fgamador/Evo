@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.NewtonianBody;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +11,7 @@ import static fga.evo.model.Util.sqr;
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
-public class Ball {
+public class Ball extends NewtonianBody {
     static DoubleParameter speedLimit = new DoubleParameter(4);
     static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
