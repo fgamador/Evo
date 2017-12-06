@@ -17,11 +17,6 @@ public class Ball extends NewtonianBody {
 
     private double radius;
     private double area;
-    private double mass;
-    private double centerX;
-    private double centerY;
-    private double velocityX, velocityY;
-    private double netForceX, netForceY;
     private Set<Ball> bondedBalls = new HashSet<>();
     private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
