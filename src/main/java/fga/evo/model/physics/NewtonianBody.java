@@ -16,7 +16,7 @@ public class NewtonianBody {
     private double netForceY;
 
     /**
-     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtickPhysics(int)}.
+     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtick(int)}.
      */
     public void setCenterPosition(double centerX, double centerY) {
         this.centerX = centerX;
@@ -24,7 +24,7 @@ public class NewtonianBody {
     }
 
     /**
-     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #subtickPhysics(int)}.
+     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #subtick(int)}.
      */
     public void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
@@ -32,7 +32,7 @@ public class NewtonianBody {
     }
 
     /**
-     * Adds a force on the ball that will be used by the next call to {@link #subtickPhysics(int)}. This is the only way to
+     * Adds a force on the ball that will be used by the next call to {@link #subtick(int)}. This is the only way to
      * influence the ball's motion (after setting its initial position and possibly velocity).
      *
      * @param forceX X-component of the force
