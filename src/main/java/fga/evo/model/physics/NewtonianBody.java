@@ -43,6 +43,13 @@ public class NewtonianBody {
         netForceY += forceY;
     }
 
+    public void subtick(int subticksPerTick) {
+        updateVelocity(subticksPerTick);
+        limitSpeed();
+        updatePosition(subticksPerTick);
+        clearForces();
+    }
+
     private void updateVelocity(int subticksPerTick) {
         assert getMass() > 0;
 
@@ -105,12 +112,5 @@ public class NewtonianBody {
 
     public double getNetForceY() {
         return netForceY;
-    }
-
-    public void subtick(int subticksPerTick) {
-        updateVelocity(subticksPerTick);
-        limitSpeed();
-        updatePosition(subticksPerTick);
-        clearForces();
     }
 }
