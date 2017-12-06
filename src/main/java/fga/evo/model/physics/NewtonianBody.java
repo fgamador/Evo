@@ -7,13 +7,13 @@ import static fga.evo.model.Util.sqr;
 public class NewtonianBody {
     public static DoubleParameter speedLimit = new DoubleParameter(4);
 
-    protected double mass;
-    protected double centerX;
-    protected double centerY;
-    protected double velocityX;
-    protected double velocityY;
-    protected double netForceX;
-    protected double netForceY;
+    private double mass;
+    private double centerX;
+    private double centerY;
+    private double velocityX;
+    private double velocityY;
+    private double netForceX;
+    private double netForceY;
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtickPhysics(int)}.
