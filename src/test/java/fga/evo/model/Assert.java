@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.NewtonianBody;
+
 import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -40,30 +42,30 @@ public class Assert {
         assertEquals("Energy", energy, cell.getEnergy(), delta);
     }
 
-    public static void assertPosition(double centerX, double centerY, Ball ball) {
-        assertPosition(centerX, centerY, ball, DEFAULT_DELTA);
+    public static void assertPosition(double centerX, double centerY, NewtonianBody body) {
+        assertPosition(centerX, centerY, body, DEFAULT_DELTA);
     }
 
-    public static void assertPosition(double centerX, double centerY, Ball ball, double delta) {
-        assertEquals("Center X", centerX, ball.getCenterX(), delta);
-        assertEquals("Center Y", centerY, ball.getCenterY(), delta);
+    public static void assertPosition(double centerX, double centerY, NewtonianBody body, double delta) {
+        assertEquals("Center X", centerX, body.getCenterX(), delta);
+        assertEquals("Center Y", centerY, body.getCenterY(), delta);
     }
 
-    public static void assertVelocity(double velocityX, double velocityY, Ball ball) {
-        assertVelocity(velocityX, velocityY, ball, DEFAULT_DELTA);
+    public static void assertVelocity(double velocityX, double velocityY, NewtonianBody body) {
+        assertVelocity(velocityX, velocityY, body, DEFAULT_DELTA);
     }
 
-    public static void assertVelocity(double velocityX, double velocityY, Ball ball, double delta) {
-        assertEquals("Velocity X", velocityX, ball.getVelocityX(), delta);
-        assertEquals("Velocity Y", velocityY, ball.getVelocityY(), delta);
+    public static void assertVelocity(double velocityX, double velocityY, NewtonianBody body, double delta) {
+        assertEquals("Velocity X", velocityX, body.getVelocityX(), delta);
+        assertEquals("Velocity Y", velocityY, body.getVelocityY(), delta);
     }
 
-    public static void assertNetForce(double forceX, double forceY, Ball ball) {
-        assertNetForce(forceX, forceY, ball, DEFAULT_DELTA);
+    public static void assertNetForce(double forceX, double forceY, NewtonianBody body) {
+        assertNetForce(forceX, forceY, body, DEFAULT_DELTA);
     }
 
-    public static void assertNetForce(double forceX, double forceY, Ball ball, double delta) {
-        assertEquals("Force X", forceX, ball.getNetForceX(), delta);
-        assertEquals("Force Y", forceY, ball.getNetForceY(), delta);
+    public static void assertNetForce(double forceX, double forceY, NewtonianBody body, double delta) {
+        assertEquals("Force X", forceX, body.getNetForceX(), delta);
+        assertEquals("Force Y", forceY, body.getNetForceY(), delta);
     }
 }
