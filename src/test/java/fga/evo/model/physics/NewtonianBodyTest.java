@@ -8,9 +8,8 @@ import static fga.evo.model.Assert.assertVelocity;
 public class NewtonianBodyTest {
     @Test
     public void subtickWithNoForcesDoesNotMoveStationaryBody() {
-        NewtonianBody body = new NewtonianBody();
+        NewtonianBody body = new NewtonianBody(0, 0);
         body.setMass(1);
-        body.setCenterPosition(0, 0);
 
         body.subtick(1);
 

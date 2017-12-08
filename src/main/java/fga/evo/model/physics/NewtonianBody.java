@@ -15,6 +15,13 @@ public class NewtonianBody {
     private double netForceX;
     private double netForceY;
 
+    public NewtonianBody() {
+    }
+
+    public NewtonianBody(int centerX, int centerY) {
+        setCenterPosition(centerX, centerY);
+    }
+
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtick(int)}.
      */
