@@ -52,4 +52,16 @@ public class NewtonianBodyTest {
         assertVelocity(2, 1, body);
         assertPosition(2, 1, body);
     }
+
+    @Test
+    public void doubleMassHasHalfAcceleration() {
+        NewtonianBody heavy = new NewtonianBody(0, 0, 0, 0);
+        heavy.setMass(2);
+        heavy.addForce(1, -2);
+
+        heavy.subtick(1);
+
+        assertVelocity(0.5, -1, heavy);
+        assertPosition(0.5, -1, heavy);
+    }
 }

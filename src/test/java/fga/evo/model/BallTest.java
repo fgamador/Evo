@@ -35,19 +35,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_DoubleMass() {
-        Ball heavyBall = new Ball();
-        heavyBall.setRadius(1);
-        heavyBall.setMass(2);
-        heavyBall.addForce(1, -2);
-
-        heavyBall.subtickPhysics(1);
-
-        assertVelocity(0.5, -1, heavyBall);
-        assertPosition(0.5, -1, heavyBall);
-    }
-
-    @Test
     public void testSubtickPhysics_SpeedLimit() {
         NewtonianBody.speedLimit.setValue(4);
         ball.setVelocity(8 / SQRT_2, -8 / SQRT_2);
