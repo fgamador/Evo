@@ -18,7 +18,7 @@ public class NewtonianBody {
     public NewtonianBody() {
     }
 
-    public NewtonianBody(int centerX, int centerY) {
+    public NewtonianBody(double centerX, double centerY) {
         setCenterPosition(centerX, centerY);
     }
 
