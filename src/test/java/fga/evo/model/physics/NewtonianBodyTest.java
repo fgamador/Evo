@@ -98,6 +98,7 @@ public class NewtonianBodyTest extends EvoTest {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         body.addForce(1, 1);
+
         body.subtick(2);
 
         assertVelocity(0.5, 0.5, body);
