@@ -35,16 +35,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_SpeedLimit() {
-        NewtonianBody.speedLimit.setValue(4);
-        ball.setVelocity(8 / SQRT_2, -8 / SQRT_2);
-
-        ball.subtickPhysics(1);
-
-        assertVelocity(4 / SQRT_2, -4 / SQRT_2, ball);
-    }
-
-    @Test
     public void testSubtickPhysics_DoubleResolution_ConstantVelocity() {
         ball.setVelocity(1, 1);
 

@@ -1,11 +1,12 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.EvoTest;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
 
-public class NewtonianBodyTest {
+public class NewtonianBodyTest extends EvoTest {
     @Test
     public void subtickWithNoForcesDoesNotMoveStationaryBody() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
@@ -63,5 +64,17 @@ public class NewtonianBodyTest {
 
         assertVelocity(0.5, -1, heavy);
         assertPosition(0.5, -1, heavy);
+    }
+
+    @Test
+    public void speedLimitCapsVelocity() {
+        NewtonianBody.speedLimit.setValue(4);
+        NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
+        body.setMass(1);
+        body.setVelocity(8 / SQRT_2, -8 / SQRT_2);
+
+        body.subtick(1);
+
+        assertVelocity(4 / SQRT_2, -4 / SQRT_2, body);
     }
 }
