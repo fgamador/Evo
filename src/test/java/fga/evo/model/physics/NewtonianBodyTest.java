@@ -56,14 +56,14 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void doubleMassHasHalvedAcceleration() {
-        NewtonianBody heavy = new NewtonianBody(0, 0, 0, 0);
-        heavy.setMass(2);
-        heavy.addForce(1, -2);
+        NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
+        body.setMass(2);
+        body.addForce(1, -2);
 
-        heavy.subtick(1);
+        body.subtick(1);
 
-        assertVelocity(0.5, -1, heavy);
-        assertPosition(0.5, -1, heavy);
+        assertVelocity(0.5, -1, body);
+        assertPosition(0.5, -1, body);
     }
 
     @Test
