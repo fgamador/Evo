@@ -35,16 +35,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_OneForce() {
-        ball.addForce(0.5, -1);
-
-        ball.subtickPhysics(1);
-
-        assertVelocity(0.5, -1, ball);
-        assertPosition(0.5, -1, ball);
-    }
-
-    @Test
     public void testSubtickPhysics_TwoForces() {
         ball.addForce(0.5, -1);
         ball.addForce(1.5, 2);
