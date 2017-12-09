@@ -30,7 +30,7 @@ public class NewtonianBodyTest extends EvoTest {
     }
 
     @Test
-    public void stationaryBodyWithAForceAccelerates() {
+    public void stationaryBodyWithForceAccelerates() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         body.addForce(0.5, -1);
