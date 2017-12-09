@@ -76,4 +76,21 @@ public class NewtonianBodyTest extends EvoTest {
 
         assertVelocity(4 / SQRT_2, -4 / SQRT_2, body);
     }
+
+    @Test
+    public void testSubtickPhysics_DoubleResolution_ConstantVelocity() {
+        NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
+        body.setMass(1);
+        body.setVelocity(1, 1);
+
+        body.subtick(2);
+
+        assertVelocity(1, 1, body);
+        assertPosition(0.5, 0.5, body);
+
+        body.subtick(2);
+
+        assertVelocity(1, 1, body);
+        assertPosition(1, 1, body);
+    }
 }

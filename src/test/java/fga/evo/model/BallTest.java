@@ -35,21 +35,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_DoubleResolution_ConstantVelocity() {
-        ball.setVelocity(1, 1);
-
-        ball.subtickPhysics(2);
-
-        assertVelocity(1, 1, ball);
-        assertPosition(0.5, 0.5, ball);
-
-        ball.subtickPhysics(2);
-
-        assertVelocity(1, 1, ball);
-        assertPosition(1, 1, ball);
-    }
-
-    @Test
     public void testSubtickPhysics_DoubleResolution_ConstantForce() {
         ball.addForce(1, 1);
         ball.subtickPhysics(2);
