@@ -79,9 +79,8 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void testSubtickPhysics_DoubleResolution_ConstantVelocity() {
-        NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
+        NewtonianBody body = new NewtonianBody(0, 0, 1, 1);
         body.setMass(1);
-        body.setVelocity(1, 1);
 
         body.subtick(2);
 
