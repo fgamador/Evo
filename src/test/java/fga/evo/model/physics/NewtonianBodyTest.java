@@ -86,11 +86,6 @@ public class NewtonianBodyTest extends EvoTest {
 
         assertVelocity(1, 1, body);
         assertPosition(0.5, 0.5, body);
-
-        body.subtick(2);
-
-        assertVelocity(1, 1, body);
-        assertPosition(1, 1, body);
     }
 
     @Test
@@ -103,11 +98,5 @@ public class NewtonianBodyTest extends EvoTest {
 
         assertVelocity(0.5, 0.5, body);
         assertPosition(0.25, 0.25, body);
-
-        body.addForce(1, 1);
-        body.subtick(2);
-
-        assertVelocity(1, 1, body);
-        assertPosition(0.75, 0.75, body);
     }
 }
