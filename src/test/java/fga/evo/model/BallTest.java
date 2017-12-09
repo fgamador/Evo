@@ -35,21 +35,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_DoubleResolution_ConstantForce() {
-        ball.addForce(1, 1);
-        ball.subtickPhysics(2);
-
-        assertVelocity(0.5, 0.5, ball);
-        assertPosition(0.25, 0.25, ball);
-
-        ball.addForce(1, 1);
-        ball.subtickPhysics(2);
-
-        assertVelocity(1, 1, ball);
-        assertPosition(0.75, 0.75, ball);
-    }
-
-    @Test
     public void testGetRecentTotalOverlap() {
         Ball ball1 = new Cell(1);
         ball1.setCenterPosition(0, 0);
