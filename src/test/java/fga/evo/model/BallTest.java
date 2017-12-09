@@ -35,17 +35,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_Coasting() {
-        ball.addForce(0.5, -1);
-        ball.subtickPhysics(1);
-
-        ball.subtickPhysics(1);
-
-        assertVelocity(0.5, -1, ball);
-        assertPosition(1, -2, ball);
-    }
-
-    @Test
     public void testSubtickPhysics_DoubleMass() {
         Ball heavyBall = new Ball();
         heavyBall.setRadius(1);

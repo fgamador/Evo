@@ -41,4 +41,17 @@ public class NewtonianBodyTest {
         assertVelocity(2, 1, body);
         assertPosition(2, 1, body);
     }
+
+    @Test
+    public void subtickWithNoForcesDoesNotAccelerateMovingBody() {
+        NewtonianBody body = new NewtonianBody(0, 0);
+        body.setMass(1);
+        body.addForce(0.5, -1);
+        body.subtick(1);
+
+        body.subtick(1);
+
+        assertVelocity(0.5, -1, body);
+        assertPosition(1, -2, body);
+    }
 }
