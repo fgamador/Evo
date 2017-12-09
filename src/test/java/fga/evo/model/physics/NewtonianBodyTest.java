@@ -94,7 +94,7 @@ public class NewtonianBodyTest extends EvoTest {
     }
 
     @Test
-    public void testSubtickPhysics_DoubleResolution_ConstantForce() {
+    public void doubleResolutionSubticksAccelerateAtHalfForce() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         body.addForce(1, 1);
