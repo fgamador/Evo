@@ -69,9 +69,8 @@ public class NewtonianBodyTest extends EvoTest {
     @Test
     public void speedLimitCapsVelocity() {
         NewtonianBody.speedLimit.setValue(4);
-        NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
+        NewtonianBody body = new NewtonianBody(0, 0, 8 / SQRT_2, -8 / SQRT_2);
         body.setMass(1);
-        body.setVelocity(8 / SQRT_2, -8 / SQRT_2);
 
         body.subtick(1);
 
