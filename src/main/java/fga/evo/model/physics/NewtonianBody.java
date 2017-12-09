@@ -18,8 +18,9 @@ public class NewtonianBody {
     public NewtonianBody() {
     }
 
-    public NewtonianBody(double centerX, double centerY) {
+    public NewtonianBody(double centerX, double centerY, double velocityX, double velocityY) {
         setCenterPosition(centerX, centerY);
+        setVelocity(velocityX, velocityY);
     }
 
     /**
