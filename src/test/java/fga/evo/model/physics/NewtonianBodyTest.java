@@ -8,7 +8,7 @@ import static fga.evo.model.Assert.assertVelocity;
 
 public class NewtonianBodyTest extends EvoTest {
     @Test
-    public void subtickWithNoForcesDoesNotMoveStationaryBody() {
+    public void stationaryBodyWithNoForcesDoesNotMove() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
 
@@ -19,7 +19,7 @@ public class NewtonianBodyTest extends EvoTest {
     }
 
     @Test
-    public void subtickWithNoForcesDoesNotAccelerateMovingBody() {
+    public void movingBodyWithNoForcesCoasts() {
         NewtonianBody body = new NewtonianBody(0, 0, 0.5, -1);
         body.setMass(1);
 
@@ -30,7 +30,7 @@ public class NewtonianBodyTest extends EvoTest {
     }
 
     @Test
-    public void subtickWithOneForceAcceleratesAndMovesStationaryBody() {
+    public void stationaryBodyWithAForceAccelerates() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         body.addForce(0.5, -1);
@@ -42,7 +42,7 @@ public class NewtonianBodyTest extends EvoTest {
     }
 
     @Test
-    public void subtickWithTwoForcesHasAdditiveAcceleration() {
+    public void twoForcesHaveAdditiveAcceleration() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         body.addForce(0.5, -1);
@@ -55,7 +55,7 @@ public class NewtonianBodyTest extends EvoTest {
     }
 
     @Test
-    public void doubleMassHasHalfAcceleration() {
+    public void doubleMassHasHalvedAcceleration() {
         NewtonianBody heavy = new NewtonianBody(0, 0, 0, 0);
         heavy.setMass(2);
         heavy.addForce(1, -2);
