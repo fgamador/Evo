@@ -62,26 +62,26 @@ public class BallPairForces {
     }
 
     private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
-        double centerXDelta = ball1.getCenterX() - ball2.getCenterX();
-        double centerYDelta = ball1.getCenterY() - ball2.getCenterY();
-        return sqr(centerXDelta) + sqr(centerYDelta);
+        double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
+        double ball1RelativeCenterY = ball1.getCenterY() - ball2.getCenterY();
+        return sqr(ball1RelativeCenterX) + sqr(ball1RelativeCenterY);
     }
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
         double force = Ball.calcOverlapForce(overlap);
-        double centerXDelta = ball1.getCenterX() - ball2.getCenterX();
-        double centerYDelta = ball1.getCenterY() - ball2.getCenterY();
-        double forceX = (centerXDelta / centerSeparation) * force;
-        double forceY = (centerYDelta / centerSeparation) * force;
+        double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
+        double ball1RelativeCenterY = ball1.getCenterY() - ball2.getCenterY();
+        double forceX = (ball1RelativeCenterX / centerSeparation) * force;
+        double forceY = (ball1RelativeCenterY / centerSeparation) * force;
         ball1.addForce(forceX, forceY);
         ball2.addForce(-forceX, -forceY);
     }
 
     private static void addDampingForces(Ball ball1, Ball ball2) {
-        double relativeVelocityX = ball1.getVelocityX() - ball2.getVelocityX();
-        double relativeVelocityY = ball1.getVelocityY() - ball2.getVelocityY();
-        double forceX = -dampingForceFactor.getValue() * relativeVelocityX;
-        double forceY = -dampingForceFactor.getValue() * relativeVelocityY;
+        double ball1RelativeVelocityX = ball1.getVelocityX() - ball2.getVelocityX();
+        double ball1RelativeVelocityY = ball1.getVelocityY() - ball2.getVelocityY();
+        double forceX = -dampingForceFactor.getValue() * ball1RelativeVelocityX;
+        double forceY = -dampingForceFactor.getValue() * ball1RelativeVelocityY;
         ball1.addForce(forceX, forceY);
         ball2.addForce(-forceX, -forceY);
     }
