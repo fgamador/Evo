@@ -18,11 +18,15 @@ public class BallPairForces {
     static void addBallPairForces(Ball ball1, Ball ball2) {
         if (!haveSameCenter(ball1, ball2)) {
             if (ball1.isBondedTo(ball2)) {
-                addBondForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
+                addBondForces(ball1, ball2);
             } else {
                 addCollisionForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
             }
         }
+    }
+
+    private static void addBondForces(Ball ball1, Ball ball2) {
+        addBondForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
     }
 
     private static boolean haveSameCenter(Ball ball1, Ball ball2) {
