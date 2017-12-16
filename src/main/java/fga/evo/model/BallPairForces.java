@@ -49,9 +49,8 @@ public class BallPairForces {
             ball1.onOverlap(overlap1);
             ball2.onOverlap(overlap1);
         }
-        double overlap = overlap1;
-        if (overlap > 0) {
-            addOverlapForces(ball1, ball2, centerSeparation, overlap);
+        if (overlap1 > 0) {
+            addOverlapForces(ball1, ball2, centerSeparation, overlap1);
         }
     }
 
