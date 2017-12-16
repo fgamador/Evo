@@ -43,10 +43,7 @@ public class BallPairForces {
      * Adds forces to the balls that will push them away from one another.
      */
     private static void addCollisionForces(Ball ball1, Ball ball2) {
-        addCollisionForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
-    }
-
-    private static void addCollisionForces(Ball ball1, Ball ball2, double centerSeparation) {
+        double centerSeparation = calcCenterSeparation(ball1, ball2);
         double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
         if (overlap > 0) {
             addOverlapForces(ball1, ball2, centerSeparation, overlap);
