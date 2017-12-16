@@ -26,9 +26,7 @@ public class BallPairForces {
     }
 
     private static boolean haveSameCenter(Ball ball1, Ball ball2) {
-        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
-        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
-        return sqr(relativeCenterX) == 0 && sqr(relativeCenterY) == 0;
+        return sqr(ball1.getCenterX() - ball2.getCenterX()) == 0 && sqr(ball1.getCenterY() - ball2.getCenterY()) == 0;
     }
 
     /**
