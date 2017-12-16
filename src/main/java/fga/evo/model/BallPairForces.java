@@ -35,11 +35,12 @@ public class BallPairForces {
     private static void addBondForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
         double centerSeparation = Math.sqrt(centerSeparationSquared);
-        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
+            double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
             ball1.onOverlap(overlap);
             ball2.onOverlap(overlap);
         }
+        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         addOverlapForces(ball1, ball2, centerSeparation, overlap);
         addDampingForces(ball1, ball2);
     }
