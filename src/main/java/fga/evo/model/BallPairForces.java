@@ -48,8 +48,6 @@ public class BallPairForces {
         if (overlap > 0) {
             ball1.onOverlap(overlap);
             ball2.onOverlap(overlap);
-        }
-        if (overlap > 0) {
             addOverlapForces(ball1, ball2, centerSeparation, overlap);
         }
     }
