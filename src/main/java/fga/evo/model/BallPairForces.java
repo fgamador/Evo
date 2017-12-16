@@ -55,7 +55,7 @@ public class BallPairForces {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
         double centerSeparation = Math.sqrt(centerSeparationSquared);
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
-        double overlap1 = overlap;
+        double overlap1 = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         if (overlap1 > 0) {
             ball1.onOverlap(overlap);
             ball2.onOverlap(overlap);
