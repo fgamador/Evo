@@ -27,10 +27,11 @@ public class BallPairForces {
      * Adds forces to the balls that will move them back toward just touching one another.
      */
     private static void addBondForces(Ball ball1, Ball ball2) {
-        if (haveSameCenter(ball1, ball2))
-            return;
-
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
+        if (centerSeparationSquared == 0) {
+            return;
+        }
+
         double centerSeparation = Math.sqrt(centerSeparationSquared);
         if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
             notifyOverlap(ball1, ball2, centerSeparation);
@@ -43,19 +44,16 @@ public class BallPairForces {
      * Adds forces to the balls that will push them away from one another.
      */
     private static void addCollisionForces(Ball ball1, Ball ball2) {
-        if (haveSameCenter(ball1, ball2))
-            return;
-
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
+        if (centerSeparationSquared == 0) {
+            return;
+        }
+
         if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
             double centerSeparation = Math.sqrt(centerSeparationSquared);
             notifyOverlap(ball1, ball2, centerSeparation);
             addOverlapForces(ball1, ball2, centerSeparation);
         }
-    }
-
-    private static boolean haveSameCenter(Ball ball1, Ball ball2) {
-        return ball1.getCenterX() == ball2.getCenterX() && ball1.getCenterY() == ball2.getCenterY();
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
