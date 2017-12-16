@@ -44,7 +44,12 @@ public class BallPairForces {
      */
     private static void addCollisionForces(Ball ball1, Ball ball2) {
         double centerSeparation = calcCenterSeparation(ball1, ball2);
-        double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
+        double overlap1 = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        if (overlap1 > 0) {
+            ball1.onOverlap(overlap1);
+            ball2.onOverlap(overlap1);
+        }
+        double overlap = overlap1;
         if (overlap > 0) {
             addOverlapForces(ball1, ball2, centerSeparation, overlap);
         }
