@@ -67,8 +67,7 @@ public class BallPairForces {
     }
 
     private static double calcCenterSeparation(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
-        return Math.sqrt(centerSeparationSquared);
+        return Math.sqrt(calcCenterSeparationSquared(ball1, ball2));
     }
 
     private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
