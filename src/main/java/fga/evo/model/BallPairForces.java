@@ -25,17 +25,6 @@ public class BallPairForces {
         }
     }
 
-    private static double calcCenterSeparation(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
-        return Math.sqrt(centerSeparationSquared);
-    }
-
-    private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
-        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
-        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
-        return sqr(relativeCenterX) + sqr(relativeCenterY);
-    }
-
     /**
      * Adds forces to the balls that will move them back toward just touching one another.
      */
@@ -83,4 +72,14 @@ public class BallPairForces {
         ball2.addForce(-forceX, -forceY);
     }
 
+    private static double calcCenterSeparation(Ball ball1, Ball ball2) {
+        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
+        return Math.sqrt(centerSeparationSquared);
+    }
+
+    private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
+        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
+        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
+        return sqr(relativeCenterX) + sqr(relativeCenterY);
+    }
 }
