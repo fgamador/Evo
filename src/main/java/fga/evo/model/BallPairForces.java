@@ -16,13 +16,11 @@ public class BallPairForces {
      * @param ball2 another ball
      */
     static void addBallPairForces(Ball ball1, Ball ball2) {
-        double centerSeparation = calcCenterSeparation(ball1, ball2);
-
-        if (centerSeparation != 0) {
+        if (calcCenterSeparation(ball1, ball2) != 0) {
             if (ball1.isBondedTo(ball2)) {
-                addBondForces(ball1, ball2, centerSeparation);
+                addBondForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
             } else {
-                addCollisionForces(ball1, ball2, centerSeparation);
+                addCollisionForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
             }
         }
     }
