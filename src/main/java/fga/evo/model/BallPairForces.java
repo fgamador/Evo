@@ -69,10 +69,10 @@ public class BallPairForces {
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
         double force = Ball.calcOverlapForce(overlap);
-        double relativeCenterX = ball1.getCenterX() - ball2.getCenterX();
-        double relativeCenterY = ball1.getCenterY() - ball2.getCenterY();
-        double forceX = (relativeCenterX / centerSeparation) * force;
-        double forceY = (relativeCenterY / centerSeparation) * force;
+        double centerXSeparation = ball1.getCenterX() - ball2.getCenterX();
+        double centerYSeparation = ball1.getCenterY() - ball2.getCenterY();
+        double forceX = (centerXSeparation / centerSeparation) * force;
+        double forceY = (centerYSeparation / centerSeparation) * force;
         ball1.addForce(forceX, forceY);
         ball2.addForce(-forceX, -forceY);
     }
