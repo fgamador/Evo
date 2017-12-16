@@ -16,7 +16,7 @@ public class BallPairForces {
      * @param ball2 another ball
      */
     static void addBallPairForces(Ball ball1, Ball ball2) {
-        if (calcCenterSeparation(ball1, ball2) != 0) {
+        if (calcCenterSeparationSquared(ball1, ball2) != 0) {
             if (ball1.isBondedTo(ball2)) {
                 addBondForces(ball1, ball2, calcCenterSeparation(ball1, ball2));
             } else {
