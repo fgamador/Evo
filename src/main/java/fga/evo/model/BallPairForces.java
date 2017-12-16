@@ -62,17 +62,17 @@ public class BallPairForces {
     }
 
     private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
-        double centerXSeparation = ball1.getCenterX() - ball2.getCenterX();
-        double centerYSeparation = ball1.getCenterY() - ball2.getCenterY();
-        return sqr(centerXSeparation) + sqr(centerYSeparation);
+        double centerXDelta = ball1.getCenterX() - ball2.getCenterX();
+        double centerYDelta = ball1.getCenterY() - ball2.getCenterY();
+        return sqr(centerXDelta) + sqr(centerYDelta);
     }
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
         double force = Ball.calcOverlapForce(overlap);
-        double centerXSeparation = ball1.getCenterX() - ball2.getCenterX();
-        double centerYSeparation = ball1.getCenterY() - ball2.getCenterY();
-        double forceX = (centerXSeparation / centerSeparation) * force;
-        double forceY = (centerYSeparation / centerSeparation) * force;
+        double centerXDelta = ball1.getCenterX() - ball2.getCenterX();
+        double centerYDelta = ball1.getCenterY() - ball2.getCenterY();
+        double forceX = (centerXDelta / centerSeparation) * force;
+        double forceY = (centerYDelta / centerSeparation) * force;
         ball1.addForce(forceX, forceY);
         ball2.addForce(-forceX, -forceY);
     }
