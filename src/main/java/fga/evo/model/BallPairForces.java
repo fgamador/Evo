@@ -39,8 +39,7 @@ public class BallPairForces {
             ball1.onOverlap(overlap1);
             ball2.onOverlap(overlap1);
         }
-        double overlap = overlap1;
-        addOverlapForces(ball1, ball2, centerSeparation, overlap);
+        addOverlapForces(ball1, ball2, centerSeparation, overlap1);
         addDampingForces(ball1, ball2);
     }
 
