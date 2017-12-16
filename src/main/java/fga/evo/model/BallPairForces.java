@@ -42,11 +42,6 @@ public class BallPairForces {
         addDampingForces(ball1, ball2);
     }
 
-    private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
-        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
-        addOverlapForces(ball1, ball2, centerSeparation, overlap);
-    }
-
     /**
      * Adds forces to the balls that will push them away from one another.
      */
@@ -73,6 +68,11 @@ public class BallPairForces {
         double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
         double ball1RelativeCenterY = ball1.getCenterY() - ball2.getCenterY();
         return sqr(ball1RelativeCenterX) + sqr(ball1RelativeCenterY);
+    }
+
+    private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
+        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        addOverlapForces(ball1, ball2, centerSeparation, overlap);
     }
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
