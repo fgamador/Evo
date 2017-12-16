@@ -33,7 +33,7 @@ public class BallPairForces {
      * Adds forces to the balls that will move them back toward just touching one another.
      */
     private static void addBondForces(Ball ball1, Ball ball2) {
-        double centerSeparation = calcCenterSeparation(ball1, ball2);
+        double centerSeparation = Math.sqrt(calcCenterSeparationSquared(ball1, ball2));
         double overlap = calcAndRecordOverlap(ball1, ball2, centerSeparation);
         addOverlapForces(ball1, ball2, centerSeparation, overlap);
         addDampingForces(ball1, ball2);
@@ -64,10 +64,6 @@ public class BallPairForces {
 
     private static boolean ballsOverlap(Ball ball1, Ball ball2, double centerSeparationSquared) {
         return sqr(ball1.getRadius() + ball2.getRadius()) > centerSeparationSquared;
-    }
-
-    private static double calcCenterSeparation(Ball ball1, Ball ball2) {
-        return Math.sqrt(calcCenterSeparationSquared(ball1, ball2));
     }
 
     private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
