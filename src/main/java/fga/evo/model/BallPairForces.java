@@ -38,9 +38,13 @@ public class BallPairForces {
         if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
             notifyOverlap(ball1, ball2, centerSeparation);
         }
+        addOverlapForces(ball1, ball2, centerSeparation);
+        addDampingForces(ball1, ball2);
+    }
+
+    private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         addOverlapForces(ball1, ball2, centerSeparation, overlap);
-        addDampingForces(ball1, ball2);
     }
 
     /**
@@ -51,8 +55,7 @@ public class BallPairForces {
         if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
             double centerSeparation = Math.sqrt(centerSeparationSquared);
             notifyOverlap(ball1, ball2, centerSeparation);
-            double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
-            addOverlapForces(ball1, ball2, centerSeparation, overlap);
+            addOverlapForces(ball1, ball2, centerSeparation);
         }
     }
 
