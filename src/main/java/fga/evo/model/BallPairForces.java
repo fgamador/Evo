@@ -63,7 +63,7 @@ public class BallPairForces {
     }
 
     private static boolean ballsOverlap(Ball ball1, Ball ball2, double centerSeparationSquared) {
-        return ball1.getRadius() + ball2.getRadius() - Math.sqrt(centerSeparationSquared) > 0;
+        return ball1.getRadius() + ball2.getRadius() > Math.sqrt(centerSeparationSquared);
     }
 
     private static double calcCenterSeparation(Ball ball1, Ball ball2) {
