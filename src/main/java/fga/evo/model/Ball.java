@@ -20,7 +20,6 @@ public class Ball extends NewtonianBody {
 
     private double radius;
     private double area;
-    private Set<Ball> bondedBalls = new HashSet<>();
     private List<PairBond> bonds = new ArrayList<>();
     private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
