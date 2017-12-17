@@ -118,6 +118,17 @@ public class BallTest extends EvoTest {
         assertFalse(ball2.isBondedTo(ball1));
     }
 
+//    @Test
+//    public void bondingIsIdempotent2() {
+//        Ball ball1 = new Ball();
+//        Ball ball2 = new Ball();
+//
+//        PairBond bond1 = ball1.addBond(ball2);
+//        PairBond bond2 = ball1.addBond(ball2);
+//
+//        assertEquals(bond2, bond1);
+//    }
+
     @Test
     public void bondingIsIdempotentEvenFromOtherEnd() {
         Ball ball1 = new Ball();
