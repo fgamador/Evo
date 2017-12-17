@@ -61,8 +61,8 @@ public class BallTest extends EvoTest {
 
         PairBond bond = ball1.addBond(ball2);
 
-        assertEquals(ball1, bond.getBody1());
-        assertEquals(ball2, bond.getBody2());
+        assertTrue(bond.bondsTo(ball1));
+        assertTrue(bond.bondsTo(ball2));
     }
 
     @Test

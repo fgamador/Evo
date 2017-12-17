@@ -1,5 +1,7 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.Ball;
+
 public class PairBond {
     private final NewtonianBody body1;
     private final NewtonianBody body2;
@@ -23,5 +25,9 @@ public class PairBond {
 
     public NewtonianBody getBody2() {
         return body2;
+    }
+
+    public boolean bondsTo(NewtonianBody body) {
+        return body1 == body || body2 == body;
     }
 }
