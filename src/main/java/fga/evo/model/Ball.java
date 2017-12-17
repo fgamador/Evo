@@ -96,10 +96,11 @@ public class Ball extends NewtonianBody {
         BallPairForces.addBallPairForces(this, ball);
     }
 
-    public void addBond(Ball ball) {
+    public PairBond addBond(Ball ball) {
         PairBond bond = new PairBond(this, ball);
         bonds.add(bond);
         ball.bonds.add(bond);
+        return bond;
     }
 
     public void removeBond(Ball ball) {

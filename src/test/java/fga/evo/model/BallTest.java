@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.NewtonianBody;
+import fga.evo.model.physics.PairBond;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,6 +52,17 @@ public class BallTest extends EvoTest {
 
         assertTrue(ball1.isBondedTo(ball2));
         assertTrue(ball2.isBondedTo(ball1));
+    }
+
+    @Test
+    public void bondingBallsReturnsBond() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+
+        PairBond bond = ball1.addBond(ball2);
+
+        assertEquals(ball1, bond.getBody1());
+        assertEquals(ball2, bond.getBody2());
     }
 
     @Test
