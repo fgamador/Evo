@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.PairBond;
+
 import java.util.*;
 
 /**
@@ -126,19 +128,19 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         if (Chance.success(spawnOdds)) {
-            return spawn();
+            return spawn().getCells().get(0);
         }
 
         return null;
     }
 
-    private Cell spawn() {
+    private Spawnings spawn() {
         child = new Cell(0, control);
         child.parent = this;
-        addBond(child);
+        PairBond bond = addBond(child);
         child.addEnergy(requestedChildDonation);
         child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
-        return child;
+        return new Spawnings(Collections.singletonList(child), Collections.singletonList(bond));
     }
 
 //    private double getSpawningX(double angle, double childRadius) {
