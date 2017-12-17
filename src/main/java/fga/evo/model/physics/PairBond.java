@@ -35,7 +35,7 @@ public class PairBond {
             return false;
 
         PairBond bond = (PairBond) obj;
-        return (bond.body1 == body1 && bond.body2 == body2) || (bond.body2 == body1 && bond.body1 == body2);
+        return (bond.body1 == body1 && bond.body2 == body2) || (bond.body1 == body2 && bond.body2 == body1);
     }
 
     @Override
