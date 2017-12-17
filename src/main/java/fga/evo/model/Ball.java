@@ -97,25 +97,18 @@ public class Ball extends NewtonianBody {
     }
 
     public void addBond(Ball ball) {
-        bondedBalls.add(ball);
-        ball.bondedBalls.add(this);
-
         PairBond bond = new PairBond(this, ball);
         bonds.add(bond);
         ball.bonds.add(bond);
     }
 
     public void removeBond(Ball ball) {
-        bondedBalls.remove(ball);
-        ball.bondedBalls.remove(this);
-
         bonds.removeIf(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
         ball.bonds.removeIf(bond -> bond.getBody1() == this || bond.getBody2() == this);
     }
 
     public boolean isBondedTo(Ball ball) {
-        return bondedBalls.contains(ball)
-                || bonds.stream().anyMatch(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
+        return bonds.stream().anyMatch(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
     }
 
     public void setRadius(double val) {
