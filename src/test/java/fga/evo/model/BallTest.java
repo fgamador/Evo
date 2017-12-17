@@ -5,8 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
-import static fga.evo.model.Assert.assertPosition;
-import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
