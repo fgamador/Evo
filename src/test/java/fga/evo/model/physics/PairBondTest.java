@@ -35,7 +35,18 @@ public class PairBondTest {
     }
 
     @Test
-    public void pairBondsBondedToTheSameBodiesAreEqual() {
+    public void pairBondEqualsUsesBodies() {
+        NewtonianBody body1 = new NewtonianBody();
+        NewtonianBody body2 = new NewtonianBody();
+
+        PairBond bond1 = new PairBond(body1, body2);
+        PairBond bond2 = new PairBond(body1, body2);
+
+        assertEquals(bond1, bond2);
+    }
+
+    @Test
+    public void pairBondEqualsIsOrderIndependent() {
         NewtonianBody body1 = new NewtonianBody();
         NewtonianBody body2 = new NewtonianBody();
 
@@ -43,6 +54,16 @@ public class PairBondTest {
         PairBond bond2 = new PairBond(body2, body1);
 
         assertEquals(bond1, bond2);
-        assertEquals(bond2, bond1);
+    }
+
+    @Test
+    public void pairBondHashCodeIsOrderIndependent() {
+        NewtonianBody body1 = new NewtonianBody();
+        NewtonianBody body2 = new NewtonianBody();
+
+        PairBond bond1 = new PairBond(body1, body2);
+        PairBond bond2 = new PairBond(body2, body1);
+
+        assertEquals(bond1.hashCode(), bond2.hashCode());
     }
 }

@@ -27,26 +27,20 @@ public class PairBond {
         return body1 == body || body2 == body;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        PairBond pairBond = (PairBond) o;
-//        return Objects.equals(body1, pairBond.body1) &&
-//                Objects.equals(body2, pairBond.body2);
-//    }
-
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(body1, body2);
-//    }
-
     @Override
     public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
         if (!(obj instanceof PairBond))
             return false;
 
         PairBond bond = (PairBond) obj;
         return (bond.body1 == body1 && bond.body2 == body2) || (bond.body2 == body1 && bond.body1 == body2);
+    }
+
+    @Override
+    public int hashCode() {
+        // Same algorithm as in java.util.Set#hashCode.
+        return body1.hashCode() + body2.hashCode();
     }
 }
