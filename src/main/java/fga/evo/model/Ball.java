@@ -104,12 +104,12 @@ public class Ball extends NewtonianBody {
     }
 
     public void removeBond(Ball ball) {
-        bonds.removeIf(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
-        ball.bonds.removeIf(bond -> bond.getBody1() == this || bond.getBody2() == this);
+        bonds.removeIf(bond -> bond.bondsTo(ball));
+        ball.bonds.removeIf(bond -> bond.bondsTo(this));
     }
 
     public boolean isBondedTo(Ball ball) {
-        return bonds.stream().anyMatch(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
+        return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
     }
 
     public void setRadius(double val) {

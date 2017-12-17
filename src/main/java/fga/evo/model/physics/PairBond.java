@@ -19,14 +19,6 @@ public class PairBond {
 //        restLength = val;
 //    }
 
-    public NewtonianBody getBody1() {
-        return body1;
-    }
-
-    public NewtonianBody getBody2() {
-        return body2;
-    }
-
     public boolean bondsTo(NewtonianBody body) {
         return body1 == body || body2 == body;
     }
