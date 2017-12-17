@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class BallTest extends EvoTest {
@@ -30,6 +31,50 @@ public class BallTest extends EvoTest {
     public void testGetArea() {
         ball.setRadius(5);
         assertEquals(25 * Math.PI, ball.getArea(), 0.001);
+    }
+
+    @Test
+    public void unbondedBallsAreNotBonded() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+
+        assertFalse(ball1.isBondedTo(ball2));
+        assertFalse(ball2.isBondedTo(ball1));
+    }
+
+    @Test
+    public void bondingBallsBondsThem() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+
+        ball1.addBond(ball2);
+
+        assertTrue(ball1.isBondedTo(ball2));
+        assertTrue(ball2.isBondedTo(ball1));
+    }
+
+    @Test
+    public void unbondingBallsUnbondsThem() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+        ball1.addBond(ball2);
+
+        ball1.removeBond(ball2);
+
+        assertFalse(ball1.isBondedTo(ball2));
+        assertFalse(ball2.isBondedTo(ball1));
+    }
+
+    @Test
+    public void unbondingBallsUnbondsThem2() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+        ball1.addBond(ball2);
+
+        ball2.removeBond(ball1);
+
+        assertFalse(ball1.isBondedTo(ball2));
+        assertFalse(ball2.isBondedTo(ball1));
     }
 
     @Test
