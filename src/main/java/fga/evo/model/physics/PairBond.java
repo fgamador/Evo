@@ -6,6 +6,9 @@ public class PairBond {
 //    private double restLength = 0;
 
     public PairBond(NewtonianBody body1, NewtonianBody body2) {
+        if (body1 == body2)
+            throw new IllegalArgumentException("Cannot bond a body to itself");
+
         this.body1 = body1;
         this.body2 = body2;
     }
