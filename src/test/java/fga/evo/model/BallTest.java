@@ -78,6 +78,48 @@ public class BallTest extends EvoTest {
     }
 
     @Test
+    public void unbondingRemovesOnlySpecifiedBond() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+        Ball ball3 = new Ball();
+        ball1.addBond(ball2);
+        ball1.addBond(ball3);
+
+        ball1.removeBond(ball2);
+
+        assertFalse(ball1.isBondedTo(ball2));
+        assertFalse(ball2.isBondedTo(ball1));
+        assertTrue(ball1.isBondedTo(ball3));
+        assertTrue(ball3.isBondedTo(ball1));
+    }
+
+    @Test
+    public void bondingIsIdempotent() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+        ball1.addBond(ball2);
+        ball1.addBond(ball2);
+
+        ball1.removeBond(ball2);
+
+        assertFalse(ball1.isBondedTo(ball2));
+        assertFalse(ball2.isBondedTo(ball1));
+    }
+
+    @Test
+    public void bondingIsIdempotentEvenFromOtherEnd() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+        ball1.addBond(ball2);
+        ball2.addBond(ball1);
+
+        ball1.removeBond(ball2);
+
+        assertFalse(ball1.isBondedTo(ball2));
+        assertFalse(ball2.isBondedTo(ball1));
+    }
+
+    @Test
     public void testGetRecentTotalOverlap() {
         Ball ball1 = new Cell(1);
         ball1.setCenterPosition(0, 0);
