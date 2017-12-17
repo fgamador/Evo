@@ -97,6 +97,9 @@ public class Ball extends NewtonianBody {
     }
 
     public PairBond addBond(Ball ball) {
+        if (isBondedTo(ball))
+            throw new IllegalStateException("Cannot bond the same ball twice");
+
         PairBond bond = new PairBond(this, ball);
         bonds.add(bond);
         ball.bonds.add(bond);

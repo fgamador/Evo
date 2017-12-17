@@ -6,9 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class BallTest extends EvoTest {
     private Ball ball;
@@ -105,41 +103,20 @@ public class BallTest extends EvoTest {
         assertTrue(ball3.isBondedTo(ball1));
     }
 
-    @Test
-    public void bondingIsIdempotent() {
+    @Test(expected = IllegalStateException.class)
+    public void cannotBondSameBallTwice() {
         Ball ball1 = new Ball();
         Ball ball2 = new Ball();
         ball1.addBond(ball2);
         ball1.addBond(ball2);
-
-        ball1.removeBond(ball2);
-
-        assertFalse(ball1.isBondedTo(ball2));
-        assertFalse(ball2.isBondedTo(ball1));
     }
 
-//    @Test
-//    public void bondingIsIdempotent2() {
-//        Ball ball1 = new Ball();
-//        Ball ball2 = new Ball();
-//
-//        PairBond bond1 = ball1.addBond(ball2);
-//        PairBond bond2 = ball1.addBond(ball2);
-//
-//        assertEquals(bond2, bond1);
-//    }
-
-    @Test
-    public void bondingIsIdempotentEvenFromOtherEnd() {
+    @Test(expected = IllegalStateException.class)
+    public void cannotBondSameBallTwiceEvenFromOtherEnd() {
         Ball ball1 = new Ball();
         Ball ball2 = new Ball();
         ball1.addBond(ball2);
         ball2.addBond(ball1);
-
-        ball1.removeBond(ball2);
-
-        assertFalse(ball1.isBondedTo(ball2));
-        assertFalse(ball2.isBondedTo(ball1));
     }
 
     @Test
