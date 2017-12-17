@@ -66,7 +66,7 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void unbondingBallsUnbondsThem2() {
+    public void unbondingBallsFromOtherEndUnbondsThem() {
         Ball ball1 = new Ball();
         Ball ball2 = new Ball();
         ball1.addBond(ball2);
