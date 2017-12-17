@@ -1,8 +1,11 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.NewtonianBody;
+import fga.evo.model.physics.PairBond;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static fga.evo.model.Util.sqr;
@@ -18,6 +21,7 @@ public class Ball extends NewtonianBody {
     private double radius;
     private double area;
     private Set<Ball> bondedBalls = new HashSet<>();
+    private List<PairBond> bonds = new ArrayList<>();
     private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
     /**
@@ -81,6 +85,7 @@ public class Ball extends NewtonianBody {
             addForce(0, -calcOverlapForce(overlap));
         }
     }
+
     /**
      * Adds the forces due to the interaction of the ball with another ball, such as a collision or a bond.
      * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
@@ -94,15 +99,23 @@ public class Ball extends NewtonianBody {
     public void addBond(Ball ball) {
         bondedBalls.add(ball);
         ball.bondedBalls.add(this);
+
+        PairBond bond = new PairBond(this, ball);
+        bonds.add(bond);
+        ball.bonds.add(bond);
     }
 
     public void removeBond(Ball ball) {
         bondedBalls.remove(ball);
         ball.bondedBalls.remove(this);
+
+        bonds.removeIf(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
+        ball.bonds.removeIf(bond -> bond.getBody1() == this || bond.getBody2() == this);
     }
 
     public boolean isBondedTo(Ball ball) {
-        return bondedBalls.contains(ball);
+        return bondedBalls.contains(ball)
+                || bonds.stream().anyMatch(bond -> bond.getBody1() == ball || bond.getBody2() == ball);
     }
 
     public void setRadius(double val) {
