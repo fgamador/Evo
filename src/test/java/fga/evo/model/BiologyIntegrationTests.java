@@ -100,6 +100,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         assertEquals(1, newCells.size());
         assertEquals(2, world.getCells().size());
+        assertEquals(1, world.getBonds().size());
         Cell child = cell.getChild();
         assertEquals(0, child.getRadius(), 0);
         assertEquals(0, child.getMass(), 0);
@@ -122,6 +123,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         assertEquals(0, newCells.size());
         assertEquals(2, world.getCells().size());
+        assertEquals(1, world.getBonds().size());
         Cell child = cell.getChild();
         assertTrue(child.getRadius() > 0);
         assertTrue(child.getMass() > 0);

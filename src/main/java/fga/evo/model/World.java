@@ -96,10 +96,15 @@ public class World {
 
     public void restart() {
         cells.clear();
+        bonds.clear();
     }
 
     public Collection<Cell> getCells() {
         return cells;
+    }
+
+    public Collection<PairBond> getBonds() {
+        return bonds;
     }
 
     public void startPull(Cell cell) {
