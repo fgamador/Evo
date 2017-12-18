@@ -60,7 +60,8 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public Cell tickBiology_ControlPhase() {
-        return state.controlPhase(this);
+        List<Cell> children = state.controlPhase(this).getCells();
+        return children.isEmpty() ? null : children.get(0);
     }
 
     public void tickBiology_ConsequencesPhase() {
@@ -189,8 +190,8 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
     }
 
-    private Cell deadControlPhase() {
-        return null;
+    private Spawnings deadControlPhase() {
+        return Spawnings.EMPTY;
     }
 
     private void deadConsequencesPhase() {
@@ -303,15 +304,14 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private interface State {
-        Cell controlPhase(Cell cell);
+        Spawnings controlPhase(Cell cell);
 
         void consequencesPhase(Cell cell);
     }
 
     private static class Alive implements State {
-        public Cell controlPhase(Cell cell) {
-            List<Cell> children = cell.liveControlPhase().getCells();
-            return children.isEmpty() ? null : children.get(0);
+        public Spawnings controlPhase(Cell cell) {
+            return cell.liveControlPhase();
         }
 
         public void consequencesPhase(Cell cell) {
@@ -320,7 +320,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private static class Dead implements State {
-        public Cell controlPhase(Cell cell) {
+        public Spawnings controlPhase(Cell cell) {
             return cell.deadControlPhase();
         }
 
