@@ -181,6 +181,7 @@ public class CellTest {
         Spawnings spawnings = cell.tickBiology_ControlPhase();
 
         assertTrue(spawnings.getCells().isEmpty());
+        assertTrue(spawnings.getBonds().isEmpty());
     }
 
     @Test
@@ -195,6 +196,7 @@ public class CellTest {
         Spawnings spawnings = cell.tickBiology_ControlPhase();
 
         assertFalse(spawnings.getCells().isEmpty());
+        assertFalse(spawnings.getBonds().isEmpty());
     }
 
     @Test
@@ -208,6 +210,7 @@ public class CellTest {
         Spawnings spawnings = cell.tickBiology_ControlPhase();
 
         assertTrue(spawnings.getCells().isEmpty());
+        assertTrue(spawnings.getBonds().isEmpty());
     }
 
     @Test
