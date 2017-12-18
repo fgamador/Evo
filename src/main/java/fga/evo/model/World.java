@@ -39,9 +39,7 @@ public class World {
         Collection<Cell> newCells = new ArrayList<>();
         for (Cell cell : cells) {
             Spawnings spawnings = cell.tickBiology_ControlPhase();
-            if (!spawnings.getCells().isEmpty()) {
-                newCells.add(spawnings.getCells().get(0));
-            }
+            newCells.addAll(spawnings.getCells());
         }
 
         for (Cell cell : cells) {
