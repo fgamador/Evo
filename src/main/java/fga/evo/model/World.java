@@ -1,7 +1,10 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.PairBond;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -12,6 +15,7 @@ public class World {
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
+    private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
 
     public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
@@ -27,26 +31,29 @@ public class World {
      * TODO parallelize the loops
      */
     public Collection<Cell> tick() {
-        Collection<Cell> newCells = tickBiology();
+        Spawnings spawnings = tickBiology();
         for (int i = 0; i < subticksPerTick; i++) {
             subtickPhysics();
         }
-        cells.addAll(newCells);
-        return newCells;
+        cells.addAll(spawnings.getCells());
+        bonds.addAll(spawnings.getBonds());
+        return spawnings.getCells();
     }
 
-    private Collection<Cell> tickBiology() {
-        Collection<Cell> newCells = new ArrayList<>();
+    private Spawnings tickBiology() {
+        List<Cell> newCells = new ArrayList<>();
+        List<PairBond> newBonds = new ArrayList<>();
         for (Cell cell : cells) {
             Spawnings spawnings = cell.tickBiology_ControlPhase();
             newCells.addAll(spawnings.getCells());
+            newBonds.addAll(spawnings.getBonds());
         }
 
         for (Cell cell : cells) {
             tickBiology_ConsequencesPhase(cell);
         }
 
-        return newCells;
+        return new Spawnings(newCells, newBonds);
     }
 
     private void tickBiology_ConsequencesPhase(Cell cell) {
