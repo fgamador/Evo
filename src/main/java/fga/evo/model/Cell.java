@@ -67,7 +67,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         state.consequencesPhase(this);
     }
 
-    private Cell liveControlPhase() {
+    private Spawnings liveControlPhase() {
         control.exertControl(this);
         adjustAndChargeForEnergyRequests();
         resizeRings();
@@ -114,9 +114,9 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
     }
 
-    private Cell manageChild() {
+    private Spawnings manageChild() {
         if (requestedChildDonation <= 0) {
-            return null;
+            return Spawnings.EMPTY;
         }
 
         if (child != null) {
@@ -124,14 +124,14 @@ public class Cell extends Onion implements CellControl.CellApi {
             if (Chance.success(releaseChildOdds)) {
                 releaseChild();
             }
-            return null;
+            return Spawnings.EMPTY;
         }
 
         if (Chance.success(spawnOdds)) {
-            return spawn().getCells().get(0);
+            return spawn();
         }
 
-        return null;
+        return Spawnings.EMPTY;
     }
 
     private Spawnings spawn() {
@@ -310,7 +310,8 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     private static class Alive implements State {
         public Cell controlPhase(Cell cell) {
-            return cell.liveControlPhase();
+            List<Cell> children = cell.liveControlPhase().getCells();
+            return children.isEmpty() ? null : children.get(0);
         }
 
         public void consequencesPhase(Cell cell) {
