@@ -178,9 +178,9 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        Cell child = cell.tickBiology_ControlPhase();
+        Spawnings spawnings = cell.tickBiology_ControlPhase();
 
-        assertNull(child);
+        assertTrue(spawnings.getCells().isEmpty());
     }
 
     @Test
@@ -192,9 +192,9 @@ public class CellTest {
                 .build();
         Chance.setNextRandom(0.4);
 
-        Cell child = cell.tickBiology_ControlPhase();
+        Spawnings spawnings = cell.tickBiology_ControlPhase();
 
-        assertNotNull(child);
+        assertFalse(spawnings.getCells().isEmpty());
     }
 
     @Test
@@ -205,9 +205,9 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        Cell child = cell.tickBiology_ControlPhase();
+        Spawnings spawnings = cell.tickBiology_ControlPhase();
 
-        assertNull(child);
+        assertTrue(spawnings.getCells().isEmpty());
     }
 
     @Test
@@ -218,7 +218,7 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        Cell child = cell.tickBiology_ControlPhase();
+        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
 
         assertNotNull(child);
         assertEquals(child, cell.getChild());
@@ -245,7 +245,7 @@ public class CellTest {
                 .build();
         double startPhotoArea = cell.getPhotoArea();
 
-        Cell child = cell.tickBiology_ControlPhase();
+        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
 
         assertNotNull(child);
         assertEnergy(10 / 2, child);
@@ -262,7 +262,7 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase();
+        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
         cell.tickBiology_ConsequencesPhase();
         assertEnergy(2, child);
 
@@ -288,7 +288,7 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase();
+        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase
@@ -310,7 +310,7 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase();
+        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase
@@ -333,7 +333,7 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase();
+        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase

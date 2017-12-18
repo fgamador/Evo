@@ -59,9 +59,8 @@ public class Cell extends Onion implements CellControl.CellApi {
         state = DEAD;
     }
 
-    public Cell tickBiology_ControlPhase() {
-        List<Cell> children = state.controlPhase(this).getCells();
-        return children.isEmpty() ? null : children.get(0);
+    public Spawnings tickBiology_ControlPhase() {
+        return state.controlPhase(this);
     }
 
     public void tickBiology_ConsequencesPhase() {
