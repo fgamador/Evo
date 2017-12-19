@@ -163,10 +163,10 @@ public class Cell extends Onion implements CellControl.CellApi {
 //    }
 
     private void releaseChild() {
-        removeBond(child);
+        PairBond bond = removeBond(child);
         child.parent = null;
         child = null;
-        // TODO lifecycleListener.onBondBroken(bond);
+        lifecycleListener.onBondBroken(bond);
     }
 
     private void liveConsequencesPhase() {
