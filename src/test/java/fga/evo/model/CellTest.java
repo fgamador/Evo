@@ -423,13 +423,17 @@ public class CellTest {
     @Test
     public void testConsequencesPhase_DeadlyDamage() {
         Cell.maximumSurvivableDamage.setValue(0.1);
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setPhotoRingArea(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
 
         cell.tickBiology_ConsequencesPhase();
 
         assertFalse(cell.isAlive());
+        assertEquals(1, lifecycleListener.deadCells.size());
+        assertEquals(cell, lifecycleListener.deadCells.get(0));
     }
 
     @Test

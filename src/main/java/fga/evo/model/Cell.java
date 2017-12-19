@@ -63,6 +63,7 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     public void die() {
         state = DEAD;
+        lifecycleListener.onCellDied(this);
     }
 
     public Spawnings tickBiology_ControlPhase() {
