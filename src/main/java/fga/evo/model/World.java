@@ -4,13 +4,12 @@ import fga.evo.model.physics.PairBond;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
-public class World {
+public class World implements LifecycleListener {
     private static int subticksPerTick = 2;
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
@@ -121,6 +120,26 @@ public class World {
 
     public boolean isPulling() {
         return puller != null;
+    }
+
+    @Override
+    public void onCellBorn(Cell cell) {
+        cells.add(cell);
+    }
+
+    @Override
+    public void onCellDied(Cell cell) {
+        cells.remove(cell);
+    }
+
+    @Override
+    public void onBondFormed(PairBond bond) {
+        bonds.add(bond);
+    }
+
+    @Override
+    public void onBondBroken(PairBond bond) {
+        bonds.remove(bond);
     }
 
     //=========================================================================
