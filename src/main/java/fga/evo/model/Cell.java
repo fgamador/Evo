@@ -142,7 +142,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private Spawnings spawn() {
-        child = new Cell(0, control);
+        child = new Cell(0, control, lifecycleListener);
         child.parent = this;
         PairBond bond = addBond(child);
         child.addEnergy(requestedChildDonation);
@@ -310,6 +310,10 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     public double getDamage() {
         return damage;
+    }
+
+    public LifecycleListener getLifecycleListener() {
+        return lifecycleListener;
     }
 
     private interface State {

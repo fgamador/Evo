@@ -236,6 +236,7 @@ public class CellTest {
         assertEquals(cell, child.getParent());
         assertBonded(cell, child);
         assertEquals(cell.getControl(), child.getControl());
+        assertEquals(cell.getLifecycleListener(), child.getLifecycleListener());
         assertEquals(0, child.getPhotoArea(), 0);
         assertEquals(0, child.getRadius(), 0);
         assertEnergy(100 - 2, cell);
