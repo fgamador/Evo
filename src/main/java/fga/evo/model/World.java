@@ -33,13 +33,14 @@ public class World {
      * TODO parallelize the loops
      */
     public Collection<Cell> tick() {
-        Spawnings spawnings = tickBiology();
+        lifecycleListener.clear();
+        tickBiology();
         for (int i = 0; i < subticksPerTick; i++) {
             subtickPhysics();
         }
-        cells.addAll(spawnings.getCells());
-        bonds.addAll(spawnings.getBonds());
-        return spawnings.getCells();
+        cells.addAll(lifecycleListener.bornCells);
+        bonds.addAll(lifecycleListener.formedBonds);
+        return lifecycleListener.bornCells;
     }
 
     private Spawnings tickBiology() {
