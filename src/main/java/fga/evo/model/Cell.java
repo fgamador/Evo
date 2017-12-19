@@ -28,6 +28,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private Cell child;
     private Cell parent;
     private double damage;
+    private LifecycleListener lifecycleListener;
 
     public Cell(double radius) {
         this(radius, c -> {
@@ -35,10 +36,15 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public Cell(double radius, CellControl control) {
+        this(radius, control, LifecycleListener.NULL_LISTENER);
+    }
+
+    public Cell(double radius, CellControl control, LifecycleListener lifecycleListener) {
         addRing(floatRing = new FloatRing(0));
         addRing(photoRing = new PhotoRing(radius));
         syncFields();
         this.control = control;
+        this.lifecycleListener = lifecycleListener;
     }
 
     protected void addRing(TissueRing ring) {
