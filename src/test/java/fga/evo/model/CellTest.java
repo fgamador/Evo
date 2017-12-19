@@ -260,7 +260,6 @@ public class CellTest {
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(1, lifecycleListener.bornCells.size());
         Cell child = lifecycleListener.bornCells.get(0);
         assertEnergy(10 / 2, child);
         assertEquals((10 / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea, 0.001);
@@ -269,14 +268,17 @@ public class CellTest {
 
     @Test
     public void testBothPhases_MaintainChild() {
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2))
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
+        cell.tickBiology_ControlPhase();
+        Cell child = lifecycleListener.bornCells.get(0);
         cell.tickBiology_ConsequencesPhase();
         assertEnergy(2, child);
 
@@ -295,14 +297,17 @@ public class CellTest {
 
     @Test
     public void testControlPhase_ReleaseChild() {
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2).setReleaseChildOdds(1))
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
+        cell.tickBiology_ControlPhase();
+        Cell child = lifecycleListener.bornCells.get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase
