@@ -180,10 +180,8 @@ public class CellTest {
                 .setLifecycleListener(lifecycleListener)
                 .build();
 
-        Spawnings spawnings = cell.tickBiology_ControlPhase();
+        cell.tickBiology_ControlPhase();
 
-        assertTrue(spawnings.getCells().isEmpty());
-        assertTrue(spawnings.getBonds().isEmpty());
         assertTrue(lifecycleListener.bornCells.isEmpty());
         assertTrue(lifecycleListener.formedBonds.isEmpty());
     }
@@ -199,10 +197,8 @@ public class CellTest {
                 .build();
         Chance.setNextRandom(0.4);
 
-        Spawnings spawnings = cell.tickBiology_ControlPhase();
+        cell.tickBiology_ControlPhase();
 
-        assertFalse(spawnings.getCells().isEmpty());
-        assertFalse(spawnings.getBonds().isEmpty());
         assertEquals(1, lifecycleListener.bornCells.size());
         assertEquals(1, lifecycleListener.formedBonds.size());
     }
@@ -217,10 +213,8 @@ public class CellTest {
                 .setLifecycleListener(lifecycleListener)
                 .build();
 
-        Spawnings spawnings = cell.tickBiology_ControlPhase();
+        cell.tickBiology_ControlPhase();
 
-        assertTrue(spawnings.getCells().isEmpty());
-        assertTrue(spawnings.getBonds().isEmpty());
         assertTrue(lifecycleListener.bornCells.isEmpty());
         assertTrue(lifecycleListener.formedBonds.isEmpty());
     }
