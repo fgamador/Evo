@@ -1,10 +1,8 @@
 package fga.evo.model;
 
-import org.jcp.xml.dsig.internal.MacOutputStream;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
-import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.*;
 
 public class CellTest {
