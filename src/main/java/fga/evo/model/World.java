@@ -43,20 +43,14 @@ public class World {
         return lifecycleListener.bornCells;
     }
 
-    private Spawnings tickBiology() {
-        List<Cell> newCells = new ArrayList<>();
-        List<PairBond> newBonds = new ArrayList<>();
+    private void tickBiology() {
         for (Cell cell : cells) {
-            Spawnings spawnings = cell.tickBiology_ControlPhase();
-            newCells.addAll(spawnings.getCells());
-            newBonds.addAll(spawnings.getBonds());
+            cell.tickBiology_ControlPhase();
         }
 
         for (Cell cell : cells) {
             tickBiology_ConsequencesPhase(cell);
         }
-
-        return new Spawnings(newCells, newBonds);
     }
 
     private void tickBiology_ConsequencesPhase(Cell cell) {

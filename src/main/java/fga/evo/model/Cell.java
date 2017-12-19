@@ -66,20 +66,20 @@ public class Cell extends Onion implements CellControl.CellApi {
         lifecycleListener.onCellDied(this);
     }
 
-    public Spawnings tickBiology_ControlPhase() {
-        return state.controlPhase(this);
+    public void tickBiology_ControlPhase() {
+        state.controlPhase(this);
     }
 
     public void tickBiology_ConsequencesPhase() {
         state.consequencesPhase(this);
     }
 
-    private Spawnings liveControlPhase() {
+    private void liveControlPhase() {
         control.exertControl(this);
         adjustAndChargeForEnergyRequests();
         resizeRings();
         manageParent();
-        return manageChild();
+        manageChild();
     }
 
     private void adjustAndChargeForEnergyRequests() {
@@ -121,9 +121,9 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
     }
 
-    private Spawnings manageChild() {
+    private void manageChild() {
         if (requestedChildDonation <= 0) {
-            return Spawnings.EMPTY;
+            return;
         }
 
         if (child != null) {
@@ -131,17 +131,15 @@ public class Cell extends Onion implements CellControl.CellApi {
             if (Chance.success(releaseChildOdds)) {
                 releaseChild();
             }
-            return Spawnings.EMPTY;
+            return;
         }
 
         if (Chance.success(spawnOdds)) {
-            return spawn();
+            spawn();
         }
-
-        return Spawnings.EMPTY;
     }
 
-    private Spawnings spawn() {
+    private void spawn() {
         child = new Cell(0, control, lifecycleListener);
         child.parent = this;
         PairBond bond = addBond(child);
@@ -149,7 +147,6 @@ public class Cell extends Onion implements CellControl.CellApi {
         child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
         lifecycleListener.onCellBorn(child);
         lifecycleListener.onBondFormed(bond);
-        return new Spawnings(Collections.singletonList(child), Collections.singletonList(bond));
     }
 
 //    private double getSpawningX(double angle, double childRadius) {
@@ -199,8 +196,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
     }
 
-    private Spawnings deadControlPhase() {
-        return Spawnings.EMPTY;
+    private void deadControlPhase() {
     }
 
     private void deadConsequencesPhase() {
@@ -321,14 +317,14 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private interface State {
-        Spawnings controlPhase(Cell cell);
+        void controlPhase(Cell cell);
 
         void consequencesPhase(Cell cell);
     }
 
     private static class Alive implements State {
-        public Spawnings controlPhase(Cell cell) {
-            return cell.liveControlPhase();
+        public void controlPhase(Cell cell) {
+            cell.liveControlPhase();
         }
 
         public void consequencesPhase(Cell cell) {
@@ -337,8 +333,8 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private static class Dead implements State {
-        public Spawnings controlPhase(Cell cell) {
-            return cell.deadControlPhase();
+        public void controlPhase(Cell cell) {
+            cell.deadControlPhase();
         }
 
         public void consequencesPhase(Cell cell) {
