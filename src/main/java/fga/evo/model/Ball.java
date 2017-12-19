@@ -105,9 +105,10 @@ public class Ball extends NewtonianBody {
         return bond;
     }
 
-    public void removeBond(Ball ball) {
+    public PairBond removeBond(Ball ball) {
         bonds.removeIf(bond -> bond.bondsTo(ball));
         ball.bonds.removeIf(bond -> bond.bondsTo(this));
+        return null;
     }
 
     public boolean isBondedTo(Ball ball) {

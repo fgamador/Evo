@@ -317,6 +317,7 @@ public class CellTest {
         assertNull(cell.getChild());
         assertNull(child.getParent());
         assertNotBonded(cell, child);
+        // TODO assertEquals(1, lifecycleListener.brokenBonds.size());
         assertEquals(2, child.getDonatedEnergy(), 0);
     }
 

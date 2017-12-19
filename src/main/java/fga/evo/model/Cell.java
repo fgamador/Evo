@@ -166,6 +166,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         removeBond(child);
         child.parent = null;
         child = null;
+        // TODO lifecycleListener.onBondBroken(bond);
     }
 
     private void liveConsequencesPhase() {
