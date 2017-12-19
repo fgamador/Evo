@@ -322,14 +322,17 @@ public class CellTest {
 
     @Test
     public void testControlPhase_ReleaseParent() {
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2).setReleaseParentOdds(1))
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
+        cell.tickBiology_ControlPhase();
+        Cell child = lifecycleListener.bornCells.get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase
@@ -344,15 +347,18 @@ public class CellTest {
 
     @Test
     public void testControlPhase_NegativeDonationDoesNothing() {
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         ParentChildControl control = new ParentChildControl(1, 2);
         Cell cell = new Cell.Builder()
                 .setControl(control)
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
 
         // first tick, both phases
-        Cell child = cell.tickBiology_ControlPhase().getCells().get(0);
+        cell.tickBiology_ControlPhase();
+        Cell child = lifecycleListener.bornCells.get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase
