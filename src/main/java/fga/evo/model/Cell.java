@@ -372,6 +372,11 @@ public class Cell extends Onion implements CellControl.CellApi {
             return this;
         }
 
+        public Builder setLifecycleListener(LifecycleListener listener) {
+            cell.lifecycleListener = listener;
+            return this;
+        }
+
         public Cell build() {
             cell.syncFields();
             return cell;

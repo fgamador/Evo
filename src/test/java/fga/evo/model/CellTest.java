@@ -172,16 +172,20 @@ public class CellTest {
 
     @Test
     public void testControlPhase_NoSpawnOddsNoChild() {
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(0, 2))
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
 
         Spawnings spawnings = cell.tickBiology_ControlPhase();
 
         assertTrue(spawnings.getCells().isEmpty());
         assertTrue(spawnings.getBonds().isEmpty());
+        assertTrue(lifecycleListener.bornCells.isEmpty());
+        assertTrue(lifecycleListener.formedBonds.isEmpty());
     }
 
     @Test
