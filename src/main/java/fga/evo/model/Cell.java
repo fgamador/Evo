@@ -146,6 +146,8 @@ public class Cell extends Onion implements CellControl.CellApi {
         PairBond bond = addBond(child);
         child.addEnergy(requestedChildDonation);
         child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
+        lifecycleListener.onCellBorn(child);
+        lifecycleListener.onBondFormed(bond);
         return new Spawnings(Collections.singletonList(child), Collections.singletonList(bond));
     }
 

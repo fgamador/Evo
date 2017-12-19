@@ -190,10 +190,12 @@ public class CellTest {
 
     @Test
     public void testControlPhase_SpawnOddsSuccessSpawnChild() {
+        SpyLifecycleListener lifecycleListener = new SpyLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(0.5, 2))
                 .setPhotoRingOuterRadius(10)
                 .setEnergy(100)
+                .setLifecycleListener(lifecycleListener)
                 .build();
         Chance.setNextRandom(0.4);
 
@@ -201,6 +203,8 @@ public class CellTest {
 
         assertFalse(spawnings.getCells().isEmpty());
         assertFalse(spawnings.getBonds().isEmpty());
+        assertEquals(1, lifecycleListener.bornCells.size());
+        assertEquals(1, lifecycleListener.formedBonds.size());
     }
 
     @Test
