@@ -316,6 +316,10 @@ public class Cell extends Onion implements CellControl.CellApi {
         return lifecycleListener;
     }
 
+    public void setLifecycleListener(LifecycleListener listener) {
+        this.lifecycleListener = listener;
+    }
+
     private interface State {
         Spawnings controlPhase(Cell cell);
 
