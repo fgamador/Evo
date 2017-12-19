@@ -75,17 +75,17 @@ public class BallTest extends EvoTest {
         assertFalse(ball2.isBondedTo(ball1));
     }
 
-//    @Test
-//    public void unbondingBallsReturnsBond() {
-//        Ball ball1 = new Ball();
-//        Ball ball2 = new Ball();
-//        ball1.addBond(ball2);
-//
-//        PairBond bond = ball1.removeBond(ball2);
-//
-//        assertTrue(bond.bondsTo(ball1));
-//        assertTrue(bond.bondsTo(ball2));
-//    }
+    @Test
+    public void unbondingBallsReturnsBond() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
+        ball1.addBond(ball2);
+
+        PairBond bond = ball1.removeBond(ball2);
+
+        assertTrue(bond.bondsTo(ball1));
+        assertTrue(bond.bondsTo(ball2));
+    }
 
     @Test
     public void unbondingBallsFromOtherEndUnbondsThem() {

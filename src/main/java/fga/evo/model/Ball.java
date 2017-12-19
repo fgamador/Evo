@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import static fga.evo.model.Util.sqr;
 
@@ -106,9 +107,11 @@ public class Ball extends NewtonianBody {
     }
 
     public PairBond removeBond(Ball ball) {
-        bonds.removeIf(bond -> bond.bondsTo(ball));
+        Predicate<PairBond> bondsToBall = bond -> bond.bondsTo(ball);
+        PairBond removed = bonds.stream().filter(bondsToBall).findFirst().orElse(null);
+        bonds.removeIf(bondsToBall);
         ball.bonds.removeIf(bond -> bond.bondsTo(this));
-        return null;
+        return removed;
     }
 
     public boolean isBondedTo(Ball ball) {
