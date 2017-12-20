@@ -5,7 +5,7 @@ import fga.evo.model.physics.PairBond;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccumulatingLifecycleListener implements LifecycleListener {
+public class AccumulatingCellLifecycleListener implements CellLifecycleListener {
     public List<Cell> bornCells = new ArrayList<>();
     public List<Cell> deadCells = new ArrayList<>();
     public List<PairBond> formedBonds = new ArrayList<>();

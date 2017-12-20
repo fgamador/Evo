@@ -2,7 +2,6 @@ package fga.evo.model;
 
 import fga.evo.model.physics.PairBond;
 
-import javax.swing.plaf.ActionMapUIResource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +16,7 @@ public class World {
     private List<Cell> cells = new ArrayList<>();
     private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
-    private AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+    private AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
 
     public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);

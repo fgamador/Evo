@@ -2,7 +2,7 @@ package fga.evo.model;
 
 import fga.evo.model.physics.PairBond;
 
-public interface LifecycleListener {
+public interface CellLifecycleListener {
     void onCellBorn(Cell cell);
 
     void onCellDied(Cell cell);
@@ -11,7 +11,7 @@ public interface LifecycleListener {
 
     void onBondBroken(PairBond bond);
 
-    public static final LifecycleListener NULL_LISTENER = new LifecycleListener() {
+    public static final CellLifecycleListener NULL_LISTENER = new CellLifecycleListener() {
         @Override
         public void onCellBorn(Cell cell) {
         }

@@ -28,7 +28,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private Cell child;
     private Cell parent;
     private double damage;
-    private LifecycleListener lifecycleListener;
+    private CellLifecycleListener lifecycleListener;
 
     public Cell(double radius) {
         this(radius, c -> {
@@ -36,10 +36,10 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public Cell(double radius, CellControl control) {
-        this(radius, control, LifecycleListener.NULL_LISTENER);
+        this(radius, control, CellLifecycleListener.NULL_LISTENER);
     }
 
-    public Cell(double radius, CellControl control, LifecycleListener lifecycleListener) {
+    public Cell(double radius, CellControl control, CellLifecycleListener lifecycleListener) {
         addRing(floatRing = new FloatRing(0));
         addRing(photoRing = new PhotoRing(radius));
         syncFields();
@@ -308,11 +308,11 @@ public class Cell extends Onion implements CellControl.CellApi {
         return damage;
     }
 
-    public LifecycleListener getLifecycleListener() {
+    public CellLifecycleListener getLifecycleListener() {
         return lifecycleListener;
     }
 
-    public void setLifecycleListener(LifecycleListener listener) {
+    public void setLifecycleListener(CellLifecycleListener listener) {
         this.lifecycleListener = listener;
     }
 
@@ -380,7 +380,7 @@ public class Cell extends Onion implements CellControl.CellApi {
             return this;
         }
 
-        public Builder setLifecycleListener(LifecycleListener listener) {
+        public Builder setLifecycleListener(CellLifecycleListener listener) {
             cell.lifecycleListener = listener;
             return this;
         }

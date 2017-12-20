@@ -170,7 +170,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_NoSpawnOddsNoChild() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(0, 2))
                 .setPhotoRingOuterRadius(10)
@@ -186,7 +186,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_SpawnOddsSuccessSpawnChild() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(0.5, 2))
                 .setPhotoRingOuterRadius(10)
@@ -203,7 +203,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_NoDonatedEnergyNoChild() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 0))
                 .setPhotoRingOuterRadius(10)
@@ -219,7 +219,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_SpawnChild() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2))
                 .setPhotoRingOuterRadius(10)
@@ -246,7 +246,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_ScaleChildDonation() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(c -> {
                     c.setSpawnOdds(1);
@@ -269,7 +269,7 @@ public class CellTest {
 
     @Test
     public void testBothPhases_MaintainChild() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2))
                 .setPhotoRingOuterRadius(10)
@@ -298,7 +298,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_ReleaseChild() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2).setReleaseChildOdds(1))
                 .setPhotoRingOuterRadius(10)
@@ -324,7 +324,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_ReleaseParent() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setControl(new ParentChildControl(1, 2).setReleaseParentOdds(1))
                 .setPhotoRingOuterRadius(10)
@@ -349,7 +349,7 @@ public class CellTest {
 
     @Test
     public void testControlPhase_NegativeDonationDoesNothing() {
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         ParentChildControl control = new ParentChildControl(1, 2);
         Cell cell = new Cell.Builder()
                 .setControl(control)
@@ -425,7 +425,7 @@ public class CellTest {
     @Test
     public void testConsequencesPhase_DeadlyDamage() {
         Cell.maximumSurvivableDamage.setValue(0.1);
-        AccumulatingLifecycleListener lifecycleListener = new AccumulatingLifecycleListener();
+        AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         Cell cell = new Cell.Builder()
                 .setPhotoRingArea(100)
                 .setLifecycleListener(lifecycleListener)
