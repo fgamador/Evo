@@ -26,7 +26,7 @@ public class BallPairForces {
     /**
      * Adds forces to the balls that will move them back toward just touching one another.
      */
-    private static void addBondForces(Ball ball1, Ball ball2) {
+    public static void addBondForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
         if (centerSeparationSquared == 0) {
             return;
@@ -43,7 +43,7 @@ public class BallPairForces {
     /**
      * Adds forces to the balls that will push them away from one another.
      */
-    private static void addCollisionForces(Ball ball1, Ball ball2) {
+    public static void addCollisionForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
         if (centerSeparationSquared == 0) {
             return;

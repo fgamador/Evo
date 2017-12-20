@@ -35,7 +35,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testAddBallPairForces_XRestLength() {
         ball2.setCenterPosition(2, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addCollisionForces(ball, ball2);
 
         assertNetForce(0, 0, ball);
         assertNetForce(0, 0, ball2);
@@ -45,7 +45,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testAddBallPairForces_XCollision() {
         ball2.setCenterPosition(1, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addCollisionForces(ball, ball2);
 
         assertNetForce(-1, 0, ball);
         assertNetForce(1, 0, ball2);
@@ -55,7 +55,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testAddBallPairForces_NotInCollision() {
         ball2.setCenterPosition(3, -3);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addCollisionForces(ball, ball2);
 
         assertNetForce(0, 0, ball);
         assertNetForce(0, 0, ball2);
@@ -65,7 +65,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testAddBallPairForces_DiagonalCollision() {
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addCollisionForces(ball, ball2);
 
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
@@ -75,7 +75,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testAddBallPairForces_ReverseDiagonalCollision() {
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
-        BallPairForces.addBallPairForces(ball2, ball);
+        BallPairForces.addCollisionForces(ball2, ball);
 
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
@@ -85,7 +85,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testAddBallPairForces_FullOverlap() {
         ball2.setCenterPosition(0, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addCollisionForces(ball, ball2);
 
         assertNetForce(0, 0, ball);
         assertNetForce(0, 0, ball2);
@@ -96,7 +96,7 @@ public class BallPairForcesTest extends EvoTest {
         ball.addBond(ball2);
         ball2.setCenterPosition(2, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertNetForce(0, 0, ball);
         assertNetForce(0, 0, ball2);
@@ -109,7 +109,7 @@ public class BallPairForcesTest extends EvoTest {
         ball.setVelocity(1, 0);
         ball2.setVelocity(1, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertNetForce(0, 0, ball);
         assertNetForce(0, 0, ball2);
@@ -120,7 +120,7 @@ public class BallPairForcesTest extends EvoTest {
         ball.addBond(ball2);
         ball2.setCenterPosition(1, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertNetForce(-1, 0, ball);
         assertNetForce(1, 0, ball2);
@@ -131,7 +131,7 @@ public class BallPairForcesTest extends EvoTest {
         ball.addBond(ball2);
         ball2.setCenterPosition(0, -3);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertNetForce(0, -1, ball);
         assertNetForce(0, 1, ball2);
@@ -143,7 +143,7 @@ public class BallPairForcesTest extends EvoTest {
         ball2.setCenterPosition(2, 0);
         ball2.setVelocity(-1, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertNetForce(-1, 0, ball);
         assertNetForce(1, 0, ball2);
@@ -153,7 +153,7 @@ public class BallPairForcesTest extends EvoTest {
     public void testOnOverlap_BallCollision() {
         ball2.setCenterPosition(1.5, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addCollisionForces(ball, ball2);
 
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
         assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
@@ -164,7 +164,7 @@ public class BallPairForcesTest extends EvoTest {
         ball.addBond(ball2);
         ball2.setCenterPosition(1.5, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
         assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
@@ -175,7 +175,7 @@ public class BallPairForcesTest extends EvoTest {
         ball.addBond(ball2);
         ball2.setCenterPosition(2.5, 0);
 
-        BallPairForces.addBallPairForces(ball, ball2);
+        BallPairForces.addBondForces(ball, ball2);
 
         assertEquals(0, ball.getRecentTotalOverlap(), 0);
         assertEquals(0, ball2.getRecentTotalOverlap(), 0);
