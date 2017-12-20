@@ -1,7 +1,6 @@
 package fga.evo.model;
 
-import mockit.Expectations;
-import org.junit.After;
+import fga.evo.model.physics.Ball;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,9 +1,5 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.Ball;
-
-import java.util.Objects;
-
 public class PairBond {
     private final NewtonianBody body1;
     private final NewtonianBody body2;

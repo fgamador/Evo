@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.Ball;
+
 /**
  * The four walls surrounding the cells.
  */

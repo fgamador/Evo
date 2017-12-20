@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.Ball;
+
 import static fga.evo.model.Util.sqr;
 
 /**

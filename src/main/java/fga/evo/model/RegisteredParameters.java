@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.Ball;
+import fga.evo.model.physics.BallPairForces;
 import fga.evo.model.physics.NewtonianBody;
 
 import java.util.HashMap;

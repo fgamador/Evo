@@ -1,12 +1,10 @@
-package fga.evo.model;
+package fga.evo.model.physics;
 
-import fga.evo.model.physics.NewtonianBody;
-import fga.evo.model.physics.PairBond;
+import fga.evo.model.DecayingAccumulator;
+import fga.evo.model.DoubleParameter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import static fga.evo.model.Util.sqr;
@@ -16,8 +14,8 @@ import static fga.evo.model.Util.sqr;
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
 public class Ball extends NewtonianBody {
-    static DoubleParameter overlapForceFactor = new DoubleParameter(1);
-    static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
+    public static DoubleParameter overlapForceFactor = new DoubleParameter(1);
+    public static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
     private double radius;
     private double area;
@@ -29,7 +27,7 @@ public class Ball extends NewtonianBody {
      *
      * @param subticksPerTick time resolution
      */
-    void subtickPhysics(int subticksPerTick) {
+    public void subtickPhysics(int subticksPerTick) {
         subtick(subticksPerTick);
         overlapAccumulator.decay();
     }

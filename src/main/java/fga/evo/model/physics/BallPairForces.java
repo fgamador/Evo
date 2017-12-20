@@ -1,4 +1,7 @@
-package fga.evo.model;
+package fga.evo.model.physics;
+
+import fga.evo.model.DoubleParameter;
+import fga.evo.model.physics.Ball;
 
 import static fga.evo.model.Util.sqr;
 
@@ -6,7 +9,7 @@ import static fga.evo.model.Util.sqr;
  * Collision and bond forces for pairs of balls. Split out from Ball in honor of the Single Responsibility Principle.
  */
 public class BallPairForces {
-    static DoubleParameter dampingForceFactor = new DoubleParameter(1);
+    public static DoubleParameter dampingForceFactor = new DoubleParameter(1);
 
     /**
      * Adds the forces due to the interaction of one ball with another ball, such as a collision or a bond.
@@ -15,7 +18,7 @@ public class BallPairForces {
      * @param ball1 a ball
      * @param ball2 another ball
      */
-    static void addBallPairForces(Ball ball1, Ball ball2) {
+    public static void addBallPairForces(Ball ball1, Ball ball2) {
         if (ball1.isBondedTo(ball2)) {
             addBondForces(ball1, ball2);
         } else {
