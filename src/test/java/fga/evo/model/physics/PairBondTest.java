@@ -6,63 +6,63 @@ import static org.junit.Assert.*;
 
 public class PairBondTest {
     @Test
-    public void aPairBondBondsToTheBodiesItWasConstructedWith() {
-        NewtonianBody body1 = new NewtonianBody();
-        NewtonianBody body2 = new NewtonianBody();
+    public void aPairBondBondsToTheBallsItWasConstructedWith() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
 
-        PairBond bond = new PairBond(body1, body2);
+        PairBond bond = new PairBond(ball1, ball2);
 
-        assertTrue(bond.bondsTo(body1));
-        assertTrue(bond.bondsTo(body2));
+        assertTrue(bond.bondsTo(ball1));
+        assertTrue(bond.bondsTo(ball2));
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void aPairBondCannotBondABodyToItself() {
-        NewtonianBody body1 = new NewtonianBody();
-        PairBond bond = new PairBond(body1, body1);
+    public void aPairBondCannotBondABallToItself() {
+        Ball ball1 = new Ball();
+        PairBond bond = new PairBond(ball1, ball1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondNull1() {
-        NewtonianBody body = new NewtonianBody();
-        PairBond bond = new PairBond(null, body);
+        Ball ball = new Ball();
+        PairBond bond = new PairBond(null, ball);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondNull2() {
-        NewtonianBody body = new NewtonianBody();
-        PairBond bond = new PairBond(body, null);
+        Ball ball = new Ball();
+        PairBond bond = new PairBond(ball, null);
     }
 
     @Test
-    public void pairBondEqualsUsesBodies() {
-        NewtonianBody body1 = new NewtonianBody();
-        NewtonianBody body2 = new NewtonianBody();
+    public void pairBondEqualsUsesBalls() {
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
 
-        PairBond bond1 = new PairBond(body1, body2);
-        PairBond bond2 = new PairBond(body1, body2);
+        PairBond bond1 = new PairBond(ball1, ball2);
+        PairBond bond2 = new PairBond(ball1, ball2);
 
         assertEquals(bond1, bond2);
     }
 
     @Test
     public void pairBondEqualsIsOrderIndependent() {
-        NewtonianBody body1 = new NewtonianBody();
-        NewtonianBody body2 = new NewtonianBody();
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
 
-        PairBond bond1 = new PairBond(body1, body2);
-        PairBond bond2 = new PairBond(body2, body1);
+        PairBond bond1 = new PairBond(ball1, ball2);
+        PairBond bond2 = new PairBond(ball2, ball1);
 
         assertEquals(bond1, bond2);
     }
 
     @Test
     public void pairBondHashCodeIsOrderIndependent() {
-        NewtonianBody body1 = new NewtonianBody();
-        NewtonianBody body2 = new NewtonianBody();
+        Ball ball1 = new Ball();
+        Ball ball2 = new Ball();
 
-        PairBond bond1 = new PairBond(body1, body2);
-        PairBond bond2 = new PairBond(body2, body1);
+        PairBond bond1 = new PairBond(ball1, ball2);
+        PairBond bond2 = new PairBond(ball2, ball1);
 
         assertEquals(bond1.hashCode(), bond2.hashCode());
     }
