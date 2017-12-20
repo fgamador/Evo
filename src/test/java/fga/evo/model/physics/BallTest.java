@@ -1,10 +1,6 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.Cell;
 import fga.evo.model.EvoTest;
-import fga.evo.model.physics.Ball;
-import fga.evo.model.physics.NewtonianBody;
-import fga.evo.model.physics.PairBond;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -136,9 +132,13 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testGetRecentTotalOverlap() {
-        Ball ball1 = new Cell(1);
+        Ball ball1 = new Ball();
+        ball1.setRadius(1);
+        ball1.setMass(1);
         ball1.setCenterPosition(0, 0);
-        Ball ball2 = new Cell(1);
+        Ball ball2 = new Ball();
+        ball2.setRadius(1);
+        ball2.setMass(1);
         ball2.setCenterPosition(1.5, 0);
 
         ball1.addBallPairForces(ball2);
