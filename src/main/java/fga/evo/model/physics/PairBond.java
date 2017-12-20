@@ -14,6 +14,10 @@ public class PairBond {
         this.ball2 = ball2;
     }
 
+    public void addForces() {
+        BallPairForces.addBondForces(ball1, ball2);
+    }
+
     public boolean bondsTo(Ball ball) {
         return ball1 == ball || ball2 == ball;
     }
