@@ -1,26 +1,21 @@
 package fga.evo.model.physics;
 
 public class PairBond {
-    private final NewtonianBody body1;
-    private final NewtonianBody body2;
-//    private double restLength = 0;
+    private final Ball ball1;
+    private final Ball ball2;
 
-    public PairBond(NewtonianBody body1, NewtonianBody body2) {
-        if (body1 == null || body2 == null)
+    public PairBond(Ball ball1, Ball ball2) {
+        if (ball1 == null || ball2 == null)
             throw new IllegalArgumentException("Cannot bond null");
-        if (body1 == body2)
-            throw new IllegalArgumentException("Cannot bond a body to itself");
+        if (ball1 == ball2)
+            throw new IllegalArgumentException("Cannot bond a ball to itself");
 
-        this.body1 = body1;
-        this.body2 = body2;
+        this.ball1 = ball1;
+        this.ball2 = ball2;
     }
 
-//    public void setRestLength(double val) {
-//        restLength = val;
-//    }
-
-    public boolean bondsTo(NewtonianBody body) {
-        return body1 == body || body2 == body;
+    public boolean bondsTo(Ball ball) {
+        return ball1 == ball || ball2 == ball;
     }
 
     @Override
@@ -31,12 +26,12 @@ public class PairBond {
             return false;
 
         PairBond bond = (PairBond) obj;
-        return (bond.body1 == body1 && bond.body2 == body2) || (bond.body1 == body2 && bond.body2 == body1);
+        return (bond.ball1 == ball1 && bond.ball2 == ball2) || (bond.ball1 == ball2 && bond.ball2 == ball1);
     }
 
     @Override
     public int hashCode() {
         // Same algorithm as in java.util.Set#hashCode.
-        return body1.hashCode() + body2.hashCode();
+        return ball1.hashCode() + ball2.hashCode();
     }
 }
