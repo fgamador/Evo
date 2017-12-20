@@ -38,6 +38,7 @@ public class World {
             subtickPhysics();
         }
         cells.addAll(lifecycleListener.bornCells);
+        bonds.removeAll(lifecycleListener.brokenBonds);
         bonds.addAll(lifecycleListener.formedBonds);
         return lifecycleListener.bornCells;
     }
