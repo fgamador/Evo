@@ -12,22 +12,11 @@ public class BallPairForces {
     public static DoubleParameter dampingForceFactor = new DoubleParameter(1);
 
     /**
-     * Adds the forces due to the interaction of one ball with another ball, such as a collision or a bond.
+     * Adds forces to the balls that will move them back toward just touching one another.
      * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
      *
      * @param ball1 a ball
      * @param ball2 another ball
-     */
-    public static void addBallPairForces(Ball ball1, Ball ball2) {
-        if (ball1.isBondedTo(ball2)) {
-            addBondForces(ball1, ball2);
-        } else {
-            addCollisionForces(ball1, ball2);
-        }
-    }
-
-    /**
-     * Adds forces to the balls that will move them back toward just touching one another.
      */
     public static void addBondForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
@@ -45,6 +34,10 @@ public class BallPairForces {
 
     /**
      * Adds forces to the balls that will push them away from one another.
+     * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
+     *
+     * @param ball1 a ball
+     * @param ball2 another ball
      */
     public static void addCollisionForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);

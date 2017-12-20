@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.PairBond;
+import fga.evo.model.physics.PairCollision;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -87,7 +88,11 @@ public class World {
         // radius. Works for finding shadowing, too.
         for (int j = index + 1; j < cells.size(); j++) {
             Cell cell2 = cells.get(j);
-            cell.addBallPairForces(cell2);
+            PairCollision.addForces(cell, cell2);
+        }
+
+        for (PairBond bond : bonds) {
+            bond.addForces();
         }
     }
 

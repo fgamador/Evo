@@ -84,16 +84,6 @@ public class Ball extends NewtonianBody {
         }
     }
 
-    /**
-     * Adds the forces due to the interaction of the ball with another ball, such as a collision or a bond.
-     * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
-     *
-     * @param ball another ball
-     */
-    public void addBallPairForces(Ball ball) {
-        BallPairForces.addBallPairForces(this, ball);
-    }
-
     public PairBond addBond(Ball ball) {
         if (isBondedTo(ball))
             throw new IllegalStateException("Cannot bond the same ball twice");
