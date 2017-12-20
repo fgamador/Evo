@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.PairBond;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
@@ -309,6 +310,7 @@ public class CellTest {
         // first tick, both phases
         cell.tickBiology_ControlPhase();
         Cell child = lifecycleListener.bornCells.get(0);
+        PairBond bond = lifecycleListener.formedBonds.get(0);
         cell.tickBiology_ConsequencesPhase();
 
         // second tick, first phase
@@ -319,6 +321,7 @@ public class CellTest {
         assertNull(child.getParent());
         assertNotBonded(cell, child);
         assertEquals(1, lifecycleListener.brokenBonds.size());
+        assertEquals(bond, lifecycleListener.brokenBonds.get(0));
         assertEquals(2, child.getDonatedEnergy(), 0);
     }
 
