@@ -31,9 +31,12 @@ class OverlapDetection {
             for (int j = i + 1; j < balls.size(); j++) {
                 Ball ball2 = balls.get(j);
                 if (!ball1.isBondedTo(ball2))
-                    PairCollision.addForces(ball1, ball2);
+                    onPossibleOverlap(ball1, ball2);
             }
         }
     }
 
+    private void onPossibleOverlap(Ball ball1, Ball ball2) {
+        PairCollision.addForces(ball1, ball2);
+    }
 }
