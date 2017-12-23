@@ -131,7 +131,8 @@ public class Ball extends NewtonianBody {
         return overlapForceFactor.getValue() * overlap;
     }
 
-    public void onPossibleOverlap(Ball ball2) {
-        PairCollision.addForces(this, ball2);
+    public void onPossibleOverlap(Ball ball) {
+        if (!isBondedTo(ball))
+            PairCollision.addForces(this, ball);
     }
 }

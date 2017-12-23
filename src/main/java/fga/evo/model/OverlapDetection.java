@@ -29,9 +29,9 @@ class OverlapDetection {
             Ball ball1 = balls.get(i);
             for (int j = i + 1; j < balls.size(); j++) {
                 Ball ball2 = balls.get(j);
-                if (!ball1.isBondedTo(ball2))
-                    ball1.onPossibleOverlap(ball2);
+                ball1.onPossibleOverlap(ball2);
             }
         }
     }
+
 }
