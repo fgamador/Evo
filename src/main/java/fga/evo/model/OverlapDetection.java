@@ -22,13 +22,12 @@ class OverlapDetection {
     }
 
     void addCollisionForces() {
+        // TODO Idea: keep balls sorted by centerX. Need check a ball against
+        // only those others with greater indexes until we find another ball
+        // whose centerX is beyond the max radius plus the first ball's
+        // radius. Works for finding shadowing, too.
         for (int i = 0; i < balls.size(); i++) {
             Ball ball1 = balls.get(i);
-
-            // TODO Idea: keep balls sorted by centerX. Need check a ball against
-            // only those others with greater indexes until we find another ball
-            // whose centerX is beyond the max radius plus the first ball's
-            // radius. Works for finding shadowing, too.
             for (int j = i + 1; j < balls.size(); j++) {
                 Ball ball2 = balls.get(j);
                 if (!ball1.isBondedTo(ball2))
