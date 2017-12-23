@@ -9,32 +9,16 @@ import java.util.List;
 class OverlapDetection {
     private List<Ball> balls = new ArrayList<>();
 
-    static void addBall(Ball ball, OverlapDetection overlapDetection) {
-        overlapDetection.addBall(ball);
-    }
-
-    void addBall(Ball ball) {
+    public void addBall(Ball ball) {
         balls.add(ball);
-    }
-
-    static void addBalls(List<Cell> balls, OverlapDetection overlapDetection) {
-        overlapDetection.addBalls(balls);
     }
 
     void addBalls(List<Cell> balls) {
         this.balls.addAll(balls);
     }
 
-    static void clearBalls(OverlapDetection overlapDetection) {
-        overlapDetection.clearBalls();
-    }
-
     void clearBalls() {
         balls.clear();
-    }
-
-    static void addCollisionForces(OverlapDetection overlapDetection) {
-        overlapDetection.addCollisionForces();
     }
 
     void addCollisionForces() {
