@@ -74,9 +74,7 @@ public class World {
     }
 
     private void addForces() {
-        for (int i = 0; i < cells.size(); i++) {
-            Cell cell = cells.get(i);
-
+        for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : environmentalInfluences) {
                 influence.addForcesToCell(cell);
             }
