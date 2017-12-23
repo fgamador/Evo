@@ -85,10 +85,10 @@ public class World {
             }
         }
 
-        addCollisionForces();
+        addCollisionForces(cells);
     }
 
-    private void addCollisionForces() {
+    private void addCollisionForces(List<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
             Cell cell = cells.get(i);
 
