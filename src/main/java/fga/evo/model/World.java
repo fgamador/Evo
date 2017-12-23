@@ -66,33 +66,34 @@ public class World {
             puller.addForceToCell();
         }
 
-        for (int i = 0; i < cells.size(); i++) {
-            addForcesToCell(i);
-        }
+        addForces();
 
         for (Cell cell : cells) {
             cell.subtickPhysics(subticksPerTick);
         }
     }
 
-    private void addForcesToCell(int index) {
-        Cell cell = cells.get(index);
+    private void addForces() {
+        for (int i = 0; i < cells.size(); i++) {
+            Cell cell = cells.get(i);
 
-        for (EnvironmentalInfluence influence : environmentalInfluences) {
-            influence.addForcesToCell(cell);
-        }
+            for (EnvironmentalInfluence influence : environmentalInfluences) {
+                influence.addForcesToCell(cell);
+            }
 
-        // TODO Idea: keep cells sorted by centerX. Need check a cell against
-        // only those others with greater indexes until we find another cell
-        // whose centerX is beyond the max radius plus the first cell's
-        // radius. Works for finding shadowing, too.
-        for (int j = index + 1; j < cells.size(); j++) {
-            Cell cell2 = cells.get(j);
-            PairCollision.addForces(cell, cell2);
-        }
+            // TODO Idea: keep cells sorted by centerX. Need check a cell against
+            // only those others with greater indexes until we find another cell
+            // whose centerX is beyond the max radius plus the first cell's
+            // radius. Works for finding shadowing, too.
+            for (int j = i + 1; j < cells.size(); j++) {
+                Cell cell2 = cells.get(j);
+                if (!cell.isBondedTo(cell2))
+                    PairCollision.addForces(cell, cell2);
+            }
 
-        for (PairBond bond : bonds) {
-            bond.addForces();
+            for (PairBond bond : bonds) {
+                bond.addForces();
+            }
         }
     }
 
