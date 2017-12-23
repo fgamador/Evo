@@ -86,11 +86,7 @@ public class World {
             }
         }
 
-        addCollisionForces(overlapDetection);
-    }
-
-    private static void addCollisionForces(OverlapDetection overlapDetection) {
-        overlapDetection.addCollisionForces(OverlapDetection.balls);
+        OverlapDetection.addCollisionForces(overlapDetection);
     }
 
     public void restart() {

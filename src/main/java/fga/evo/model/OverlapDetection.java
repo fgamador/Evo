@@ -21,6 +21,10 @@ class OverlapDetection {
         balls.clear();
     }
 
+    static void addCollisionForces(OverlapDetection overlapDetection) {
+        overlapDetection.addCollisionForces(balls);
+    }
+
     public void addCollisionForces(List<? extends Ball> balls) {
         for (int i = 0; i < balls.size(); i++) {
             Ball ball = balls.get(i);
