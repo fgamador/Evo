@@ -15,7 +15,7 @@ public class World {
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
-    private List<Ball> balls = new ArrayList<>();
+    private static List<Ball> balls = new ArrayList<>();
     private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
     private AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
