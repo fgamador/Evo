@@ -18,6 +18,7 @@ public class World {
     private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
     private AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
+    private OverlapDetection overlapDetection = new OverlapDetection();
 
     public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);
@@ -142,5 +143,9 @@ public class World {
 
     public static void setSubticksPerTick(int val) {
         subticksPerTick = val;
+    }
+
+    private class OverlapDetection {
+
     }
 }
