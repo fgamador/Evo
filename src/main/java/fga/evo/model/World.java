@@ -31,7 +31,7 @@ public class World {
         cell.setLifecycleListener(lifecycleListener);
     }
 
-    private void addBall(Ball ball) {
+    private static void addBall(Ball ball) {
         balls.add(ball);
     }
 
@@ -52,8 +52,8 @@ public class World {
         return lifecycleListener.bornCells;
     }
 
-    private void addBalls(List<Cell> balls) {
-        this.balls.addAll(balls);
+    private static void addBalls(List<Cell> balls) {
+        World.balls.addAll(balls);
     }
 
     private void tickBiology() {
