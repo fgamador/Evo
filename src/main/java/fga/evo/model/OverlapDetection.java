@@ -20,7 +20,7 @@ class OverlapDetection {
         balls.clear();
     }
 
-    public void addCollisionForces() {
+    public void reportOverlaps() {
         // TODO Idea: keep balls sorted by centerX. Need check a ball against
         // only those others with greater indexes until we find another ball
         // whose centerX is beyond the max radius plus the first ball's
