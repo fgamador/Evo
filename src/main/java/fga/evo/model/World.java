@@ -91,7 +91,7 @@ public class World {
 
     public void restart() {
         cells.clear();
-        OverlapDetection.balls.clear();
+        OverlapDetection.clearBalls();
         bonds.clear();
     }
 
