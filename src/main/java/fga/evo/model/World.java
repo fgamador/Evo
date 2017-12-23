@@ -25,7 +25,7 @@ public class World {
 
     public void addCell(Cell cell) {
         cells.add(cell);
-        OverlapDetection.addBall(cell);
+        OverlapDetection.addBall(cell, overlapDetection);
         cell.setLifecycleListener(lifecycleListener);
     }
 
@@ -40,7 +40,7 @@ public class World {
             subtickPhysics();
         }
         cells.addAll(lifecycleListener.bornCells);
-        OverlapDetection.addBalls(lifecycleListener.bornCells);
+        OverlapDetection.addBalls(lifecycleListener.bornCells, overlapDetection);
         bonds.removeAll(lifecycleListener.brokenBonds);
         bonds.addAll(lifecycleListener.formedBonds);
         return lifecycleListener.bornCells;
@@ -91,7 +91,7 @@ public class World {
 
     public void restart() {
         cells.clear();
-        OverlapDetection.clearBalls();
+        OverlapDetection.clearBalls(overlapDetection);
         bonds.clear();
     }
 
