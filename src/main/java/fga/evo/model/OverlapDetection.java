@@ -13,7 +13,7 @@ class OverlapDetection {
         balls.add(ball);
     }
 
-    void addBalls(List<Cell> balls) {
+    void addBalls(List<? extends Ball> balls) {
         this.balls.addAll(balls);
     }
 
