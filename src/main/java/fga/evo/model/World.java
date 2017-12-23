@@ -27,8 +27,12 @@ public class World {
 
     public void addCell(Cell cell) {
         cells.add(cell);
-        balls.add(cell);
+        addBall(cell);
         cell.setLifecycleListener(lifecycleListener);
+    }
+
+    private void addBall(Ball ball) {
+        balls.add(ball);
     }
 
     /**
@@ -42,10 +46,14 @@ public class World {
             subtickPhysics();
         }
         cells.addAll(lifecycleListener.bornCells);
-        balls.addAll(lifecycleListener.bornCells);
+        addBalls(lifecycleListener.bornCells);
         bonds.removeAll(lifecycleListener.brokenBonds);
         bonds.addAll(lifecycleListener.formedBonds);
         return lifecycleListener.bornCells;
+    }
+
+    private void addBalls(List<Cell> balls) {
+        this.balls.addAll(balls);
     }
 
     private void tickBiology() {
