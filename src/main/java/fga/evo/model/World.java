@@ -81,6 +81,14 @@ public class World {
                 influence.addForcesToCell(cell);
             }
 
+            for (PairBond bond : bonds) {
+                bond.addForces();
+            }
+        }
+
+        for (int i = 0; i < cells.size(); i++) {
+            Cell cell = cells.get(i);
+
             // TODO Idea: keep cells sorted by centerX. Need check a cell against
             // only those others with greater indexes until we find another cell
             // whose centerX is beyond the max radius plus the first cell's
@@ -89,10 +97,6 @@ public class World {
                 Cell cell2 = cells.get(j);
                 if (!cell.isBondedTo(cell2))
                     PairCollision.addForces(cell, cell2);
-            }
-
-            for (PairBond bond : bonds) {
-                bond.addForces();
             }
         }
     }
