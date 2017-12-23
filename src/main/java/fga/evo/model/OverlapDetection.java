@@ -10,19 +10,35 @@ class OverlapDetection {
     private List<Ball> balls = new ArrayList<>();
 
     static void addBall(Ball ball, OverlapDetection overlapDetection) {
-        overlapDetection.balls.add(ball);
+        overlapDetection.addBall(ball);
+    }
+
+    void addBall(Ball ball) {
+        balls.add(ball);
     }
 
     static void addBalls(List<Cell> balls, OverlapDetection overlapDetection) {
-        overlapDetection.balls.addAll(balls);
+        overlapDetection.addBalls(balls);
+    }
+
+    void addBalls(List<Cell> balls) {
+        this.balls.addAll(balls);
     }
 
     static void clearBalls(OverlapDetection overlapDetection) {
-        overlapDetection.balls.clear();
+        overlapDetection.clearBalls();
+    }
+
+    void clearBalls() {
+        balls.clear();
     }
 
     static void addCollisionForces(OverlapDetection overlapDetection) {
-        overlapDetection.addCollisionForces(overlapDetection.balls);
+        overlapDetection.addCollisionForces();
+    }
+
+    void addCollisionForces() {
+        addCollisionForces(balls);
     }
 
     private void addCollisionForces(List<? extends Ball> balls) {
