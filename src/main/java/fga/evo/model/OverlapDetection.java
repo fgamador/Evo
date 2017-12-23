@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class OverlapDetection {
-    private static List<Ball> balls = new ArrayList<>();
+    private List<Ball> balls = new ArrayList<>();
 
     static void addBall(Ball ball, OverlapDetection overlapDetection) {
         overlapDetection.balls.add(ball);
