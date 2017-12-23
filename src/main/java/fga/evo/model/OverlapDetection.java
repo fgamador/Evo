@@ -1,7 +1,6 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.Ball;
-import fga.evo.model.physics.PairCollision;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +30,9 @@ class OverlapDetection {
             for (int j = i + 1; j < balls.size(); j++) {
                 Ball ball2 = balls.get(j);
                 if (!ball1.isBondedTo(ball2))
-                    onPossibleOverlap(ball1, ball2);
+                    ball1.onPossibleOverlap(ball2);
             }
         }
     }
 
-    private void onPossibleOverlap(Ball ball1, Ball ball2) {
-        PairCollision.addForces(ball1, ball2);
-    }
 }
