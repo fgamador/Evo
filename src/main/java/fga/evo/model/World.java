@@ -130,7 +130,7 @@ public class World {
     }
 
     private class OverlapDetection {
-        private void addCollisionForces(List<Cell> cells) {
+        public void addCollisionForces(List<Cell> cells) {
             for (int i = 0; i < cells.size(); i++) {
                 Cell cell = cells.get(i);
 
