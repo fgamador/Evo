@@ -86,6 +86,10 @@ public class World {
             }
         }
 
+        addCollisionForces();
+    }
+
+    private void addCollisionForces() {
         for (int i = 0; i < cells.size(); i++) {
             Cell cell = cells.get(i);
 
