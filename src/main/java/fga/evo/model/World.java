@@ -1,6 +1,5 @@
 package fga.evo.model;
 
-import fga.evo.model.physics.Ball;
 import fga.evo.model.physics.PairBond;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ public class World {
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
-    private static List<Ball> balls = new ArrayList<>();
     private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
     private AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
@@ -27,12 +25,8 @@ public class World {
 
     public void addCell(Cell cell) {
         cells.add(cell);
-        addBall(cell);
+        OverlapDetection.addBall(cell);
         cell.setLifecycleListener(lifecycleListener);
-    }
-
-    private static void addBall(Ball ball) {
-        balls.add(ball);
     }
 
     /**
@@ -46,14 +40,10 @@ public class World {
             subtickPhysics();
         }
         cells.addAll(lifecycleListener.bornCells);
-        addBalls(lifecycleListener.bornCells);
+        OverlapDetection.addBalls(lifecycleListener.bornCells);
         bonds.removeAll(lifecycleListener.brokenBonds);
         bonds.addAll(lifecycleListener.formedBonds);
         return lifecycleListener.bornCells;
-    }
-
-    private static void addBalls(List<Cell> balls) {
-        World.balls.addAll(balls);
     }
 
     private void tickBiology() {
@@ -96,12 +86,12 @@ public class World {
             }
         }
 
-        overlapDetection.addCollisionForces(balls);
+        overlapDetection.addCollisionForces(OverlapDetection.balls);
     }
 
     public void restart() {
         cells.clear();
-        balls.clear();
+        OverlapDetection.balls.clear();
         bonds.clear();
     }
 
