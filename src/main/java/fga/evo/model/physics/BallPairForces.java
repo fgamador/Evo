@@ -44,12 +44,12 @@ public class BallPairForces {
         if (centerSeparationSquared == 0) {
             return;
         }
-
-        if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
-            double centerSeparation = Math.sqrt(centerSeparationSquared);
-            notifyOverlap(ball1, ball2, centerSeparation);
-            addOverlapForces(ball1, ball2, centerSeparation);
+        if (!ballsOverlap(ball1, ball2, centerSeparationSquared)) {
+            return;
         }
+        double centerSeparation = Math.sqrt(centerSeparationSquared);
+        notifyOverlap(ball1, ball2, centerSeparation);
+        addOverlapForces(ball1, ball2, centerSeparation);
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
