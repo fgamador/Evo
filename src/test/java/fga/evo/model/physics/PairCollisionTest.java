@@ -77,4 +77,20 @@ public class PairCollisionTest {
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball1);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
     }
+
+    @Test
+    public void reversingBallOrderMakesNoDifference() {
+        Ball ball1 = new Ball();
+        ball1.setRadius(1);
+        ball1.setCenterPosition(0, 0);
+
+        Ball ball2 = new Ball();
+        ball2.setRadius(1);
+        ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
+
+        PairCollision.addForces(ball2, ball1);
+
+        assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball1);
+        assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
+    }
 }

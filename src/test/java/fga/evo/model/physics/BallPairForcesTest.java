@@ -34,16 +34,6 @@ public class BallPairForcesTest extends EvoTest {
     }
 
     @Test
-    public void testAddBallPairForces_ReverseDiagonalCollision() {
-        ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
-
-        BallPairForces.addCollisionForces(ball2, ball);
-
-        assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball);
-        assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
-    }
-
-    @Test
     public void testAddBallPairForces_FullOverlap() {
         ball2.setCenterPosition(0, 0);
 
