@@ -87,7 +87,7 @@ public class World {
             }
         }
 
-        overlapDetection.notifyOverlaps();
+        overlapDetection.findAndNotifyOverlaps();
     }
 
     public void restart() {
