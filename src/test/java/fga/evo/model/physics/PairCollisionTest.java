@@ -14,7 +14,7 @@ public class PairCollisionTest {
     }
 
     @Test
-    public void grazingCollisionAddsNoForces() {
+    public void justTouchingAddsNoForces() {
         Ball ball1 = new Ball();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
