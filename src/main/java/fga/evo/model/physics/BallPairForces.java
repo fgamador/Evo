@@ -1,10 +1,7 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.DoubleParameter;
-import fga.evo.model.OverlapDetection;
-import fga.evo.model.geometry.Circle;
-
-import static fga.evo.model.Util.sqr;
+import fga.evo.model.geometry.Circles;
 
 /**
  * Collision and bond forces for pairs of balls. Split out from Ball in honor of the Single Responsibility Principle.
@@ -20,13 +17,13 @@ public class BallPairForces {
      * @param ball2 another ball
      */
     public static void addBondForces(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
+        double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
         if (centerSeparationSquared == 0) {
             return;
         }
 
         double centerSeparation = Math.sqrt(centerSeparationSquared);
-        if (circlesOverlap(ball1, ball2, centerSeparationSquared)) {
+        if (Circles.circlesOverlap(ball1, ball2, centerSeparationSquared)) {
             notifyOverlap(ball1, ball2, centerSeparation);
         }
         addOverlapForces(ball1, ball2, centerSeparation);
@@ -42,31 +39,21 @@ public class BallPairForces {
      */
     public static void addCollisionForces(Ball ball1, Ball ball2) {
         if (ballsOverlapWithOffset(ball1, ball2)) {
-            double centerSeparation = Math.sqrt(calcCenterSeparationSquared(ball1, ball2));
+            double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
             notifyOverlap(ball1, ball2, centerSeparation);
             addOverlapForces(ball1, ball2, centerSeparation);
         }
     }
 
     private static boolean ballsOverlapWithOffset(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
-        return centerSeparationSquared != 0 && circlesOverlap(ball1, ball2, centerSeparationSquared);
+        double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
+        return centerSeparationSquared != 0 && Circles.circlesOverlap(ball1, ball2, centerSeparationSquared);
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         ball1.onOverlap(overlap);
         ball2.onOverlap(overlap);
-    }
-
-    private static boolean circlesOverlap(Circle circle1, Circle circle2, double centerSeparationSquared) {
-        return sqr(circle1.getRadius() + circle2.getRadius()) > centerSeparationSquared;
-    }
-
-    private static double calcCenterSeparationSquared(Circle circle1, Circle circle2) {
-        double ball1RelativeCenterX = circle1.getCenterX() - circle2.getCenterX();
-        double ball1RelativeCenterY = circle1.getCenterY() - circle2.getCenterY();
-        return sqr(ball1RelativeCenterX) + sqr(ball1RelativeCenterY);
     }
 
     private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
