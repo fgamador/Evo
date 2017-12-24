@@ -9,15 +9,15 @@ import java.util.List;
 class OverlapDetection {
     private List<Circle> circles = new ArrayList<>();
 
-    public void addBall(Circle circle) {
+    public void addCircle(Circle circle) {
         circles.add(circle);
     }
 
-    public void addBalls(List<? extends Circle> balls) {
-        this.circles.addAll(balls);
+    public void addCircls(List<? extends Circle> circles) {
+        this.circles.addAll(circles);
     }
 
-    public void clearBalls() {
+    public void clearCircles() {
         circles.clear();
     }
 
