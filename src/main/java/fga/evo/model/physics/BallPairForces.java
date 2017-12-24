@@ -30,28 +30,13 @@ public class BallPairForces {
         addDampingForces(ball1, ball2);
     }
 
-    /**
-     * Adds forces to the balls that will push them away from one another.
-     * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
-     *
-     * @param ball1 a ball
-     * @param ball2 another ball
-     */
-    public static void addCollisionForces(Ball ball1, Ball ball2) {
-        if (Circles.circlesOverlapWithOffset(ball1, ball2)) {
-            double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
-            notifyOverlap(ball1, ball2, centerSeparation);
-            addOverlapForces(ball1, ball2, centerSeparation);
-        }
-    }
-
-    private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
+    public static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         ball1.onOverlap(overlap);
         ball2.onOverlap(overlap);
     }
 
-    private static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
+    public static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
         double force = Ball.calcOverlapForce(overlap);
         double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
