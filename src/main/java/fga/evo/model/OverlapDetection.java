@@ -32,13 +32,7 @@ public class OverlapDetection {
         }
     }
 
-    public interface Circle {
-        double getCenterX();
-
-        double getCenterY();
-
-        double getRadius();
-
+    public interface Circle extends fga.evo.model.geometry.Circle {
         void onPossibleOverlap(Circle circle);
     }
 }
