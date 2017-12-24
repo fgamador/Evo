@@ -2,6 +2,7 @@ package fga.evo.model.physics;
 
 import fga.evo.model.DoubleParameter;
 import fga.evo.model.OverlapDetection;
+import fga.evo.model.geometry.Circle;
 
 import static fga.evo.model.Util.sqr;
 
@@ -25,7 +26,7 @@ public class BallPairForces {
         }
 
         double centerSeparation = Math.sqrt(centerSeparationSquared);
-        if (ballsOverlap(ball1, ball2, centerSeparationSquared)) {
+        if (circlesOverlap(ball1, ball2, centerSeparationSquared)) {
             notifyOverlap(ball1, ball2, centerSeparation);
         }
         addOverlapForces(ball1, ball2, centerSeparation);
@@ -49,7 +50,7 @@ public class BallPairForces {
 
     private static boolean ballsOverlapWithOffset(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
-        return centerSeparationSquared != 0 && ballsOverlap(ball1, ball2, centerSeparationSquared);
+        return centerSeparationSquared != 0 && circlesOverlap(ball1, ball2, centerSeparationSquared);
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
@@ -58,13 +59,13 @@ public class BallPairForces {
         ball2.onOverlap(overlap);
     }
 
-    private static boolean ballsOverlap(OverlapDetection.Circle ball1, OverlapDetection.Circle ball2, double centerSeparationSquared) {
-        return sqr(ball1.getRadius() + ball2.getRadius()) > centerSeparationSquared;
+    private static boolean circlesOverlap(Circle circle1, Circle circle2, double centerSeparationSquared) {
+        return sqr(circle1.getRadius() + circle2.getRadius()) > centerSeparationSquared;
     }
 
-    private static double calcCenterSeparationSquared(Ball ball1, Ball ball2) {
-        double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
-        double ball1RelativeCenterY = ball1.getCenterY() - ball2.getCenterY();
+    private static double calcCenterSeparationSquared(Circle circle1, Circle circle2) {
+        double ball1RelativeCenterX = circle1.getCenterX() - circle2.getCenterX();
+        double ball1RelativeCenterY = circle1.getCenterY() - circle2.getCenterY();
         return sqr(ball1RelativeCenterX) + sqr(ball1RelativeCenterY);
     }
 
