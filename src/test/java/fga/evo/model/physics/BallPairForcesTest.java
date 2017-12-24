@@ -26,12 +26,6 @@ public class BallPairForcesTest extends EvoTest {
     }
 
     @Test
-    public void testCalcOverlapForce() {
-        Ball.overlapForceFactor.setValue(2);
-        assertEquals(2, Ball.calcOverlapForce(1), 0);
-    }
-
-    @Test
     public void testAddBallPairForces_Bonded_TouchingAtRest() {
         ball.addBond(ball2);
         ball2.setCenterPosition(2, 0);

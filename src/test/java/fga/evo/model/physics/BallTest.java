@@ -32,6 +32,12 @@ public class BallTest extends EvoTest {
     }
 
     @Test
+    public void testCalcOverlapForce() {
+        Ball.overlapForceFactor.setValue(2);
+        assertEquals(2, Ball.calcOverlapForce(1), 0);
+    }
+
+    @Test
     public void unbondedBallsAreNotBonded() {
         Ball ball1 = new Ball();
         Ball ball2 = new Ball();
