@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.geometry.OverlapDetection;
 import fga.evo.model.physics.PairBond;
 
 import java.util.ArrayList;

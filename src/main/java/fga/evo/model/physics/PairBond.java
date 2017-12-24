@@ -1,6 +1,6 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.OverlapDetection;
+import fga.evo.model.geometry.OverlapDetection;
 
 public class PairBond {
     private final Ball ball1;

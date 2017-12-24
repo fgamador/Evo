@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.geometry;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,7 +2,7 @@ package fga.evo.model.physics;
 
 import fga.evo.model.DecayingAccumulator;
 import fga.evo.model.DoubleParameter;
-import fga.evo.model.OverlapDetection;
+import fga.evo.model.geometry.OverlapDetection;
 
 import java.util.ArrayList;
 import java.util.List;
