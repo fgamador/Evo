@@ -14,7 +14,7 @@ public class OverlapDetection {
         this.circles.addAll(circles);
     }
 
-    public void clearCircles() {
+    public void clear() {
         circles.clear();
     }
 
