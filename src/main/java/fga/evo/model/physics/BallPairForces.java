@@ -1,6 +1,7 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.DoubleParameter;
+import fga.evo.model.geometry.Circle;
 import fga.evo.model.geometry.Circles;
 
 /**
@@ -38,16 +39,16 @@ public class BallPairForces {
      * @param ball2 another ball
      */
     public static void addCollisionForces(Ball ball1, Ball ball2) {
-        if (ballsOverlapWithOffset(ball1, ball2)) {
+        if (circlesOverlapWithOffset(ball1, ball2)) {
             double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
             notifyOverlap(ball1, ball2, centerSeparation);
             addOverlapForces(ball1, ball2, centerSeparation);
         }
     }
 
-    private static boolean ballsOverlapWithOffset(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
-        return centerSeparationSquared != 0 && Circles.circlesOverlap(ball1, ball2, centerSeparationSquared);
+    private static boolean circlesOverlapWithOffset(Circle circle1, Circle circle2) {
+        double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
+        return centerSeparationSquared != 0 && Circles.circlesOverlap(circle1, circle2, centerSeparationSquared);
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
