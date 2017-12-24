@@ -18,7 +18,7 @@ public class PairBond {
         BallPairForces.addBondForces(ball1, ball2);
     }
 
-    public boolean bondsTo(Ball ball) {
+    public boolean bondsTo(Circle ball) {
         return ball1 == ball || ball2 == ball;
     }
 

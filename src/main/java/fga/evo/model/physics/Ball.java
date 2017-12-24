@@ -13,7 +13,7 @@ import static fga.evo.model.Util.sqr;
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
-public class Ball extends NewtonianBody {
+public class Ball extends NewtonianBody implements Circle {
     public static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     public static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
@@ -102,7 +102,7 @@ public class Ball extends NewtonianBody {
         return removed;
     }
 
-    public boolean isBondedTo(Ball ball) {
+    public boolean isBondedTo(Circle ball) {
         return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
     }
 
@@ -111,6 +111,7 @@ public class Ball extends NewtonianBody {
         area = Math.PI * sqr(radius);
     }
 
+    @Override
     public double getRadius() {
         return radius;
     }
@@ -131,8 +132,9 @@ public class Ball extends NewtonianBody {
         return overlapForceFactor.getValue() * overlap;
     }
 
-    public void onPossibleOverlap(Ball ball) {
-        if (!isBondedTo(ball))
-            PairCollision.addForces(this, ball);
+    @Override
+    public void onPossibleOverlap(Circle circle) {
+        if (!isBondedTo(circle))
+            PairCollision.addForces(this, (Ball) circle);
     }
 }

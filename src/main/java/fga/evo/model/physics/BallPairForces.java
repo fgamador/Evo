@@ -1,7 +1,6 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.DoubleParameter;
-import fga.evo.model.physics.Ball;
 
 import static fga.evo.model.Util.sqr;
 
@@ -58,7 +57,7 @@ public class BallPairForces {
         ball2.onOverlap(overlap);
     }
 
-    private static boolean ballsOverlap(Ball ball1, Ball ball2, double centerSeparationSquared) {
+    private static boolean ballsOverlap(Circle ball1, Circle ball2, double centerSeparationSquared) {
         return sqr(ball1.getRadius() + ball2.getRadius()) > centerSeparationSquared;
     }
 
