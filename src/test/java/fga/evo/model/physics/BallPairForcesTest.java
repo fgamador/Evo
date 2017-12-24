@@ -34,16 +34,6 @@ public class BallPairForcesTest extends EvoTest {
     }
 
     @Test
-    public void testAddBallPairForces_NotInCollision() {
-        ball2.setCenterPosition(3, -3);
-
-        BallPairForces.addCollisionForces(ball, ball2);
-
-        assertNetForce(0, 0, ball);
-        assertNetForce(0, 0, ball2);
-    }
-
-    @Test
     public void testAddBallPairForces_DiagonalCollision() {
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
