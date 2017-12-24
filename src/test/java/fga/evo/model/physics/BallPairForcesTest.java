@@ -1,8 +1,6 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.EvoTest;
-import fga.evo.model.physics.Ball;
-import fga.evo.model.physics.BallPairForces;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -89,16 +87,6 @@ public class BallPairForcesTest extends EvoTest {
 
         assertNetForce(-1, 0, ball);
         assertNetForce(1, 0, ball2);
-    }
-
-    @Test
-    public void testOnOverlap_BallCollision() {
-        ball2.setCenterPosition(1.5, 0);
-
-        BallPairForces.addCollisionForces(ball, ball2);
-
-        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
-        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
     }
 
     @Test
