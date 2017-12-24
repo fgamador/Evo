@@ -40,13 +40,16 @@ public class BallPairForces {
      * @param ball2 another ball
      */
     public static void addCollisionForces(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
-        if (centerSeparationSquared == 0 || !ballsOverlap(ball1, ball2, centerSeparationSquared)) {
-            return;
+        if (ballsOverlapWithOffset(ball1, ball2)) {
+            double centerSeparation = Math.sqrt(calcCenterSeparationSquared(ball1, ball2));
+            notifyOverlap(ball1, ball2, centerSeparation);
+            addOverlapForces(ball1, ball2, centerSeparation);
         }
-        double centerSeparation = Math.sqrt(centerSeparationSquared);
-        notifyOverlap(ball1, ball2, centerSeparation);
-        addOverlapForces(ball1, ball2, centerSeparation);
+    }
+
+    private static boolean ballsOverlapWithOffset(Ball ball1, Ball ball2) {
+        double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
+        return centerSeparationSquared != 0 && ballsOverlap(ball1, ball2, centerSeparationSquared);
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
