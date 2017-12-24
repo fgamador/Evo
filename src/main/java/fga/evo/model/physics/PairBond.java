@@ -1,5 +1,7 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.OverlapDetection;
+
 public class PairBond {
     private final Ball ball1;
     private final Ball ball2;
@@ -18,7 +20,7 @@ public class PairBond {
         BallPairForces.addBondForces(ball1, ball2);
     }
 
-    public boolean bondsTo(Circle ball) {
+    public boolean bondsTo(OverlapDetection.Circle ball) {
         return ball1 == ball || ball2 == ball;
     }
 

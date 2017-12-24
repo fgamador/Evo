@@ -1,12 +1,9 @@
 package fga.evo.model;
 
-import fga.evo.model.physics.Ball;
-import fga.evo.model.physics.Circle;
-
 import java.util.ArrayList;
 import java.util.List;
 
-class OverlapDetection {
+public class OverlapDetection {
     private List<Circle> circles = new ArrayList<>();
 
     public void addCircle(Circle circle) {
@@ -33,5 +30,15 @@ class OverlapDetection {
                 circle1.onPossibleOverlap(circle2);
             }
         }
+    }
+
+    public static interface Circle {
+        double getCenterX();
+
+        double getCenterY();
+
+        double getRadius();
+
+        void onPossibleOverlap(Circle circle);
     }
 }
