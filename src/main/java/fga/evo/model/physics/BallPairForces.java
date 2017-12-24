@@ -41,10 +41,7 @@ public class BallPairForces {
      */
     public static void addCollisionForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = calcCenterSeparationSquared(ball1, ball2);
-        if (centerSeparationSquared == 0) {
-            return;
-        }
-        if (!ballsOverlap(ball1, ball2, centerSeparationSquared)) {
+        if (centerSeparationSquared == 0 || !ballsOverlap(ball1, ball2, centerSeparationSquared)) {
             return;
         }
         double centerSeparation = Math.sqrt(centerSeparationSquared);
