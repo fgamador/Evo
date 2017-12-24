@@ -13,7 +13,7 @@ class OverlapDetection {
         circles.add(circle);
     }
 
-    public void addCircls(List<? extends Circle> circles) {
+    public void addCircles(List<? extends Circle> circles) {
         this.circles.addAll(circles);
     }
 
