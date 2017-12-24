@@ -32,7 +32,7 @@ public class OverlapDetection {
         }
     }
 
-    public static interface Circle {
+    public interface Circle {
         double getCenterX();
 
         double getCenterY();
