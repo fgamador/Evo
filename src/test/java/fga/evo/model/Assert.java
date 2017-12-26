@@ -23,6 +23,10 @@ public class Assert {
         assertTrue(collection.isEmpty());
     }
 
+    public static <T> void assertContains(Collection<T> collection, T item) {
+        assertTrue(collection.contains(item));
+    }
+
     public static void assertBonded(Cell cell1, Cell cell2) {
         assertTrue(cell1.isBondedTo(cell2));
         assertTrue(cell2.isBondedTo(cell1));

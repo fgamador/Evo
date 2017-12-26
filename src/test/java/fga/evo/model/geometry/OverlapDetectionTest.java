@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static fga.evo.model.Assert.assertContains;
 import static fga.evo.model.Assert.assertEmpty;
 
 public class OverlapDetectionTest {
@@ -32,6 +33,19 @@ public class OverlapDetectionTest {
         testSubject.findAndNotifyOverlaps();
 
         assertEmpty(circle1.overlapCircles);
+        assertEmpty(circle2.overlapCircles);
+    }
+
+    @Test
+    public void slightXOverlap() {
+        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+        SpyCircle circle2 = new SpyCircle(1, 1.99, 0);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        testSubject.addCircles(Arrays.asList(circle1, circle2));
+        testSubject.findAndNotifyOverlaps();
+
+        assertContains(circle1.overlapCircles, circle2);
         assertEmpty(circle2.overlapCircles);
     }
 
