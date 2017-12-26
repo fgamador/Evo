@@ -51,18 +51,18 @@ public class OverlapDetectionTest {
         assertNull(circle2.lastOverlapCircle);
     }
 
-//    @Test
-//    public void notificationIncludesCenterSeparation() {
-//        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-//        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
-//
-//        OverlapDetection testSubject = new OverlapDetection();
-//        testSubject.addCircles(Arrays.asList(circle1, circle2));
-//        testSubject.findAndNotifyOverlaps();
-//
-//        assertContains(circle1.overlapCircles, circle2);
-//        assertEmpty(circle2.overlapCircles);
-//    }
+    @Test
+    public void notificationIncludesCenterSeparation() {
+        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        testSubject.addCircles(Arrays.asList(circle1, circle2));
+        testSubject.findAndNotifyOverlaps();
+
+        assertEquals(1.5, circle1.lastOverlapCenterSeparation, 0);
+        assertEquals(-1, circle2.lastOverlapCenterSeparation, 0);
+    }
 
     @Test
     public void xOverlapWithoutYOverlap() {
@@ -94,7 +94,8 @@ public class OverlapDetectionTest {
         private double centerX;
         private double centerY;
         private double radius;
-        OverlapDetection.Circle lastOverlapCircle;
+        OverlapDetection.Circle lastOverlapCircle = null;
+        double lastOverlapCenterSeparation = -1;
 
         SpyCircle(double radius, double centerX, double centerY) {
             this.radius = radius;
@@ -118,8 +119,9 @@ public class OverlapDetectionTest {
         }
 
         @Override
-        public void onOverlap(OverlapDetection.Circle circle) {
+        public void onOverlap(OverlapDetection.Circle circle, double centerSeparation) {
             lastOverlapCircle = circle;
+            lastOverlapCenterSeparation = centerSeparation;
         }
     }
 }
