@@ -48,19 +48,6 @@ public class OverlapDetectionTest {
     }
 
     @Test
-    public void notificationIncludesOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
-
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
-
-        assertEquals(0.5, circle1.lastOverlap, 0);
-        assertEquals(-1, circle2.lastOverlap, 0);
-    }
-
-    @Test
     public void xOverlapWithoutYOverlap() {
         SpyCircle circle1 = new SpyCircle(1, 0, 0);
         SpyCircle circle2 = new SpyCircle(1, 1, 2);
@@ -84,6 +71,19 @@ public class OverlapDetectionTest {
 
         assertNull(circle1.lastOverlapCircle);
         assertNull(circle2.lastOverlapCircle);
+    }
+
+    @Test
+    public void notificationIncludesOverlap() {
+        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        testSubject.addCircles(Arrays.asList(circle1, circle2));
+        testSubject.findAndNotifyOverlaps();
+
+        assertEquals(0.5, circle1.lastOverlap, 0);
+        assertEquals(-1, circle2.lastOverlap, 0);
     }
 
     private static class SpyCircle implements OverlapDetection.Circle {
