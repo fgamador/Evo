@@ -35,7 +35,7 @@ public class BallPairForces {
         notifyOverlap_Inner(ball1, ball2, overlap);
     }
 
-    private static void notifyOverlap_Inner(Ball ball1, Ball ball2, double overlap) {
+    public static void notifyOverlap_Inner(Ball ball1, Ball ball2, double overlap) {
         ball1.onOverlap(overlap);
         ball2.onOverlap(overlap);
     }
