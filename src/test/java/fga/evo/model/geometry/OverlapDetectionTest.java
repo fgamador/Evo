@@ -8,6 +8,8 @@ import java.util.List;
 
 import static fga.evo.model.Assert.assertContains;
 import static fga.evo.model.Assert.assertEmpty;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class OverlapDetectionTest {
     @Test
@@ -19,8 +21,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEmpty(circle1.overlapCircles);
-        assertEmpty(circle2.overlapCircles);
+        assertNull(circle1.lastOverlapCircle);
+        assertNull(circle2.lastOverlapCircle);
     }
 
     @Test
@@ -32,8 +34,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEmpty(circle1.overlapCircles);
-        assertEmpty(circle2.overlapCircles);
+        assertNull(circle1.lastOverlapCircle);
+        assertNull(circle2.lastOverlapCircle);
     }
 
     @Test
@@ -45,9 +47,22 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertContains(circle1.overlapCircles, circle2);
-        assertEmpty(circle2.overlapCircles);
+        assertEquals(circle2, circle1.lastOverlapCircle);
+        assertNull(circle2.lastOverlapCircle);
     }
+
+//    @Test
+//    public void notificationIncludesCenterSeparation() {
+//        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+//        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
+//
+//        OverlapDetection testSubject = new OverlapDetection();
+//        testSubject.addCircles(Arrays.asList(circle1, circle2));
+//        testSubject.findAndNotifyOverlaps();
+//
+//        assertContains(circle1.overlapCircles, circle2);
+//        assertEmpty(circle2.overlapCircles);
+//    }
 
     @Test
     public void xOverlapWithoutYOverlap() {
@@ -58,8 +73,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEmpty(circle1.overlapCircles);
-        assertEmpty(circle2.overlapCircles);
+        assertNull(circle1.lastOverlapCircle);
+        assertNull(circle2.lastOverlapCircle);
     }
 
     @Test
@@ -71,15 +86,15 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEmpty(circle1.overlapCircles);
-        assertEmpty(circle2.overlapCircles);
+        assertNull(circle1.lastOverlapCircle);
+        assertNull(circle2.lastOverlapCircle);
     }
 
     private static class SpyCircle implements OverlapDetection.Circle {
         private double centerX;
         private double centerY;
         private double radius;
-        List<OverlapDetection.Circle> overlapCircles = new ArrayList<>();
+        OverlapDetection.Circle lastOverlapCircle;
 
         SpyCircle(double radius, double centerX, double centerY) {
             this.radius = radius;
@@ -104,7 +119,7 @@ public class OverlapDetectionTest {
 
         @Override
         public void onOverlap(OverlapDetection.Circle circle) {
-            overlapCircles.add(circle);
+            lastOverlapCircle = circle;
         }
     }
 }
