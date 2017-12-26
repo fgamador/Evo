@@ -29,12 +29,12 @@ public class OverlapDetection {
                 Circle circle2 = circles.get(j);
                 double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
                 if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared))
-                    circle1.onPossibleOverlap(circle2);
+                    circle1.onOverlap(circle2);
             }
         }
     }
 
     public interface Circle extends fga.evo.model.geometry.Circle {
-        void onPossibleOverlap(Circle circle);
+        void onOverlap(Circle circle);
     }
 }

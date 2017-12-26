@@ -103,7 +103,7 @@ public class OverlapDetectionTest {
         }
 
         @Override
-        public void onPossibleOverlap(OverlapDetection.Circle circle) {
+        public void onOverlap(OverlapDetection.Circle circle) {
             overlapCircles.add(circle);
         }
     }
