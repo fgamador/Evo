@@ -11,9 +11,8 @@ public class PairCollision {
      * @param ball2 another ball
      */
     public static void addForces(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
-        if (centerSeparationSquared != 0) {
-            double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
+        double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
+        if (centerSeparation != 0) {
             BallPairForces.notifyOverlap(ball1, ball2, centerSeparation);
             BallPairForces.addOverlapForces(ball1, ball2, centerSeparation);
         }
