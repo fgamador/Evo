@@ -24,7 +24,7 @@ public class PairCollisionTest {
         ball2.setRadius(1);
         ball2.setCenterPosition(1, 0);
 
-        PairCollision.addForces(ball1, ball2);
+        PairCollision.addForces(ball1, ball2, -1);
 
         assertNetForce(-1, 0, ball1);
         assertNetForce(1, 0, ball2);
@@ -40,7 +40,7 @@ public class PairCollisionTest {
         ball2.setRadius(1);
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
-        PairCollision.addForces(ball1, ball2);
+        PairCollision.addForces(ball1, ball2, -1);
 
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball1);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
@@ -56,7 +56,7 @@ public class PairCollisionTest {
         ball2.setRadius(1);
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
-        PairCollision.addForces(ball2, ball1);
+        PairCollision.addForces(ball2, ball1, -1);
 
         assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball1);
         assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
@@ -72,7 +72,7 @@ public class PairCollisionTest {
         ball2.setRadius(1);
         ball2.setCenterPosition(0, 0);
 
-        PairCollision.addForces(ball1, ball2);
+        PairCollision.addForces(ball1, ball2, -1);
 
         assertNetForce(0, 0, ball1);
         assertNetForce(0, 0, ball2);
@@ -88,7 +88,7 @@ public class PairCollisionTest {
         ball2.setRadius(1);
         ball2.setCenterPosition(1.5, 0);
 
-        PairCollision.addForces(ball1, ball2);
+        PairCollision.addForces(ball1, ball2, -1);
 
         assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
         assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);

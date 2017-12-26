@@ -147,14 +147,14 @@ public class BallTest extends EvoTest {
         ball2.setMass(1);
         ball2.setCenterPosition(1.5, 0);
 
-        PairCollision.addForces(ball1, ball2);
+        PairCollision.addForces(ball1, ball2, -1);
 
         assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
         assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
 
         ball1.subtickPhysics(2);
         ball2.subtickPhysics(2);
-        PairCollision.addForces(ball1, ball2);
+        PairCollision.addForces(ball1, ball2, -1);
 
         assertTrue(ball1.getRecentTotalOverlap() < 1);
         assertEquals(ball1.getRecentTotalOverlap(), ball2.getRecentTotalOverlap(), 0);
