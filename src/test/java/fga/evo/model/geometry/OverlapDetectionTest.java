@@ -2,12 +2,8 @@ package fga.evo.model.geometry;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import static fga.evo.model.Assert.assertContains;
-import static fga.evo.model.Assert.assertEmpty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -52,7 +48,7 @@ public class OverlapDetectionTest {
     }
 
     @Test
-    public void notificationIncludesCenterSeparation() {
+    public void notificationIncludesOverlap() {
         SpyCircle circle1 = new SpyCircle(1, 0, 0);
         SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
 
@@ -60,8 +56,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEquals(1.5, circle1.lastOverlapCenterSeparation, 0);
-        assertEquals(-1, circle2.lastOverlapCenterSeparation, 0);
+        assertEquals(0.5, circle1.lastOverlap, 0);
+        assertEquals(-1, circle2.lastOverlap, 0);
     }
 
     @Test
@@ -96,6 +92,7 @@ public class OverlapDetectionTest {
         private double radius;
         OverlapDetection.Circle lastOverlapCircle = null;
         double lastOverlapCenterSeparation = -1;
+        double lastOverlap = -1;
 
         SpyCircle(double radius, double centerX, double centerY) {
             this.radius = radius;
@@ -119,9 +116,10 @@ public class OverlapDetectionTest {
         }
 
         @Override
-        public void onOverlap(OverlapDetection.Circle circle, double centerSeparation) {
+        public void onOverlap(OverlapDetection.Circle circle, double centerSeparation, double overlap) {
             lastOverlapCircle = circle;
             lastOverlapCenterSeparation = centerSeparation;
+            lastOverlap = overlap;
         }
     }
 }

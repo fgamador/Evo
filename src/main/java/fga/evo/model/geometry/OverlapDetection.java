@@ -28,13 +28,15 @@ public class OverlapDetection {
             for (int j = i + 1; j < circles.size(); j++) {
                 Circle circle2 = circles.get(j);
                 double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
-                if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared))
-                    circle1.onOverlap(circle2, Math.sqrt(centerSeparationSquared));
+                if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared)) {
+                    double centerSeparation = Math.sqrt(centerSeparationSquared);
+                    circle1.onOverlap(circle2, centerSeparation, Circles.calcOverlap(circle1, circle2, centerSeparation));
+                }
             }
         }
     }
 
     public interface Circle extends fga.evo.model.geometry.Circle {
-        void onOverlap(Circle circle, double centerSeparation);
+        void onOverlap(Circle circle, double centerSeparation, double overlap);
     }
 }
