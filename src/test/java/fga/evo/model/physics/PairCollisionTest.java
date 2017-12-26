@@ -63,7 +63,7 @@ public class PairCollisionTest {
     }
 
     @Test
-    public void overlapWithSameCenterPositionAddNoForces() {
+    public void overlapWithSameCenterPositionAddsNoForces() {
         Ball ball1 = new Ball();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
