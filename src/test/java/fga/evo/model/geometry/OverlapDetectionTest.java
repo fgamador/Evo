@@ -91,7 +91,6 @@ public class OverlapDetectionTest {
         private double centerY;
         private double radius;
         OverlapDetection.Circle lastOverlapCircle = null;
-        double lastOverlapCenterSeparation = -1;
         double lastOverlap = -1;
 
         SpyCircle(double radius, double centerX, double centerY) {
@@ -116,9 +115,8 @@ public class OverlapDetectionTest {
         }
 
         @Override
-        public void onOverlap(OverlapDetection.Circle circle, double centerSeparation, double overlap) {
+        public void onOverlap(OverlapDetection.Circle circle, double overlap) {
             lastOverlapCircle = circle;
-            lastOverlapCenterSeparation = centerSeparation;
             lastOverlap = overlap;
         }
     }
