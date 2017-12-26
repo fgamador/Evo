@@ -2,6 +2,8 @@ package fga.evo.model;
 
 import fga.evo.model.physics.NewtonianBody;
 
+import java.util.Collection;
+
 import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,6 +18,10 @@ public class Assert {
 //    public static void assertEquals(double expected, double actual) {
 //        assertEquals(expected, actual, DEFAULT_DELTA);
 //    }
+
+    public static void assertEmpty(Collection<?> collection) {
+        assertTrue(collection.isEmpty());
+    }
 
     public static void assertBonded(Cell cell1, Cell cell2) {
         assertTrue(cell1.isBondedTo(cell2));

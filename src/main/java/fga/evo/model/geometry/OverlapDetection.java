@@ -27,7 +27,9 @@ public class OverlapDetection {
             Circle circle1 = circles.get(i);
             for (int j = i + 1; j < circles.size(); j++) {
                 Circle circle2 = circles.get(j);
-                circle1.onPossibleOverlap(circle2);
+                double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
+                if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared))
+                    circle1.onPossibleOverlap(circle2);
             }
         }
     }
