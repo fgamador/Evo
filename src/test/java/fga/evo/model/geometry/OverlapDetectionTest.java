@@ -37,7 +37,7 @@ public class OverlapDetectionTest {
     }
 
     @Test
-    public void slightXOverlap() {
+    public void tinyXOverlap() {
         SpyCircle circle1 = new SpyCircle(1, 0, 0);
         SpyCircle circle2 = new SpyCircle(1, 1.99, 0);
 
