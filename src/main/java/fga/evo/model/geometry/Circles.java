@@ -20,4 +20,8 @@ public class Circles {
     public static double calcOverlap(Circle circle1, Circle circle2, double centerSeparation) {
         return circle1.getRadius() + circle2.getRadius() - centerSeparation;
     }
+
+    public static double calcCenterSeparation(Circle circle1, Circle circle2, double overlap) {
+        return circle1.getRadius() + circle2.getRadius() - overlap;
+    }
 }
