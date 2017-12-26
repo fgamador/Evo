@@ -22,6 +22,19 @@ public class OverlapDetectionTest {
         assertEmpty(circle2.overlapCircles);
     }
 
+    @Test
+    public void justTouchingNoOverlap() {
+        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+        SpyCircle circle2 = new SpyCircle(1, 2, 0);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        testSubject.addCircles(Arrays.asList(circle1, circle2));
+        testSubject.findAndNotifyOverlaps();
+
+        assertEmpty(circle1.overlapCircles);
+        assertEmpty(circle2.overlapCircles);
+    }
+
     private static class SpyCircle implements OverlapDetection.Circle {
         private double centerX;
         private double centerY;
