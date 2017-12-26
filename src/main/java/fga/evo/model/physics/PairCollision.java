@@ -11,8 +11,7 @@ public class PairCollision {
      * @param ball2 another ball
      */
     public static void addForces(Ball ball1, Ball ball2) {
-        double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
-        addForces(ball1, ball2, centerSeparation);
+        addForces(ball1, ball2, Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2)));
     }
 
     public static void addForces(Ball ball1, Ball ball2, double centerSeparation) {
