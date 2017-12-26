@@ -1,9 +1,11 @@
 package fga.evo.model.geometry;
 
+import fga.evo.model.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static fga.evo.model.EvoTest.SQRT_2;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -83,6 +85,19 @@ public class OverlapDetectionTest {
         testSubject.findAndNotifyOverlaps();
 
         assertEquals(0.5, circle1.lastOverlap, 0);
+        assertEquals(-1, circle2.lastOverlap, 0);
+    }
+
+    @Test
+    public void notificationCanCalculateDiagonalOverlap() {
+        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+        SpyCircle circle2 = new SpyCircle(1, 1 / SQRT_2, -1 / SQRT_2);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        testSubject.addCircles(Arrays.asList(circle1, circle2));
+        testSubject.findAndNotifyOverlaps();
+
+        assertEquals(1, circle1.lastOverlap, Assert.DEFAULT_DELTA);
         assertEquals(-1, circle2.lastOverlap, 0);
     }
 
