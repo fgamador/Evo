@@ -102,9 +102,9 @@ public class OverlapDetectionTest {
     }
 
     private static class SpyCircle implements OverlapDetection.Circle {
+        private double radius;
         private double centerX;
         private double centerY;
-        private double radius;
         OverlapDetection.Circle lastOverlapCircle = null;
         double lastOverlap = -1;
 
@@ -115,6 +115,11 @@ public class OverlapDetectionTest {
         }
 
         @Override
+        public double getRadius() {
+            return radius;
+        }
+
+        @Override
         public double getCenterX() {
             return centerX;
         }
@@ -122,11 +127,6 @@ public class OverlapDetectionTest {
         @Override
         public double getCenterY() {
             return centerY;
-        }
-
-        @Override
-        public double getRadius() {
-            return radius;
         }
 
         @Override
