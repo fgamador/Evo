@@ -1,7 +1,9 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.DoubleParameter;
+import fga.evo.model.geometry.Circle;
 import fga.evo.model.geometry.Circles;
+import fga.evo.model.geometry.OverlapDetection;
 
 /**
  * Collision and bond forces for pairs of balls. Split out from Ball in honor of the Single Responsibility Principle.
@@ -31,13 +33,17 @@ public class BallPairForces {
     }
 
     public static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
-        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        double overlap = calcOverlap(ball1, ball2, centerSeparation);
         ball1.onOverlap(overlap);
         ball2.onOverlap(overlap);
     }
 
+    private static double calcOverlap(Circle circle1, Circle circle2, double centerSeparation) {
+        return circle1.getRadius() + circle2.getRadius() - centerSeparation;
+    }
+
     public static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
-        double overlap = ball1.getRadius() + ball2.getRadius() - centerSeparation;
+        double overlap = calcOverlap(ball1, ball2, centerSeparation);
         double force = Ball.calcOverlapForce(overlap);
         double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
         double ball1RelativeCenterY = ball1.getCenterY() - ball2.getCenterY();
