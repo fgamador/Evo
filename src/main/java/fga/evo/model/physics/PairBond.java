@@ -1,5 +1,6 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.geometry.Circles;
 import fga.evo.model.geometry.OverlapDetection;
 
 public class PairBond {
@@ -17,7 +18,23 @@ public class PairBond {
     }
 
     public void addForces() {
-        BallPairForces.addBondForces(ball1, ball2);
+        addBondForces(ball1, ball2);
+    }
+
+    /**
+     * Adds forces to the balls that will move them back toward just touching one another.
+     * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
+     *
+     * @param ball1 a ball
+     * @param ball2 another ball
+     */
+    public static void addBondForces(Ball ball1, Ball ball2) {
+        double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
+        if (centerSeparation != 0) {
+            double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
+            BallPairForces.addOverlapForces(ball1, ball2, centerSeparation, overlap);
+            BallPairForces.addDampingForces(ball1, ball2);
+        }
     }
 
     public boolean bondsTo(OverlapDetection.Circle ball) {
