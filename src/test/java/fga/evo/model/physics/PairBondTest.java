@@ -102,6 +102,18 @@ public class PairBondTest extends EvoTest {
         assertNetForce(0, 0, ball2);
     }
 
+    @Test
+    public void pairBondAddsXForceWhenXOverlap() {
+        Ball ball1 = createBall(1, 0, 0);
+        Ball ball2 = createBall(1, 1, 0);
+        PairBond bond = ball1.addBond(ball2);
+
+        bond.addForces();
+
+        assertNetForce(-1, 0, ball1);
+        assertNetForce(1, 0, ball2);
+    }
+
     private Ball createBall(int radius, int centerX, int centerY) {
         Ball ball1 = new Ball();
         ball1.setRadius(radius);
