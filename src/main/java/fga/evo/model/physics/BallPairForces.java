@@ -18,8 +18,8 @@ public class BallPairForces {
      */
     public static void addBondForces(Ball ball1, Ball ball2) {
         double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
+        double centerSeparation = Math.sqrt(centerSeparationSquared);
         if (centerSeparationSquared != 0) {
-            double centerSeparation = Math.sqrt(centerSeparationSquared);
             double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
             addOverlapForces(ball1, ball2, centerSeparation, overlap);
             addDampingForces(ball1, ball2);
