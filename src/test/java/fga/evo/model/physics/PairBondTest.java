@@ -80,10 +80,10 @@ public class PairBondTest {
         assertNetForce(0, 0, ball2);
     }
 
-    private Ball createBall(int i) {
+    private Ball createBall(int centerX) {
         Ball ball1 = new Ball();
         ball1.setRadius(1);
-        ball1.setCenterPosition(i, 0);
+        ball1.setCenterPosition(centerX, 0);
         return ball1;
     }
 }
