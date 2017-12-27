@@ -27,11 +27,6 @@ public class BallPairForces {
         addDampingForces(ball1, ball2);
     }
 
-    public static void notifyOverlap(Ball ball1, Ball ball2, double overlap) {
-        ball1.onOverlap(overlap);
-        ball2.onOverlap(overlap);
-    }
-
     public static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation) {
         double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
         addOverlapForces_Inner(ball1, ball2, centerSeparation, overlap);
