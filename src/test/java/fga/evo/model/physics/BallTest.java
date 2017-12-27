@@ -162,6 +162,22 @@ public class BallTest extends EvoTest {
     }
 
     @Test
+    public void recordOverlapEvenIfBonded() {
+        Ball ball1 = new Ball();
+        ball1.setRadius(1);
+        ball1.setCenterPosition(0, 0);
+        Ball ball2 = new Ball();
+        ball2.setRadius(1);
+        ball2.setCenterPosition(1.5, 0);
+        ball1.addBond(ball2);
+
+        ball1.onOverlap(ball2, 0.5);
+
+        assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
     public void testOnOverlap_LeftWallCollision() {
         ball.addLeftBarrierCollisionForce(-0.5);
 

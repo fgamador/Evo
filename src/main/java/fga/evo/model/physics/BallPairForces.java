@@ -23,16 +23,8 @@ public class BallPairForces {
         }
 
         double centerSeparation = Math.sqrt(centerSeparationSquared);
-        if (Circles.circlesOverlap(ball1, ball2, centerSeparationSquared)) {
-            notifyOverlap(ball1, ball2, centerSeparation);
-        }
         addOverlapForces(ball1, ball2, centerSeparation);
         addDampingForces(ball1, ball2);
-    }
-
-    public static void notifyOverlap(Ball ball1, Ball ball2, double centerSeparation) {
-        double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
-        notifyOverlap_Inner(ball1, ball2, overlap);
     }
 
     public static void notifyOverlap_Inner(Ball ball1, Ball ball2, double overlap) {
