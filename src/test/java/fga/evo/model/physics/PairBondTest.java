@@ -1,11 +1,19 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.EvoTest;
+import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.*;
 
-public class PairBondTest {
+public class PairBondTest extends EvoTest {
+    @Before
+    public void setUp() {
+        Ball.overlapForceFactor.setValue(1);
+        BallPairForces.dampingForceFactor.setValue(1);
+    }
+
     @Test
     public void aPairBondBondsToTheBallsItWasConstructedWith() {
         Ball ball1 = new Ball();
