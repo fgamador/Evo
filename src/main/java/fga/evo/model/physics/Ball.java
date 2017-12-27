@@ -121,7 +121,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
         return area;
     }
 
-    public void onOverlap(double overlap) {
+    private void onOverlap(double overlap) {
         overlapAccumulator.addValue(overlap);
     }
 
@@ -141,7 +141,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
         }
     }
 
-    public static void notifyOverlap(Ball ball1, Ball ball2, double overlap) {
+    private static void notifyOverlap(Ball ball1, Ball ball2, double overlap) {
         ball1.onOverlap(overlap);
         ball2.onOverlap(overlap);
     }
