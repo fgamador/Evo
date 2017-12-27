@@ -82,26 +82,4 @@ public class BallPairForcesTest extends EvoTest {
         assertNetForce(-1, 0, ball);
         assertNetForce(1, 0, ball2);
     }
-
-    @Test
-    public void testOnOverlap_BondedBallCollision() {
-        ball.addBond(ball2);
-        ball2.setCenterPosition(1.5, 0);
-
-        BallPairForces.addBondForces(ball, ball2);
-
-        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
-        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
-    }
-
-    @Test
-    public void testOnOverlap_BondedBallExtension() {
-        ball.addBond(ball2);
-        ball2.setCenterPosition(2.5, 0);
-
-        BallPairForces.addBondForces(ball, ball2);
-
-        assertEquals(0, ball.getRecentTotalOverlap(), 0);
-        assertEquals(0, ball2.getRecentTotalOverlap(), 0);
-    }
 }
