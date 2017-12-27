@@ -41,7 +41,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     public void addLeftBarrierCollisionForce(double wallX) {
         double overlap = getRadius() - (getCenterX() - wallX);
         if (overlap > 0) {
-            onOverlap(overlap);
+            recordOverlap(overlap);
             addForce(calcOverlapForce(overlap), 0);
         }
     }
@@ -54,7 +54,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     public void addRightBarrierCollisionForce(double wallX) {
         double overlap = getCenterX() + getRadius() - wallX;
         if (overlap > 0) {
-            onOverlap(overlap);
+            recordOverlap(overlap);
             addForce(-calcOverlapForce(overlap), 0);
         }
     }
@@ -67,7 +67,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     public void addLowBarrierCollisionForce(double wallY) {
         double overlap = getRadius() - (getCenterY() - wallY);
         if (overlap > 0) {
-            onOverlap(overlap);
+            recordOverlap(overlap);
             addForce(0, calcOverlapForce(overlap));
         }
     }
@@ -80,7 +80,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     public void addHighBarrierCollisionForce(double wallY) {
         double overlap = getCenterY() + getRadius() - wallY;
         if (overlap > 0) {
-            onOverlap(overlap);
+            recordOverlap(overlap);
             addForce(0, -calcOverlapForce(overlap));
         }
     }
@@ -121,7 +121,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
         return area;
     }
 
-    private void onOverlap(double overlap) {
+    private void recordOverlap(double overlap) {
         overlapAccumulator.addValue(overlap);
     }
 
@@ -142,7 +142,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     }
 
     private static void notifyOverlap(Ball ball1, Ball ball2, double overlap) {
-        ball1.onOverlap(overlap);
-        ball2.onOverlap(overlap);
+        ball1.recordOverlap(overlap);
+        ball2.recordOverlap(overlap);
     }
 }
