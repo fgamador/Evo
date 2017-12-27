@@ -2,6 +2,7 @@ package fga.evo.model.physics;
 
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.*;
 
 public class PairBondTest {
@@ -65,5 +66,21 @@ public class PairBondTest {
         PairBond bond2 = new PairBond(ball2, ball1);
 
         assertEquals(bond1.hashCode(), bond2.hashCode());
+    }
+
+    @Test
+    public void testAddBallPairForces_Bonded_TouchingAtRest() {
+        Ball ball1 = new Ball();
+        ball1.setRadius(1);
+        ball1.setCenterPosition(0, 0);
+        Ball ball2 = new Ball();
+        ball2.setRadius(1);
+        ball2.setCenterPosition(2, 0);
+        PairBond bond = ball1.addBond(ball2);
+
+        bond.addForces();
+
+        assertNetForce(0, 0, ball1);
+        assertNetForce(0, 0, ball2);
     }
 }
