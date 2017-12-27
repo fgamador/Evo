@@ -17,18 +17,11 @@ public class PairBond {
         this.ball2 = ball2;
     }
 
-    public void addForces() {
-        addBondForces(ball1, ball2);
-    }
-
     /**
      * Adds forces to the balls that will move them back toward just touching one another.
      * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
-     *
-     * @param ball1 a ball
-     * @param ball2 another ball
      */
-    public static void addBondForces(Ball ball1, Ball ball2) {
+    public void addForces() {
         double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
         if (centerSeparation != 0) {
             double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
