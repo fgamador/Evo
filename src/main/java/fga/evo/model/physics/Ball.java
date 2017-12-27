@@ -131,10 +131,11 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
 
     @Override
     public void onOverlap(OverlapDetection.Circle circle, double overlap) {
+        Ball ball2 = (Ball) circle;
         recordOverlap(overlap);
-        ((Ball) circle).recordOverlap(overlap);
+        ball2.recordOverlap(overlap);
         if (!isBondedTo(circle)) {
-            PairCollision.addForces(this, (Ball) circle, overlap);
+            PairCollision.addForces(this, ball2, overlap);
         }
     }
 
