@@ -126,6 +126,19 @@ public class PairBondTest extends EvoTest {
         assertNetForce(0, 1, ball2);
     }
 
+    @Test
+    public void pairBondAddsDampingForceWhenRelativeVelocity() {
+        Ball ball1 = createBall(1, 0, 0);
+        Ball ball2 = createBall(1, 2, 0);
+        PairBond bond = ball1.addBond(ball2);
+        ball2.setVelocity(-1, 0);
+
+        bond.addForces();
+
+        assertNetForce(-1, 0, ball1);
+        assertNetForce(1, 0, ball2);
+    }
+
     private Ball createBall(int radius, int centerX, int centerY) {
         Ball ball1 = new Ball();
         ball1.setRadius(radius);
