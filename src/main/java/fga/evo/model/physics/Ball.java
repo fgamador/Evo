@@ -121,10 +121,6 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
         return area;
     }
 
-    private void recordOverlap(double overlap) {
-        overlapAccumulator.addValue(overlap);
-    }
-
     public double getRecentTotalOverlap() {
         return overlapAccumulator.getTotal();
     }
@@ -135,14 +131,14 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
 
     @Override
     public void onOverlap(OverlapDetection.Circle circle, double overlap) {
-        notifyOverlap(this, (Ball) circle, overlap);
+        recordOverlap(overlap);
+        ((Ball) circle).recordOverlap(overlap);
         if (!isBondedTo(circle)) {
             PairCollision.addForces(this, (Ball) circle, overlap);
         }
     }
 
-    private static void notifyOverlap(Ball ball1, Ball ball2, double overlap) {
-        ball1.recordOverlap(overlap);
-        ball2.recordOverlap(overlap);
+    private void recordOverlap(double overlap) {
+        overlapAccumulator.addValue(overlap);
     }
 }
