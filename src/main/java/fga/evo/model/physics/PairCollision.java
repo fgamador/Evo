@@ -11,9 +11,9 @@ public class PairCollision {
      * @param overlap overlap distance along inter-radial axis
      */
     public static void addForces(Ball ball1, Ball ball2, double overlap) {
+        BallPairForces.notifyOverlap_Inner(ball1, ball2, overlap);
         double centerSeparation = Circles.calcCenterSeparation(ball1, ball2, overlap);
         if (centerSeparation != 0) {
-            BallPairForces.notifyOverlap_Inner(ball1, ball2, overlap);
             BallPairForces.addOverlapForces(ball1, ball2, centerSeparation);
         }
     }
