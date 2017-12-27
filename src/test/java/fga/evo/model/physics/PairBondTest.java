@@ -69,7 +69,7 @@ public class PairBondTest {
     }
 
     @Test
-    public void testAddBallPairForces_Bonded_TouchingAtRest() {
+    public void pairBondAddsNoForcesToBallsJustTouchingAtRest() {
         Ball ball1 = createBall(1, 0, 0);
         Ball ball2 = createBall(1, 2, 0);
         PairBond bond = ball1.addBond(ball2);
