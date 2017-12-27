@@ -70,8 +70,8 @@ public class PairBondTest {
 
     @Test
     public void testAddBallPairForces_Bonded_TouchingAtRest() {
-        Ball ball1 = createBall(0);
-        Ball ball2 = createBall(2);
+        Ball ball1 = createBall(1, 0, 0);
+        Ball ball2 = createBall(1, 2, 0);
         PairBond bond = ball1.addBond(ball2);
 
         bond.addForces();
@@ -80,10 +80,10 @@ public class PairBondTest {
         assertNetForce(0, 0, ball2);
     }
 
-    private Ball createBall(int centerX) {
+    private Ball createBall(int radius, int centerX, int centerY) {
         Ball ball1 = new Ball();
-        ball1.setRadius(1);
-        ball1.setCenterPosition(centerX, 0);
+        ball1.setRadius(radius);
+        ball1.setCenterPosition(centerX, centerY);
         return ball1;
     }
 }
