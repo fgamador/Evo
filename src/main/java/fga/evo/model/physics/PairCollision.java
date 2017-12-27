@@ -13,7 +13,7 @@ public class PairCollision {
     public static void addForces(Ball ball1, Ball ball2, double overlap) {
         double centerSeparation = Circles.calcCenterSeparation(ball1, ball2, overlap);
         if (centerSeparation != 0) {
-            BallPairForces.addOverlapForces(ball1, ball2, centerSeparation);
+            BallPairForces.addOverlapForces(ball1, ball2, centerSeparation, overlap);
         }
     }
 }
