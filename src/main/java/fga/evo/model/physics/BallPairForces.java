@@ -17,8 +17,7 @@ public class BallPairForces {
      * @param ball2 another ball
      */
     public static void addBondForces(Ball ball1, Ball ball2) {
-        double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
-        double centerSeparation = Math.sqrt(centerSeparationSquared);
+        double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
         if (centerSeparation != 0) {
             double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
             addOverlapForces(ball1, ball2, centerSeparation, overlap);
