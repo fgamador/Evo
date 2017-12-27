@@ -26,19 +26,6 @@ public class BallPairForcesTest extends EvoTest {
     }
 
     @Test
-    public void testAddBallPairForces_Bonded_TouchingMovingTogether() {
-        ball.addBond(ball2);
-        ball2.setCenterPosition(2, 0);
-        ball.setVelocity(1, 0);
-        ball2.setVelocity(1, 0);
-
-        BallPairForces.addBondForces(ball, ball2);
-
-        assertNetForce(0, 0, ball);
-        assertNetForce(0, 0, ball2);
-    }
-
-    @Test
     public void testAddBallPairForces_Bonded_XCollision() {
         ball.addBond(ball2);
         ball2.setCenterPosition(1, 0);
