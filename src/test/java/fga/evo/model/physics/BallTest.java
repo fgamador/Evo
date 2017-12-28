@@ -249,18 +249,18 @@ public class BallTest extends EvoTest {
         checkAddHighBarrierCollisionForce(ball, -5, -4.5, -0.5); // overlap by 0.5
     }
 
-    private Ball createBall(double radius, double centerX, double centerY) {
-        ball = new Ball();
-        ball.setRadius(radius);
-        ball.setCenterPosition(centerX, centerY);
-        return ball;
-    }
-
     private void checkAddHighBarrierCollisionForce(Ball ball, double ballY, double wallY, double expected) {
         ball.setCenterPosition(0, ballY);
 
         ball.addHighBarrierCollisionForce(wallY);
 
         assertNetForce(0, expected, ball);
+    }
+
+    private Ball createBall(double radius, double centerX, double centerY) {
+        ball = new Ball();
+        ball.setRadius(radius);
+        ball.setCenterPosition(centerX, centerY);
+        return ball;
     }
 }
