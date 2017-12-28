@@ -177,23 +177,23 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testOnOverlap_RightWallCollision() {
+    public void rightBarrierCollisionRecordsOverlap() {
+        Ball ball = createBall(1, 0, 0);
         ball.addRightBarrierCollisionForce(0.5);
-
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
-    public void testOnOverlap_LowWallCollision() {
+    public void lowBarrierCollisionRecordsOverlap() {
+        Ball ball = createBall(1, 0, 0);
         ball.addLowBarrierCollisionForce(-0.5);
-
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
-    public void testOnOverlap_HighWallCollision() {
+    public void highBarrierCollisionRecordsOverlap() {
+        Ball ball = createBall(1, 0, 0);
         ball.addHighBarrierCollisionForce(0.5);
-
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
