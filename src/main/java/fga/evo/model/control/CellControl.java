@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.control;
 
 /**
  * The brains and eventually the genome of a cell.

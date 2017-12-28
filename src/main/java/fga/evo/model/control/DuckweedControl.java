@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.control;
 
 /**
  * A hard-coded control that emulates duckweed, which floats on the surface and reproduces until it fills the surface layer.

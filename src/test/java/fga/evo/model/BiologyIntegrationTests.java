@@ -1,12 +1,12 @@
 package fga.evo.model;
 
-import org.junit.After;
+import fga.evo.model.control.FixedDepthSeekingControl;
+import fga.evo.model.control.ParentChildControl;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Collection;
 
-import static fga.evo.model.Assert.*;
 import static org.junit.Assert.*;
 
 public class BiologyIntegrationTests extends WorldIntegrationTests {

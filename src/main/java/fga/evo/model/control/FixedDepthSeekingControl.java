@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.control;
 
 /**
  * A simple, hard-coded control that seeks a specified depth by adjusting the size of the float ring.

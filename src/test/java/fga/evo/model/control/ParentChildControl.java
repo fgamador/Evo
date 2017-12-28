@@ -1,6 +1,6 @@
-package fga.evo.model;
+package fga.evo.model.control;
 
-class ParentChildControl implements CellControl {
+public class ParentChildControl implements CellControl {
     private double spawnOdds;
     private double donation;
     private double releaseChildOdds;
