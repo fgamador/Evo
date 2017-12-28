@@ -1,5 +1,6 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.Assert;
 import fga.evo.model.EvoTest;
 import fga.evo.model.geometry.Circles;
 import org.junit.Before;
@@ -22,20 +23,16 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testSetRadius() {
-        assertEquals(Math.PI, ball.getArea(), 0.001);
+    public void areaCorrespondsToRadius() {
+        Ball ball = new Ball();
+        ball.setRadius(3);
+        assertEquals(9 * Math.PI, ball.getArea(), Assert.DEFAULT_DELTA);
     }
 
     @Test
-    public void testGetArea() {
-        ball.setRadius(5);
-        assertEquals(25 * Math.PI, ball.getArea(), 0.001);
-    }
-
-    @Test
-    public void testCalcOverlapForce() {
+    public void ballCalculatesOverlapForceFromOverlapAndForceFactor() {
         Ball.overlapForceFactor.setValue(2);
-        assertEquals(2, Ball.calcOverlapForce(1), 0);
+        assertEquals(6, Ball.calcOverlapForce(3), 0);
     }
 
     @Test
@@ -162,7 +159,7 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void recordOverlapEvenIfBonded() {
+    public void ballsRecordOverlapEvenWhenBonded() {
         Ball ball1 = new Ball();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
