@@ -10,16 +10,9 @@ import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.*;
 
 public class BallTest extends EvoTest {
-    private Ball ball;
-
     @Before
     public void setUp() {
         NewtonianBody.speedLimit.setValue(100);
-
-        ball = new Ball();
-        ball.setRadius(1);
-        ball.setMass(1);
-        ball.setCenterPosition(0, 0);
     }
 
     @Test
@@ -199,6 +192,7 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testCalcLowXWallCollisionForce() {
+        Ball ball = createBall(1, 0, 0);
         checkAddLeftBarrierCollisionForce(ball, 5, 0, 0); // no contact
         checkAddLeftBarrierCollisionForce(ball, 5, 4, 0); // just touching
         checkAddLeftBarrierCollisionForce(ball, 5, 4.5, 0.5); // overlap by 0.5
@@ -212,6 +206,7 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testCalcHighXWallCollisionForce() {
+        Ball ball = createBall(1, 0, 0);
         checkAddRightBarrierCollisionForce(ball, 5, 10, 0); // no contact
         checkAddRightBarrierCollisionForce(ball, 5, 6, 0); // just touching
         checkAddRightBarrierCollisionForce(ball, 5, 5.5, -0.5); // overlap by 0.5
@@ -225,6 +220,7 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testCalcLowYWallCollisionForce() {
+        Ball ball = createBall(1, 0, 0);
         checkAddLowBarrierCollisionForce(ball, -5, -10, 0); // no contact
         checkAddLowBarrierCollisionForce(ball, -5, -6, 0); // just touching
         checkAddLowBarrierCollisionForce(ball, -5, -5.5, 0.5); // overlap by 0.5
@@ -238,6 +234,7 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testCalcHighYWallCollisionForce() {
+        Ball ball = createBall(1, 0, 0);
         checkAddHighBarrierCollisionForce(ball, -5, 0, 0); // no contact
         checkAddHighBarrierCollisionForce(ball, -5, -4, 0); // just touching
         checkAddHighBarrierCollisionForce(ball, -5, -4.5, -0.5); // overlap by 0.5
@@ -250,7 +247,7 @@ public class BallTest extends EvoTest {
     }
 
     private Ball createBall(double radius, double centerX, double centerY) {
-        ball = new Ball();
+        Ball ball = new Ball();
         ball.setRadius(radius);
         ball.setCenterPosition(centerX, centerY);
         return ball;
