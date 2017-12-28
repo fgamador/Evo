@@ -23,6 +23,33 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     private List<PairBond> bonds = new ArrayList<>();
     private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
+    public void setRadius(double val) {
+        radius = val;
+        area = Math.PI * sqr(radius);
+    }
+
+    public PairBond addBond(Ball ball) {
+        if (isBondedTo(ball))
+            throw new IllegalStateException("Cannot bond the same ball twice");
+
+        PairBond bond = new PairBond(this, ball);
+        bonds.add(bond);
+        ball.bonds.add(bond);
+        return bond;
+    }
+
+    public PairBond removeBond(Ball ball) {
+        Predicate<PairBond> bondsToBall = bond -> bond.bondsTo(ball);
+        PairBond removed = bonds.stream().filter(bondsToBall).findFirst().orElse(null);
+        bonds.removeIf(bondsToBall);
+        ball.bonds.removeIf(bond -> bond.bondsTo(this));
+        return removed;
+    }
+
+    public boolean isBondedTo(OverlapDetection.Circle ball) {
+        return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
+    }
+
     /**
      * Updates the ball's velocity and position per the forces currently on it, then clears the forces.
      *
@@ -31,6 +58,20 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     public void subtickPhysics(int subticksPerTick) {
         subtick(subticksPerTick);
         overlapAccumulator.decay();
+    }
+
+    @Override
+    public void onOverlap(OverlapDetection.Circle circle, double overlap) {
+        Ball ball2 = (Ball) circle;
+        recordOverlap(overlap);
+        ball2.recordOverlap(overlap);
+        if (!isBondedTo(circle)) {
+            PairCollision.addForces(this, ball2, overlap);
+        }
+    }
+
+    private void recordOverlap(double overlap) {
+        overlapAccumulator.addValue(overlap);
     }
 
     /**
@@ -85,33 +126,6 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
         }
     }
 
-    public PairBond addBond(Ball ball) {
-        if (isBondedTo(ball))
-            throw new IllegalStateException("Cannot bond the same ball twice");
-
-        PairBond bond = new PairBond(this, ball);
-        bonds.add(bond);
-        ball.bonds.add(bond);
-        return bond;
-    }
-
-    public PairBond removeBond(Ball ball) {
-        Predicate<PairBond> bondsToBall = bond -> bond.bondsTo(ball);
-        PairBond removed = bonds.stream().filter(bondsToBall).findFirst().orElse(null);
-        bonds.removeIf(bondsToBall);
-        ball.bonds.removeIf(bond -> bond.bondsTo(this));
-        return removed;
-    }
-
-    public boolean isBondedTo(OverlapDetection.Circle ball) {
-        return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
-    }
-
-    public void setRadius(double val) {
-        radius = val;
-        area = Math.PI * sqr(radius);
-    }
-
     @Override
     public double getRadius() {
         return radius;
@@ -127,19 +141,5 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
 
     static double calcOverlapForce(double overlap) {
         return overlapForceFactor.getValue() * overlap;
-    }
-
-    @Override
-    public void onOverlap(OverlapDetection.Circle circle, double overlap) {
-        Ball ball2 = (Ball) circle;
-        recordOverlap(overlap);
-        ball2.recordOverlap(overlap);
-        if (!isBondedTo(circle)) {
-            PairCollision.addForces(this, ball2, overlap);
-        }
-    }
-
-    private void recordOverlap(double overlap) {
-        overlapAccumulator.addValue(overlap);
     }
 }
