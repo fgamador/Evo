@@ -135,6 +135,29 @@ public class BallTest extends EvoTest {
     }
 
     @Test
+    public void ballsRecordOverlap() {
+        Ball ball1 = createBall(1, 0, 0);
+        Ball ball2 = createBall(1, 1.5, 0);
+
+        ball1.onOverlap(ball2, 0.5);
+
+        assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
+    public void ballsRecordOverlapEvenWhenBonded() {
+        Ball ball1 = createBall(1, 0, 0);
+        Ball ball2 = createBall(1, 1.5, 0);
+        ball1.addBond(ball2);
+
+        ball1.onOverlap(ball2, 0.5);
+
+        assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
+        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
     public void testGetRecentTotalOverlap() {
         Ball ball1 = createBall(1, 0, 0);
         ball1.setMass(1);
@@ -152,18 +175,6 @@ public class BallTest extends EvoTest {
 
         assertTrue(ball1.getRecentTotalOverlap() < 1);
         assertEquals(ball1.getRecentTotalOverlap(), ball2.getRecentTotalOverlap(), 0);
-    }
-
-    @Test
-    public void ballsRecordOverlapEvenWhenBonded() {
-        Ball ball1 = createBall(1, 0, 0);
-        Ball ball2 = createBall(1, 1.5, 0);
-        ball1.addBond(ball2);
-
-        ball1.onOverlap(ball2, 0.5);
-
-        assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
-        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
     }
 
     @Test
