@@ -177,6 +177,27 @@ public class BallTest extends EvoTest {
     }
 
     @Test
+    public void testOnOverlap_RightWallCollision() {
+        ball.addRightBarrierCollisionForce(0.5);
+
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
+    public void testOnOverlap_LowWallCollision() {
+        ball.addLowBarrierCollisionForce(-0.5);
+
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
+    public void testOnOverlap_HighWallCollision() {
+        ball.addHighBarrierCollisionForce(0.5);
+
+        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
+    }
+
+    @Test
     public void testCalcLowXWallCollisionForce() {
         checkAddLeftBarrierCollisionForce(ball, 5, 0, 0); // no contact
         checkAddLeftBarrierCollisionForce(ball, 5, 4, 0); // just touching
@@ -189,13 +210,6 @@ public class BallTest extends EvoTest {
         ball.addLeftBarrierCollisionForce(wallX);
 
         assertNetForce(expected, 0, ball);
-    }
-
-    @Test
-    public void testOnOverlap_RightWallCollision() {
-        ball.addRightBarrierCollisionForce(0.5);
-
-        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
@@ -214,13 +228,6 @@ public class BallTest extends EvoTest {
     }
 
     @Test
-    public void testOnOverlap_LowWallCollision() {
-        ball.addLowBarrierCollisionForce(-0.5);
-
-        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
-    }
-
-    @Test
     public void testCalcLowYWallCollisionForce() {
         checkAddLowBarrierCollisionForce(ball, -5, -10, 0); // no contact
         checkAddLowBarrierCollisionForce(ball, -5, -6, 0); // just touching
@@ -233,13 +240,6 @@ public class BallTest extends EvoTest {
         ball.addLowBarrierCollisionForce(wallY);
 
         assertNetForce(0, expected, ball);
-    }
-
-    @Test
-    public void testOnOverlap_HighWallCollision() {
-        ball.addHighBarrierCollisionForce(0.5);
-
-        assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
