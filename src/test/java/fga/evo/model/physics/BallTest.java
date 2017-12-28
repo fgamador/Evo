@@ -136,14 +136,10 @@ public class BallTest extends EvoTest {
 
     @Test
     public void testGetRecentTotalOverlap() {
-        Ball ball1 = new Ball();
-        ball1.setRadius(1);
+        Ball ball1 = createBall(1, 0, 0);
         ball1.setMass(1);
-        ball1.setCenterPosition(0, 0);
-        Ball ball2 = new Ball();
-        ball2.setRadius(1);
+        Ball ball2 = createBall(1, 1.5, 0);
         ball2.setMass(1);
-        ball2.setCenterPosition(1.5, 0);
 
         ball1.onOverlap(ball2, 0.5);
 
@@ -160,12 +156,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void ballsRecordOverlapEvenWhenBonded() {
-        Ball ball1 = new Ball();
-        ball1.setRadius(1);
-        ball1.setCenterPosition(0, 0);
-        Ball ball2 = new Ball();
-        ball2.setRadius(1);
-        ball2.setCenterPosition(1.5, 0);
+        Ball ball1 = createBall(1, 0, 0);
+        Ball ball2 = createBall(1, 1.5, 0);
         ball1.addBond(ball2);
 
         ball1.onOverlap(ball2, 0.5);
@@ -252,6 +244,13 @@ public class BallTest extends EvoTest {
         checkAddHighBarrierCollisionForce(ball, -5, 0, 0); // no contact
         checkAddHighBarrierCollisionForce(ball, -5, -4, 0); // just touching
         checkAddHighBarrierCollisionForce(ball, -5, -4.5, -0.5); // overlap by 0.5
+    }
+
+    private Ball createBall(double radius, double centerX, double centerY) {
+        ball = new Ball();
+        ball.setRadius(radius);
+        ball.setCenterPosition(centerX, centerY);
+        return ball;
     }
 
     private void checkAddHighBarrierCollisionForce(Ball ball, double ballY, double wallY, double expected) {
