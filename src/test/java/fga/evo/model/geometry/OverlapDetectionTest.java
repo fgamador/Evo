@@ -122,8 +122,7 @@ public class OverlapDetectionTest {
     }
 
     private void assertOverlap(SpyCircle circle1, SpyCircle circle2) {
-        boolean hasOverlap = foundOverlap(circle1, circle2);
-        assertTrue(hasOverlap);
+        assertTrue(foundOverlap(circle1, circle2));
     }
 
     private boolean foundOverlap(SpyCircle circle1, SpyCircle circle2) {
