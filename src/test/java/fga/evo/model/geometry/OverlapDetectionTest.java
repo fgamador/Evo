@@ -122,10 +122,14 @@ public class OverlapDetectionTest {
     }
 
     private void assertOverlap(SpyCircle circle1, SpyCircle circle2) {
-        boolean contains1 = overlaps.get(circle1).contains(circle2);
-        boolean contains2 = overlaps.get(circle2).contains(circle1);
-        assertTrue(contains1);
-        assertTrue(contains2);
+        boolean hasOverlap = foundOverlap(circle1, circle2);
+        assertTrue(hasOverlap);
+    }
+
+    private boolean foundOverlap(SpyCircle circle1, SpyCircle circle2) {
+        boolean contains1 = overlaps.containsKey(circle1) && overlaps.get(circle1).contains(circle2);
+        boolean contains2 = overlaps.containsKey(circle2) && overlaps.get(circle2).contains(circle1);
+        return contains1 && contains2;
     }
 
     private class SpyCircle implements OverlapDetection.Circle {
