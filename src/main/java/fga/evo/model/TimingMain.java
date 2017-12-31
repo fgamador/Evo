@@ -9,7 +9,7 @@ import java.util.Collection;
 //   0.01785 millis/tick
 
 public class TimingMain {
-    private static final int WIDTH = 1000;
+    private static final int WIDTH = 10000;
     private static final int AIR_HEIGHT = 50;
     private static final int WATER_DEPTH = 500;
     private static final long TICKS = 10000000;
@@ -46,16 +46,17 @@ public class TimingMain {
     }
 
     private static void populate(World world) {
+        for (int centerX = 200; centerX < WIDTH; centerX += 200)
+            addCell(world, centerX, -50);
+    }
+
+    private static void addCell(World world, int centerX, int centerY) {
         Cell cell = createCell();
-        cell.setCenterPosition(200, -100);
+        cell.setCenterPosition(centerX, centerY);
         world.addCell(cell);
     }
 
     private static Cell createCell() {
         return new Cell(10, new DuckweedControl());
-    }
-
-    private static void tick(World world) {
-        Collection<Cell> newCells = world.tick();
     }
 }
