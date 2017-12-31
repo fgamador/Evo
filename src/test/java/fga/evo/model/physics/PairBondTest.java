@@ -28,19 +28,19 @@ public class PairBondTest extends EvoTest {
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondABallToItself() {
         Ball ball1 = new Ball();
-        PairBond bond = new PairBond(ball1, ball1);
+        new PairBond(ball1, ball1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondNull1() {
         Ball ball = new Ball();
-        PairBond bond = new PairBond(null, ball);
+        new PairBond(null, ball);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondNull2() {
         Ball ball = new Ball();
-        PairBond bond = new PairBond(ball, null);
+        new PairBond(ball, null);
     }
 
     @Test
