@@ -4,11 +4,15 @@ import fga.evo.model.control.DuckweedControl;
 
 import java.util.Collection;
 
+// With original intersection detection:
+//   100000 ticks in 1.785s
+//   0.01785 millis/tick
+
 public class TimingMain {
     private static final int WIDTH = 1000;
     private static final int AIR_HEIGHT = 50;
     private static final int WATER_DEPTH = 500;
-    private static final long TICKS = 100000;
+    private static final long TICKS = 10000000;
 
     public static void main(String[] args) {
         runWorld(createWorld(), 1000);
@@ -17,8 +21,9 @@ public class TimingMain {
         runWorld(createWorld(), TICKS);
         long end = System.currentTimeMillis();
 
-        System.out.println(TICKS + " ticks in " + (end - start) / 1000.0 + "s");
-        System.out.println((end - start) * 1.0 / TICKS + " millis/tick");
+        double millis = end - start;
+        System.out.println(TICKS + " ticks in " + millis / 1000 + "s");
+        System.out.println(millis / TICKS + " millis/tick");
     }
 
     private static void runWorld(World world, long ticks) {
