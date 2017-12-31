@@ -3,13 +3,14 @@ package fga.evo.model.geometry;
 import fga.evo.model.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.*;
 
 import static fga.evo.model.EvoTest.SQRT_2;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class OverlapDetectionTest {
+    private Map<Circle, Set<Circle>> overlaps = new HashMap<>();
+
     @Test
     public void notTouchingNoOverlap() {
         SpyCircle circle1 = new SpyCircle(1, 0, 0);
@@ -19,8 +20,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertNull(circle1.lastOverlapCircle);
-        assertNull(circle2.lastOverlapCircle);
+        assertFalse(overlaps.containsKey(circle1));
+        assertFalse(overlaps.containsKey(circle2));
     }
 
     @Test
@@ -32,8 +33,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertNull(circle1.lastOverlapCircle);
-        assertNull(circle2.lastOverlapCircle);
+        assertFalse(overlaps.containsKey(circle1));
+        assertFalse(overlaps.containsKey(circle2));
     }
 
     @Test
@@ -45,8 +46,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEquals(circle2, circle1.lastOverlapCircle);
-        assertNull(circle2.lastOverlapCircle);
+        assertTrue(overlaps.get(circle1).contains(circle2));
+        assertTrue(overlaps.get(circle2).contains(circle1));
     }
 
     @Test
@@ -58,8 +59,8 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertNull(circle1.lastOverlapCircle);
-        assertNull(circle2.lastOverlapCircle);
+        assertFalse(overlaps.containsKey(circle1));
+        assertFalse(overlaps.containsKey(circle2));
     }
 
     @Test
@@ -71,9 +72,24 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertNull(circle1.lastOverlapCircle);
-        assertNull(circle2.lastOverlapCircle);
+        assertFalse(overlaps.containsKey(circle1));
+        assertFalse(overlaps.containsKey(circle2));
     }
+
+//    @Test
+//    public void detectsOverlapDespiteAddOrder() {
+//        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+//        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
+//        SpyCircle circle3 = new SpyCircle(1, 3, 0);
+//
+//        OverlapDetection testSubject = new OverlapDetection();
+//        testSubject.addCircles(Arrays.asList(circle1, circle3, circle2));
+//        testSubject.findAndNotifyOverlaps();
+//
+//        assertEquals(circle2, circle1.lastOverlapCircle);
+//        assertEquals(circle3, circle2.lastOverlapCircle);
+//        assertNull(circle3.lastOverlapCircle);
+//    }
 
     @Test
     public void notificationIncludesOverlap() {
@@ -101,11 +117,10 @@ public class OverlapDetectionTest {
         assertEquals(-1, circle2.lastOverlap, 0);
     }
 
-    private static class SpyCircle implements OverlapDetection.Circle {
+    private class SpyCircle implements OverlapDetection.Circle {
         private double radius;
         private double centerX;
         private double centerY;
-        OverlapDetection.Circle lastOverlapCircle = null;
         double lastOverlap = -1;
 
         SpyCircle(double radius, double centerX, double centerY) {
@@ -131,8 +146,15 @@ public class OverlapDetectionTest {
 
         @Override
         public void onOverlap(OverlapDetection.Circle circle, double overlap) {
-            lastOverlapCircle = circle;
+            recordOverlap(this, circle);
+            recordOverlap(circle, this);
+
             lastOverlap = overlap;
         }
+    }
+
+    private void recordOverlap(OverlapDetection.Circle circle1, OverlapDetection.Circle circle2) {
+        Set<Circle> overlapCircles = overlaps.computeIfAbsent(circle1, k -> new HashSet<>());
+        overlapCircles.add(circle2);
     }
 }
