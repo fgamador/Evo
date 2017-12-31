@@ -46,8 +46,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertTrue(overlaps.get(circle1).contains(circle2));
-        assertTrue(overlaps.get(circle2).contains(circle1));
+        assertOverlap(circle1, circle2);
     }
 
     @Test
@@ -117,6 +116,16 @@ public class OverlapDetectionTest {
         assertEquals(-1, circle2.lastOverlap, 0);
     }
 
+    private void recordOverlap(OverlapDetection.Circle circle1, OverlapDetection.Circle circle2) {
+        Set<Circle> overlapCircles = overlaps.computeIfAbsent(circle1, k -> new HashSet<>());
+        overlapCircles.add(circle2);
+    }
+
+    private void assertOverlap(SpyCircle circle1, SpyCircle circle2) {
+        assertTrue(overlaps.get(circle1).contains(circle2));
+        assertTrue(overlaps.get(circle2).contains(circle1));
+    }
+
     private class SpyCircle implements OverlapDetection.Circle {
         private double radius;
         private double centerX;
@@ -151,10 +160,5 @@ public class OverlapDetectionTest {
 
             lastOverlap = overlap;
         }
-    }
-
-    private void recordOverlap(OverlapDetection.Circle circle1, OverlapDetection.Circle circle2) {
-        Set<Circle> overlapCircles = overlaps.computeIfAbsent(circle1, k -> new HashSet<>());
-        overlapCircles.add(circle2);
     }
 }
