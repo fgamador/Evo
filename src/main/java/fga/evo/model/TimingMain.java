@@ -4,7 +4,7 @@ import fga.evo.model.control.DuckweedControl;
 
 import java.util.Collection;
 
-// With original intersection detection:
+// With original intersection detection and width 1000
 //   100000 ticks in 1.785s
 //   0.01785 millis/tick
 
