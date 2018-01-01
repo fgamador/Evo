@@ -19,14 +19,13 @@ public class OverlapDetection {
     }
 
     public void findAndNotifyOverlaps() {
-        // TODO Idea: keep balls sorted by centerX. Need check a ball against
-        // only those others with greater indexes until we find another ball
-        // whose centerX is beyond the max radius plus the first ball's
-        // radius. Works for finding shadowing, too.
-        for (int i = 0; i < circles.size(); i++) {
+        for (int i = 0; i < circles.size(); ++i) {
             OverlappableCircle circle1 = circles.get(i);
-            for (int j = i + 1; j < circles.size(); j++) {
+            for (int j = i + 1; j < circles.size(); ++j) {
                 OverlappableCircle circle2 = circles.get(j);
+                if (Circles.minX(circle2) >= Circles.maxX(circle1))
+                    break;
+
                 double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
                 if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared)) {
                     double overlap = Circles.calcOverlap(circle1, circle2, Math.sqrt(centerSeparationSquared));

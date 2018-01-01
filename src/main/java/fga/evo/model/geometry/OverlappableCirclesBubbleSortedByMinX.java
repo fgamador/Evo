@@ -8,12 +8,12 @@ public class OverlappableCirclesBubbleSortedByMinX {
 
     public void add(OverlappableCircle circle) {
         circles.add(circle);
-        bubbleSortCirclesByMinX();
+        sortCirclesByMinX();
     }
 
     public void addAll(List<? extends OverlappableCircle> circles) {
         this.circles.addAll(circles);
-        bubbleSortCirclesByMinX();
+        sortCirclesByMinX();
     }
 
     public void clear() {
@@ -28,21 +28,17 @@ public class OverlappableCirclesBubbleSortedByMinX {
         return circles.size();
     }
 
-    private void bubbleSortCirclesByMinX() {
+    public void sortCirclesByMinX() {
         boolean swapped;
         do {
             swapped = false;
             for (int i = circles.size() - 1; i > 0; --i) {
-                if (minX(circles.get(i)) < minX(circles.get(i - 1))) {
+                if (Circles.minX(circles.get(i)) < Circles.minX(circles.get(i - 1))) {
                     swapCircles(i, i - 1);
                     swapped = true;
                 }
             }
         } while (swapped);
-    }
-
-    private double minX(OverlappableCircle circle) {
-        return circle.getCenterX() - circle.getRadius();
     }
 
     private void swapCircles(int index1, int index2) {

@@ -24,4 +24,12 @@ public class Circles {
     public static double calcCenterSeparation(Circle circle1, Circle circle2, double overlap) {
         return circle1.getRadius() + circle2.getRadius() - overlap;
     }
+
+    public static double minX(Circle circle) {
+        return circle.getCenterX() - circle.getRadius();
+    }
+
+    public static double maxX(Circle circle) {
+        return circle.getCenterX() + circle.getRadius();
+    }
 }
