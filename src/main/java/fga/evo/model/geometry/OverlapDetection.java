@@ -36,6 +36,24 @@ public class OverlapDetection {
         }
     }
 
+    private void bubbleSortCirclesByMinX() {
+        for (int i = circles.size() - 1; i > 0; --i) {
+            if (minX(circles.get(i)) < minX(circles.get(i - 1))) {
+                swapCircles(i, i - 1);
+            }
+        }
+    }
+
+    private double minX(Circle circle) {
+        return circle.getCenterX() - circle.getRadius();
+    }
+
+    private void swapCircles(int index1, int index2) {
+        Circle temp = circles.get(index1);
+        circles.set(index1, circles.get(index2));
+        circles.set(index2, temp);
+    }
+
     public interface Circle extends fga.evo.model.geometry.Circle {
         void onOverlap(Circle circle, double overlap);
     }
