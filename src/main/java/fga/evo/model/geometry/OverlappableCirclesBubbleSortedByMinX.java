@@ -29,11 +29,16 @@ public class OverlappableCirclesBubbleSortedByMinX {
     }
 
     private void bubbleSortCirclesByMinX() {
-        for (int i = circles.size() - 1; i > 0; --i) {
-            if (minX(circles.get(i)) < minX(circles.get(i - 1))) {
-                swapCircles(i, i - 1);
+        boolean swapped;
+        do {
+            swapped = false;
+            for (int i = circles.size() - 1; i > 0; --i) {
+                if (minX(circles.get(i)) < minX(circles.get(i - 1))) {
+                    swapCircles(i, i - 1);
+                    swapped = true;
+                }
             }
-        }
+        } while (swapped);
     }
 
     private double minX(OverlappableCircle circle) {
