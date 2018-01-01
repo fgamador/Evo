@@ -13,8 +13,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void notTouchingNoOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 3, -3);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 3, -3);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
@@ -25,8 +25,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void justTouchingNoOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 2, 0);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 2, 0);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
@@ -37,8 +37,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void tinyXOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1.99, 0);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 1.99, 0);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
@@ -49,8 +49,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void xOverlapWithoutYOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1, 2);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 1, 2);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
@@ -61,8 +61,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void xAndYOverlapWithoutCircleOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1.5, 1.5);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 1.5, 1.5);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
@@ -73,9 +73,9 @@ public class OverlapDetectionTest {
 
     @Test
     public void detectsOverlapDespiteAddOrder() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
-        SpyCircle circle3 = new SpyCircle(1, 3, 0);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 1.5, 0);
+        OverlappableCircle circle3 = new SpyCircle(1, 3, 0);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle3, circle2));
@@ -88,8 +88,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void notificationIncludesOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 1.5, 0);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
@@ -100,8 +100,8 @@ public class OverlapDetectionTest {
 
     @Test
     public void notificationCanCalculateDiagonalOverlap() {
-        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-        SpyCircle circle2 = new SpyCircle(1, 1 / SQRT_2, -1 / SQRT_2);
+        OverlappableCircle circle1 = new SpyCircle(1, 0, 0);
+        OverlappableCircle circle2 = new SpyCircle(1, 1 / SQRT_2, -1 / SQRT_2);
 
         OverlapDetection testSubject = new OverlapDetection();
         testSubject.addCircles(Arrays.asList(circle1, circle2));
