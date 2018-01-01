@@ -19,6 +19,7 @@ public class OverlapDetection {
     }
 
     public void findAndNotifyOverlaps() {
+        circles.sortByMinX();
         for (int i = 0; i < circles.size(); ++i) {
             OverlappableCircle circle1 = circles.get(i);
             for (int j = i + 1; j < circles.size(); ++j) {

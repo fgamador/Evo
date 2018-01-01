@@ -87,6 +87,28 @@ public class OverlapDetectionTest {
     }
 
     @Test
+    public void detectsOverlapAfterMovement() {
+        SpyCircle circle1 = new SpyCircle(1, 1, 0);
+        SpyCircle circle2 = new SpyCircle(1, 3, 0);
+        SpyCircle circle3 = new SpyCircle(1, 1.5, 0);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        // will sort as circle1, circle3, circle2
+        testSubject.addCircles(Arrays.asList(circle1, circle2, circle3));
+
+        circle1.setCenterX(1);
+        circle2.setCenterX(1.5);
+        circle3.setCenterX(3);
+
+        // must sort as circle1, circle2, circle3 to find the overlaps
+        testSubject.findAndNotifyOverlaps();
+
+        assertTrue(foundOverlap(circle1, circle2));
+        assertTrue(foundOverlap(circle2, circle3));
+        assertFalse(foundOverlap(circle1, circle3));
+    }
+
+    @Test
     public void notificationIncludesOverlap() {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 1.5, 0);
@@ -126,27 +148,43 @@ public class OverlapDetectionTest {
     }
 
     private OverlappableCircle createCircle(double radius, double centerX, double centerY) {
-        return new OverlappableCircle() {
-            @Override
-            public double getRadius() {
-                return radius;
-            }
+        return new SpyCircle(radius, centerX, centerY);
+    }
 
-            @Override
-            public double getCenterX() {
-                return centerX;
-            }
+    private class SpyCircle implements OverlappableCircle {
+        private double radius;
+        private double centerX;
+        private double centerY;
 
-            @Override
-            public double getCenterY() {
-                return centerY;
-            }
+        public SpyCircle(double radius, double centerX, double centerY) {
+            this.radius = radius;
+            this.centerX = centerX;
+            this.centerY = centerY;
+        }
 
-            @Override
-            public void onOverlap(OverlappableCircle circle, double overlap) {
-                assertFalse(foundOverlap(this, circle));
-                recordOverlap(this, circle, overlap);
-            }
-        };
+        @Override
+        public double getRadius() {
+            return radius;
+        }
+
+        @Override
+        public double getCenterX() {
+            return centerX;
+        }
+
+        @Override
+        public double getCenterY() {
+            return centerY;
+        }
+
+        public void setCenterX(double val) {
+            centerX = val;
+        }
+
+        @Override
+        public void onOverlap(OverlappableCircle circle, double overlap) {
+            assertFalse(foundOverlap(this, circle));
+            recordOverlap(this, circle, overlap);
+        }
     }
 }

@@ -8,12 +8,12 @@ public class OverlappableCirclesBubbleSortedByMinX {
 
     public void add(OverlappableCircle circle) {
         circles.add(circle);
-        sortCirclesByMinX();
+        sortByMinX();
     }
 
     public void addAll(List<? extends OverlappableCircle> circles) {
         this.circles.addAll(circles);
-        sortCirclesByMinX();
+        sortByMinX();
     }
 
     public void clear() {
@@ -28,7 +28,7 @@ public class OverlappableCirclesBubbleSortedByMinX {
         return circles.size();
     }
 
-    public void sortCirclesByMinX() {
+    public void sortByMinX() {
         boolean swapped;
         do {
             swapped = false;
