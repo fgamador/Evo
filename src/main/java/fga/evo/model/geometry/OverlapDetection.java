@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OverlapDetection {
-    private List<Circle> circles = new ArrayList<>();
+    private List<OverlappableCircle> circles = new ArrayList<>();
 
-    public void addCircle(Circle circle) {
+    public void addCircle(OverlappableCircle circle) {
         circles.add(circle);
     }
 
-    public void addCircles(List<? extends Circle> circles) {
+    public void addCircles(List<? extends OverlappableCircle> circles) {
         this.circles.addAll(circles);
     }
 
@@ -24,9 +24,9 @@ public class OverlapDetection {
         // whose centerX is beyond the max radius plus the first ball's
         // radius. Works for finding shadowing, too.
         for (int i = 0; i < circles.size(); i++) {
-            Circle circle1 = circles.get(i);
+            OverlappableCircle circle1 = circles.get(i);
             for (int j = i + 1; j < circles.size(); j++) {
-                Circle circle2 = circles.get(j);
+                OverlappableCircle circle2 = circles.get(j);
                 double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
                 if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared)) {
                     double overlap = Circles.calcOverlap(circle1, circle2, Math.sqrt(centerSeparationSquared));
@@ -44,17 +44,13 @@ public class OverlapDetection {
         }
     }
 
-    private double minX(Circle circle) {
+    private double minX(OverlappableCircle circle) {
         return circle.getCenterX() - circle.getRadius();
     }
 
     private void swapCircles(int index1, int index2) {
-        Circle temp = circles.get(index1);
+        OverlappableCircle temp = circles.get(index1);
         circles.set(index1, circles.get(index2));
         circles.set(index2, temp);
-    }
-
-    public interface Circle extends fga.evo.model.geometry.Circle {
-        void onOverlap(Circle circle, double overlap);
     }
 }

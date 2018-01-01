@@ -2,7 +2,7 @@ package fga.evo.model.physics;
 
 import fga.evo.model.DecayingAccumulator;
 import fga.evo.model.DoubleParameter;
-import fga.evo.model.geometry.OverlapDetection;
+import fga.evo.model.geometry.OverlappableCircle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import static fga.evo.model.Util.sqr;
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
-public class Ball extends NewtonianBody implements OverlapDetection.Circle {
+public class Ball extends NewtonianBody implements OverlappableCircle {
     public static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     public static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
@@ -46,7 +46,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
         return removed;
     }
 
-    public boolean isBondedTo(OverlapDetection.Circle ball) {
+    public boolean isBondedTo(OverlappableCircle ball) {
         return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
     }
 
@@ -61,7 +61,7 @@ public class Ball extends NewtonianBody implements OverlapDetection.Circle {
     }
 
     @Override
-    public void onOverlap(OverlapDetection.Circle circle, double overlap) {
+    public void onOverlap(OverlappableCircle circle, double overlap) {
         Ball ball2 = (Ball) circle;
         recordOverlap(overlap);
         ball2.recordOverlap(overlap);

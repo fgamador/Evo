@@ -125,7 +125,7 @@ public class OverlapDetectionTest {
         return overlaps.get(key);
     }
 
-    private class SpyCircle implements OverlapDetection.Circle {
+    private class SpyCircle implements OverlappableCircle {
         private double radius;
         private double centerX;
         private double centerY;
@@ -152,7 +152,7 @@ public class OverlapDetectionTest {
         }
 
         @Override
-        public void onOverlap(OverlapDetection.Circle circle, double overlap) {
+        public void onOverlap(OverlappableCircle circle, double overlap) {
             recordOverlap(this, circle, overlap);
         }
     }

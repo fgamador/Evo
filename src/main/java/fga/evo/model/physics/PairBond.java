@@ -1,7 +1,7 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.geometry.Circles;
-import fga.evo.model.geometry.OverlapDetection;
+import fga.evo.model.geometry.OverlappableCircle;
 
 public class PairBond {
     private final Ball ball1;
@@ -30,7 +30,7 @@ public class PairBond {
         }
     }
 
-    public boolean bondsTo(OverlapDetection.Circle ball) {
+    public boolean bondsTo(OverlappableCircle ball) {
         return ball1 == ball || ball2 == ball;
     }
 
