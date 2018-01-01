@@ -71,20 +71,20 @@ public class OverlapDetectionTest {
         assertFalse(foundOverlap(circle1, circle2));
     }
 
-//    @Test
-//    public void detectsOverlapDespiteAddOrder() {
-//        SpyCircle circle1 = new SpyCircle(1, 0, 0);
-//        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
-//        SpyCircle circle3 = new SpyCircle(1, 3, 0);
-//
-//        OverlapDetection testSubject = new OverlapDetection();
-//        testSubject.addCircles(Arrays.asList(circle1, circle3, circle2));
-//        testSubject.findAndNotifyOverlaps();
-//
-//        assertEquals(circle2, circle1.lastOverlapCircle);
-//        assertEquals(circle3, circle2.lastOverlapCircle);
-//        assertNull(circle3.lastOverlapCircle);
-//    }
+    @Test
+    public void detectsOverlapDespiteAddOrder() {
+        SpyCircle circle1 = new SpyCircle(1, 0, 0);
+        SpyCircle circle2 = new SpyCircle(1, 1.5, 0);
+        SpyCircle circle3 = new SpyCircle(1, 3, 0);
+
+        OverlapDetection testSubject = new OverlapDetection();
+        testSubject.addCircles(Arrays.asList(circle1, circle3, circle2));
+        testSubject.findAndNotifyOverlaps();
+
+        assertTrue(foundOverlap(circle1, circle2));
+        assertTrue(foundOverlap(circle2, circle3));
+        assertFalse(foundOverlap(circle1, circle3));
+    }
 
     @Test
     public void notificationIncludesOverlap() {
