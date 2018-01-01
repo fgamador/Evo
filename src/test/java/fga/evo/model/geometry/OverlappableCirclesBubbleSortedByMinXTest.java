@@ -8,19 +8,6 @@ import static org.junit.Assert.*;
 
 public class OverlappableCirclesBubbleSortedByMinXTest {
     @Test
-    public void twoCirclesAddInSortedOrder() {
-        OverlappableCirclesBubbleSortedByMinX circles = new OverlappableCirclesBubbleSortedByMinX();
-        OverlappableCircle circle1 = createCircle(1, 1, 0);
-        OverlappableCircle circle2 = createCircle(1, 2, 0);
-
-        circles.addAll(Arrays.asList(circle2, circle1));
-
-        assertEquals(2, circles.size());
-        assertEquals(circle1, circles.get(0));
-        assertEquals(circle2, circles.get(1));
-    }
-
-    @Test
     public void threeCirclesAddInSortedOrder() {
         OverlappableCirclesBubbleSortedByMinX circles = new OverlappableCirclesBubbleSortedByMinX();
         OverlappableCircle circle1 = createCircle(1, 1, 0);
