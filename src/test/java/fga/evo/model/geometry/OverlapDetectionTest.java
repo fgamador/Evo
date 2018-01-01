@@ -9,7 +9,7 @@ import static fga.evo.model.EvoTest.SQRT_2;
 import static org.junit.Assert.*;
 
 public class OverlapDetectionTest {
-    private Map<Circle, Set<Circle>> overlaps = new HashMap<>();
+    private Map<Set<Circle>, Double> overlaps = new HashMap<>();
 
     @Test
     public void notTouchingNoOverlap() {
@@ -112,15 +112,14 @@ public class OverlapDetectionTest {
         assertEquals(-1, circle2.lastOverlap, 0);
     }
 
-    private void recordOverlap(OverlapDetection.Circle circle1, OverlapDetection.Circle circle2) {
-        Set<Circle> overlapCircles = overlaps.computeIfAbsent(circle1, k -> new HashSet<>());
-        overlapCircles.add(circle2);
+    private void recordOverlap(Circle circle1, Circle circle2, double overlap) {
+        Set<Circle> key = new HashSet<>(Arrays.asList(circle1, circle2));
+        overlaps.put(key, overlap);
     }
 
     private boolean foundOverlap(SpyCircle circle1, SpyCircle circle2) {
-        boolean contains1 = overlaps.containsKey(circle1) && overlaps.get(circle1).contains(circle2);
-        boolean contains2 = overlaps.containsKey(circle2) && overlaps.get(circle2).contains(circle1);
-        return contains1 && contains2;
+        Set<Circle> key = new HashSet<>(Arrays.asList(circle1, circle2));
+        return overlaps.containsKey(key);
     }
 
     private class SpyCircle implements OverlapDetection.Circle {
@@ -152,9 +151,7 @@ public class OverlapDetectionTest {
 
         @Override
         public void onOverlap(OverlapDetection.Circle circle, double overlap) {
-            recordOverlap(this, circle);
-            recordOverlap(circle, this);
-
+            recordOverlap(this, circle, overlap);
             lastOverlap = overlap;
         }
     }
