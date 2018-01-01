@@ -20,8 +20,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertFalse(overlaps.containsKey(circle1));
-        assertFalse(overlaps.containsKey(circle2));
+        assertFalse(foundOverlap(circle1, circle2));
     }
 
     @Test
@@ -33,8 +32,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertFalse(overlaps.containsKey(circle1));
-        assertFalse(overlaps.containsKey(circle2));
+        assertFalse(foundOverlap(circle1, circle2));
     }
 
     @Test
@@ -46,7 +44,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertOverlap(circle1, circle2);
+        assertTrue(foundOverlap(circle1, circle2));
     }
 
     @Test
@@ -58,8 +56,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertFalse(overlaps.containsKey(circle1));
-        assertFalse(overlaps.containsKey(circle2));
+        assertFalse(foundOverlap(circle1, circle2));
     }
 
     @Test
@@ -71,8 +68,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertFalse(overlaps.containsKey(circle1));
-        assertFalse(overlaps.containsKey(circle2));
+        assertFalse(foundOverlap(circle1, circle2));
     }
 
 //    @Test
@@ -119,10 +115,6 @@ public class OverlapDetectionTest {
     private void recordOverlap(OverlapDetection.Circle circle1, OverlapDetection.Circle circle2) {
         Set<Circle> overlapCircles = overlaps.computeIfAbsent(circle1, k -> new HashSet<>());
         overlapCircles.add(circle2);
-    }
-
-    private void assertOverlap(SpyCircle circle1, SpyCircle circle2) {
-        assertTrue(foundOverlap(circle1, circle2));
     }
 
     private boolean foundOverlap(SpyCircle circle1, SpyCircle circle2) {
