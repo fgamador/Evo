@@ -112,7 +112,7 @@ public class OverlapDetectionTest {
 
     private void recordOverlap(Circle circle1, Circle circle2, double overlap) {
         Set<Circle> key = new HashSet<>(Arrays.asList(circle1, circle2));
-        assertNull(overlaps.put(key, overlap));
+        overlaps.put(key, overlap);
     }
 
     private boolean foundOverlap(Circle circle1, Circle circle2) {
@@ -144,6 +144,7 @@ public class OverlapDetectionTest {
 
             @Override
             public void onOverlap(OverlappableCircle circle, double overlap) {
+                assertFalse(foundOverlap(this, circle));
                 recordOverlap(this, circle, overlap);
             }
         };
