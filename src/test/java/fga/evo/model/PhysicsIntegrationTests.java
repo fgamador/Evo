@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.biology.Cell;
+import fga.evo.model.biology.PhotoRing;
 import fga.evo.model.environment.Drag;
 import fga.evo.model.environment.SurroundingWalls;
 import fga.evo.model.environment.Weight;

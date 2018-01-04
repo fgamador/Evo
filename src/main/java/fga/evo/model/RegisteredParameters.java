@@ -1,5 +1,8 @@
 package fga.evo.model;
 
+import fga.evo.model.biology.FloatRing;
+import fga.evo.model.biology.PhotoRing;
+import fga.evo.model.biology.TissueRingParameters;
 import fga.evo.model.environment.Drag;
 import fga.evo.model.environment.Illumination;
 import fga.evo.model.environment.Weight;

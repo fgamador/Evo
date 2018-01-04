@@ -1,5 +1,8 @@
-package fga.evo.model;
+package fga.evo.model.biology;
 
+import fga.evo.model.EvoTest;
+import fga.evo.model.biology.FloatRing;
+import fga.evo.model.biology.PhotoRing;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

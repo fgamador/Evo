@@ -1,9 +1,5 @@
 package fga.evo.model.biology;
 
-import fga.evo.model.FloatRing;
-import fga.evo.model.PhotoRing;
-import fga.evo.model.biology.AccumulatingCellLifecycleListener;
-import fga.evo.model.biology.Cell;
 import fga.evo.model.control.ParentChildControl;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.util.Chance;
