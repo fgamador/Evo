@@ -1,6 +1,6 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.DecayingAccumulator;
+import fga.evo.model.util.DecayingAccumulator;
 import fga.evo.model.DoubleParameter;
 import fga.evo.model.geometry.OverlappableCircle;
 
