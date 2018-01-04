@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.biology;
 
 /**
  * A ring gradient around a cell that affects other cells.

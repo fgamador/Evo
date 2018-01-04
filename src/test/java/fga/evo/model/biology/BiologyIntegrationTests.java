@@ -1,5 +1,7 @@
-package fga.evo.model;
+package fga.evo.model.biology;
 
+import fga.evo.model.PhotoRing;
+import fga.evo.model.WorldIntegrationTests;
 import fga.evo.model.biology.Cell;
 import fga.evo.model.control.FixedDepthSeekingControl;
 import fga.evo.model.control.ParentChildControl;
