@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.util;
 
 public class Util {
     public static double sqr(double value) {

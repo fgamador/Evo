@@ -1,6 +1,6 @@
 package fga.evo.model;
 
-import static fga.evo.model.Util.sqr;
+import static fga.evo.model.util.Util.sqr;
 
 public class Ring {
     private RingParameters parameters;

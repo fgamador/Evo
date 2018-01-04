@@ -4,7 +4,7 @@ import fga.evo.model.physics.NewtonianBody;
 
 import java.util.Collection;
 
-import static fga.evo.model.Util.sqr;
+import static fga.evo.model.util.Util.sqr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

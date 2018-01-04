@@ -2,7 +2,6 @@ package fga.evo.model;
 
 import org.junit.Test;
 
-import static fga.evo.model.Util.sqr;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

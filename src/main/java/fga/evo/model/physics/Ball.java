@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static fga.evo.model.Util.sqr;
+import static fga.evo.model.util.Util.sqr;
 
 /**
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class

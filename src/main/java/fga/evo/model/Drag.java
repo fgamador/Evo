@@ -3,7 +3,7 @@ package fga.evo.model;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.util.DoubleParameter;
 
-import static fga.evo.model.Util.sqr;
+import static fga.evo.model.util.Util.sqr;
 
 /**
  * Drag caused by the fluid medium in which the cells live.

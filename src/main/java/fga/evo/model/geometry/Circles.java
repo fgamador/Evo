@@ -1,6 +1,6 @@
 package fga.evo.model.geometry;
 
-import static fga.evo.model.Util.sqr;
+import static fga.evo.model.util.Util.sqr;
 
 public class Circles {
     public static boolean circlesOverlap(Circle circle1, Circle circle2, double centerSeparationSquared) {
