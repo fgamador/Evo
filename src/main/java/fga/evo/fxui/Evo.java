@@ -1,6 +1,6 @@
 package fga.evo.fxui;
 
-import fga.evo.model.Cell;
+import fga.evo.model.biology.Cell;
 import fga.evo.model.World;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;

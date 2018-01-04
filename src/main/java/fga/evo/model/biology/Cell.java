@@ -1,5 +1,8 @@
-package fga.evo.model;
+package fga.evo.model.biology;
 
+import fga.evo.model.FloatRing;
+import fga.evo.model.PhotoRing;
+import fga.evo.model.TissueRing;
 import fga.evo.model.control.CellControl;
 import fga.evo.model.physics.Onion;
 import fga.evo.model.physics.PairBond;

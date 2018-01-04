@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.biology.Cell;
 import fga.evo.model.control.FixedDepthSeekingControl;
 import fga.evo.model.control.ParentChildControl;
 import fga.evo.model.environment.Illumination;

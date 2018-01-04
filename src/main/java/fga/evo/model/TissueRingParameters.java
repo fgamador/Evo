@@ -4,9 +4,9 @@ import fga.evo.model.physics.RingParameters;
 import fga.evo.model.util.DoubleParameter;
 
 public class TissueRingParameters extends RingParameters {
-    DoubleParameter growthCost; // energy per area
-    DoubleParameter maintenanceCost; // energy per area
-    DoubleParameter shrinkageYield; // energy per area
+    public DoubleParameter growthCost; // energy per area
+    public DoubleParameter maintenanceCost; // energy per area
+    public DoubleParameter shrinkageYield; // energy per area
     DoubleParameter maxGrowthRate; // fraction of current area
-    DoubleParameter decayRate; // fraction of current area
+    public DoubleParameter decayRate; // fraction of current area
 }

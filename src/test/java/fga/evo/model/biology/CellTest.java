@@ -1,8 +1,13 @@
-package fga.evo.model;
+package fga.evo.model.biology;
 
+import fga.evo.model.FloatRing;
+import fga.evo.model.PhotoRing;
+import fga.evo.model.biology.AccumulatingCellLifecycleListener;
+import fga.evo.model.biology.Cell;
 import fga.evo.model.control.ParentChildControl;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.util.Chance;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
@@ -14,7 +19,7 @@ public class CellTest {
         Cell cell = new Cell.Builder()
                 .setPhotoRingArea(Math.PI)
                 .build();
-        assertEquals(PhotoRing.parameters.density.getValue() * Math.PI, cell.getMass(), 0.001);
+        Assert.assertEquals(PhotoRing.parameters.density.getValue() * Math.PI, cell.getMass(), 0.001);
     }
 
     @Test
@@ -46,7 +51,7 @@ public class CellTest {
 
         cell.tickBiology_ControlPhase();
 
-        assertEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
+        Assert.assertEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(100 - 2, cell.getEnergy(), 0.001);
     }
 

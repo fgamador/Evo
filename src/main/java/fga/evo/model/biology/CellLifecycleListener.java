@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.biology;
 
 import fga.evo.model.physics.PairBond;
 

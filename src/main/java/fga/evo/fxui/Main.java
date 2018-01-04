@@ -1,6 +1,7 @@
 package fga.evo.fxui;
 
 import fga.evo.model.*;
+import fga.evo.model.biology.Cell;
 import fga.evo.model.control.DuckweedControl;
 import fga.evo.model.environment.Drag;
 import fga.evo.model.environment.Illumination;

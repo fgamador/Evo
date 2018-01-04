@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.biology.Cell;
 import fga.evo.model.physics.NewtonianBody;
 
 import java.util.Collection;

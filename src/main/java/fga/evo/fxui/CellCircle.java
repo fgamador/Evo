@@ -1,6 +1,6 @@
 package fga.evo.fxui;
 
-import fga.evo.model.Cell;
+import fga.evo.model.biology.Cell;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

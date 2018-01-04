@@ -1,6 +1,6 @@
 package fga.evo.model;
 
-import org.junit.Ignore;
+import fga.evo.model.biology.Cell;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

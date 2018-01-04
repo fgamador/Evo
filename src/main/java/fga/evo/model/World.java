@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.biology.AccumulatingCellLifecycleListener;
+import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.EnvironmentalInfluence;
 import fga.evo.model.geometry.OverlapDetection;
 import fga.evo.model.physics.PairBond;

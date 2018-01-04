@@ -1,7 +1,6 @@
 package fga.evo.model.environment;
 
-import fga.evo.model.Cell;
-import fga.evo.model.environment.EnvironmentalInfluence;
+import fga.evo.model.biology.Cell;
 import fga.evo.model.util.DoubleParameter;
 
 /**

@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.biology.Cell;
 import org.junit.Before;
 
 public abstract class WorldIntegrationTests extends EvoTest {
