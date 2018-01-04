@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.util;
 
 public class Chance {
     private static double nextRandom = Math.random();
@@ -10,7 +10,7 @@ public class Chance {
     }
 
     /** For testing. */
-    static void setNextRandom(double val) {
+    public static void setNextRandom(double val) {
         assert 0 <= val && val < 1;
         nextRandom = val;
     }

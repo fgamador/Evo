@@ -1,5 +1,6 @@
-package fga.evo.model;
+package fga.evo.model.util;
 
+import fga.evo.model.util.Chance;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

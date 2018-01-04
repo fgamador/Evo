@@ -2,6 +2,7 @@ package fga.evo.model;
 
 import fga.evo.model.control.ParentChildControl;
 import fga.evo.model.physics.PairBond;
+import fga.evo.model.util.Chance;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
