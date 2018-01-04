@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.RingParameters;
 import fga.evo.model.util.DoubleParameter;
 
 public class TissueRingParameters extends RingParameters {

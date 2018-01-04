@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.Ring;
+
 /**
  * Base class for the cell's rings of tissue.
  */

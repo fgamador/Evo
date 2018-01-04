@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.physics;
 
 import static fga.evo.model.util.Util.sqr;
 

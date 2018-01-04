@@ -1,6 +1,4 @@
-package fga.evo.model;
-
-import fga.evo.model.physics.Ball;
+package fga.evo.model.physics;
 
 import java.util.ArrayList;
 import java.util.List;
