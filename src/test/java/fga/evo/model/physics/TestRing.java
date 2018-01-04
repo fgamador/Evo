@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.physics;
 
 import fga.evo.model.physics.Ring;
 import fga.evo.model.physics.RingParameters;

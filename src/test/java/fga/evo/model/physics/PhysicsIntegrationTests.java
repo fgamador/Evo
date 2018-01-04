@@ -1,5 +1,7 @@
-package fga.evo.model;
+package fga.evo.model.physics;
 
+import fga.evo.model.World;
+import fga.evo.model.WorldIntegrationTests;
 import fga.evo.model.biology.Cell;
 import fga.evo.model.biology.PhotoRing;
 import fga.evo.model.environment.Drag;
