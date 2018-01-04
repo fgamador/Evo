@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.util.DoubleParameter;
+
 public class TestRing extends Ring {
     public static RingParameters parameters = new RingParameters();
 

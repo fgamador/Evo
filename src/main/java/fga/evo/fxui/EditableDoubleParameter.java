@@ -1,6 +1,6 @@
 package fga.evo.fxui;
 
-import fga.evo.model.DoubleParameter;
+import fga.evo.model.util.DoubleParameter;
 import fga.evo.model.RegisteredParameters;
 import javafx.scene.Group;
 import javafx.scene.control.TextField;

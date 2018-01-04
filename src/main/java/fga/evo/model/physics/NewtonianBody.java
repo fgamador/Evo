@@ -1,6 +1,6 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.DoubleParameter;
+import fga.evo.model.util.DoubleParameter;
 
 import static fga.evo.model.Util.sqr;
 

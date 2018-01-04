@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.util.DoubleParameter;
+
 public class TissueRingParameters extends RingParameters {
     DoubleParameter growthCost; // energy per area
     DoubleParameter maintenanceCost; // energy per area

@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.util.DoubleParameter;
+
 /**
  * The light illuminating the cells.
  */

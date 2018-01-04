@@ -1,7 +1,6 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.DoubleParameter;
-import fga.evo.model.physics.NewtonianBody;
+import fga.evo.model.util.DoubleParameter;
 
 /**
  * Created when the user's mouse cursor drags a cell.

@@ -4,6 +4,7 @@ import fga.evo.model.physics.Ball;
 import fga.evo.model.physics.BallPairForces;
 import fga.evo.model.physics.NewtonianBody;
 import fga.evo.model.physics.Puller;
+import fga.evo.model.util.DoubleParameter;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.util.DecayingAccumulator;
-import fga.evo.model.DoubleParameter;
+import fga.evo.model.util.DoubleParameter;
 import fga.evo.model.geometry.OverlappableCircle;
 
 import java.util.ArrayList;

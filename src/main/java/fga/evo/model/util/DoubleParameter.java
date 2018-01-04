@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.util;
 
 import java.util.HashMap;
 import java.util.Map;

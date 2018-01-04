@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.util.DoubleParameter;
+
 /**
  * A cell's air bubble, which allows it to regulate its buoyancy.
  */

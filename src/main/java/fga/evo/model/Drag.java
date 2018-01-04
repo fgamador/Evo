@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.Ball;
+import fga.evo.model.util.DoubleParameter;
 
 import static fga.evo.model.Util.sqr;
 

@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.util.DoubleParameter;
 import org.junit.After;
 import org.junit.Test;
 

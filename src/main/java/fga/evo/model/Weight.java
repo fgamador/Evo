@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.Ball;
+import fga.evo.model.util.DoubleParameter;
 
 /**
  * The effects of gravity, including cell weight and buoyancy.

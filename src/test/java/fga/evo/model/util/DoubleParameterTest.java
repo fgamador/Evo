@@ -1,5 +1,6 @@
-package fga.evo.model;
+package fga.evo.model.util;
 
+import fga.evo.model.util.DoubleParameter;
 import org.junit.Before;
 import org.junit.Test;
 

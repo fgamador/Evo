@@ -1,7 +1,6 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.DoubleParameter;
-import fga.evo.model.geometry.Circles;
+import fga.evo.model.util.DoubleParameter;
 
 /**
  * Collision and bond forces for pairs of balls. Split out from Ball in honor of the Single Responsibility Principle.

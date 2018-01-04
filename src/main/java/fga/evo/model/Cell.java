@@ -3,6 +3,7 @@ package fga.evo.model;
 import fga.evo.model.control.CellControl;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.util.Chance;
+import fga.evo.model.util.DoubleParameter;
 
 import java.util.*;
 

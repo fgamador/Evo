@@ -1,5 +1,7 @@
 package fga.evo.model;
 
+import fga.evo.model.util.DoubleParameter;
+
 /**
  * A cell's ring of photosynthetic tissue.
  */
