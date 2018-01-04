@@ -1,16 +1,18 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.NewtonianBody;
+
 /**
  * Created when the user's mouse cursor drags a cell.
  */
 public class Puller {
     static DoubleParameter forceFactor = new DoubleParameter(1);
 
-    private final Cell cell;
+    private final NewtonianBody body;
     private double x, y;
 
-    public Puller(Cell cell) {
-        this.cell = cell;
+    public Puller(NewtonianBody body) {
+        this.body = body;
     }
 
     public void setPosition(double x, double y) {
@@ -20,6 +22,6 @@ public class Puller {
 
     public void addForce() {
         double factor = forceFactor.getValue();
-        cell.addForce(factor * (x - cell.getCenterX()), factor * (y - cell.getCenterY()));
+        body.addForce(factor * (x - body.getCenterX()), factor * (y - body.getCenterY()));
     }
 }
