@@ -1,4 +1,4 @@
-package fga.evo.model;
+package fga.evo.model.environment;
 
 import fga.evo.model.environment.EnvironmentalInfluence;
 import fga.evo.model.physics.Ball;

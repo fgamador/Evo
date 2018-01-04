@@ -1,6 +1,8 @@
 package fga.evo.model;
 
 import fga.evo.model.environment.Drag;
+import fga.evo.model.environment.SurroundingWalls;
+import fga.evo.model.environment.Weight;
 import fga.evo.model.physics.Puller;
 import org.junit.After;
 import org.junit.Before;

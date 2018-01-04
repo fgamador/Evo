@@ -4,6 +4,8 @@ import fga.evo.model.*;
 import fga.evo.model.control.DuckweedControl;
 import fga.evo.model.environment.Drag;
 import fga.evo.model.environment.Illumination;
+import fga.evo.model.environment.SurroundingWalls;
+import fga.evo.model.environment.Weight;
 
 public class Main extends Evo {
     private SurroundingWalls walls;

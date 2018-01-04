@@ -1,5 +1,7 @@
-package fga.evo.model;
+package fga.evo.model.environment;
 
+import fga.evo.model.EvoTest;
+import fga.evo.model.environment.Weight;
 import fga.evo.model.physics.Ball;
 import org.junit.Before;
 import org.junit.Test;
