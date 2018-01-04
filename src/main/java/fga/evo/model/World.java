@@ -2,6 +2,7 @@ package fga.evo.model;
 
 import fga.evo.model.geometry.OverlapDetection;
 import fga.evo.model.physics.PairBond;
+import fga.evo.model.physics.Puller;
 
 import java.util.ArrayList;
 import java.util.Collection;

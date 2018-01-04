@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.physics.Puller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

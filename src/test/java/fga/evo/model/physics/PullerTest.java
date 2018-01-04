@@ -1,5 +1,8 @@
-package fga.evo.model;
+package fga.evo.model.physics;
 
+import fga.evo.model.Cell;
+import fga.evo.model.EvoTest;
+import fga.evo.model.physics.Puller;
 import org.junit.Before;
 import org.junit.Test;
 

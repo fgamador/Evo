@@ -1,12 +1,13 @@
-package fga.evo.model;
+package fga.evo.model.physics;
 
+import fga.evo.model.DoubleParameter;
 import fga.evo.model.physics.NewtonianBody;
 
 /**
  * Created when the user's mouse cursor drags a cell.
  */
 public class Puller {
-    static DoubleParameter forceFactor = new DoubleParameter(1);
+    public static DoubleParameter forceFactor = new DoubleParameter(1);
 
     private final NewtonianBody body;
     private double x, y;

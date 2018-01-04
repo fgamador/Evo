@@ -3,6 +3,7 @@ package fga.evo.model;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.physics.BallPairForces;
 import fga.evo.model.physics.NewtonianBody;
+import fga.evo.model.physics.Puller;
 
 import java.util.HashMap;
 import java.util.Map;
