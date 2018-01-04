@@ -1,5 +1,6 @@
-package fga.evo.model;
+package fga.evo.model.environment;
 
+import fga.evo.model.EnvironmentalInfluence;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.util.DoubleParameter;
 
@@ -9,7 +10,7 @@ import static fga.evo.model.util.Util.sqr;
  * Drag caused by the fluid medium in which the cells live.
  */
 public class Drag extends EnvironmentalInfluence {
-    static DoubleParameter dragFactor = new DoubleParameter(0.001);
+    public static DoubleParameter dragFactor = new DoubleParameter(0.001);
 
     @Override
     public void addForcesToCell(Ball cell) {

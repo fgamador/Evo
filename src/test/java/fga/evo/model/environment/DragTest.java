@@ -1,6 +1,8 @@
-package fga.evo.model;
+package fga.evo.model.environment;
 
-import org.junit.After;
+import fga.evo.model.Cell;
+import fga.evo.model.EvoTest;
+import fga.evo.model.environment.Drag;
 import org.junit.Before;
 import org.junit.Test;
 

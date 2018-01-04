@@ -1,8 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.control.DuckweedControl;
-
-import java.util.Collection;
+import fga.evo.model.environment.Drag;
 
 // With original intersection detection and width 1000
 //   100000 ticks in 1.785s

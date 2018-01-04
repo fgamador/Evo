@@ -2,6 +2,7 @@ package fga.evo.fxui;
 
 import fga.evo.model.*;
 import fga.evo.model.control.DuckweedControl;
+import fga.evo.model.environment.Drag;
 
 public class Main extends Evo {
     private SurroundingWalls walls;
