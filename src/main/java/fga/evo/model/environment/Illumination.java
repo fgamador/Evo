@@ -1,12 +1,14 @@
-package fga.evo.model;
+package fga.evo.model.environment;
 
+import fga.evo.model.Cell;
+import fga.evo.model.environment.EnvironmentalInfluence;
 import fga.evo.model.util.DoubleParameter;
 
 /**
  * The light illuminating the cells.
  */
 public class Illumination extends EnvironmentalInfluence {
-    static DoubleParameter maxIntensity = new DoubleParameter(1);
+    public static DoubleParameter maxIntensity = new DoubleParameter(1);
 
     private double depth;
 

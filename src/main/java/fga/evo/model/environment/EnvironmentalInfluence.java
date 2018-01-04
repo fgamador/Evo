@@ -1,5 +1,6 @@
-package fga.evo.model;
+package fga.evo.model.environment;
 
+import fga.evo.model.Cell;
 import fga.evo.model.physics.Ball;
 
 /**

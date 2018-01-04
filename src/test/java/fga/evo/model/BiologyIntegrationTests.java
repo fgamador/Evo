@@ -2,6 +2,7 @@ package fga.evo.model;
 
 import fga.evo.model.control.FixedDepthSeekingControl;
 import fga.evo.model.control.ParentChildControl;
+import fga.evo.model.environment.Illumination;
 import org.junit.Before;
 import org.junit.Test;
 

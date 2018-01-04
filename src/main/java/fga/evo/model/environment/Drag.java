@@ -1,6 +1,5 @@
 package fga.evo.model.environment;
 
-import fga.evo.model.EnvironmentalInfluence;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.util.DoubleParameter;
 

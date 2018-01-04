@@ -1,6 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.environment.Drag;
+import fga.evo.model.environment.Illumination;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.physics.BallPairForces;
 import fga.evo.model.physics.NewtonianBody;

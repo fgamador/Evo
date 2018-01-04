@@ -2,6 +2,7 @@ package fga.evo.model;
 
 import fga.evo.model.control.DuckweedControl;
 import fga.evo.model.environment.Drag;
+import fga.evo.model.environment.Illumination;
 
 // With original intersection detection and width 1000
 //   100000 ticks in 1.785s
