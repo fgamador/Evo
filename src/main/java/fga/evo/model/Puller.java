@@ -18,7 +18,7 @@ public class Puller {
         this.y = y;
     }
 
-    public void addForceToCell() {
+    public void addForce() {
         double factor = forceFactor.getValue();
         cell.addForce(factor * (x - cell.getCenterX()), factor * (y - cell.getCenterY()));
     }

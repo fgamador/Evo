@@ -1,6 +1,5 @@
 package fga.evo.model;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +22,7 @@ public class PullerTest extends EvoTest {
         cell.setCenterPosition(5, -5);
         puller.setPosition(5, -5);
 
-        puller.addForceToCell();
+        puller.addForce();
 
         assertNetForce(0, 0, cell);
     }
@@ -33,7 +32,7 @@ public class PullerTest extends EvoTest {
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
 
-        puller.addForceToCell();
+        puller.addForce();
 
         assertNetForce(1, -1, cell);
     }
@@ -44,7 +43,7 @@ public class PullerTest extends EvoTest {
         puller.setPosition(6, -6);
         Puller.forceFactor.setValue(2);
 
-        puller.addForceToCell();
+        puller.addForce();
 
         assertNetForce(2, -2, cell);
     }

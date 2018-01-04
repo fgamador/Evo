@@ -66,7 +66,7 @@ public class World {
 
     private void subtickPhysics() {
         if (puller != null) {
-            puller.addForceToCell();
+            puller.addForce();
         }
 
         addForces();
