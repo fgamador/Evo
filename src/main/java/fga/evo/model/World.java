@@ -79,6 +79,8 @@ public class World {
     }
 
     private void addForces() {
+        overlapDetection.findAndNotifyOverlaps();
+
         if (puller != null) {
             puller.addForce();
         }
@@ -92,8 +94,6 @@ public class World {
                 bond.addForces();
             }
         }
-
-        overlapDetection.findAndNotifyOverlaps();
     }
 
     private void updatePerLifecycleChanges() {
