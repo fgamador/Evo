@@ -39,14 +39,17 @@ public class World {
      */
     public Collection<Cell> tick() {
         lifecycleListener.clear();
+        tickWithMonitoredLifecycle();
+        updatePerLifecycleChanges();
+        return lifecycleListener.bornCells;
+    }
+
+    private void tickWithMonitoredLifecycle() {
         overlapDetection.findAndNotifyOverlaps();
 
         tickBiology();
 
         tickPhysicsAfterFirstOverlapDetection();
-
-        updatePerLifecycleChanges();
-        return lifecycleListener.bornCells;
     }
 
     private void tickBiology() {
