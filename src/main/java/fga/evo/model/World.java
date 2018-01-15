@@ -81,6 +81,10 @@ public class World {
     private void addForces() {
         overlapDetection.findAndNotifyOverlaps();
 
+        addNonOverlapForces();
+    }
+
+    private void addNonOverlapForces() {
         if (puller != null) {
             puller.addForce();
         }
