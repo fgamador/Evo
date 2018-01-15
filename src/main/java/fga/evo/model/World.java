@@ -43,13 +43,7 @@ public class World {
 
         tickBiology();
 
-        addNonOverlapForces();
-        for (Cell cell : cells) {
-            cell.subtickPhysics(subticksPerTick);
-        }
-        for (int i = 0; i < subticksPerTick - 1; i++) {
-            subtickPhysics();
-        }
+        tickPhysicsAfterFirstOverlapDetection();
 
         updatePerLifecycleChanges();
         return lifecycleListener.bornCells;
@@ -70,6 +64,16 @@ public class World {
             influence.addEnergyToCell(cell);
         }
         cell.tickBiology_ConsequencesPhase();
+    }
+
+    private void tickPhysicsAfterFirstOverlapDetection() {
+        addNonOverlapForces();
+        for (Cell cell : cells) {
+            cell.subtickPhysics(subticksPerTick);
+        }
+        for (int i = 0; i < subticksPerTick - 1; i++) {
+            subtickPhysics();
+        }
     }
 
     private void subtickPhysics() {
