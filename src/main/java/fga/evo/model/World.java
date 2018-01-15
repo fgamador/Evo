@@ -36,7 +36,6 @@ public class World {
 
     /**
      * Propagates a simulation clock tick through the model.
-     * TODO parallelize the loops
      */
     public Collection<Cell> tick() {
         lifecycleListener.clear();
