@@ -44,10 +44,7 @@ public class World {
         for (int i = 0; i < subticksPerTick; i++) {
             subtickPhysics();
         }
-        cells.addAll(lifecycleListener.bornCells);
-        overlapDetection.addCircles(lifecycleListener.bornCells);
-        bonds.removeAll(lifecycleListener.brokenBonds);
-        bonds.addAll(lifecycleListener.formedBonds);
+        updatePerLifecycleChanges();
         return lifecycleListener.bornCells;
     }
 
@@ -92,6 +89,13 @@ public class World {
         }
 
         overlapDetection.findAndNotifyOverlaps();
+    }
+
+    private void updatePerLifecycleChanges() {
+        cells.addAll(lifecycleListener.bornCells);
+        overlapDetection.addCircles(lifecycleListener.bornCells);
+        bonds.removeAll(lifecycleListener.brokenBonds);
+        bonds.addAll(lifecycleListener.formedBonds);
     }
 
     public void restart() {
