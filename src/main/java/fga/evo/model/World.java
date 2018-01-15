@@ -41,7 +41,9 @@ public class World {
         lifecycleListener.clear();
         tickBiology();
 
-        addForces();
+        overlapDetection.findAndNotifyOverlaps();
+
+        addNonOverlapForces();
         for (Cell cell : cells) {
             cell.subtickPhysics(subticksPerTick);
         }
