@@ -39,18 +39,18 @@ public class World {
      */
     public Collection<Cell> tick() {
         lifecycleListener.clear();
-        tickBiology();
-
         overlapDetection.findAndNotifyOverlaps();
+
+        tickBiology();
 
         addNonOverlapForces();
         for (Cell cell : cells) {
             cell.subtickPhysics(subticksPerTick);
         }
-
         for (int i = 0; i < subticksPerTick - 1; i++) {
             subtickPhysics();
         }
+
         updatePerLifecycleChanges();
         return lifecycleListener.bornCells;
     }
