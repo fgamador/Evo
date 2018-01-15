@@ -40,7 +40,8 @@ public class World {
     public Collection<Cell> tick() {
         lifecycleListener.clear();
         tickBiology();
-        for (int i = 0; i < subticksPerTick; i++) {
+        subtickPhysics();
+        for (int i = 0; i < subticksPerTick - 1; i++) {
             subtickPhysics();
         }
         updatePerLifecycleChanges();
