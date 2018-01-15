@@ -65,10 +65,6 @@ public class World {
     }
 
     private void subtickPhysics() {
-        if (puller != null) {
-            puller.addForce();
-        }
-
         addForces();
 
         for (Cell cell : cells) {
@@ -77,6 +73,10 @@ public class World {
     }
 
     private void addForces() {
+        if (puller != null) {
+            puller.addForce();
+        }
+
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : environmentalInfluences) {
                 influence.addForcesToCell(cell);
