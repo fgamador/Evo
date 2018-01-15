@@ -40,7 +40,12 @@ public class World {
     public Collection<Cell> tick() {
         lifecycleListener.clear();
         tickBiology();
-        subtickPhysics();
+
+        addForces();
+        for (Cell cell : cells) {
+            cell.subtickPhysics(subticksPerTick);
+        }
+
         for (int i = 0; i < subticksPerTick - 1; i++) {
             subtickPhysics();
         }
