@@ -24,6 +24,10 @@ public class Ring {
         area = 0;
     }
 
+    public void resize(double deltaArea) {
+        setArea(getArea() + deltaArea);
+    }
+
     public void syncFields(Ring innerRing) {
         innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
         if (area != 0) {

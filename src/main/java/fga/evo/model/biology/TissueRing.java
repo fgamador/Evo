@@ -38,7 +38,7 @@ public class TissueRing extends Ring {
     }
 
     public void resize() {
-        setArea(getArea() + requestedDeltaArea);
+        resize(requestedDeltaArea);
         requestedDeltaArea = 0;
     }
 
