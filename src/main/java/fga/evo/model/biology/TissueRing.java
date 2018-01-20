@@ -17,14 +17,14 @@ public class TissueRing extends Ring {
     /**
      * Records a request that the ring's area grow or shrink using a specified amount of energy.
      *
-     * @param growthEnergy the amount of energy available for growth; negative to shrink
+     * @param availableEnergy the amount of energy available for growth; negative to shrink
      */
-    public void requestResize(double growthEnergy) {
-        if (growthEnergy >= 0) {
+    public void requestResize(double availableEnergy) {
+        if (availableEnergy >= 0) {
             double maxDeltaArea = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
-            requestedDeltaArea = Math.min(growthEnergy / parameters.growthCost.getValue(), maxDeltaArea);
+            requestedDeltaArea = Math.min(availableEnergy / parameters.growthCost.getValue(), maxDeltaArea);
         } else {
-            requestedDeltaArea = Math.max(-getArea(), growthEnergy / parameters.shrinkageYield.getValue());
+            requestedDeltaArea = Math.max(-getArea(), availableEnergy / parameters.shrinkageYield.getValue());
         }
     }
 
