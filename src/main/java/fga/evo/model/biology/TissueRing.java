@@ -28,8 +28,8 @@ public class TissueRing extends Ring {
     }
 
     private void requestGrowth(double availableEnergy) {
-        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
         double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
+        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
         requestedDeltaArea = Math.min(requestedGrowth, maxAllowedGrowth);
     }
 
