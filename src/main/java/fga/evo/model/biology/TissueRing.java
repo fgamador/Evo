@@ -34,7 +34,8 @@ public class TissueRing extends Ring {
     }
 
     private void requestShrinkage(double availableEnergy) {
-        requestedDeltaArea = Math.max(-getArea(), availableEnergy / parameters.shrinkageYield.getValue());
+        double requestedShrinkage = availableEnergy / parameters.shrinkageYield.getValue();
+        requestedDeltaArea = Math.max(-getArea(), requestedShrinkage);
     }
 
     public double getRequestedEnergy() {
