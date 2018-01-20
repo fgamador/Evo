@@ -3,7 +3,7 @@ package fga.evo.model.util;
 public class Chance {
     private static double nextRandom = Math.random();
 
-    public static boolean success(double odds) {
+    public static boolean beats(double odds) {
         boolean success = nextRandom < odds;
         nextRandom = Math.random();
         return success;

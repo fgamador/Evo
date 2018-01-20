@@ -120,7 +120,7 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     private void manageParent() {
         if (parent != null) {
-            if (Chance.success(releaseParentOdds)) {
+            if (Chance.beats(releaseParentOdds)) {
                 parent.releaseChild();
             }
         }
@@ -133,13 +133,13 @@ public class Cell extends Onion implements CellControl.CellApi {
 
         if (child != null) {
             child.setDonatedEnergy(requestedChildDonation);
-            if (Chance.success(releaseChildOdds)) {
+            if (Chance.beats(releaseChildOdds)) {
                 releaseChild();
             }
             return;
         }
 
-        if (Chance.success(spawnOdds)) {
+        if (Chance.beats(spawnOdds)) {
             spawn();
         }
     }
