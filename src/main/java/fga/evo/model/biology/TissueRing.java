@@ -1,6 +1,7 @@
 package fga.evo.model.biology;
 
 import fga.evo.model.physics.Ring;
+import fga.evo.model.util.DoubleParameter;
 
 /**
  * Base class for the cell's rings of tissue.
@@ -56,9 +57,8 @@ public class TissueRing extends Ring {
     }
 
     public void resize() {
-        double deltaArea = (consumedEnergy >= 0)
-                ? consumedEnergy / parameters.growthCost.getValue()
-                : consumedEnergy / parameters.shrinkageYield.getValue();
+        DoubleParameter energyPerArea = (consumedEnergy >= 0) ? parameters.growthCost : parameters.shrinkageYield;
+        double deltaArea = consumedEnergy / energyPerArea.getValue();
         resize(deltaArea);
         consumedEnergy = 0;
     }
