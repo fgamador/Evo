@@ -15,13 +15,10 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void testRequestResize_Grow() {
-        TestTissueRing ring = new TestTissueRing(1, null);
-
-        double growthEnergy = 2;
-        ring.requestResize(growthEnergy);
-
-        assertEquals(growthEnergy, ring.getIntendedEnergyConsumption(), 0);
+    public void growthRequestUsesAvailableEnergy() {
+        TissueRing testSubject = new TestTissueRing();
+        testSubject.requestResize(2);
+        assertEquals(2, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
@@ -133,6 +130,10 @@ public class TissueRingTest extends EvoTest {
             parameters.maxGrowthRate = new DoubleParameter(100);
             parameters.maxShrinkRate = new DoubleParameter(1);
             parameters.decayRate = new DoubleParameter(0.1);
+        }
+
+        public TestTissueRing() {
+            this(1, null);
         }
 
         public TestTissueRing(double outerRadius, TestTissueRing innerRing) {
