@@ -9,22 +9,24 @@ import static org.junit.Assert.assertTrue;
 public class RingTest extends EvoTest {
     @Test
     public void testSetArea() {
-        TestRing ring = new TestRing(1, null);
+        TestRing ring1 = new TestRing(1);
+        ring1.syncFields(null);
 
-        ring.setArea(Math.PI);
+        ring1.setArea(Math.PI);
 
-        assertEquals(Math.PI, ring.getArea(), 0.001);
-        assertEquals(0, ring.getOuterRadius(), 0);
+        assertEquals(Math.PI, ring1.getArea(), 0.001);
+        assertEquals(0, ring1.getOuterRadius(), 0);
     }
 
     @Test
     public void testSetOuterRadius() {
-        TestRing ring = new TestRing(1, null);
+        TestRing ring1 = new TestRing(1);
+        ring1.syncFields(null);
 
-        ring.setOuterRadius(2);
+        ring1.setOuterRadius(2);
 
-        assertEquals(0, ring.getArea(), 0);
-        assertEquals(2, ring.getOuterRadius(), 0);
+        assertEquals(0, ring1.getArea(), 0);
+        assertEquals(2, ring1.getOuterRadius(), 0);
     }
 
     @Test
@@ -50,7 +52,8 @@ public class RingTest extends EvoTest {
 
     @Test
     public void testSyncFields_Area_InnerRing() {
-        TestRing innerRing = new TestRing(1, null);
+        TestRing innerRing = new TestRing(1);
+        innerRing.syncFields(null);
         TestRing ring = new TestRing(0);
         ring.setArea(3 * Math.PI);
 
@@ -62,7 +65,8 @@ public class RingTest extends EvoTest {
 
     @Test
     public void testSyncFields_OuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1, null);
+        TestRing innerRing = new TestRing(1);
+        innerRing.syncFields(null);
         TestRing ring = new TestRing(2);
 
         ring.syncFields(innerRing);
@@ -73,7 +77,8 @@ public class RingTest extends EvoTest {
 
     @Test
     public void testSyncFields_ZeroOuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1, null);
+        TestRing innerRing = new TestRing(1);
+        innerRing.syncFields(null);
         TestRing ring = new TestRing(0);
 
         ring.syncFields(innerRing);
