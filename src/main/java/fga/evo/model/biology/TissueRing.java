@@ -58,8 +58,7 @@ public class TissueRing extends Ring {
 
     public void resize() {
         DoubleParameter energyPerArea = (consumedEnergy >= 0) ? parameters.growthCost : parameters.shrinkageYield;
-        double deltaArea = consumedEnergy / energyPerArea.getValue();
-        resize(deltaArea);
+        resize(consumedEnergy / energyPerArea.getValue());
         consumedEnergy = 0;
     }
 
