@@ -133,6 +133,7 @@ public class TissueRingTest extends EvoTest {
             parameters.maintenanceCost = new DoubleParameter(0.05);
             parameters.shrinkageYield = new DoubleParameter(0.05);
             parameters.maxGrowthRate = new DoubleParameter(100);
+            parameters.maxShrinkRate = new DoubleParameter(1);
             parameters.decayRate = new DoubleParameter(0.1);
         }
 

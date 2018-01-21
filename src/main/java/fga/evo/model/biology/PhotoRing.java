@@ -14,6 +14,7 @@ public class PhotoRing extends TissueRing {
         parameters.maintenanceCost = new DoubleParameter(0.005);
         parameters.shrinkageYield = new DoubleParameter(0.1);
         parameters.maxGrowthRate = new DoubleParameter(1000);
+        parameters.maxShrinkRate = new DoubleParameter(1);
         parameters.decayRate = new DoubleParameter(0.1);
     }
 
