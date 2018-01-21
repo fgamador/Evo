@@ -51,12 +51,12 @@ public class TissueRing extends Ring {
     }
 
     public double getConsumedEnergy() {
-        return deltaArea *
-                ((deltaArea >= 0) ? parameters.growthCost.getValue() : parameters.shrinkageYield.getValue());
+        return consumedEnergy;
     }
 
     public void scaleResizeRequest(double ratio) {
         deltaArea *= ratio;
+        consumedEnergy *= ratio;
     }
 
     public void resize() {
