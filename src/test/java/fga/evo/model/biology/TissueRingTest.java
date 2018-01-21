@@ -48,18 +48,18 @@ public class TissueRingTest extends EvoTest {
 
         testSubject.requestResize(-5);
 
-        double energyFromShrinkToZeroArea = initialArea * TestTissueRing.parameters.shrinkageYield.getValue();
-        assertEquals(-energyFromShrinkToZeroArea, testSubject.getIntendedEnergyConsumption(), 0);
+        double energyFromShrinkingToZeroArea = initialArea * TestTissueRing.parameters.shrinkageYield.getValue();
+        assertEquals(-energyFromShrinkingToZeroArea, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
-    public void testScaleResizeRequest() {
-        TestTissueRing ring = new TestTissueRing(1, null);
+    public void scalingResizeRequestScalesEnergyConsumption() {
+        TissueRing testSubject = new TestTissueRing();
 
-        ring.requestResize(10);
-        ring.scaleResizeRequest(0.1);
+        testSubject.requestResize(10);
+        testSubject.scaleResizeRequest(0.1);
 
-        assertEquals(1, ring.getIntendedEnergyConsumption(), 0);
+        assertEquals(1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
