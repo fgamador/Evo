@@ -28,20 +28,20 @@ public class TissueRing extends Ring {
     }
 
     private void requestGrowth(double availableEnergy) {
-        requestedDeltaArea = calcActualGrowth(availableEnergy);
+        requestedDeltaArea = calcGrowth(availableEnergy);
     }
 
-    private double calcActualGrowth(double availableEnergy) {
+    private double calcGrowth(double availableEnergy) {
         double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
         double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
         return Math.min(requestedGrowth, maxAllowedGrowth);
     }
 
     private void requestShrinkage(double requestedEnergy) {
-        requestedDeltaArea = -calcActualShrinkage(requestedEnergy);
+        requestedDeltaArea = -calcShrinkage(requestedEnergy);
     }
 
-    private double calcActualShrinkage(double requestedEnergy) {
+    private double calcShrinkage(double requestedEnergy) {
         double requestedShrinkage = requestedEnergy / parameters.shrinkageYield.getValue();
         double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate.getValue();
         return Math.min(requestedShrinkage, maxAllowedShrinkage);
