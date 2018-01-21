@@ -114,14 +114,14 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void testDecay() {
-        TestTissueRing ring = new TestTissueRing(1, null);
-        double initialArea = ring.getArea();
+    public void decayUsesExpectedCalculation() {
+        TissueRing testSubject = new TestTissueRing();
+        double initialArea = testSubject.getArea();
 
-        ring.decay();
+        testSubject.decay();
 
-        double newArea = initialArea * (1 - TestTissueRing.parameters.decayRate.getValue());
-        assertEquals(newArea, ring.getArea(), 0.001);
+        double expectedFinalArea = initialArea * (1 - TestTissueRing.parameters.decayRate.getValue());
+        assertEquals(expectedFinalArea, testSubject.getArea(), 0.001);
     }
 
     public static class TestTissueRing extends TissueRing {
