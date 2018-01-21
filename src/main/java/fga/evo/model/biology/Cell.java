@@ -91,7 +91,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         double requestedEnergy = Math.max(requestedChildDonation, 0);
 
         for (TissueRing ring : tissueRings) {
-            double ringRequestedEnergy = ring.getRequestedEnergy();
+            double ringRequestedEnergy = ring.getConsumedEnergy();
             if (ringRequestedEnergy > 0) {
                 requestedEnergy += ringRequestedEnergy;
             } else {
@@ -102,7 +102,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         if (requestedEnergy > energy) {
             requestedChildDonation *= energy / requestedEnergy;
             for (TissueRing ring : tissueRings) {
-                if (ring.getRequestedEnergy() > 0) {
+                if (ring.getConsumedEnergy() > 0) {
                     ring.scaleResizeRequest(energy / requestedEnergy);
                 }
             }

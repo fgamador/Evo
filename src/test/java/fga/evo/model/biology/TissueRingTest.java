@@ -1,8 +1,6 @@
 package fga.evo.model.biology;
 
 import fga.evo.model.EvoTest;
-import fga.evo.model.biology.TissueRing;
-import fga.evo.model.biology.TissueRingParameters;
 import fga.evo.model.util.DoubleParameter;
 import org.junit.After;
 import org.junit.Test;
@@ -23,7 +21,7 @@ public class TissueRingTest extends EvoTest {
         double growthEnergy = 2;
         ring.requestResize(growthEnergy);
 
-        assertEquals(growthEnergy, ring.getRequestedEnergy(), 0);
+        assertEquals(growthEnergy, ring.getConsumedEnergy(), 0);
     }
 
     @Test
@@ -36,7 +34,7 @@ public class TissueRingTest extends EvoTest {
         ring.requestResize(100);
 
         assertTrue(maxGrowthEnergy < 100);
-        assertEquals(maxGrowthEnergy, ring.getRequestedEnergy(), 0);
+        assertEquals(maxGrowthEnergy, ring.getConsumedEnergy(), 0);
     }
 
     @Test
@@ -45,7 +43,7 @@ public class TissueRingTest extends EvoTest {
 
         ring.requestResize(-0.1);
 
-        assertEquals(-0.1, ring.getRequestedEnergy(), 0);
+        assertEquals(-0.1, ring.getConsumedEnergy(), 0);
     }
 
     @Test
@@ -54,7 +52,7 @@ public class TissueRingTest extends EvoTest {
 
         ring.requestResize(-5);
 
-        assertEquals(-Math.PI * TestTissueRing.parameters.shrinkageYield.getValue(), ring.getRequestedEnergy(), 0);
+        assertEquals(-Math.PI * TestTissueRing.parameters.shrinkageYield.getValue(), ring.getConsumedEnergy(), 0);
     }
 
     @Test
@@ -64,7 +62,7 @@ public class TissueRingTest extends EvoTest {
         ring.requestResize(10);
         ring.scaleResizeRequest(0.1);
 
-        assertEquals(1, ring.getRequestedEnergy(), 0);
+        assertEquals(1, ring.getConsumedEnergy(), 0);
     }
 
     @Test
