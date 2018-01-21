@@ -15,14 +15,14 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void growthRequestUsesAvailableEnergy() {
+    public void growthUsesAvailableEnergy() {
         TissueRing testSubject = new TestTissueRing();
         testSubject.requestResize(2);
         assertEquals(2, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
-    public void growthRequestIsLimitedByMaxGrowthRate() {
+    public void growthIsLimitedByMaxGrowthRate() {
         TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
         TissueRing testSubject = new TestTissueRing();
         double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate.getValue();
@@ -35,14 +35,14 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void shrinkRequestYieldsRequestedEnergy() {
+    public void shrinkageYieldsRequestedEnergy() {
         TissueRing testSubject = new TestTissueRing();
         testSubject.requestResize(-0.1);
         assertEquals(-0.1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
-    public void shrinkRequestIsLimitedByAvailableArea() {
+    public void shrinkageIsLimitedToAvailableArea() {
         TissueRing testSubject = new TestTissueRing();
         double initialArea = testSubject.getArea();
 
