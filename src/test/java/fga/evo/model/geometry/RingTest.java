@@ -78,26 +78,26 @@ public class RingTest extends EvoTest {
 
     @Test
     public void testSyncFields_OuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1);
+        Ring innerRing = new TestRing(1);
         innerRing.syncFields(null);
-        TestRing ring = new TestRing(2);
+        Ring testSubject = new TestRing(2);
 
-        ring.syncFields(innerRing);
+        testSubject.syncFields(innerRing);
 
-        assertEquals(3 * Math.PI, ring.getArea(), 0.001);
-        assertEquals(3 * Math.PI * TestRing.parameters.density.getValue(), ring.getMass(), 0.001);
+        assertEquals(3 * Math.PI, testSubject.getArea(), 0.001);
+        assertEquals(3 * Math.PI * TestRing.parameters.density.getValue(), testSubject.getMass(), 0.001);
     }
 
     @Test
     public void testSyncFields_ZeroOuterRadius_InnerRing() {
-        TestRing innerRing = new TestRing(1);
+        Ring innerRing = new TestRing(1);
         innerRing.syncFields(null);
-        TestRing ring = new TestRing(0);
+        Ring testSubject = new TestRing(0);
 
-        ring.syncFields(innerRing);
+        testSubject.syncFields(innerRing);
 
-        assertEquals(1, ring.getOuterRadius(), 0);
-        assertEquals(0, ring.getArea(), 0);
-        assertEquals(0, ring.getMass(), 0);
+        assertEquals(1, testSubject.getOuterRadius(), 0);
+        assertEquals(0, testSubject.getArea(), 0);
+        assertEquals(0, testSubject.getMass(), 0);
     }
 }
