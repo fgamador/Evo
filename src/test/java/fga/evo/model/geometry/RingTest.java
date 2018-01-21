@@ -66,7 +66,7 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void syncFieldsSetsOuterRadiusInAdditionToInnerRingOuterRadius() {
+    public void syncFieldsSetsOuterRadiusToIncludeInnerRingOuterRadius() {
         Ring innerRing = new TestRing(1);
         Ring testSubject = new TestRing(0);
         testSubject.setArea(3 * Math.PI);
