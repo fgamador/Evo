@@ -1,5 +1,7 @@
 package fga.evo.model.physics;
 
+import fga.evo.model.geometry.Ring;
+
 import java.util.ArrayList;
 import java.util.List;
 

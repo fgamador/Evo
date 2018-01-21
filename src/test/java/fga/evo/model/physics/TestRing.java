@@ -1,7 +1,7 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.physics.Ring;
-import fga.evo.model.physics.RingParameters;
+import fga.evo.model.geometry.Ring;
+import fga.evo.model.geometry.RingParameters;
 import fga.evo.model.util.DoubleParameter;
 
 public class TestRing extends Ring {

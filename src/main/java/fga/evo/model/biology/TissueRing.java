@@ -1,7 +1,6 @@
 package fga.evo.model.biology;
 
-import fga.evo.model.physics.Ring;
-import fga.evo.model.util.DoubleParameter;
+import fga.evo.model.geometry.Ring;
 
 /**
  * Base class for the cell's rings of tissue.

@@ -1,6 +1,7 @@
-package fga.evo.model.physics;
+package fga.evo.model.geometry;
 
 import fga.evo.model.EvoTest;
+import fga.evo.model.physics.TestRing;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
