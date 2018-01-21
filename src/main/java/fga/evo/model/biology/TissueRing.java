@@ -7,7 +7,7 @@ import fga.evo.model.physics.Ring;
  */
 public class TissueRing extends Ring {
     private TissueRingParameters parameters;
-    private double requestedDeltaArea;
+    private double deltaArea;
 
     protected TissueRing(TissueRingParameters parameters, double outerRadius) {
         super(parameters, outerRadius);
@@ -28,7 +28,7 @@ public class TissueRing extends Ring {
     }
 
     private void requestGrowth(double availableEnergy) {
-        requestedDeltaArea = calcGrowth(availableEnergy);
+        deltaArea = calcGrowth(availableEnergy);
     }
 
     private double calcGrowth(double availableEnergy) {
@@ -38,7 +38,7 @@ public class TissueRing extends Ring {
     }
 
     private void requestShrinkage(double requestedEnergy) {
-        requestedDeltaArea = -calcShrinkage(requestedEnergy);
+        deltaArea = -calcShrinkage(requestedEnergy);
     }
 
     private double calcShrinkage(double requestedEnergy) {
@@ -48,17 +48,17 @@ public class TissueRing extends Ring {
     }
 
     public double getRequestedEnergy() {
-        return requestedDeltaArea *
-                ((requestedDeltaArea >= 0) ? parameters.growthCost.getValue() : parameters.shrinkageYield.getValue());
+        return deltaArea *
+                ((deltaArea >= 0) ? parameters.growthCost.getValue() : parameters.shrinkageYield.getValue());
     }
 
     public void scaleResizeRequest(double ratio) {
-        requestedDeltaArea *= ratio;
+        deltaArea *= ratio;
     }
 
     public void resize() {
-        resize(requestedDeltaArea);
-        requestedDeltaArea = 0;
+        resize(deltaArea);
+        deltaArea = 0;
     }
 
     public double getMaintenanceEnergy() {
