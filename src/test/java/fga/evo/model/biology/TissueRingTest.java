@@ -35,12 +35,10 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void testRequestResize_Shrink() {
-        TestTissueRing ring = new TestTissueRing(1, null);
-
-        ring.requestResize(-0.1);
-
-        assertEquals(-0.1, ring.getIntendedEnergyConsumption(), 0);
+    public void shrinkRequestYieldsRequestedEnergy() {
+        TissueRing testSubject = new TestTissueRing(1, null);
+        testSubject.requestResize(-0.1);
+        assertEquals(-0.1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
