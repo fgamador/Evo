@@ -64,7 +64,7 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void resizeChangesArea() {
-        TissueRing testSubject = new TestTissueRing(1, null);
+        TissueRing testSubject = new TestTissueRing();
         double initialArea = testSubject.getArea();
         testSubject.requestResize(2);
 
@@ -75,12 +75,13 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void testResize_NoRequest() {
-        TestTissueRing ring = new TestTissueRing(1, null);
+    public void resizeWithoutRequestDoesNothing() {
+        TissueRing testSubject = new TestTissueRing();
+        double initialArea = testSubject.getArea();
 
-        ring.resize();
+        testSubject.resize();
 
-        assertEquals(Math.PI, ring.getArea(), 0);
+        assertEquals(initialArea, testSubject.getArea(), 0);
     }
 
     @Test
