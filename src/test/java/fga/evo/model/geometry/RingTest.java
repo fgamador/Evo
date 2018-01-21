@@ -66,8 +66,8 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void syncFieldsSetsOuterRadiusToIncludeInnerRingOuterRadius() {
-        Ring innerRing = new TestRing(1);
+    public void syncFieldsSetsOuterRadiusInclusiveOfInnerRingOuterRadius() {
+        Ring innerRing = createSyncedRing(1);
         Ring testSubject = new TestRing(0);
         testSubject.setArea(3 * Math.PI);
 
@@ -77,27 +77,29 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void testSyncFields_OuterRadius_InnerRing() {
-        Ring innerRing = new TestRing(1);
-        innerRing.syncFields(null);
+    public void syncFieldsSetsAreaExclusiveOfInnerRingArea() {
+        Ring innerRing = createSyncedRing(1);
         Ring testSubject = new TestRing(2);
 
         testSubject.syncFields(innerRing);
 
         assertEquals(3 * Math.PI, testSubject.getArea(), 0.001);
-        assertEquals(3 * Math.PI * TestRing.parameters.density.getValue(), testSubject.getMass(), 0.001);
     }
 
     @Test
-    public void testSyncFields_ZeroOuterRadius_InnerRing() {
-        Ring innerRing = new TestRing(1);
-        innerRing.syncFields(null);
+    public void syncFieldsSetsOuterRadiusOfZeroAreaRingToEqualInnerRingOuterRadius() {
+        Ring innerRing = createSyncedRing(1);
         Ring testSubject = new TestRing(0);
 
         testSubject.syncFields(innerRing);
 
-        assertEquals(1, testSubject.getOuterRadius(), 0);
+        assertEquals(innerRing.getOuterRadius(), testSubject.getOuterRadius(), 0);
         assertEquals(0, testSubject.getArea(), 0);
-        assertEquals(0, testSubject.getMass(), 0);
+    }
+
+    private Ring createSyncedRing(double outerRadius) {
+        Ring ring = new TestRing(outerRadius);
+        ring.syncFields(null);
+        return ring;
     }
 }
