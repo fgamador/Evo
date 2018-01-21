@@ -88,27 +88,27 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private void adjustAndChargeForEnergyRequests() {
-        double requestedEnergy = Math.max(requestedChildDonation, 0);
+        double intendedEnergyConsumption = Math.max(requestedChildDonation, 0);
 
         for (TissueRing ring : tissueRings) {
-            double ringRequestedEnergy = ring.getConsumedEnergy();
-            if (ringRequestedEnergy > 0) {
-                requestedEnergy += ringRequestedEnergy;
+            double ringIntendedEnergyConsumption = ring.getIntendedEnergyConsumption();
+            if (ringIntendedEnergyConsumption > 0) {
+                intendedEnergyConsumption += ringIntendedEnergyConsumption;
             } else {
-                energy += -ringRequestedEnergy;
+                energy += -ringIntendedEnergyConsumption;
             }
         }
 
-        if (requestedEnergy > energy) {
-            requestedChildDonation *= energy / requestedEnergy;
+        if (intendedEnergyConsumption > energy) {
+            requestedChildDonation *= energy / intendedEnergyConsumption;
             for (TissueRing ring : tissueRings) {
-                if (ring.getConsumedEnergy() > 0) {
-                    ring.scaleResizeRequest(energy / requestedEnergy);
+                if (ring.getIntendedEnergyConsumption() > 0) {
+                    ring.scaleResizeRequest(energy / intendedEnergyConsumption);
                 }
             }
         }
 
-        energy -= Math.min(requestedEnergy, energy);
+        energy -= Math.min(intendedEnergyConsumption, energy);
     }
 
     private void resizeRings() {

@@ -21,7 +21,7 @@ public class TissueRingTest extends EvoTest {
         double growthEnergy = 2;
         ring.requestResize(growthEnergy);
 
-        assertEquals(growthEnergy, ring.getConsumedEnergy(), 0);
+        assertEquals(growthEnergy, ring.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class TissueRingTest extends EvoTest {
         ring.requestResize(100);
 
         assertTrue(maxGrowthEnergy < 100);
-        assertEquals(maxGrowthEnergy, ring.getConsumedEnergy(), 0);
+        assertEquals(maxGrowthEnergy, ring.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TissueRingTest extends EvoTest {
 
         ring.requestResize(-0.1);
 
-        assertEquals(-0.1, ring.getConsumedEnergy(), 0);
+        assertEquals(-0.1, ring.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TissueRingTest extends EvoTest {
 
         ring.requestResize(-5);
 
-        assertEquals(-Math.PI * TestTissueRing.parameters.shrinkageYield.getValue(), ring.getConsumedEnergy(), 0);
+        assertEquals(-Math.PI * TestTissueRing.parameters.shrinkageYield.getValue(), ring.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class TissueRingTest extends EvoTest {
         ring.requestResize(10);
         ring.scaleResizeRequest(0.1);
 
-        assertEquals(1, ring.getConsumedEnergy(), 0);
+        assertEquals(1, ring.getIntendedEnergyConsumption(), 0);
     }
 
     @Test

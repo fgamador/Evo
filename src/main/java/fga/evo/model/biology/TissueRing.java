@@ -8,7 +8,7 @@ import fga.evo.model.util.DoubleParameter;
  */
 public class TissueRing extends Ring {
     private TissueRingParameters parameters;
-    private double consumedEnergy;
+    private double intendedEnergyConsumption;
 
     protected TissueRing(TissueRingParameters parameters, double outerRadius) {
         super(parameters, outerRadius);
@@ -29,37 +29,37 @@ public class TissueRing extends Ring {
     }
 
     private void requestGrowth(double availableEnergy) {
-        consumedEnergy = calcGrowth(availableEnergy) * parameters.growthCost.getValue();
+        intendedEnergyConsumption = calcIntendedGrowth(availableEnergy) * parameters.growthCost.getValue();
     }
 
-    private double calcGrowth(double availableEnergy) {
+    private double calcIntendedGrowth(double availableEnergy) {
         double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
         double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
         return Math.min(requestedGrowth, maxAllowedGrowth);
     }
 
     private void requestShrinkage(double requestedEnergy) {
-        consumedEnergy = -calcShrinkage(requestedEnergy) * parameters.shrinkageYield.getValue();
+        intendedEnergyConsumption = -calcIntendedShrinkage(requestedEnergy) * parameters.shrinkageYield.getValue();
     }
 
-    private double calcShrinkage(double requestedEnergy) {
+    private double calcIntendedShrinkage(double requestedEnergy) {
         double requestedShrinkage = requestedEnergy / parameters.shrinkageYield.getValue();
         double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate.getValue();
         return Math.min(requestedShrinkage, maxAllowedShrinkage);
     }
 
-    public double getConsumedEnergy() {
-        return consumedEnergy;
+    public double getIntendedEnergyConsumption() {
+        return intendedEnergyConsumption;
     }
 
     public void scaleResizeRequest(double ratio) {
-        consumedEnergy *= ratio;
+        intendedEnergyConsumption *= ratio;
     }
 
     public void resize() {
-        DoubleParameter energyPerArea = (consumedEnergy >= 0) ? parameters.growthCost : parameters.shrinkageYield;
-        resize(consumedEnergy / energyPerArea.getValue());
-        consumedEnergy = 0;
+        DoubleParameter energyPerArea = (intendedEnergyConsumption >= 0) ? parameters.growthCost : parameters.shrinkageYield;
+        resize(intendedEnergyConsumption / energyPerArea.getValue());
+        intendedEnergyConsumption = 0;
     }
 
     public double getMaintenanceEnergy() {
