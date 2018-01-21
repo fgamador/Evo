@@ -15,6 +15,13 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
+    public void maintenanceEnergyDependsOnMaintenanceCost() {
+        TissueRing testSubject = new TestTissueRing(3);
+        double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
+        assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
+    }
+
+    @Test
     public void growthUsesAvailableEnergy() {
         TissueRing testSubject = new TestTissueRing();
         testSubject.requestResize(2);
@@ -107,12 +114,6 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void testGetMaintenanceEnergy() {
-        TestTissueRing ring = new TestTissueRing(3, null);
-        assertEquals(Math.PI * 9 * TestTissueRing.parameters.maintenanceCost.getValue(), ring.getMaintenanceEnergy(), 0);
-    }
-
-    @Test
     public void testDecay() {
         TestTissueRing ring = new TestTissueRing(1, null);
         double initialArea = ring.getArea();
@@ -138,6 +139,10 @@ public class TissueRingTest extends EvoTest {
 
         public TestTissueRing() {
             this(1, null);
+        }
+
+        public TestTissueRing(double outerRadius) {
+            this(outerRadius, null);
         }
 
         public TestTissueRing(double outerRadius, TestTissueRing innerRing) {
