@@ -17,14 +17,16 @@ public class RingTest extends EvoTest {
     @Test
     public void settingAreaClearsOuterRadius() {
         TestRing testSubject = new TestRing(1);
+        testSubject.setOuterRadius(2);
+
         testSubject.setArea(Math.PI);
+
         assertEquals(0, testSubject.getOuterRadius(), 0);
     }
 
     @Test
     public void testSetOuterRadius() {
         TestRing ring1 = new TestRing(1);
-        ring1.syncFields(null);
 
         ring1.setOuterRadius(2);
 
