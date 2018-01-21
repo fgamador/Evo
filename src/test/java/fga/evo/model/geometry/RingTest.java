@@ -8,14 +8,13 @@ import static org.junit.Assert.assertTrue;
 
 public class RingTest extends EvoTest {
     @Test
-    public void testSetArea() {
-        TestRing ring1 = new TestRing(1);
-        ring1.syncFields(null);
+    public void settingAreaClearsOuterRadius() {
+        TestRing testSubject = new TestRing(1);
 
-        ring1.setArea(Math.PI);
+        testSubject.setArea(Math.PI);
 
-        assertEquals(Math.PI, ring1.getArea(), 0.001);
-        assertEquals(0, ring1.getOuterRadius(), 0);
+        assertEquals(Math.PI, testSubject.getArea(), 0.001);
+        assertEquals(0, testSubject.getOuterRadius(), 0);
     }
 
     @Test
