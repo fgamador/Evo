@@ -22,16 +22,16 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void testRequestResize_MaxGrowthRate() {
+    public void growthRequestIsLimitedByMaxGrowthRate() {
         TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
-        TestTissueRing ring = new TestTissueRing(1, null);
-        double maxDeltaArea = ring.getArea() * TestTissueRing.parameters.maxGrowthRate.getValue();
+        TissueRing testSubject = new TestTissueRing();
+        double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate.getValue();
         double maxGrowthEnergy = maxDeltaArea * TestTissueRing.parameters.growthCost.getValue();
-
-        ring.requestResize(100);
-
         assertTrue(maxGrowthEnergy < 100);
-        assertEquals(maxGrowthEnergy, ring.getIntendedEnergyConsumption(), 0);
+
+        testSubject.requestResize(100);
+
+        assertEquals(maxGrowthEnergy, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
