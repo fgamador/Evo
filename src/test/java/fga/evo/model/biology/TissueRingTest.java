@@ -12,6 +12,7 @@ public class TissueRingTest extends EvoTest {
     @After
     public void tearDown() {
         TestTissueRing.parameters.maxGrowthRate.revertToDefaultValue();
+        TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
     }
 
     @Test
@@ -107,6 +108,17 @@ public class TissueRingTest extends EvoTest {
     public void resizeWillNotShrinkBelowZeroArea() {
         TissueRing testSubject = new TestTissueRing();
         testSubject.requestResize(-5);
+
+        testSubject.resize();
+
+        assertEquals(0, testSubject.getArea(), 0);
+    }
+
+    @Test
+    public void shrinkingWithZeroShrinkageYieldParameterShrinksToZeroArea() {
+        TestTissueRing.parameters.shrinkageYield.setValue(0);
+        TissueRing testSubject = new TestTissueRing();
+        testSubject.requestResize(-0.01);
 
         testSubject.resize();
 
