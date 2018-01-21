@@ -9,6 +9,7 @@ import fga.evo.model.util.DoubleParameter;
 public class TissueRing extends Ring {
     private TissueRingParameters parameters;
     private double intendedEnergyConsumption;
+    private double deltaArea;
 
     protected TissueRing(TissueRingParameters parameters, double outerRadius) {
         super(parameters, outerRadius);
@@ -29,7 +30,8 @@ public class TissueRing extends Ring {
     }
 
     private void requestGrowth(double availableEnergy) {
-        intendedEnergyConsumption = calcIntendedGrowth(availableEnergy) * parameters.growthCost.getValue();
+        deltaArea = calcIntendedGrowth(availableEnergy);
+        intendedEnergyConsumption = deltaArea * parameters.growthCost.getValue();
     }
 
     private double calcIntendedGrowth(double availableEnergy) {
@@ -39,7 +41,8 @@ public class TissueRing extends Ring {
     }
 
     private void requestShrinkage(double requestedEnergy) {
-        intendedEnergyConsumption = -calcIntendedShrinkage(requestedEnergy) * parameters.shrinkageYield.getValue();
+        deltaArea = -calcIntendedShrinkage(requestedEnergy);
+        intendedEnergyConsumption = deltaArea * parameters.shrinkageYield.getValue();
     }
 
     private double calcIntendedShrinkage(double requestedEnergy) {
@@ -53,12 +56,13 @@ public class TissueRing extends Ring {
     }
 
     public void scaleResizeRequest(double ratio) {
+        deltaArea *= ratio;
         intendedEnergyConsumption *= ratio;
     }
 
     public void resize() {
-        DoubleParameter energyPerArea = (intendedEnergyConsumption >= 0) ? parameters.growthCost : parameters.shrinkageYield;
-        resize(intendedEnergyConsumption / energyPerArea.getValue());
+        resize(deltaArea);
+        deltaArea = 0;
         intendedEnergyConsumption = 0;
     }
 
