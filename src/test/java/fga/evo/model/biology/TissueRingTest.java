@@ -87,14 +87,13 @@ public class TissueRingTest extends EvoTest {
     @Test
     public void resizeIsIdempotent() {
         TissueRing testSubject = new TestTissueRing(1, null);
-        double initialArea = testSubject.getArea();
         testSubject.requestResize(2);
+        testSubject.resize();
+        double areaAfterFirstResize = testSubject.getArea();
 
         testSubject.resize();
-        testSubject.resize();
 
-        double expectedFinalArea = initialArea + 2 / TestTissueRing.parameters.growthCost.getValue();
-        assertEquals(expectedFinalArea, testSubject.getArea(), 0);
+        assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
     }
 
     @Test
