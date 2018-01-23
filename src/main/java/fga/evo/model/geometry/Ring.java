@@ -19,11 +19,6 @@ public class Ring {
         outerRadius = 0;
     }
 
-    public void setOuterRadius(double val) {
-        outerRadius = val;
-        area = 0;
-    }
-
     public void resize(double deltaArea) {
         setArea(getArea() + deltaArea);
     }

@@ -9,6 +9,8 @@ import fga.evo.model.util.DoubleParameter;
 
 import java.util.*;
 
+import static fga.evo.model.util.Util.sqr;
+
 /**
  * The basic living unit in evo. A circular entity that can move and grow and reproduce.
  * Cells can also bond together to form larger organisms.
@@ -361,7 +363,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public Builder setFloatRingOuterRadius(double radius) {
-            setOuterRadius(cell.floatRing, radius);
+            cell.floatRing.setArea(Math.PI * sqr(radius));
             return this;
         }
 
@@ -371,7 +373,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public Builder setPhotoRingOuterRadius(double radius) {
-            setOuterRadius(cell.photoRing, radius);
+            cell.photoRing.setArea(Math.PI * sqr(radius) - cell.floatRing.getArea());
             return this;
         }
 
@@ -396,22 +398,10 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         private void setArea(Ring ring, double val) {
-            enforceUnsetAreaAndOuterRadius(ring);
-            ring.setArea(val);
-        }
-
-        private void setOuterRadius(Ring ring, double val) {
-            enforceUnsetAreaAndOuterRadius(ring);
-            ring.setOuterRadius(val);
-        }
-
-        private void enforceUnsetAreaAndOuterRadius(Ring ring) {
             if (ring.getArea() != 0) {
                 throw new IllegalStateException("Area is already set to " + ring.getArea());
             }
-            if (ring.getOuterRadius() != 0) {
-                throw new IllegalStateException("Outer radius is already set to " + ring.getOuterRadius());
-            }
+            ring.setArea(val);
         }
     }
 }

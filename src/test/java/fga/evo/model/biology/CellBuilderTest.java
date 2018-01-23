@@ -20,20 +20,6 @@ public class CellBuilderTest {
                 .setFloatRingArea(Math.PI);
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void testBuild_SetOuterRadiusTwice() {
-        new Cell.Builder()
-                .setFloatRingOuterRadius(1)
-                .setFloatRingOuterRadius(1);
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void testBuild_SetAreaThenOuterRadius() {
-        new Cell.Builder()
-                .setFloatRingArea(Math.PI)
-                .setFloatRingOuterRadius(1);
-    }
-
     @Test
     public void testBuild_FloatRingOuterRadius() {
         Cell cell = new Cell.Builder()
