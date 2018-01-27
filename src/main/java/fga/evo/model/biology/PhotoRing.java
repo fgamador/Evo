@@ -22,10 +22,6 @@ public class PhotoRing extends TissueRing {
         super(parameters, area);
     }
 
-    public PhotoRing(double outerRadius, boolean marker) {
-        super(parameters, outerRadius, false);
-    }
-
     /**
      * Converts incoming light into energy.
      *
