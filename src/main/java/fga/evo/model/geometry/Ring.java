@@ -9,6 +9,10 @@ public class Ring {
     private double area;
     private double mass;
 
+    public Ring(RingParameters parameters) {
+        this.parameters = parameters;
+    }
+
     public Ring(RingParameters parameters, double outerRadius) {
         this.parameters = parameters;
         this.outerRadius = outerRadius;

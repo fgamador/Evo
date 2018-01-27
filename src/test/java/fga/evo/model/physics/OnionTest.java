@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class OnionTest extends EvoTest {
     @Test
     public void testSyncFields_OneRing() {
-        TestRing ring = new TestRing(0);
+        TestRing ring = new TestRing();
         ring.setArea(Math.PI);
         Onion onion = new Onion();
         onion.addRing(ring);
@@ -25,8 +25,10 @@ public class OnionTest extends EvoTest {
 
     @Test
     public void testSyncFields_TwoRings() {
-        TestRing ring1 = new TestRing(1);
-        TestRing ring2 = new TestRing(2);
+        TestRing ring1 = new TestRing();
+        ring1.setArea(Math.PI);
+        TestRing ring2 = new TestRing();
+        ring2.setArea(3 * Math.PI);
         Onion onion = new Onion();
         onion.addRing(ring1);
         onion.addRing(ring2);

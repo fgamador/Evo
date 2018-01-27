@@ -10,21 +10,21 @@ import static org.junit.Assert.assertTrue;
 public class RingTest extends EvoTest {
     @Test
     public void canSetArea() {
-        Ring testSubject = new TestRing(1);
+        Ring testSubject = new TestRing();
         testSubject.setArea(Math.PI);
         assertEquals(Math.PI, testSubject.getArea(), 0.001);
     }
 
     @Test
     public void settingAreaClearsOuterRadius() {
-        Ring testSubject = new TestRing(1);
+        Ring testSubject = new TestRing();
         testSubject.setArea(Math.PI);
         assertEquals(0, testSubject.getOuterRadius(), 0);
     }
 
     @Test
     public void syncFieldsSetsOuterRadiusAndMassFromArea() {
-        Ring testSubject = new TestRing(0);
+        Ring testSubject = new TestRing();
         testSubject.setArea(Math.PI);
 
         testSubject.syncFields(null);
@@ -37,7 +37,7 @@ public class RingTest extends EvoTest {
     @Test
     public void syncFieldsSetsOuterRadiusInclusiveOfInnerRingOuterRadius() {
         Ring innerRing = createSyncedRing(1);
-        Ring testSubject = new TestRing(0);
+        Ring testSubject = new TestRing();
         testSubject.setArea(3 * Math.PI);
 
         testSubject.syncFields(innerRing);
@@ -48,7 +48,7 @@ public class RingTest extends EvoTest {
     @Test
     public void syncFieldsSetsOuterRadiusOfZeroAreaRingToEqualInnerRingOuterRadius() {
         Ring innerRing = createSyncedRing(1);
-        Ring testSubject = new TestRing(0);
+        Ring testSubject = new TestRing();
 
         testSubject.syncFields(innerRing);
 
@@ -57,7 +57,7 @@ public class RingTest extends EvoTest {
     }
 
     private Ring createSyncedRing(double outerRadius) {
-        Ring ring = new TestRing(outerRadius);
+        Ring ring = new TestRing();
         ring.setArea(Math.PI * sqr(outerRadius));
         ring.syncFields(null);
         return ring;
