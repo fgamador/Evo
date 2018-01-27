@@ -363,7 +363,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public Builder setFloatRingOuterRadius(double radius) {
-            cell.floatRing.setArea(Math.PI * sqr(radius));
+            setArea(cell.floatRing, Math.PI * sqr(radius));
             return this;
         }
 
@@ -373,7 +373,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public Builder setPhotoRingOuterRadius(double radius) {
-            cell.photoRing.setArea(Math.PI * sqr(radius) - cell.floatRing.getArea());
+            setArea(cell.photoRing, Math.PI * sqr(radius) - cell.floatRing.getArea());
             return this;
         }
 
