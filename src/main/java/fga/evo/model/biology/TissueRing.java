@@ -10,6 +10,11 @@ public class TissueRing extends Ring {
     private double intendedEnergyConsumption;
     private double deltaArea;
 
+    protected TissueRing(TissueRingParameters parameters, double area) {
+        super(parameters, area);
+        this.parameters = parameters;
+    }
+
     protected TissueRing(TissueRingParameters parameters, double outerRadius, boolean marker) {
         super(parameters, outerRadius, false);
         this.parameters = parameters;
