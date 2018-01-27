@@ -26,7 +26,7 @@ public class PhotoRingTest extends EvoTest {
     public void testCalcPhotoAbsorptivity_WithInnerRing() {
         FloatRing innerRing = new FloatRing(Math.PI);
         innerRing.syncFields(null);
-        PhotoRing ring = new PhotoRing(2, false);
+        PhotoRing ring = new PhotoRing(Math.PI * 3);
         ring.syncFields(innerRing);
 
         assertEquals(0.5, ring.calcPhotoAbsorptivity(), 0);
