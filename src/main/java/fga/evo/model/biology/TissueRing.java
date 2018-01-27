@@ -70,6 +70,6 @@ public class TissueRing extends Ring {
     }
 
     public void decay() {
-        setArea(getArea() * (1 - parameters.decayRate.getValue()));
+        multiplyAreaBy(1 - parameters.decayRate.getValue());
     }
 }
