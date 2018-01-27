@@ -10,7 +10,7 @@ public class TestRing extends Ring {
     }
 
     public TestRing(double area) {
-        super(parameters);
+        super(parameters, 0);
         setArea(area);
     }
 }
