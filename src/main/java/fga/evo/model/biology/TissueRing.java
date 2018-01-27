@@ -2,8 +2,6 @@ package fga.evo.model.biology;
 
 import fga.evo.model.geometry.Ring;
 
-import static fga.evo.model.util.Util.sqr;
-
 /**
  * Base class for the cell's rings of tissue.
  */
@@ -13,7 +11,7 @@ public class TissueRing extends Ring {
     private double deltaArea;
 
     protected TissueRing(TissueRingParameters parameters, double outerRadius) {
-        super(parameters, outerRadius);
+        super(parameters, outerRadius, false);
         this.parameters = parameters;
     }
 

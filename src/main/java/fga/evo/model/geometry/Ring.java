@@ -13,7 +13,7 @@ public class Ring {
         this.parameters = parameters;
     }
 
-    public Ring(RingParameters parameters, double outerRadius) {
+    public Ring(RingParameters parameters, double outerRadius, boolean marker) {
         this.parameters = parameters;
         this.outerRadius = outerRadius;
     }
