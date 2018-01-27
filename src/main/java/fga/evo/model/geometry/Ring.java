@@ -16,7 +16,6 @@ public class Ring {
 
     public void setArea(double val) {
         area = val;
-        outerRadius = 0;
         mass = parameters.density.getValue() * area;
     }
 

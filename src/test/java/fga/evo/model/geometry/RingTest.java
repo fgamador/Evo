@@ -13,14 +13,6 @@ public class RingTest extends EvoTest {
         assertEquals(Math.PI, testSubject.getArea(), 0.001);
     }
 
-    // TODO Do I care about this any more?
-    @Test
-    public void settingAreaClearsOuterRadius() {
-        Ring testSubject = new TestRing(0);
-        testSubject.setArea(Math.PI);
-        assertEquals(0, testSubject.getOuterRadius(), 0);
-    }
-
     @Test
     public void syncFieldsSetsOuterRadiusAndMassFromArea() {
         Ring testSubject = new TestRing(Math.PI);
