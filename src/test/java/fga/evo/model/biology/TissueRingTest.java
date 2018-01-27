@@ -30,7 +30,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     private TestTissueRing createRing1() {
-        return new TestTissueRing(1, null, false);
+        return new TestTissueRing(Math.PI);
     }
 
     @Test
