@@ -153,15 +153,5 @@ public class TissueRingTest extends EvoTest {
             super(parameters, area);
             syncFields(null);
         }
-
-        public TestTissueRing(double area, TestTissueRing innerRing) {
-            super(parameters, area);
-            syncFields(innerRing);
-        }
-
-        public TestTissueRing(double outerRadius, TestTissueRing innerRing, boolean marker) {
-            super(parameters, outerRadius, false);
-            syncFields(innerRing);
-        }
     }
 }
