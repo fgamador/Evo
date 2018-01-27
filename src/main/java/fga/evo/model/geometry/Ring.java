@@ -23,6 +23,10 @@ public class Ring {
         setArea(getArea() + deltaArea);
     }
 
+    public void multiplyAreaBy(double factor) {
+        setArea(getArea() * factor);
+    }
+
     public void setRadiiBasedOnArea(double innerRadius) {
         this.innerRadius = innerRadius;
         outerRadius = Math.sqrt(sqr(this.innerRadius) + area / Math.PI);

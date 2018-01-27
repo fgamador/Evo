@@ -28,6 +28,13 @@ public class RingTest extends EvoTest {
     }
 
     @Test
+    public void canMultiplyAreaByFactor() {
+        Ring testSubject = new TestRing(2);
+        testSubject.multiplyAreaBy(0.5);
+        assertEquals(1, testSubject.getArea(), 0.001);
+    }
+
+    @Test
     public void canSetOuterRadiusBasedOnArea() {
         Ring testSubject = new TestRing(Math.PI);
         testSubject.setRadiiBasedOnArea(0);
