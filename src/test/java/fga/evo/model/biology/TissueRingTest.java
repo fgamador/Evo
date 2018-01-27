@@ -17,7 +17,7 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void maintenanceEnergyDependsOnMaintenanceCost() {
-        TissueRing testSubject = new TestTissueRing(3, null, false);
+        TissueRing testSubject = new TestTissueRing(Math.PI * 9);
         double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
         assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
     }
