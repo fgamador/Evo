@@ -24,7 +24,7 @@ public class Ring {
         setArea(getArea() + deltaArea);
     }
 
-    public void syncFields(Ring innerRing) {
+    public void updateRadii(Ring innerRing) {
         innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
     }
