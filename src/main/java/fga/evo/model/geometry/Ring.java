@@ -25,13 +25,7 @@ public class Ring {
 
     public void syncFields(Ring innerRing) {
         innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
-        if (area != 0) {
-            outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
-        } else {
-            outerRadius = Math.max(outerRadius, innerRadius);
-            double innerArea = (innerRing != null) ? innerRing.area : 0;
-            area = Math.PI * sqr(outerRadius) - innerArea;
-        }
+        outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
         mass = parameters.density.getValue() * area;
     }
 
