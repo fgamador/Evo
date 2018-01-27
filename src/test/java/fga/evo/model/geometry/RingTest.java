@@ -23,37 +23,21 @@ public class RingTest extends EvoTest {
     @Test
     public void canSetOuterRadiusBasedOnArea() {
         Ring testSubject = new TestRing(Math.PI);
-
         testSubject.setRadiiBasedOnArea(0);
-
-        assertEquals(Math.PI, testSubject.getArea(), 0.001);
         assertEquals(1, testSubject.getOuterRadius(), 0.001);
     }
 
     @Test
     public void canSetOuterRadiusBasedOnAreaAndInnerRadius() {
-        Ring innerRing = createSyncedRing(Math.PI);
         Ring testSubject = new TestRing(3 * Math.PI);
-
-        testSubject.setRadiiBasedOnArea(innerRing.getOuterRadius());
-
+        testSubject.setRadiiBasedOnArea(1);
         assertEquals(2, testSubject.getOuterRadius(), 0.001);
     }
 
     @Test
     public void whenAreaIsZeroOuterRadiusGetsSetEqualToInnerRadius() {
-        Ring innerRing = createSyncedRing(Math.PI);
         Ring testSubject = new TestRing(0);
-
-        testSubject.setRadiiBasedOnArea(innerRing.getOuterRadius());
-
-        assertEquals(innerRing.getOuterRadius(), testSubject.getOuterRadius(), 0);
-        assertEquals(0, testSubject.getArea(), 0);
-    }
-
-    private Ring createSyncedRing(double area) {
-        Ring ring = new TestRing(area);
-        ring.setRadiiBasedOnArea(0);
-        return ring;
+        testSubject.setRadiiBasedOnArea(1);
+        assertEquals(testSubject.getInnerRadius(), testSubject.getOuterRadius(), 0);
     }
 }
