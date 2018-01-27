@@ -41,7 +41,7 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void whenZeroAreaOuterRadiusGetsSetEqualToInnerRadius() {
+    public void whenAreaIsZeroOuterRadiusGetsSetEqualToInnerRadius() {
         Ring innerRing = createSyncedRing(Math.PI);
         Ring testSubject = new TestRing(0);
 
