@@ -25,7 +25,7 @@ public class PhotoRingTest extends EvoTest {
     }
 
     @Test
-    public void testPhotosynthesize() {
+    public void photosynthesisReturnsTheRightAmountOfEnergy() {
         PhotoRing testSubject = new PhotoRing(0);
         testSubject.setArea(Math.PI * 9);
         testSubject.syncFields(null);
