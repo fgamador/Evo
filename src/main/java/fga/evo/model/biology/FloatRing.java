@@ -21,8 +21,4 @@ public class FloatRing extends TissueRing {
     public FloatRing(double area) {
         super(parameters, area);
     }
-
-    public FloatRing(double outerRadius, boolean marker) {
-        super(parameters, outerRadius, false);
-    }
 }
