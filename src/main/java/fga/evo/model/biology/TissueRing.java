@@ -60,7 +60,7 @@ public class TissueRing extends Ring {
     }
 
     public void resize() {
-        resize(deltaArea);
+        addToArea(deltaArea);
         deltaArea = 0;
         intendedEnergyConsumption = 0;
     }
