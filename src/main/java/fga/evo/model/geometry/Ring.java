@@ -17,6 +17,7 @@ public class Ring {
     public void setArea(double val) {
         area = val;
         outerRadius = 0;
+        mass = parameters.density.getValue() * area;
     }
 
     public void resize(double deltaArea) {
@@ -26,7 +27,6 @@ public class Ring {
     public void syncFields(Ring innerRing) {
         innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
         outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
-        mass = parameters.density.getValue() * area;
     }
 
     public double getOuterRadius() {
