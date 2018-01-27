@@ -136,7 +136,7 @@ public class TissueRingTest extends EvoTest {
         assertEquals(expectedFinalArea, testSubject.getArea(), 0.001);
     }
 
-    public static class TestTissueRing extends TissueRing {
+    private static class TestTissueRing extends TissueRing {
         public static TissueRingParameters parameters = new TissueRingParameters();
 
         static {
