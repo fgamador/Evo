@@ -151,7 +151,7 @@ public class TissueRingTest extends EvoTest {
 
         TestTissueRing(double area) {
             super(parameters, area);
-            updateRadii(null);
+            updateRadii(0);
         }
     }
 }
