@@ -137,7 +137,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     private static class TestTissueRing extends TissueRing {
-        public static TissueRingParameters parameters = new TissueRingParameters();
+        static TissueRingParameters parameters = new TissueRingParameters();
 
         static {
             parameters.density = new DoubleParameter(0.5);
@@ -149,7 +149,7 @@ public class TissueRingTest extends EvoTest {
             parameters.decayRate = new DoubleParameter(0.1);
         }
 
-        public TestTissueRing(double area) {
+        TestTissueRing(double area) {
             super(parameters, area);
             syncFields(null);
         }
