@@ -24,7 +24,7 @@ public class Ring {
         setArea(getArea() + deltaArea);
     }
 
-    public void updateRadiiFromArea(double innerRadius) {
+    public void setRadiiBasedOnArea(double innerRadius) {
         this.innerRadius = innerRadius;
         outerRadius = Math.sqrt(sqr(this.innerRadius) + area / Math.PI);
     }
