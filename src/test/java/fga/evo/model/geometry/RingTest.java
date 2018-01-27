@@ -55,8 +55,8 @@ public class RingTest extends EvoTest {
     }
 
     private Ring createRing(double area) {
-        Ring testSubject = new TestRing();
-        testSubject.setArea(area);
+        Ring testSubject = new TestRing(area);
+//        testSubject.setArea(area);
         return testSubject;
     }
 }
