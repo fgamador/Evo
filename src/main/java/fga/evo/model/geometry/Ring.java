@@ -4,10 +4,10 @@ import static fga.evo.model.util.Util.sqr;
 
 public class Ring {
     private RingParameters parameters;
-    private double innerRadius;
-    private double outerRadius;
     private double area;
     private double mass;
+    private double innerRadius;
+    private double outerRadius;
 
     public Ring(RingParameters parameters, double area) {
         this.parameters = parameters;
@@ -29,19 +29,19 @@ public class Ring {
         outerRadius = Math.sqrt(sqr(this.innerRadius) + area / Math.PI);
     }
 
-    public double getOuterRadius() {
-        return outerRadius;
-    }
-
-    public double getInnerRadius() {
-        return innerRadius;
-    }
-
     public double getArea() {
         return area;
     }
 
     public double getMass() {
         return mass;
+    }
+
+    public double getOuterRadius() {
+        return outerRadius;
+    }
+
+    public double getInnerRadius() {
+        return innerRadius;
     }
 }
