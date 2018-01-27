@@ -8,19 +8,23 @@ import static org.junit.Assert.assertEquals;
 public class RingTest extends EvoTest {
     @Test
     public void canSetArea() {
-        Ring testSubject = new TestRing(Math.PI);
+        Ring testSubject = new TestRing(0);
+        testSubject.setArea(Math.PI);
         assertEquals(Math.PI, testSubject.getArea(), 0.001);
     }
 
     @Test
     public void settingAreaClearsOuterRadius() {
-        Ring testSubject = new TestRing(Math.PI);
+        Ring testSubject = new TestRing(0);
+        testSubject.setArea(Math.PI);
         assertEquals(0, testSubject.getOuterRadius(), 0);
     }
 
     @Test
     public void syncFieldsSetsOuterRadiusAndMassFromArea() {
-        Ring testSubject = createSyncedRing(Math.PI);
+        Ring testSubject = new TestRing(Math.PI);
+
+        testSubject.syncFields(null);
 
         assertEquals(Math.PI, testSubject.getArea(), 0.001);
         assertEquals(1, testSubject.getOuterRadius(), 0.001);
