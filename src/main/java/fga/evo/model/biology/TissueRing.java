@@ -15,11 +15,6 @@ public class TissueRing extends Ring {
         this.parameters = parameters;
     }
 
-    protected TissueRing(TissueRingParameters parameters, double outerRadius, boolean marker) {
-        super(parameters, outerRadius, false);
-        this.parameters = parameters;
-    }
-
     /**
      * Records a request that the ring's area grow or shrink using a specified amount of energy.
      *
