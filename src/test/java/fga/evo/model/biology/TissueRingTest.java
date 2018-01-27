@@ -158,7 +158,7 @@ public class TissueRingTest extends EvoTest {
         }
 
         public TestTissueRing(double outerRadius, TestTissueRing innerRing) {
-            super(parameters, outerRadius);
+            super(parameters, outerRadius, false);
             syncFields(innerRing);
         }
     }

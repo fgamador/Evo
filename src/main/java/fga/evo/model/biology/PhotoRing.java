@@ -19,7 +19,7 @@ public class PhotoRing extends TissueRing {
     }
 
     public PhotoRing(double outerRadius) {
-        super(parameters, outerRadius);
+        super(parameters, outerRadius, false);
     }
 
     /**

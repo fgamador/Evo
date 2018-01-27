@@ -19,6 +19,6 @@ public class FloatRing extends TissueRing {
     }
 
     public FloatRing(double outerRadius) {
-        super(parameters, outerRadius);
+        super(parameters, outerRadius, false);
     }
 }
