@@ -14,11 +14,6 @@ public class Ring {
         setArea(area);
     }
 
-    public Ring(RingParameters parameters, double outerRadius, boolean marker) {
-        this.parameters = parameters;
-        this.outerRadius = outerRadius;
-    }
-
     public void setArea(double val) {
         area = val;
         outerRadius = 0;
