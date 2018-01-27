@@ -18,7 +18,7 @@ public class PhotoRing extends TissueRing {
         parameters.decayRate = new DoubleParameter(0.1);
     }
 
-    public PhotoRing(double outerRadius) {
+    public PhotoRing(double outerRadius, boolean marker) {
         super(parameters, outerRadius, false);
     }
 
