@@ -26,6 +26,9 @@ public class PhotoRingTest extends EvoTest {
 
     @Test
     public void testPhotosynthesize() {
-        assertEquals(4.5, new PhotoRing(3).photosynthesize(2), 0);
+        PhotoRing testSubject = new PhotoRing(0);
+        testSubject.setArea(Math.PI * 9);
+        testSubject.syncFields(null);
+        assertEquals(4.5, testSubject.photosynthesize(2), 0);
     }
 }
