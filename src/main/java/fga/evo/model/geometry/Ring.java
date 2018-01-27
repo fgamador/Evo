@@ -25,8 +25,7 @@ public class Ring {
     }
 
     public void updateRadii(Ring innerRing) {
-        double innerRingRadius = (innerRing != null) ? innerRing.outerRadius : 0;
-        updateRadii(innerRingRadius);
+        updateRadii((innerRing != null) ? innerRing.outerRadius : 0);
     }
 
     public void updateRadii(double innerRingRadius) {
