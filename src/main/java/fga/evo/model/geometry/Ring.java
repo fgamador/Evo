@@ -19,8 +19,8 @@ public class Ring {
         mass = parameters.density.getValue() * area;
     }
 
-    public void addToArea(double deltaArea) {
-        setArea(getArea() + deltaArea);
+    public void addToArea(double delta) {
+        setArea(getArea() + delta);
     }
 
     public void multiplyAreaBy(double factor) {
