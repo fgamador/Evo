@@ -25,8 +25,13 @@ public class Ring {
     }
 
     public void updateRadii(Ring innerRing) {
-        innerRadius = (innerRing != null) ? innerRing.outerRadius : 0;
-        outerRadius = Math.sqrt(sqr(innerRadius) + area / Math.PI);
+        double innerRingRadius = (innerRing != null) ? innerRing.outerRadius : 0;
+        updateRadii(innerRingRadius);
+    }
+
+    public void updateRadii(double innerRingRadius) {
+        innerRadius = innerRingRadius;
+        outerRadius = Math.sqrt(sqr(this.innerRadius) + area / Math.PI);
     }
 
     public double getOuterRadius() {
