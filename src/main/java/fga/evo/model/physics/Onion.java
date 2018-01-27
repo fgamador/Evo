@@ -23,7 +23,7 @@ public class Onion extends Ball {
     private void syncRingFields() {
         double innerRadius = 0;
         for (Ring ring : rings) {
-            ring.updateRadii(innerRadius);
+            ring.updateRadiiFromArea(innerRadius);
             innerRadius = ring.getOuterRadius();
         }
     }
