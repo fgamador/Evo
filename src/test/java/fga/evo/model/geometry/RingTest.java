@@ -21,7 +21,7 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void syncFieldsSetsOuterRadiusAndMassFromArea() {
+    public void canSetOuterRadiusBasedOnArea() {
         Ring testSubject = new TestRing(Math.PI);
 
         testSubject.setRadiiBasedOnArea(0);
@@ -31,7 +31,7 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void syncFieldsSetsOuterRadiusInclusiveOfInnerRingOuterRadius() {
+    public void canSetOuterRadiusBasedOnAreaAndInnerRadius() {
         Ring innerRing = createSyncedRing(Math.PI);
         Ring testSubject = new TestRing(3 * Math.PI);
 
@@ -41,7 +41,7 @@ public class RingTest extends EvoTest {
     }
 
     @Test
-    public void syncFieldsSetsOuterRadiusOfZeroAreaRingToEqualInnerRingOuterRadius() {
+    public void whenZeroAreaOuterRadiusGetsSetEqualToInnerRadius() {
         Ring innerRing = createSyncedRing(Math.PI);
         Ring testSubject = new TestRing(0);
 
