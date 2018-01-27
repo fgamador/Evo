@@ -8,15 +8,13 @@ import static org.junit.Assert.assertEquals;
 public class RingTest extends EvoTest {
     @Test
     public void canSetArea() {
-        double area = Math.PI;
-        Ring testSubject = createRing(area);
+        Ring testSubject = createRing(Math.PI);
         assertEquals(Math.PI, testSubject.getArea(), 0.001);
     }
 
     @Test
     public void settingAreaClearsOuterRadius() {
-        double area = Math.PI;
-        Ring testSubject = createRing(area);
+        Ring testSubject = createRing(Math.PI);
         assertEquals(0, testSubject.getOuterRadius(), 0);
     }
 
@@ -32,8 +30,7 @@ public class RingTest extends EvoTest {
     @Test
     public void syncFieldsSetsOuterRadiusInclusiveOfInnerRingOuterRadius() {
         Ring innerRing = createSyncedRing(Math.PI);
-        double area = 3 * Math.PI;
-        Ring testSubject = createRing(area);
+        Ring testSubject = createRing(3 * Math.PI);
 
         testSubject.syncFields(innerRing);
 
