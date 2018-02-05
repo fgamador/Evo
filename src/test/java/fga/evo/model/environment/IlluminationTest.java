@@ -38,6 +38,17 @@ public class IlluminationTest extends EvoTest {
     }
 
     @Test
+    public void illuminationUpdatesCellEnvironment() {
+        Illumination.maxIntensity.setValue(2);
+        Illumination lighting = new Illumination(100);
+        StandaloneCellEnvironment environment = new StandaloneCellEnvironment(0, -50);
+
+        lighting.updateEnvironment(environment);
+
+        assertEquals(1, environment.getLightIntensity(), 0);
+    }
+
+    @Test
     public void testIlluminateCell() {
         Illumination.maxIntensity.setValue(2);
         Illumination lighting = new Illumination(100);
