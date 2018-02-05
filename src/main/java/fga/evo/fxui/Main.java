@@ -56,7 +56,7 @@ public class Main extends Evo {
     protected void onHeightChanged(double oldHeight, double newHeight) {
         super.onHeightChanged(oldHeight, newHeight);
         walls.resizeHeight(newHeight);
-        light.setDepth(newHeight);
+        light.setDepthLimit(newHeight);
     }
 
     public static void main(String[] args) {

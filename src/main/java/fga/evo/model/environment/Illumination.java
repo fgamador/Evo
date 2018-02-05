@@ -9,18 +9,18 @@ import fga.evo.model.util.DoubleParameter;
 public class Illumination extends EnvironmentalInfluence {
     public static DoubleParameter maxIntensity = new DoubleParameter(1);
 
-    private double depth;
+    private double depthLimit;
 
-    public Illumination(double depth) {
-        setDepth(depth);
+    public Illumination(double depthLimit) {
+        setDepthLimit(depthLimit);
     }
 
-    public void setDepth(double depth) {
-        if (depth <= 0) {
-            throw new IllegalArgumentException("Depth must be greater than zero but is " + depth);
+    public void setDepthLimit(double depthLimit) {
+        if (depthLimit <= 0) {
+            throw new IllegalArgumentException("Depth must be greater than zero but is " + depthLimit);
         }
 
-        this.depth = depth;
+        this.depthLimit = depthLimit;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     double calcLightIntensity(double y) {
-        return (y >= 0) ? maxIntensity.getValue() : maxIntensity.getValue() * (depth + y) / depth;
+        return (y >= 0) ? maxIntensity.getValue() : maxIntensity.getValue() * (depthLimit + y) / depthLimit;
     }
 }
