@@ -33,6 +33,7 @@ public class CellTest {
                 .setPhotoRingOuterRadius(3)
                 .build();
 
+        cell.getEnvironment().setLightIntensity(2);
         cell.photosynthesize(2);
 
         assertEnergy(4.5, cell);
