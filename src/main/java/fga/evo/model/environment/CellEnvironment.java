@@ -1,24 +1,24 @@
 package fga.evo.model.environment;
 
 public class CellEnvironment {
-    private double x;
-    private double y;
+    private double centerX;
+    private double centerY;
     private double lightIntensity;
 
-    public double getX() {
-        return x;
+    public double getCenterX() {
+        return centerX;
     }
 
-    public void setX(double val) {
-        x = val;
+    public void setCenterX(double val) {
+        centerX = val;
     }
 
-    public double getY() {
-        return y;
+    public double getCenterY() {
+        return centerY;
     }
 
-    public void setY(double val) {
-        y = val;
+    public void setCenterY(double val) {
+        centerY = val;
     }
 
     public double getLightIntensity() {
