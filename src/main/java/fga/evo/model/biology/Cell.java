@@ -1,6 +1,7 @@
 package fga.evo.model.biology;
 
 import fga.evo.model.control.CellControl;
+import fga.evo.model.environment.CellEnvironment;
 import fga.evo.model.physics.Onion;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.geometry.Ring;
@@ -35,6 +36,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private Cell child;
     private Cell parent;
     private double damage;
+    private CellEnvironment environment = new CellEnvironment();
     private CellLifecycleListener lifecycleListener;
 
     public Cell(double radius) {
@@ -65,7 +67,8 @@ public class Cell extends Onion implements CellControl.CellApi {
      * @param lightIntensity incoming light intensity, as energy per width
      */
     public void photosynthesize(double lightIntensity) {
-        addEnergy(photoRing.photosynthesize(lightIntensity));
+        environment.setLightIntensity(lightIntensity);
+        addEnergy(photoRing.photosynthesize(environment.getLightIntensity()));
     }
 
     public void die() {
