@@ -77,10 +77,8 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     /**
      * Converts incoming light into energy.
-     *
-     * @param lightIntensity incoming light intensity, as energy per width
      */
-    public void photosynthesize(double lightIntensity) {
+    public void photosynthesize() {
         addEnergy(photoRing.photosynthesize(environment.getLightIntensity()));
     }
 

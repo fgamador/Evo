@@ -34,7 +34,7 @@ public class CellTest {
                 .build();
 
         cell.getEnvironment().setLightIntensity(2);
-        cell.photosynthesize(2);
+        cell.photosynthesize();
 
         assertEnergy(4.5, cell);
     }
