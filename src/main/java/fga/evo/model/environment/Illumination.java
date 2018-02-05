@@ -26,8 +26,12 @@ public class Illumination extends EnvironmentalInfluence {
     @Override
     public void addEnergyToCell(Cell cell) {
         CellEnvironment environment = cell.getEnvironment();
-        environment.setLightIntensity(calcLightIntensity(environment.getCenterY()));
+        updateEnvironment(environment);
         cell.photosynthesize();
+    }
+
+    public void updateEnvironment(CellEnvironment environment) {
+        environment.setLightIntensity(calcLightIntensity(environment.getCenterY()));
     }
 
     double calcLightIntensity(double y) {
