@@ -48,6 +48,7 @@ public class IlluminationTest extends EvoTest {
         assertEquals(1, environment.getLightIntensity(), 0);
     }
 
+    // TODO almost obsolete
     @Test
     public void testIlluminateCell() {
         Illumination.maxIntensity.setValue(2);

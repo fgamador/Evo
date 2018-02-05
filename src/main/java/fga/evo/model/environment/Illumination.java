@@ -23,9 +23,11 @@ public class Illumination extends EnvironmentalInfluence {
         this.depthLimit = depthLimit;
     }
 
+    // TODO almost obsolete
     @Override
     public void addEnergyToCell(Cell cell) {
         updateEnvironment(cell.getEnvironment());
+        // TODO move this to PhotoRing updateCell method in another phase or something
         cell.photosynthesize();
     }
 
