@@ -9,33 +9,39 @@ import static fga.evo.model.Assert.assertEnergy;
 import static org.junit.Assert.assertEquals;
 
 public class IlluminationTest extends EvoTest {
-    private Illumination lighting;
-
-    @Before
-    public void setUp() {
+    @Test
+    public void intensityAtTheSurfaceIsTheMaximum() {
         Illumination.maxIntensity.setValue(2);
-
-        lighting = new Illumination(100);
-    }
-
-    @Test
-    public void testCalcLightIntensity() {
-        assertEquals(2, lighting.calcLightIntensity(50), 0);
+        Illumination lighting = new Illumination(100);
         assertEquals(2, lighting.calcLightIntensity(0), 0);
-        assertEquals(1, lighting.calcLightIntensity(-50), 0);
-        assertEquals(0, lighting.calcLightIntensity(-100), 0);
     }
 
     @Test
-    public void testCalcLightIntensity_MaxIntensity() {
-        Illumination.maxIntensity.setValue(4);
-        assertEquals(4, lighting.calcLightIntensity(0), 0);
-        assertEquals(2, lighting.calcLightIntensity(-50), 0);
+    public void intensityAboveTheSurfaceIsTheMaximum() {
+        Illumination.maxIntensity.setValue(2);
+        Illumination lighting = new Illumination(100);
+        assertEquals(2, lighting.calcLightIntensity(50), 0);
+    }
+
+    @Test
+    public void intensityScalesWithDepth() {
+        Illumination.maxIntensity.setValue(2);
+        Illumination lighting = new Illumination(100);
+        assertEquals(1, lighting.calcLightIntensity(-50), 0);
+    }
+
+    @Test
+    public void intensityAtDepthLimitIsZero() {
+        Illumination.maxIntensity.setValue(2);
+        Illumination lighting = new Illumination(100);
         assertEquals(0, lighting.calcLightIntensity(-100), 0);
     }
 
     @Test
     public void testIlluminateCell() {
+        Illumination.maxIntensity.setValue(2);
+        Illumination lighting = new Illumination(100);
+
         Cell cell = new Cell(1);
         cell.setCenterPosition(50, -50);
 
