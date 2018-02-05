@@ -56,6 +56,10 @@ public class Cell extends Onion implements CellControl.CellApi {
         this.lifecycleListener = lifecycleListener;
     }
 
+    public CellEnvironment getEnvironment() {
+        return environment;
+    }
+
     protected void addRing(TissueRing ring) {
         super.addRing(ring);
         tissueRings.add(ring);
