@@ -42,6 +42,11 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     private double calcTransmissionFactor(double y) {
-        return (y >= 0) ? 1.0 : (y <= -depthLimit) ? 0 : (depthLimit + y) / depthLimit;
+        if (y >= 0)
+            return 1.0;
+        else if (y <= -depthLimit)
+            return 0;
+        else
+            return (depthLimit + y) / depthLimit;
     }
 }
