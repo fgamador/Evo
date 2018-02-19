@@ -27,7 +27,7 @@ public class NewtonianBody {
     }
 
     /**
-     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtick(int)}.
+     * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtick}.
      */
     public void setCenterPosition(double centerX, double centerY) {
         this.centerX = centerX;
@@ -35,7 +35,7 @@ public class NewtonianBody {
     }
 
     /**
-     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #subtick(int)}.
+     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #subtick}.
      */
     public void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
