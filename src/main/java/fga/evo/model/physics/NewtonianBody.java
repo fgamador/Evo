@@ -6,7 +6,7 @@ import static fga.evo.model.util.Util.sqr;
 
 public class NewtonianBody {
     public static DoubleParameter speedLimit = new DoubleParameter(4);
-    private final NewtonianBodyForces newtonianBodyForces = new NewtonianBodyForces();
+    private final NewtonianBodyForces forces = new NewtonianBodyForces();
 
     private double mass;
     private double centerX;
@@ -46,22 +46,22 @@ public class NewtonianBody {
      * @param forceY Y-component of the force
      */
     public void addForce(double forceX, double forceY) {
-        newtonianBodyForces.addForce(forceX, forceY);
+        forces.addForce(forceX, forceY);
     }
 
     public void subtick(int subticksPerTick) {
         updateVelocity(subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
-        newtonianBodyForces.clearForces();
+        forces.clearForces();
     }
 
     private void updateVelocity(int subticksPerTick) {
         assert getMass() > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick
-        double accelerationX = newtonianBodyForces.getNetForceX() / getMass();
-        double accelerationY = newtonianBodyForces.getNetForceY() / getMass();
+        double accelerationX = forces.getNetForceX() / getMass();
+        double accelerationY = forces.getNetForceY() / getMass();
 
         // the velocity during this subtick
         velocityX += accelerationX / subticksPerTick;
@@ -109,10 +109,10 @@ public class NewtonianBody {
     }
 
     public double getNetForceX() {
-        return newtonianBodyForces.getNetForceX();
+        return forces.getNetForceX();
     }
 
     public double getNetForceY() {
-        return newtonianBodyForces.getNetForceY();
+        return forces.getNetForceY();
     }
 }
