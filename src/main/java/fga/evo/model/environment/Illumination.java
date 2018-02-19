@@ -41,10 +41,9 @@ public class Illumination extends EnvironmentalInfluence {
         double tf;
         if (y >= 0) {
             tf = 1.0;
-            return maxIntensity.getValue() * tf;
         } else {
             tf = transmissionFactor;
-            return maxIntensity.getValue() * tf;
         }
+        return maxIntensity.getValue() * tf;
     }
 }
