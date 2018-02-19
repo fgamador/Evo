@@ -16,9 +16,8 @@ public final class Illumination extends EnvironmentalInfluence {
     }
 
     public void setDepthLimit(double depthLimit) {
-        if (depthLimit <= 0) {
+        if (depthLimit <= 0)
             throw new IllegalArgumentException("Depth must be greater than zero but is " + depthLimit);
-        }
 
         this.depthLimit = depthLimit;
     }
