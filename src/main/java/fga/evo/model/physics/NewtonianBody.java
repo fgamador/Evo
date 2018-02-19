@@ -43,10 +43,11 @@ public class NewtonianBody {
     }
 
     public void subtick_outer(int subticksPerTick) {
-        updateVelocity(forces, subticksPerTick);
+        NewtonianBodyForces theForces = this.forces;
+        updateVelocity(theForces, subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
-        forces.clearForces();
+        theForces.clearForces();
     }
 
     private void updateVelocity(NewtonianBodyForces forces, int subticksPerTick) {
