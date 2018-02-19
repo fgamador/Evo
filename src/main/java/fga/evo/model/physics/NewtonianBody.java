@@ -50,7 +50,7 @@ public class NewtonianBody {
      * @param forceY Y-component of the force
      */
     public void addForce(double forceX, double forceY) {
-        forces.addForce(forceX, forceY);
+        getForces().addForce(forceX, forceY);
     }
 
     public void subtick(int subticksPerTick) {
