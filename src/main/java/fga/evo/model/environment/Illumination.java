@@ -37,7 +37,7 @@ public class Illumination extends EnvironmentalInfluence {
     }
 
     double calcLightIntensity(double y) {
-        double tf = y >= 0 ? 1.0 : (depthLimit + y) / depthLimit;
-        return maxIntensity.getValue() * tf;
+        double transmissionFactor = y >= 0 ? 1.0 : (depthLimit + y) / depthLimit;
+        return maxIntensity.getValue() * transmissionFactor;
     }
 }
