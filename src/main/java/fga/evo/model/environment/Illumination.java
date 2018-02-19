@@ -40,7 +40,7 @@ public final class Illumination extends EnvironmentalInfluence {
 
     double calcTransmissionFactor(double y) {
         if (y >= 0)
-            return 1.0;
+            return 1;
         else if (y <= -depthLimit)
             return 0;
         else
