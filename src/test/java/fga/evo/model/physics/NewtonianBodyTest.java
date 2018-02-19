@@ -34,7 +34,7 @@ public class NewtonianBodyTest extends EvoTest {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         NewtonianBodyForces forces = new NewtonianBodyForces();
-        forces.addForce(0.5, (double) -1);
+        forces.addForce(0.5, -1);
 
         body.subtick(forces, 1);
 
@@ -47,8 +47,8 @@ public class NewtonianBodyTest extends EvoTest {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         NewtonianBodyForces forces = new NewtonianBodyForces();
-        forces.addForce(0.5, (double) -1);
-        forces.addForce(1.5, (double) 2);
+        forces.addForce(0.5, -1);
+        forces.addForce(1.5, 2);
 
         body.subtick(forces, 1);
 
@@ -61,7 +61,7 @@ public class NewtonianBodyTest extends EvoTest {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(2);
         NewtonianBodyForces forces = new NewtonianBodyForces();
-        forces.addForce((double) 1, (double) -2);
+        forces.addForce(1, -2);
 
         body.subtick(forces, 1);
 
@@ -96,7 +96,7 @@ public class NewtonianBodyTest extends EvoTest {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
         NewtonianBodyForces forces = new NewtonianBodyForces();
-        forces.addForce((double) 1, (double) 1);
+        forces.addForce(1, 1);
 
         body.subtick(forces, 2);
 
