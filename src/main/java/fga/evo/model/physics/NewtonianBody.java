@@ -42,13 +42,6 @@ public class NewtonianBody {
         this.velocityY = velocityY;
     }
 
-    /**
-     * Adds a force on the body that will be used by the next call to {@link #subtick(int)}. This is the only way to
-     * influence the body's motion (after setting its initial position and possibly velocity).
-     *
-     * @param forceX X-component of the force
-     * @param forceY Y-component of the force
-     */
     public void addForce(double forceX, double forceY) {
         getForces().addForce(forceX, forceY);
     }
