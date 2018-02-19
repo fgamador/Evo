@@ -1,8 +1,8 @@
 package fga.evo.model.physics;
 
 public class NewtonianBodyForces {
-    public double netForceX;
-    public double netForceY;
+    private double netForceX;
+    private double netForceY;
 
     public NewtonianBodyForces() {
     }
