@@ -8,8 +8,8 @@ public class NewtonianBodyForces {
     }
 
     /**
-     * Adds a force on the body that will be used by the next call to {@link #subtick(int)}. This is the only way to
-     * influence the body's motion (after setting its initial position and possibly velocity).
+     * Adds a force on the body that will be used by the next call to {@link NewtonianBody#subtick(int)}. This is the
+     * only way to influence the body's motion (after setting its initial position and possibly velocity).
      *
      * @param forceX X-component of the force
      * @param forceY Y-component of the force
