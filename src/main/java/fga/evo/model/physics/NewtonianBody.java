@@ -53,8 +53,8 @@ public class NewtonianBody {
         assert getMass() > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick
-        double accelerationX = this.forces.getNetForceX() / getMass();
-        double accelerationY = this.forces.getNetForceY() / getMass();
+        double accelerationX = forces.getNetForceX() / getMass();
+        double accelerationY = forces.getNetForceY() / getMass();
 
         // the velocity during this subtick
         velocityX += accelerationX / subticksPerTick;
