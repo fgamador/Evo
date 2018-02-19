@@ -6,14 +6,13 @@ import static fga.evo.model.util.Util.sqr;
 
 public class NewtonianBody {
     public static DoubleParameter speedLimit = new DoubleParameter(4);
+    private final NewtonianBodyForces newtonianBodyForces = new NewtonianBodyForces();
 
     private double mass;
     private double centerX;
     private double centerY;
     private double velocityX;
     private double velocityY;
-    private double netForceX;
-    private double netForceY;
 
     public NewtonianBody() {
     }
@@ -47,23 +46,22 @@ public class NewtonianBody {
      * @param forceY Y-component of the force
      */
     public void addForce(double forceX, double forceY) {
-        netForceX += forceX;
-        netForceY += forceY;
+        newtonianBodyForces.addForce(forceX, forceY);
     }
 
     public void subtick(int subticksPerTick) {
         updateVelocity(subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
-        clearForces();
+        newtonianBodyForces.clearForces();
     }
 
     private void updateVelocity(int subticksPerTick) {
         assert getMass() > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick
-        double accelerationX = netForceX / getMass();
-        double accelerationY = netForceY / getMass();
+        double accelerationX = newtonianBodyForces.getNetForceX() / getMass();
+        double accelerationY = newtonianBodyForces.getNetForceY() / getMass();
 
         // the velocity during this subtick
         velocityX += accelerationX / subticksPerTick;
@@ -87,7 +85,7 @@ public class NewtonianBody {
     }
 
     private void clearForces() {
-        netForceX = netForceY = 0;
+        newtonianBodyForces.clearForces();
     }
 
     public void setMass(double val) {
@@ -115,10 +113,10 @@ public class NewtonianBody {
     }
 
     public double getNetForceX() {
-        return netForceX;
+        return newtonianBodyForces.getNetForceX();
     }
 
     public double getNetForceY() {
-        return netForceY;
+        return newtonianBodyForces.getNetForceY();
     }
 }
