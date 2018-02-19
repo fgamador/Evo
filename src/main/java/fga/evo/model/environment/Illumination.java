@@ -19,7 +19,7 @@ public final class Illumination extends EnvironmentalInfluence {
         if (value <= 0)
             throw new IllegalArgumentException("Depth must be greater than zero but is " + value);
 
-        this.depthLimit = value;
+        depthLimit = value;
     }
 
     // TODO almost obsolete
