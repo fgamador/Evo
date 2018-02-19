@@ -84,10 +84,6 @@ public class NewtonianBody {
         setCenterPosition(centerX + (velocityX / subticksPerTick), centerY + (velocityY / subticksPerTick));
     }
 
-    private void clearForces() {
-        newtonianBodyForces.clearForces();
-    }
-
     public void setMass(double val) {
         mass = val;
     }
