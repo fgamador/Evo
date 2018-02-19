@@ -37,7 +37,7 @@ public class IlluminationTest extends EvoTest {
         assertEquals(0, lighting.calcLightIntensity(-100), 0);
     }
 
-    //@Test
+    @Test
     public void intensityBeyondDepthLimitIsZero() {
         Illumination.maxIntensity.setValue(2);
         Illumination lighting = new Illumination(100);
