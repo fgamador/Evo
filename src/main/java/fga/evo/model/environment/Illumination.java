@@ -44,6 +44,6 @@ public final class Illumination extends EnvironmentalInfluence {
         else if (y <= -depthLimit)
             return 0;
         else
-            return (depthLimit + y) / depthLimit;
+            return 1 + y / depthLimit;
     }
 }
