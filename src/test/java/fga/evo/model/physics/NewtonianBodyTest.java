@@ -33,7 +33,7 @@ public class NewtonianBodyTest extends EvoTest {
     public void stationaryBodyWithForceAccelerates() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
-        body.addForce(0.5, -1);
+        body.getForces().addForce(0.5, (double) -1);
 
         body.subtick(1);
 
@@ -45,8 +45,8 @@ public class NewtonianBodyTest extends EvoTest {
     public void twoForcesHaveAdditiveAcceleration() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
-        body.addForce(0.5, -1);
-        body.addForce(1.5, 2);
+        body.getForces().addForce(0.5, (double) -1);
+        body.getForces().addForce(1.5, (double) 2);
 
         body.subtick(1);
 
@@ -58,7 +58,7 @@ public class NewtonianBodyTest extends EvoTest {
     public void doubleMassHasHalvedAcceleration() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(2);
-        body.addForce(1, -2);
+        body.getForces().addForce((double) 1, (double) -2);
 
         body.subtick(1);
 
@@ -92,7 +92,7 @@ public class NewtonianBodyTest extends EvoTest {
     public void doubleResolutionSubticksAccelerateAtHalfForce() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
-        body.addForce(1, 1);
+        body.getForces().addForce((double) 1, (double) 1);
 
         body.subtick(2);
 
