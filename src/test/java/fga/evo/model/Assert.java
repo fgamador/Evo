@@ -76,7 +76,7 @@ public class Assert {
     }
 
     public static void assertNetForce(double forceX, double forceY, NewtonianBody body, double delta) {
-        assertEquals("Force X", forceX, body.getNetForceX(), delta);
-        assertEquals("Force Y", forceY, body.getNetForceY(), delta);
+        assertEquals("Force X", forceX, body.getForces().getNetForceX(), delta);
+        assertEquals("Force Y", forceY, body.getForces().getNetForceY(), delta);
     }
 }
