@@ -43,8 +43,7 @@ public class NewtonianBody {
     }
 
     public void subtick_outer(int subticksPerTick) {
-        NewtonianBodyForces theForces = this.forces;
-        subtick(theForces, subticksPerTick);
+        subtick(this.forces, subticksPerTick);
     }
 
     public void subtick(NewtonianBodyForces forces, int subticksPerTick) {
