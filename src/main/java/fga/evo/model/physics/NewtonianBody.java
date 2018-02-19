@@ -6,13 +6,13 @@ import static fga.evo.model.util.Util.sqr;
 
 public class NewtonianBody {
     public static DoubleParameter speedLimit = new DoubleParameter(4);
-    private final NewtonianBodyForces forces = new NewtonianBodyForces();
 
     private double mass;
     private double centerX;
     private double centerY;
     private double velocityX;
     private double velocityY;
+    private final NewtonianBodyForces forces = new NewtonianBodyForces();
 
     public NewtonianBody() {
     }
@@ -20,6 +20,10 @@ public class NewtonianBody {
     public NewtonianBody(double centerX, double centerY, double velocityX, double velocityY) {
         setCenterPosition(centerX, centerY);
         setVelocity(velocityX, velocityY);
+    }
+
+    public NewtonianBodyForces getForces() {
+        return forces;
     }
 
     /**
