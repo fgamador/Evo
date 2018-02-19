@@ -10,38 +10,40 @@ import static org.junit.Assert.assertEquals;
 
 public class IlluminationTest extends EvoTest {
     @Test
-    public void intensityAtTheSurfaceIsTheMaximum() {
-        Illumination.maxIntensity.setValue(2);
+    public void transmissionAtTheSurfaceIsTheMaximum() {
         Illumination lighting = new Illumination(100);
-        assertEquals(2, lighting.calcLightIntensity(0), 0);
+        assertEquals(1, lighting.calcTransmissionFactor(0), 0);
     }
 
     @Test
-    public void intensityAboveTheSurfaceIsTheMaximum() {
-        Illumination.maxIntensity.setValue(2);
+    public void transmissionAboveTheSurfaceIsTheMaximum() {
         Illumination lighting = new Illumination(100);
-        assertEquals(2, lighting.calcLightIntensity(50), 0);
+        assertEquals(1, lighting.calcTransmissionFactor(50), 0);
     }
 
     @Test
-    public void intensityScalesWithDepth() {
+    public void transmissionDecreasesWithDepth() {
+        Illumination lighting = new Illumination(100);
+        assertEquals(0.5, lighting.calcTransmissionFactor(-50), 0);
+    }
+
+    @Test
+    public void transmissionAtDepthLimitIsZero() {
+        Illumination lighting = new Illumination(100);
+        assertEquals(0, lighting.calcTransmissionFactor(-100), 0);
+    }
+
+    @Test
+    public void transmissionBeyondDepthLimitIsZero() {
+        Illumination lighting = new Illumination(100);
+        assertEquals(0, lighting.calcTransmissionFactor(-110), 0);
+    }
+
+    @Test
+    public void intensityScalesWithTransmission() {
         Illumination.maxIntensity.setValue(2);
         Illumination lighting = new Illumination(100);
         assertEquals(1, lighting.calcLightIntensity(-50), 0);
-    }
-
-    @Test
-    public void intensityAtDepthLimitIsZero() {
-        Illumination.maxIntensity.setValue(2);
-        Illumination lighting = new Illumination(100);
-        assertEquals(0, lighting.calcLightIntensity(-100), 0);
-    }
-
-    @Test
-    public void intensityBeyondDepthLimitIsZero() {
-        Illumination.maxIntensity.setValue(2);
-        Illumination lighting = new Illumination(100);
-        assertEquals(0, lighting.calcLightIntensity(-110), 0);
     }
 
     @Test
