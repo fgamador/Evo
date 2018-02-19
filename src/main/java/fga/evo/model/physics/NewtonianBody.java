@@ -106,10 +106,10 @@ public class NewtonianBody {
     }
 
     public double getNetForceX() {
-        return forces.getNetForceX();
+        return getForces().getNetForceX();
     }
 
     public double getNetForceY() {
-        return forces.getNetForceY();
+        return getForces().getNetForceY();
     }
 }
