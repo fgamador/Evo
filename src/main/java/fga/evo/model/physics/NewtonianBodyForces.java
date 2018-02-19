@@ -4,9 +4,6 @@ public class NewtonianBodyForces {
     private double netForceX;
     private double netForceY;
 
-    public NewtonianBodyForces() {
-    }
-
     /**
      * Adds a force on the body that will be used by the next call to {@link NewtonianBody#subtick}. This is the
      * only way to influence the body's motion (after setting its initial position and possibly velocity).
