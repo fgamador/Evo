@@ -42,10 +42,6 @@ public class NewtonianBody {
         this.velocityY = velocityY;
     }
 
-    public void subtick_outer(int subticksPerTick) {
-        subtick(getForces(), subticksPerTick);
-    }
-
     public void subtick(NewtonianBodyForces forces, int subticksPerTick) {
         updateVelocity(forces, subticksPerTick);
         limitSpeed();
