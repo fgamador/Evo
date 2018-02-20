@@ -12,6 +12,11 @@ public class Drag extends EnvironmentalInfluence {
     public static DoubleParameter dragFactor = new DoubleParameter(0.001);
 
     @Override
+    public void updateEnvironment(CellEnvironment environment) {
+        // TODO
+    }
+
+    @Override
     public void addForcesToCell(Ball cell) {
         // TODO if the cell is not wholly submerged, drag will be reduced, but it depends on what direction the cell is moving
         double dragX = calcDrag(cell.getVelocityX(), cell.getRadius());
