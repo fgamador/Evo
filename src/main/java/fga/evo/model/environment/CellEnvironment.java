@@ -5,9 +5,15 @@ import fga.evo.model.physics.NewtonianBodyForces;
 public abstract class CellEnvironment extends NewtonianBodyForces {
     private double lightIntensity;
 
+    public abstract double getRadius();
+
     public abstract double getCenterX();
 
     public abstract double getCenterY();
+
+    public abstract double getVelocityX();
+
+    public abstract double getVelocityY();
 
     public double getLightIntensity() {
         return lightIntensity;
