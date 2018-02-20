@@ -22,7 +22,7 @@ public class DragTest extends EvoTest {
 
     @Test
     public void testAddDragForceToCell_NoMotion() {
-        drag.addForcesToCell(cell);
+        drag.updateEnvironment(cell.getEnvironment());
 
         assertNetForce(0, 0, cell);
     }
@@ -31,7 +31,7 @@ public class DragTest extends EvoTest {
     public void testAddDragForceToCell_Motion() {
         cell.setVelocity(-2, 3);
 
-        drag.addForcesToCell(cell);
+        drag.updateEnvironment(cell.getEnvironment());
 
         assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), cell);
     }
@@ -41,7 +41,7 @@ public class DragTest extends EvoTest {
         Drag.dragFactor.setValue(2);
         cell.setVelocity(1, 0);
 
-        drag.addForcesToCell(cell);
+        drag.updateEnvironment(cell.getEnvironment());
 
         assertNetForce(-4, 0, cell);
     }
