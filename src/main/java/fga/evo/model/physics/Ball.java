@@ -56,7 +56,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param subticksPerTick time resolution
      */
     public void subtickPhysics(int subticksPerTick) {
-        subtick(getForces(), subticksPerTick);
+        subtick(getEnvironment(), subticksPerTick);
         overlapAccumulator.decay();
     }
 
@@ -83,7 +83,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         double overlap = getRadius() - (getCenterX() - wallX);
         if (overlap > 0) {
             recordOverlap(overlap);
-            getForces().addForce(calcOverlapForce(overlap), (double) 0);
+            getEnvironment().addForce(calcOverlapForce(overlap), (double) 0);
         }
     }
 
@@ -97,7 +97,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         if (overlap > 0) {
             recordOverlap(overlap);
             double forceX = -calcOverlapForce(overlap);
-            getForces().addForce(forceX, (double) 0);
+            getEnvironment().addForce(forceX, (double) 0);
         }
     }
 
@@ -110,7 +110,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         double overlap = getRadius() - (getCenterY() - wallY);
         if (overlap > 0) {
             recordOverlap(overlap);
-            getForces().addForce((double) 0, calcOverlapForce(overlap));
+            getEnvironment().addForce((double) 0, calcOverlapForce(overlap));
         }
     }
 
@@ -124,7 +124,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         if (overlap > 0) {
             recordOverlap(overlap);
             double forceY = -calcOverlapForce(overlap);
-            getForces().addForce((double) 0, forceY);
+            getEnvironment().addForce((double) 0, forceY);
         }
     }
 

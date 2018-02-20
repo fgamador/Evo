@@ -22,6 +22,6 @@ public class Puller {
 
     public void addForce() {
         double factor = forceFactor.getValue();
-        body.getForces().addForce(factor * (x - body.getCenterX()), factor * (y - body.getCenterY()));
+        body.getEnvironment().addForce(factor * (x - body.getCenterX()), factor * (y - body.getCenterY()));
     }
 }

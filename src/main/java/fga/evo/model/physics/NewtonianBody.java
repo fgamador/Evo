@@ -22,7 +22,7 @@ public class NewtonianBody {
         setVelocity(velocityX, velocityY);
     }
 
-    public NewtonianBodyForces getForces() {
+    public NewtonianBodyForces getEnvironment() {
         return forces;
     }
 

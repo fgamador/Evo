@@ -45,7 +45,7 @@ public class CellCircle extends Group {
 //        if (selected) {
 //            getChildren().removeAll(forceArrows);
 //            forceArrows.clear();
-//            for (Force force : cell.getForces()) {
+//            for (Force force : cell.getEnvironment()) {
 //                ForceArrow arrow = new ForceArrow(force);
 //                forceArrows.add(arrow);
 //                getChildren().add(arrow);
