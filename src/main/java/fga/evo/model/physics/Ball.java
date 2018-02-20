@@ -50,10 +50,6 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
     }
 
-    public void subtickPhysics(int subticksPerTick) {
-        subtickPhysics(getEnvironment(), subticksPerTick);
-    }
-
     /**
      * Updates the ball's velocity and position per the forces currently on it, then clears the forces.
      *

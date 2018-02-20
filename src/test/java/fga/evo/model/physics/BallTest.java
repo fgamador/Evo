@@ -2,7 +2,6 @@ package fga.evo.model.physics;
 
 import fga.evo.model.Assert;
 import fga.evo.model.EvoTest;
-import fga.evo.model.geometry.Circles;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -157,7 +156,7 @@ public class BallTest extends EvoTest {
         Ball ball2 = createBall(1, 1.5, 0);
         ball1.onOverlap(ball2, 0.5);
 
-        ball1.subtickPhysics(2);
+        ball1.subtickPhysics(ball1.getEnvironment(), 2);
 
         assertTrue(ball1.getRecentTotalOverlap() < 0.5);
     }
