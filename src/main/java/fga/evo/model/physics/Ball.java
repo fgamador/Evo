@@ -50,16 +50,17 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         return bonds.stream().anyMatch(bond -> bond.bondsTo(ball));
     }
 
-    /**
-     * Updates the ball's velocity and position per the forces currently on it, then clears the forces.
-     *
-     * @param subticksPerTick time resolution
-     */
     public void subtickPhysics(int subticksPerTick) {
         NewtonianBodyForces environment = getEnvironment();
         subtickPhysics(environment, subticksPerTick);
     }
 
+    /**
+     * Updates the ball's velocity and position per the forces currently on it, then clears the forces.
+     *
+     * @param environment holds the net forces on the ball
+     * @param subticksPerTick time resolution
+     */
     public void subtickPhysics(NewtonianBodyForces environment, int subticksPerTick) {
         subtick(environment, subticksPerTick);
         overlapAccumulator.decay();
