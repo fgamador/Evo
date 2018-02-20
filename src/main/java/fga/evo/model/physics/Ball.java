@@ -56,7 +56,8 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param subticksPerTick time resolution
      */
     public void subtickPhysics(int subticksPerTick) {
-        subtick(getEnvironment(), subticksPerTick);
+        NewtonianBodyForces environment = getEnvironment();
+        subtick(environment, subticksPerTick);
         overlapAccumulator.decay();
     }
 
