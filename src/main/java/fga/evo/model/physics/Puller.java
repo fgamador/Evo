@@ -12,9 +12,11 @@ public class Puller {
 
     private final Cell body;
     private double x, y;
+    private CellEnvironment environment;
 
     public Puller(Cell body) {
         this.body = body;
+        environment = body.getEnvironment();
     }
 
     public void setPosition(double x, double y) {
@@ -24,7 +26,6 @@ public class Puller {
 
     public void addForce() {
         double factor = forceFactor.getValue();
-        CellEnvironment environment = body.getEnvironment();
         environment.addForce(factor * (x - environment.getCenterX()), factor * (y - environment.getCenterY()));
     }
 }
