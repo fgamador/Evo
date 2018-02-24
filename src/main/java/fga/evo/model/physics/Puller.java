@@ -10,12 +10,10 @@ import fga.evo.model.util.DoubleParameter;
 public class Puller {
     public static DoubleParameter forceFactor = new DoubleParameter(1);
 
-    private final Cell body;
     private double x, y;
     private CellEnvironment environment;
 
     public Puller(Cell body) {
-        this.body = body;
         environment = body.getEnvironment();
     }
 
