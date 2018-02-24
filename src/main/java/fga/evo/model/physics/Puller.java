@@ -25,6 +25,6 @@ public class Puller {
     public void addForce() {
         double factor = forceFactor.getValue();
         CellEnvironment environment = body.getEnvironment();
-        environment.addForce(factor * (x - body.getCenterX()), factor * (y - body.getCenterY()));
+        environment.addForce(factor * (x - environment.getCenterX()), factor * (y - environment.getCenterY()));
     }
 }
