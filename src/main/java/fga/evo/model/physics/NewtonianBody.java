@@ -12,7 +12,7 @@ public class NewtonianBody {
     private double centerY;
     private double velocityX;
     private double velocityY;
-    private final NewtonianBodyForces forces = new NewtonianBodyForces();
+    private final NewtonianBodyEnvironment forces = new NewtonianBodyEnvironment();
 
     public NewtonianBody() {
     }
@@ -22,7 +22,7 @@ public class NewtonianBody {
         setVelocity(velocityX, velocityY);
     }
 
-    public NewtonianBodyForces getEnvironment() {
+    public NewtonianBodyEnvironment getEnvironment() {
         return forces;
     }
 
@@ -42,14 +42,14 @@ public class NewtonianBody {
         this.velocityY = velocityY;
     }
 
-    public void subtick(NewtonianBodyForces forces, int subticksPerTick) {
+    public void subtick(NewtonianBodyEnvironment forces, int subticksPerTick) {
         updateVelocity(forces, subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
         forces.clearForces();
     }
 
-    private void updateVelocity(NewtonianBodyForces forces, int subticksPerTick) {
+    private void updateVelocity(NewtonianBodyEnvironment forces, int subticksPerTick) {
         assert getMass() > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick

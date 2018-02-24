@@ -1,6 +1,6 @@
 package fga.evo.model.physics;
 
-public class NewtonianBodyForces {
+public class NewtonianBodyEnvironment {
     private double netForceX;
     private double netForceY;
 

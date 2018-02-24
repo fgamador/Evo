@@ -1,7 +1,7 @@
 package fga.evo.model;
 
 import fga.evo.model.physics.Ball;
-import fga.evo.model.physics.NewtonianBodyForces;
+import fga.evo.model.physics.NewtonianBodyEnvironment;
 import fga.evo.model.physics.PairBond;
 
 public class BondedPairMain {
@@ -53,10 +53,10 @@ public class BondedPairMain {
     }
 
     private static class BallWithEnvironment extends Ball {
-        NewtonianBodyForces forces = new NewtonianBodyForces();
+        NewtonianBodyEnvironment forces = new NewtonianBodyEnvironment();
 
         @Override
-        public NewtonianBodyForces getEnvironment() {
+        public NewtonianBodyEnvironment getEnvironment() {
             return forces;
         }
     }

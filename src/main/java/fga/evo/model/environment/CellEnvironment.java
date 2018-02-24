@@ -1,8 +1,8 @@
 package fga.evo.model.environment;
 
-import fga.evo.model.physics.NewtonianBodyForces;
+import fga.evo.model.physics.NewtonianBodyEnvironment;
 
-public abstract class CellEnvironment extends NewtonianBodyForces {
+public abstract class CellEnvironment extends NewtonianBodyEnvironment {
     private double lightIntensity;
 
     public abstract double getRadius();
