@@ -13,10 +13,6 @@ public class Puller {
     private double x, y;
     private CellEnvironment environment;
 
-    public Puller(Cell body) {
-        environment = body.getEnvironment();
-    }
-
     public Puller(CellEnvironment environment) {
         this.environment = environment;
     }
