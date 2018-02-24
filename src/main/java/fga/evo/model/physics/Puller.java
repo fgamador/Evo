@@ -17,6 +17,10 @@ public class Puller {
         environment = body.getEnvironment();
     }
 
+    public Puller(CellEnvironment environment) {
+        this.environment = environment;
+    }
+
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;

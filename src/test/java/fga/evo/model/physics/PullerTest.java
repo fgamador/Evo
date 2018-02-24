@@ -16,7 +16,7 @@ public class PullerTest extends EvoTest {
         Puller.forceFactor.setValue(1);
 
         cell = new Cell(1);
-        puller = new Puller(cell);
+        puller = new Puller(cell.getEnvironment());
     }
 
     @Test
