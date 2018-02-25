@@ -52,4 +52,24 @@ public class PullerTest extends EvoTest {
 
         assertNetForce(2, -2, cell);
     }
+
+    private static class Environment extends NewtonianBodyEnvironment {
+        private double centerX;
+        private double centerY;
+
+        public void setCenterPosition(double centerX, double centerY) {
+            this.centerX = centerX;
+            this.centerY = centerY;
+        }
+
+        @Override
+        public double getCenterX() {
+            return centerX;
+        }
+
+        @Override
+        public double getCenterY() {
+            return centerY;
+        }
+    }
 }
