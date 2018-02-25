@@ -8,9 +8,7 @@ import fga.evo.model.physics.Ball;
  * TODO split this into force influence/source and energy influence/source
  */
 public abstract class EnvironmentalInfluence {
-    // TODO will become abstract
-    public void updateEnvironment(CellEnvironment environment) {
-    }
+    public abstract void updateEnvironment(CellEnvironment environment);
 
     // TODO make this obsolete
     public void addEnergyToCell(Cell cell) {
