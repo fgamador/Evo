@@ -12,6 +12,12 @@ public class StandaloneCellEnvironment extends CellEnvironment {
         this.centerY = centerY;
     }
 
+    public StandaloneCellEnvironment(double radius, double centerX, double centerY) {
+        this.radius = radius;
+        this.centerX = centerX;
+        this.centerY = centerY;
+    }
+
     public void setRadius(double radius) {
         this.radius = radius;
     }

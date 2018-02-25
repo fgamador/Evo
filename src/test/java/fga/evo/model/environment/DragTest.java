@@ -9,6 +9,7 @@ import static fga.evo.model.Assert.assertNetForce;
 
 public class DragTest extends EvoTest {
     private Cell cell;
+    private CellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
 
     @Before
     public void setUp() {
@@ -21,9 +22,9 @@ public class DragTest extends EvoTest {
     @Test
     public void testAddDragForceToCell_NoMotion() {
         Drag drag = new Drag();
-        drag.updateEnvironment(cell.getEnvironment());
+        drag.updateEnvironment(environment);
 
-        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, environment);
     }
 
     @Test
