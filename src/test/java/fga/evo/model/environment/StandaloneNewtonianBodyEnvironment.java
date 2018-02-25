@@ -11,6 +11,11 @@ public class StandaloneNewtonianBodyEnvironment extends NewtonianBodyEnvironment
         this.centerY = centerY;
     }
 
+    public void setCenterPosition(double centerX, double centerY) {
+        this.centerX = centerX;
+        this.centerY = centerY;
+    }
+
     @Override
     public double getCenterX() {
         return centerX;
