@@ -33,10 +33,10 @@ public class NewtonianBodyTest extends EvoTest {
     public void stationaryBodyWithForceAccelerates() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
-        NewtonianBodyEnvironment forces = new Environment();
-        forces.addForce(0.5, -1);
+        NewtonianBodyEnvironment environment = new Environment();
+        environment.addForce(0.5, -1);
 
-        body.subtick(forces, 1);
+        body.subtick(environment, 1);
 
         assertVelocity(0.5, -1, body);
         assertPosition(0.5, -1, body);
@@ -46,11 +46,11 @@ public class NewtonianBodyTest extends EvoTest {
     public void twoForcesHaveAdditiveAcceleration() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
-        NewtonianBodyEnvironment forces = new Environment();
-        forces.addForce(0.5, -1);
-        forces.addForce(1.5, 2);
+        NewtonianBodyEnvironment environment = new Environment();
+        environment.addForce(0.5, -1);
+        environment.addForce(1.5, 2);
 
-        body.subtick(forces, 1);
+        body.subtick(environment, 1);
 
         assertVelocity(2, 1, body);
         assertPosition(2, 1, body);
@@ -60,10 +60,10 @@ public class NewtonianBodyTest extends EvoTest {
     public void doubleMassHasHalvedAcceleration() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(2);
-        NewtonianBodyEnvironment forces = new Environment();
-        forces.addForce(1, -2);
+        NewtonianBodyEnvironment environment = new Environment();
+        environment.addForce(1, -2);
 
-        body.subtick(forces, 1);
+        body.subtick(environment, 1);
 
         assertVelocity(0.5, -1, body);
         assertPosition(0.5, -1, body);
@@ -95,10 +95,10 @@ public class NewtonianBodyTest extends EvoTest {
     public void doubleResolutionSubticksAccelerateAtHalfForce() {
         NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
         body.setMass(1);
-        NewtonianBodyEnvironment forces = new Environment();
-        forces.addForce(1, 1);
+        NewtonianBodyEnvironment environment = new Environment();
+        environment.addForce(1, 1);
 
-        body.subtick(forces, 2);
+        body.subtick(environment, 2);
 
         assertVelocity(0.5, 0.5, body);
         assertPosition(0.25, 0.25, body);
