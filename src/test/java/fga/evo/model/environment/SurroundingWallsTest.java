@@ -21,7 +21,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void testAddForcesToCell_JustTouching() {
         cell.setCenterPosition(1, -1);
 
-        walls.addForcesToCell(cell);
+        walls.updateEnvironment(cell.getEnvironment(), cell);
 
         assertNetForce(0, 0, cell);
     }
@@ -30,7 +30,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void testAddForcesToCell_LowXYCollision() {
         cell.setCenterPosition(0.5, -0.5);
 
-        walls.addForcesToCell(cell);
+        walls.updateEnvironment(cell.getEnvironment(), cell);
 
         assertNetForce(0.5, -0.5, cell);
     }
@@ -39,7 +39,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void testAddForcesToCell_HighXYCollision() {
         cell.setCenterPosition(9.5, -9.5);
 
-        walls.addForcesToCell(cell);
+        walls.updateEnvironment(cell.getEnvironment(), cell);
 
         assertNetForce(-0.5, 0.5, cell);
     }
@@ -49,7 +49,7 @@ public class SurroundingWallsTest extends EvoTest {
         walls = new SurroundingWalls(-5, 5, -5, 5);
         cell.setCenterPosition(0, 0);
 
-        walls.addForcesToCell(cell);
+        walls.updateEnvironment(cell.getEnvironment(), cell);
 
         assertNetForce(0, 0, cell);
     }
