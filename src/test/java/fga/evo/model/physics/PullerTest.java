@@ -46,5 +46,4 @@ public class PullerTest extends EvoTest {
 
         assertNetForce(2, -2, environment);
     }
-
 }
