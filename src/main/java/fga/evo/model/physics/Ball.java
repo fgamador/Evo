@@ -82,6 +82,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      */
     public void addLeftBarrierCollisionForce(double wallX) {
         NewtonianBodyEnvironment environment = getEnvironment();
+        addLeftBarrierCollisionForce(environment, wallX);
+    }
+
+    public void addLeftBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
         double overlap = getRadius() - (getCenterX() - wallX);
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -96,6 +100,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      */
     public void addRightBarrierCollisionForce(double wallX) {
         NewtonianBodyEnvironment environment = getEnvironment();
+        addRightBarrierCollisionForce(environment, wallX);
+    }
+
+    public void addRightBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
         double overlap = getCenterX() + getRadius() - wallX;
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -111,6 +119,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      */
     public void addLowBarrierCollisionForce(double wallY) {
         NewtonianBodyEnvironment environment = getEnvironment();
+        addLowBarrierCollisionForce(environment, wallY);
+    }
+
+    public void addLowBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
         double overlap = getRadius() - (getCenterY() - wallY);
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -125,6 +137,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      */
     public void addHighBarrierCollisionForce(double wallY) {
         NewtonianBodyEnvironment environment = getEnvironment();
+        addHighBarrierCollisionForce(environment, wallY);
+    }
+
+    public void addHighBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
         double overlap = getCenterY() + getRadius() - wallY;
         if (overlap > 0) {
             recordOverlap(overlap);
