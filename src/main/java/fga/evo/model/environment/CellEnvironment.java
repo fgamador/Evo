@@ -7,6 +7,10 @@ public abstract class CellEnvironment extends NewtonianBodyEnvironment {
 
     public abstract double getRadius();
 
+    public abstract double getCenterX();
+
+    public abstract double getCenterY();
+
     public abstract double getVelocityX();
 
     public abstract double getVelocityY();
