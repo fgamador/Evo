@@ -1,6 +1,7 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.EvoTest;
+import fga.evo.model.environment.StandaloneNewtonianBodyEnvironment;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -46,23 +47,4 @@ public class PullerTest extends EvoTest {
         assertNetForce(2, -2, environment);
     }
 
-    private static class StandaloneNewtonianBodyEnvironment extends NewtonianBodyEnvironment {
-        private double centerX;
-        private double centerY;
-
-        StandaloneNewtonianBodyEnvironment(double centerX, double centerY) {
-            this.centerX = centerX;
-            this.centerY = centerY;
-        }
-
-        @Override
-        public double getCenterX() {
-            return centerX;
-        }
-
-        @Override
-        public double getCenterY() {
-            return centerY;
-        }
-    }
 }
