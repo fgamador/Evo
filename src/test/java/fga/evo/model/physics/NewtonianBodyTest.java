@@ -105,9 +105,6 @@ public class NewtonianBodyTest extends EvoTest {
         assertPosition(0.25, 0.25, body);
     }
 
-    private class Environment extends StandaloneNewtonianBodyEnvironment {
-        Environment() {
-            super(0, 0);
-        }
+    private class Environment extends NewtonianBodyEnvironment {
     }
 }
