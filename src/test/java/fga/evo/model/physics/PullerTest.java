@@ -14,13 +14,13 @@ public class PullerTest extends EvoTest {
     @Before
     public void setUp() {
         Puller.forceFactor.setValue(1);
-
-        cell = new Cell(1);
-        puller = new Puller(cell.getEnvironment());
     }
 
     @Test
     public void testAddForceToCell_NoPull() {
+        cell = new Cell(1);
+        puller = new Puller(cell.getEnvironment());
+
         cell.setCenterPosition(5, -5);
         puller.setPosition(5, -5);
 
@@ -31,6 +31,9 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_Pull() {
+        cell = new Cell(1);
+        puller = new Puller(cell.getEnvironment());
+
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
 
@@ -41,6 +44,9 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_PullForceFactor() {
+        cell = new Cell(1);
+        puller = new Puller(cell.getEnvironment());
+
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
         Puller.forceFactor.setValue(2);
