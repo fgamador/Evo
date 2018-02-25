@@ -43,10 +43,11 @@ public class DragTest extends EvoTest {
     public void testAddDragForceToCell_DragFactor() {
         Drag.dragFactor.setValue(2);
         Drag drag = new Drag();
-        cell.setVelocity(1, 0);
+        StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
+        environment.setVelocity(1, 0);
 
-        drag.updateEnvironment(cell.getEnvironment());
+        drag.updateEnvironment(environment);
 
-        assertNetForce(-4, 0, cell);
+        assertNetForce(-4, 0, environment);
     }
 }
