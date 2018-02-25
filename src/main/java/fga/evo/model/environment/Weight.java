@@ -12,15 +12,10 @@ public class Weight extends EnvironmentalInfluence {
     public static DoubleParameter fluidDensity = new DoubleParameter(0.1); // mass per area // TODO 0.1 (0.01)
 
     @Override
-    public void addForcesToCell(Cell cell) {
+    public void updateEnvironment(CellEnvironment environment, Cell cell) {
         double cellWeight = cell.getMass() * gravity.getValue();
         double displacedFluidWeight = fluidDensity.getValue() * getDisplacement(cell) * gravity.getValue();
         cell.getEnvironment().addForce((double) 0, displacedFluidWeight - cellWeight);
-    }
-
-    // TODO new API
-    @Override
-    public void updateEnvironment(CellEnvironment environment, Cell cell) {
     }
 
     private double getDisplacement(Ball ball) {
