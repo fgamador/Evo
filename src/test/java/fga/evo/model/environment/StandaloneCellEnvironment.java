@@ -12,6 +12,15 @@ public class StandaloneCellEnvironment extends CellEnvironment {
         this.centerY = centerY;
     }
 
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public void setVelocity(double velocityX, double velocityY) {
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+    }
+
     @Override
     public double getRadius() {
         return radius;
