@@ -3,6 +3,7 @@ package fga.evo.model;
 import fga.evo.model.biology.AccumulatingCellLifecycleListener;
 import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.EnvironmentalInfluence;
+import fga.evo.model.environment.Illumination;
 import fga.evo.model.geometry.OverlapDetection;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.physics.Puller;
@@ -18,6 +19,8 @@ public class World {
     private static int subticksPerTick = 2;
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
+    private List<EnvironmentalInfluence> energyInfluences = new ArrayList<>();
+    private List<EnvironmentalInfluence> forceInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
@@ -26,6 +29,11 @@ public class World {
 
     public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);
+        // TODO bleah. Temp until can unify update-environment into one phase.
+        if (influence instanceof Illumination)
+            energyInfluences.add(influence);
+        else
+            forceInfluences.add(influence);
     }
 
     public void addCell(Cell cell) {
