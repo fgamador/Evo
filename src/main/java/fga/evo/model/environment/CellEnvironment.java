@@ -2,18 +2,28 @@ package fga.evo.model.environment;
 
 import fga.evo.model.physics.NewtonianBodyEnvironment;
 
-public abstract class CellEnvironment extends NewtonianBodyEnvironment {
+public class CellEnvironment extends NewtonianBodyEnvironment {
     private double lightIntensity;
 
-    public abstract double getRadius();
+    public double getRadius() {
+        return -1;
+    }
 
-    public abstract double getCenterX();
+    public double getCenterX() {
+        return -1;
+    }
 
-    public abstract double getCenterY();
+    public double getCenterY() {
+        return -1;
+    }
 
-    public abstract double getVelocityX();
+    public double getVelocityX() {
+        return -1;
+    }
 
-    public abstract double getVelocityY();
+    public double getVelocityY() {
+        return -1;
+    }
 
     public double getLightIntensity() {
         return lightIntensity;
