@@ -52,7 +52,7 @@ public class IlluminationTest extends EvoTest {
         Illumination lighting = new Illumination(100);
         Cell cell = new Cell(1);
         cell.setCenterPosition(0, -50);
-        CellEnvironment environment = new StandaloneCellEnvironment(0, -50);
+        CellEnvironment environment = new CellEnvironment();
 
         lighting.updateEnvironment(environment, cell);
 
