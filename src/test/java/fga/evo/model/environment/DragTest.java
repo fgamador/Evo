@@ -8,14 +8,9 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertNetForce;
 
 public class DragTest extends EvoTest {
-    private Cell cell;
-
     @Before
     public void setUp() {
         Drag.dragFactor.setValue(0.1);
-
-        cell = new Cell(2);
-        cell.setCenterPosition(0, -10);
     }
 
     @Test
