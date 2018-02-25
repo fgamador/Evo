@@ -1,5 +1,6 @@
 package fga.evo.model.environment;
 
+import fga.evo.model.biology.Cell;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.util.DoubleParameter;
 
@@ -19,7 +20,7 @@ public class Weight extends EnvironmentalInfluence {
 
     // TODO new API
     @Override
-    public void updateEnvironment(CellEnvironment environment) {
+    public void updateEnvironment(CellEnvironment environment, Cell cell) {
     }
 
     private double getDisplacement(Ball ball) {

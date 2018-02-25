@@ -1,5 +1,6 @@
 package fga.evo.model.environment;
 
+import fga.evo.model.biology.Cell;
 import fga.evo.model.physics.Ball;
 import fga.evo.model.util.DoubleParameter;
 
@@ -12,7 +13,7 @@ public class Drag extends EnvironmentalInfluence {
     public static DoubleParameter dragFactor = new DoubleParameter(0.001);
 
     @Override
-    public void updateEnvironment(CellEnvironment environment) {
+    public void updateEnvironment(CellEnvironment environment, Cell cell) {
         // TODO if the cell is not wholly submerged, drag will be reduced, but it depends on what direction the cell is moving
         // Idea: linearly reduce x-drag of partially submerged cell, same with y-drag but only if moving upward
         double dragX = calcDrag(environment.getVelocityX(), environment.getRadius());

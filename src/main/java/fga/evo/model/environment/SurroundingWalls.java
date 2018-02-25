@@ -1,5 +1,6 @@
 package fga.evo.model.environment;
 
+import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.EnvironmentalInfluence;
 import fga.evo.model.physics.Ball;
 
@@ -26,7 +27,7 @@ public class SurroundingWalls extends EnvironmentalInfluence {
 
     // TODO new API
     @Override
-    public void updateEnvironment(CellEnvironment environment) {
+    public void updateEnvironment(CellEnvironment environment, Cell cell) {
     }
 
     public void resizeWidth(double newWidth) {
