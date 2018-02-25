@@ -2,6 +2,7 @@ package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
 import fga.evo.model.EvoTest;
+import fga.evo.model.physics.NewtonianBody;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +24,7 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0, 0, cell);
+        assertNetForce((double) 0, (double) 0, ((NewtonianBody) cell).getEnvironment());
     }
 
     @Test
@@ -32,7 +33,7 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0.5, -0.5, cell);
+        assertNetForce(0.5, -0.5, ((NewtonianBody) cell).getEnvironment());
     }
 
     @Test
@@ -41,7 +42,7 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(-0.5, 0.5, cell);
+        assertNetForce(-0.5, 0.5, ((NewtonianBody) cell).getEnvironment());
     }
 
     @Test
@@ -51,6 +52,6 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0, 0, cell);
+        assertNetForce((double) 0, (double) 0, ((NewtonianBody) cell).getEnvironment());
     }
 }
