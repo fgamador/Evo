@@ -15,42 +15,42 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_NoPull() {
-        Cell cell = new Cell(1);
-        Puller puller = new Puller(cell.getEnvironment());
+        Environment environment = new Environment();
+        Puller puller = new Puller(environment);
 
-        cell.setCenterPosition(5, -5);
+        environment.setCenterPosition(5, -5);
         puller.setPosition(5, -5);
 
         puller.addForce();
 
-        assertNetForce(0, 0, cell);
+        assertNetForce(0, 0, environment);
     }
 
     @Test
     public void testAddForceToCell_Pull() {
-        Cell cell = new Cell(1);
-        Puller puller = new Puller(cell.getEnvironment());
+        Environment environment = new Environment();
+        Puller puller = new Puller(environment);
 
-        cell.setCenterPosition(5, -5);
+        environment.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
 
         puller.addForce();
 
-        assertNetForce(1, -1, cell);
+        assertNetForce(1, -1, environment);
     }
 
     @Test
     public void testAddForceToCell_PullForceFactor() {
-        Cell cell = new Cell(1);
-        Puller puller = new Puller(cell.getEnvironment());
+        Environment environment = new Environment();
+        Puller puller = new Puller(environment);
 
-        cell.setCenterPosition(5, -5);
+        environment.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
         Puller.forceFactor.setValue(2);
 
         puller.addForce();
 
-        assertNetForce(2, -2, cell);
+        assertNetForce(2, -2, environment);
     }
 
     private static class Environment extends NewtonianBodyEnvironment {
