@@ -23,8 +23,8 @@ public class WeightTest extends EvoTest {
     @Test
     public void testNeutralBuoyancy() {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
-
         CellEnvironment environment = new CellEnvironment();
+
         new Weight().updateEnvironment(environment, cell);
 
         assertNetForce(0, 0, environment);
@@ -33,8 +33,8 @@ public class WeightTest extends EvoTest {
     @Test
     public void testMaxBuoyancy() {
         cell.setMass(0);
-
         CellEnvironment environment = new CellEnvironment();
+
         new Weight().updateEnvironment(environment, cell);
 
         assertNetForce(0, Weight.gravity.getValue() * Math.PI, environment);
@@ -43,8 +43,8 @@ public class WeightTest extends EvoTest {
     @Test
     public void testSinking() {
         cell.setMass(2 * Weight.fluidDensity.getValue() * maxDisplacement);
-
         CellEnvironment environment = new CellEnvironment();
+
         new Weight().updateEnvironment(environment, cell);
 
         double forceY = -Weight.gravity.getValue() * Math.PI;
@@ -54,9 +54,9 @@ public class WeightTest extends EvoTest {
     @Test
     public void testBarelySubmergedBuoyancy() {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
-
         cell.setCenterPosition(0, -cell.getRadius());
         CellEnvironment environment = new CellEnvironment();
+
         new Weight().updateEnvironment(environment, cell);
 
         assertNetForce(0, 0, environment);
@@ -65,9 +65,9 @@ public class WeightTest extends EvoTest {
     @Test
     public void testFullyEmergedBuoyancy() {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
-
         cell.setCenterPosition(0, cell.getRadius());
         CellEnvironment environment = new CellEnvironment();
+
         new Weight().updateEnvironment(environment, cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue();
@@ -77,9 +77,9 @@ public class WeightTest extends EvoTest {
     @Test
     public void testHalfEmergedBuoyancy() {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
-
         cell.setCenterPosition(0, 0);
         CellEnvironment environment = new CellEnvironment();
+
         new Weight().updateEnvironment(environment, cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
