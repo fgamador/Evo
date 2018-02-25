@@ -28,7 +28,7 @@ public class WeightTest extends EvoTest {
 
         weight.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0, 0, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, 0, cell.getEnvironment());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class WeightTest extends EvoTest {
 
         weight.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0, Weight.gravity.getValue() * Math.PI, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell.getEnvironment());
     }
 
     @Test
@@ -47,7 +47,7 @@ public class WeightTest extends EvoTest {
         weight.updateEnvironment(cell.getEnvironment(), cell);
 
         double forceY = -Weight.gravity.getValue() * Math.PI;
-        assertNetForce(0, forceY, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, forceY, cell.getEnvironment());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, -cell.getRadius());
         weight.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0, 0, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, 0, cell.getEnvironment());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class WeightTest extends EvoTest {
         weight.updateEnvironment(cell.getEnvironment(), cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue();
-        assertNetForce(0, forceY, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, forceY, cell.getEnvironment());
     }
 
     @Test
@@ -79,6 +79,6 @@ public class WeightTest extends EvoTest {
         weight.updateEnvironment(cell.getEnvironment(), cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
-        assertNetForce(0, forceY, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, forceY, cell.getEnvironment());
     }
 }
