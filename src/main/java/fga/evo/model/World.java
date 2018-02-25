@@ -100,7 +100,7 @@ public class World {
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : environmentalInfluences) {
-                influence.updateEnvironment(cell.getEnvironment());
+                influence.updateEnvironment(cell.getEnvironment(), cell);
                 influence.addForcesToCell(cell);
             }
 

@@ -16,9 +16,11 @@ public class DragTest extends EvoTest {
     @Test
     public void dragAddsNoForceIfNoVelocity() {
         Drag drag = new Drag();
+        Cell cell = new Cell(2);
+        cell.setCenterPosition(0, -10);
         CellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
 
-        drag.updateEnvironment(environment);
+        drag.updateEnvironment(environment, cell);
 
         assertNetForce(0, 0, environment);
     }
@@ -26,10 +28,12 @@ public class DragTest extends EvoTest {
     @Test
     public void dragAddsForceOpposingVelocity() {
         Drag drag = new Drag();
+        Cell cell = new Cell(2);
+        cell.setCenterPosition(0, -10);
         StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
         environment.setVelocity(-2, 3);
 
-        drag.updateEnvironment(environment);
+        drag.updateEnvironment(environment, cell);
 
         assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), environment);
     }
@@ -38,10 +42,12 @@ public class DragTest extends EvoTest {
     public void dragForceUsesDragFactor() {
         Drag.dragFactor.setValue(2);
         Drag drag = new Drag();
+        Cell cell = new Cell(2);
+        cell.setCenterPosition(0, -10);
         StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
         environment.setVelocity(1, 0);
 
-        drag.updateEnvironment(environment);
+        drag.updateEnvironment(environment, cell);
 
         assertNetForce(-4, 0, environment);
     }

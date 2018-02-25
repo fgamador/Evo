@@ -25,7 +25,7 @@ public final class Illumination extends EnvironmentalInfluence {
     // TODO almost obsolete
     @Override
     public void addEnergyToCell(Cell cell) {
-        updateEnvironment(cell.getEnvironment());
+        updateEnvironment(cell.getEnvironment(), cell);
         // TODO move this to PhotoRing updateCell method in another phase or something
         cell.photosynthesize();
     }
