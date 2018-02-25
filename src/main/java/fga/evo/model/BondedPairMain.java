@@ -53,7 +53,7 @@ public class BondedPairMain {
     }
 
     private static class BallWithEnvironment extends Ball {
-        NewtonianBodyEnvironment forces = new NewtonianBodyEnvironment() {
+        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment() {
             @Override
             public double getCenterX() {
                 return BallWithEnvironment.this.getCenterX();
@@ -67,7 +67,7 @@ public class BondedPairMain {
 
         @Override
         public NewtonianBodyEnvironment getEnvironment() {
-            return forces;
+            return environment;
         }
     }
 }
