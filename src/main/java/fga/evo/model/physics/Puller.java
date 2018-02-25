@@ -12,8 +12,8 @@ public class Puller {
     private double x, y;
     private NewtonianBodyEnvironment environment;
 
-    public Puller(NewtonianBodyEnvironment environment) {
-        this.environment = environment;
+    public Puller(NewtonianBodyEnvironment pulledBodyEnvironment) {
+        this.environment = pulledBodyEnvironment;
     }
 
     public void setPosition(double x, double y) {
