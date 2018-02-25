@@ -82,11 +82,10 @@ public class Assert {
     }
 
     public static void assertNetForce(double forceX, double forceY, NewtonianBody body) {
-        assertNetForce(forceX, forceY, body, DEFAULT_DELTA);
+        assertNetForce(forceX, forceY, body.getEnvironment());
     }
 
     public static void assertNetForce(double forceX, double forceY, NewtonianBody body, double delta) {
-        assertEquals("Force X", forceX, body.getEnvironment().getNetForceX(), delta);
-        assertEquals("Force Y", forceY, body.getEnvironment().getNetForceY(), delta);
+        assertNetForce(forceX, forceY, body.getEnvironment(), delta);
     }
 }
