@@ -127,10 +127,6 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         }
     }
 
-    public void addHighBarrierCollisionForce(double wallY) {
-        addHighBarrierCollisionForce(getEnvironment(), wallY);
-    }
-
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier above it (larger y position).
      *

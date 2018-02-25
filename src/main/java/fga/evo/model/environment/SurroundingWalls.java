@@ -20,7 +20,7 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         cell.addLeftBarrierCollisionForce(minX);
         cell.addRightBarrierCollisionForce(maxX);
         cell.addLowBarrierCollisionForce(minY);
-        cell.addHighBarrierCollisionForce(maxY);
+        cell.addHighBarrierCollisionForce(cell.getEnvironment(), maxY);
     }
 
     // TODO new API

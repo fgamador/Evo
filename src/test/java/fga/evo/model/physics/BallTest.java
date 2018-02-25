@@ -185,7 +185,7 @@ public class BallTest extends EvoTest {
     @Test
     public void highBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addHighBarrierCollisionForce(0.5);
+        ball.addHighBarrierCollisionForce(ball.getEnvironment(), 0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
@@ -241,7 +241,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddHighBarrierCollisionForce(Ball ball, double ballY, double wallY, double expected) {
         ball.setCenterPosition(0, ballY);
-        ball.addHighBarrierCollisionForce(wallY);
+        ball.addHighBarrierCollisionForce(ball.getEnvironment(), wallY);
         assertNetForce(0, expected, ball);
     }
 
