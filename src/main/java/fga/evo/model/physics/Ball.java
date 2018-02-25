@@ -97,8 +97,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         double overlap = getCenterX() + getRadius() - wallX;
         if (overlap > 0) {
             recordOverlap(overlap);
-            double forceX = -calcOverlapForce(overlap);
-            environment.addForce(forceX, (double) 0);
+            environment.addForce(-calcOverlapForce(overlap), (double) 0);
         }
     }
 
@@ -124,8 +123,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         double overlap = getCenterY() + getRadius() - wallY;
         if (overlap > 0) {
             recordOverlap(overlap);
-            double forceY = -calcOverlapForce(overlap);
-            environment.addForce((double) 0, forceY);
+            environment.addForce((double) 0, -calcOverlapForce(overlap));
         }
     }
 
