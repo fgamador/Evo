@@ -1,6 +1,7 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.EvoTest;
+import fga.evo.model.environment.StandaloneNewtonianBodyEnvironment;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertPosition;
@@ -104,15 +105,9 @@ public class NewtonianBodyTest extends EvoTest {
         assertPosition(0.25, 0.25, body);
     }
 
-    private class Environment extends NewtonianBodyEnvironment {
-        @Override
-        public double getCenterX() {
-            return 0;
-        }
-
-        @Override
-        public double getCenterY() {
-            return 0;
+    private class Environment extends StandaloneNewtonianBodyEnvironment {
+        Environment() {
+            super(0, 0);
         }
     }
 }
