@@ -1,7 +1,6 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.EvoTest;
-import fga.evo.model.environment.StandaloneNewtonianBodyEnvironment;
 import org.junit.Before;
 import org.junit.Test;
 
