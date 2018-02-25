@@ -31,7 +31,7 @@ public final class Illumination extends EnvironmentalInfluence {
     }
 
     public void updateEnvironment(CellEnvironment environment, Cell cell) {
-        environment.setLightIntensity(calcLightIntensity(environment.getCenterY()));
+        environment.setLightIntensity(calcLightIntensity(cell.getCenterY()));
     }
 
     double calcLightIntensity(double y) {
