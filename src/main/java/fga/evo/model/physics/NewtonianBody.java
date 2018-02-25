@@ -12,17 +12,7 @@ public class NewtonianBody {
     private double centerY;
     private double velocityX;
     private double velocityY;
-    private final NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment() {
-        @Override
-        public double getCenterX() {
-            return NewtonianBody.this.centerX;
-        }
-
-        @Override
-        public double getCenterY() {
-            return NewtonianBody.this.centerY;
-        }
-    };
+    private final NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
 
     public NewtonianBody() {
     }
