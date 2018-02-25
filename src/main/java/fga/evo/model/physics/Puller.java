@@ -1,6 +1,5 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.environment.CellEnvironment;
 import fga.evo.model.util.DoubleParameter;
 
 /**
@@ -10,10 +9,10 @@ public class Puller {
     public static DoubleParameter forceFactor = new DoubleParameter(1);
 
     private double x, y;
-    private NewtonianBodyEnvironment environment;
+    private NewtonianBodyEnvironment pulledBodyEnvironment;
 
     public Puller(NewtonianBodyEnvironment pulledBodyEnvironment) {
-        this.environment = pulledBodyEnvironment;
+        this.pulledBodyEnvironment = pulledBodyEnvironment;
     }
 
     public void setPosition(double x, double y) {
@@ -23,6 +22,6 @@ public class Puller {
 
     public void addForce() {
         double factor = forceFactor.getValue();
-        environment.addForce(factor * (x - environment.getCenterX()), factor * (y - environment.getCenterY()));
+        pulledBodyEnvironment.addForce(factor * (x - pulledBodyEnvironment.getCenterX()), factor * (y - pulledBodyEnvironment.getCenterY()));
     }
 }
