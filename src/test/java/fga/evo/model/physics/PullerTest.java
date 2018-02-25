@@ -8,9 +8,6 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertNetForce;
 
 public class PullerTest extends EvoTest {
-    private Cell cell;
-    private Puller puller;
-
     @Before
     public void setUp() {
         Puller.forceFactor.setValue(1);
@@ -18,8 +15,8 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_NoPull() {
-        cell = new Cell(1);
-        puller = new Puller(cell.getEnvironment());
+        Cell cell = new Cell(1);
+        Puller puller = new Puller(cell.getEnvironment());
 
         cell.setCenterPosition(5, -5);
         puller.setPosition(5, -5);
@@ -31,8 +28,8 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_Pull() {
-        cell = new Cell(1);
-        puller = new Puller(cell.getEnvironment());
+        Cell cell = new Cell(1);
+        Puller puller = new Puller(cell.getEnvironment());
 
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
@@ -44,8 +41,8 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_PullForceFactor() {
-        cell = new Cell(1);
-        puller = new Puller(cell.getEnvironment());
+        Cell cell = new Cell(1);
+        Puller puller = new Puller(cell.getEnvironment());
 
         cell.setCenterPosition(5, -5);
         puller.setPosition(6, -6);
