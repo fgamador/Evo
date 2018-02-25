@@ -81,10 +81,11 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addLeftBarrierCollisionForce(double wallX) {
+        NewtonianBodyEnvironment environment = getEnvironment();
         double overlap = getRadius() - (getCenterX() - wallX);
         if (overlap > 0) {
             recordOverlap(overlap);
-            getEnvironment().addForce(calcOverlapForce(overlap), (double) 0);
+            environment.addForce(calcOverlapForce(overlap), (double) 0);
         }
     }
 
@@ -94,11 +95,12 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addRightBarrierCollisionForce(double wallX) {
+        NewtonianBodyEnvironment environment = getEnvironment();
         double overlap = getCenterX() + getRadius() - wallX;
         if (overlap > 0) {
             recordOverlap(overlap);
             double forceX = -calcOverlapForce(overlap);
-            getEnvironment().addForce(forceX, (double) 0);
+            environment.addForce(forceX, (double) 0);
         }
     }
 
@@ -108,10 +110,11 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addLowBarrierCollisionForce(double wallY) {
+        NewtonianBodyEnvironment environment = getEnvironment();
         double overlap = getRadius() - (getCenterY() - wallY);
         if (overlap > 0) {
             recordOverlap(overlap);
-            getEnvironment().addForce((double) 0, calcOverlapForce(overlap));
+            environment.addForce((double) 0, calcOverlapForce(overlap));
         }
     }
 
@@ -121,11 +124,12 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addHighBarrierCollisionForce(double wallY) {
+        NewtonianBodyEnvironment environment = getEnvironment();
         double overlap = getCenterY() + getRadius() - wallY;
         if (overlap > 0) {
             recordOverlap(overlap);
             double forceY = -calcOverlapForce(overlap);
-            getEnvironment().addForce((double) 0, forceY);
+            environment.addForce((double) 0, forceY);
         }
     }
 
