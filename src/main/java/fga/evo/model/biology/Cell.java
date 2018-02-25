@@ -37,33 +37,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     private Cell parent;
     private double damage;
     private CellLifecycleListener lifecycleListener;
-
-    private CellEnvironment environment = new CellEnvironment() {
-        @Override
-        public double getRadius() {
-            return Cell.this.getRadius();
-        }
-
-        @Override
-        public double getCenterX() {
-            return Cell.this.getCenterX();
-        }
-
-        @Override
-        public double getCenterY() {
-            return Cell.this.getCenterY();
-        }
-
-        @Override
-        public double getVelocityX() {
-            return Cell.this.getVelocityX();
-        }
-
-        @Override
-        public double getVelocityY() {
-            return Cell.this.getVelocityY();
-        }
-    };
+    private CellEnvironment environment = new CellEnvironment();
 
     public Cell(double radius) {
         this(radius, c -> {
