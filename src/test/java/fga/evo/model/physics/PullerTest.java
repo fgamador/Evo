@@ -14,7 +14,7 @@ public class PullerTest extends EvoTest {
     }
 
     @Test
-    public void testAddForceToCell_NoPull() {
+    public void pullerWithNoOffsetAddsNoForce() {
         Environment environment = new Environment(5, -5);
         Puller puller = new Puller(environment);
         puller.setPosition(5, -5);
@@ -25,7 +25,7 @@ public class PullerTest extends EvoTest {
     }
 
     @Test
-    public void testAddForceToCell_Pull() {
+    public void pullWithOffsetAddsForce() {
         Environment environment = new Environment(5, -5);
         Puller puller = new Puller(environment);
         puller.setPosition(6, -6);
@@ -36,7 +36,7 @@ public class PullerTest extends EvoTest {
     }
 
     @Test
-    public void testAddForceToCell_PullForceFactor() {
+    public void pullerForceUsesForceFactor() {
         Environment environment = new Environment(5, -5);
         Puller puller = new Puller(environment);
         puller.setPosition(6, -6);
