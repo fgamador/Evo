@@ -10,6 +10,11 @@ import fga.evo.model.physics.Ball;
 public abstract class EnvironmentalInfluence {
     public abstract void updateEnvironment(CellEnvironment environment);
 
+    public void updateEnvironment(CellEnvironment environment, Cell cell) {
+        // TODO temp impl; make abstract
+        updateEnvironment(environment);
+    }
+
     // TODO make this obsolete
     public void addEnergyToCell(Cell cell) {
     }
