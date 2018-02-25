@@ -81,8 +81,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addLeftBarrierCollisionForce(double wallX) {
-        NewtonianBodyEnvironment environment = getEnvironment();
-        addLeftBarrierCollisionForce(environment, wallX);
+        addLeftBarrierCollisionForce(getEnvironment(), wallX);
     }
 
     public void addLeftBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
@@ -99,8 +98,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addRightBarrierCollisionForce(double wallX) {
-        NewtonianBodyEnvironment environment = getEnvironment();
-        addRightBarrierCollisionForce(environment, wallX);
+        addRightBarrierCollisionForce(getEnvironment(), wallX);
     }
 
     public void addRightBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
@@ -118,8 +116,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addLowBarrierCollisionForce(double wallY) {
-        NewtonianBodyEnvironment environment = getEnvironment();
-        addLowBarrierCollisionForce(environment, wallY);
+        addLowBarrierCollisionForce(getEnvironment(), wallY);
     }
 
     public void addLowBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
@@ -136,8 +133,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addHighBarrierCollisionForce(double wallY) {
-        NewtonianBodyEnvironment environment = getEnvironment();
-        addHighBarrierCollisionForce(environment, wallY);
+        addHighBarrierCollisionForce(getEnvironment(), wallY);
     }
 
     public void addHighBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
