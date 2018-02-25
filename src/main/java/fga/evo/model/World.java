@@ -108,7 +108,6 @@ public class World {
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : forceInfluences) {
-                influence.updateEnvironment(cell.getEnvironment(), cell);
                 influence.addForcesToCell(cell);
             }
 
