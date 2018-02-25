@@ -1,7 +1,6 @@
 package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
-import fga.evo.model.physics.Ball;
 
 /**
  * Something in the cells' environment that can affect them.
@@ -15,7 +14,7 @@ public abstract class EnvironmentalInfluence {
     }
 
     // TODO make this obsolete
-    public void addForcesToCell(Ball cell) {
+    public void addForcesToCell(Cell cell) {
         //updateEnvironment(cell.getEnvironment(), cell);
     }
 }
