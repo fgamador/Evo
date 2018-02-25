@@ -18,7 +18,7 @@ public class SurroundingWallsTest extends EvoTest {
     }
 
     @Test
-    public void testAddForcesToCell_JustTouching() {
+    public void justTouchingAddsNoForce() {
         cell.setCenterPosition(1, -1);
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
@@ -27,7 +27,7 @@ public class SurroundingWallsTest extends EvoTest {
     }
 
     @Test
-    public void testAddForcesToCell_LowXYCollision() {
+    public void lowXYCollisionAddsForce() {
         cell.setCenterPosition(0.5, -0.5);
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
@@ -36,7 +36,7 @@ public class SurroundingWallsTest extends EvoTest {
     }
 
     @Test
-    public void testAddForcesToCell_HighXYCollision() {
+    public void highXYCollisionAddsForce() {
         cell.setCenterPosition(9.5, -9.5);
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
@@ -45,7 +45,7 @@ public class SurroundingWallsTest extends EvoTest {
     }
 
     @Test
-    public void testAddForcesToCell_HighCeiling() {
+    public void highCeilingAddsNoForce() {
         walls = new SurroundingWalls(-5, 5, -5, 5);
         cell.setCenterPosition(0, 0);
 
