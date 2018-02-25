@@ -26,28 +26,31 @@ public class WeightTest extends EvoTest {
     public void testNeutralBuoyancy() {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
-        weight.updateEnvironment(cell.getEnvironment(), cell);
+        CellEnvironment environment = cell.getEnvironment();
+        weight.updateEnvironment(environment, cell);
 
-        assertNetForce(0, 0, cell.getEnvironment());
+        assertNetForce(0, 0, environment);
     }
 
     @Test
     public void testMaxBuoyancy() {
         cell.setMass(0);
 
-        weight.updateEnvironment(cell.getEnvironment(), cell);
+        CellEnvironment environment = cell.getEnvironment();
+        weight.updateEnvironment(environment, cell);
 
-        assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell.getEnvironment());
+        assertNetForce(0, Weight.gravity.getValue() * Math.PI, environment);
     }
 
     @Test
     public void testSinking() {
         cell.setMass(2 * Weight.fluidDensity.getValue() * maxDisplacement);
 
-        weight.updateEnvironment(cell.getEnvironment(), cell);
+        CellEnvironment environment = cell.getEnvironment();
+        weight.updateEnvironment(environment, cell);
 
         double forceY = -Weight.gravity.getValue() * Math.PI;
-        assertNetForce(0, forceY, cell.getEnvironment());
+        assertNetForce(0, forceY, environment);
     }
 
     @Test
@@ -55,9 +58,10 @@ public class WeightTest extends EvoTest {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         cell.setCenterPosition(0, -cell.getRadius());
-        weight.updateEnvironment(cell.getEnvironment(), cell);
+        CellEnvironment environment = cell.getEnvironment();
+        weight.updateEnvironment(environment, cell);
 
-        assertNetForce(0, 0, cell.getEnvironment());
+        assertNetForce(0, 0, environment);
     }
 
     @Test
@@ -65,10 +69,11 @@ public class WeightTest extends EvoTest {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         cell.setCenterPosition(0, cell.getRadius());
-        weight.updateEnvironment(cell.getEnvironment(), cell);
+        CellEnvironment environment = cell.getEnvironment();
+        weight.updateEnvironment(environment, cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue();
-        assertNetForce(0, forceY, cell.getEnvironment());
+        assertNetForce(0, forceY, environment);
     }
 
     @Test
@@ -76,9 +81,10 @@ public class WeightTest extends EvoTest {
         cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
 
         cell.setCenterPosition(0, 0);
-        weight.updateEnvironment(cell.getEnvironment(), cell);
+        CellEnvironment environment = cell.getEnvironment();
+        weight.updateEnvironment(environment, cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
-        assertNetForce(0, forceY, cell.getEnvironment());
+        assertNetForce(0, forceY, environment);
     }
 }
