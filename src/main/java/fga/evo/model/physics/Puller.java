@@ -17,10 +17,6 @@ public class Puller {
         this.pulledBodyEnvironment = pulledBodyEnvironment;
     }
 
-    public Puller(NewtonianBodyEnvironment pulledBodyEnvironment) {
-        this.pulledBodyEnvironment = pulledBodyEnvironment;
-    }
-
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
