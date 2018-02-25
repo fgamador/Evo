@@ -17,6 +17,11 @@ public class Weight extends EnvironmentalInfluence {
         ball.getEnvironment().addForce((double) 0, displacedFluidWeight - cellWeight);
     }
 
+    // TODO new API
+    @Override
+    public void updateEnvironment(CellEnvironment environment) {
+    }
+
     private double getDisplacement(Ball ball) {
         if (ball.getCenterY() <= -ball.getRadius()) {
             return ball.getArea();

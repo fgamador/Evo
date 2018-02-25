@@ -24,6 +24,11 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         cell.addHighBarrierCollisionForce(maxY);
     }
 
+    // TODO new API
+    @Override
+    public void updateEnvironment(CellEnvironment environment) {
+    }
+
     public void resizeWidth(double newWidth) {
         maxX = minX + newWidth;
     }
