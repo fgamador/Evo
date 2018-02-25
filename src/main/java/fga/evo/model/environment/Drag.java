@@ -16,8 +16,8 @@ public class Drag extends EnvironmentalInfluence {
     public void updateEnvironment(CellEnvironment environment, Cell cell) {
         // TODO if the cell is not wholly submerged, drag will be reduced, but it depends on what direction the cell is moving
         // Idea: linearly reduce x-drag of partially submerged cell, same with y-drag but only if moving upward
-        double dragX = calcDrag(environment.getVelocityX(), environment.getRadius());
-        double dragY = calcDrag(environment.getVelocityY(), environment.getRadius());
+        double dragX = calcDrag(cell.getVelocityX(), cell.getRadius());
+        double dragY = calcDrag(cell.getVelocityY(), cell.getRadius());
         environment.addForce(dragX, dragY);
     }
 

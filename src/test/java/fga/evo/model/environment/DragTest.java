@@ -30,6 +30,7 @@ public class DragTest extends EvoTest {
         Drag drag = new Drag();
         Cell cell = new Cell(2);
         cell.setCenterPosition(0, -10);
+        cell.setVelocity(-2, 3);
         StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
         environment.setVelocity(-2, 3);
 
@@ -44,6 +45,7 @@ public class DragTest extends EvoTest {
         Drag drag = new Drag();
         Cell cell = new Cell(2);
         cell.setCenterPosition(0, -10);
+        cell.setVelocity(1, 0);
         StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
         environment.setVelocity(1, 0);
 
