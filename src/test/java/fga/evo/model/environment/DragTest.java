@@ -1,7 +1,7 @@
 package fga.evo.model.environment;
 
-import fga.evo.model.biology.Cell;
 import fga.evo.model.EvoTest;
+import fga.evo.model.biology.Cell;
 import org.junit.Before;
 import org.junit.Test;
 
