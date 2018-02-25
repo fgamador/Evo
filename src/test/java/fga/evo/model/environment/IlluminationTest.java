@@ -50,7 +50,7 @@ public class IlluminationTest extends EvoTest {
     public void illuminationUpdatesCellEnvironment() {
         Illumination.maxIntensity.setValue(2);
         Illumination lighting = new Illumination(100);
-        StandaloneCellEnvironment environment = new StandaloneCellEnvironment(0, -50);
+        CellEnvironment environment = new StandaloneCellEnvironment(0, -50);
 
         lighting.updateEnvironment(environment);
 
