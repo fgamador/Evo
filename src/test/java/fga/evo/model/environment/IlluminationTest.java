@@ -61,7 +61,7 @@ public class IlluminationTest extends EvoTest {
 
     // TODO almost obsolete
     @Test
-    public void testIlluminateCell() {
+    public void illuminationAddsEnergyToCell() {
         Illumination.maxIntensity.setValue(2);
         Illumination lighting = new Illumination(100);
 
