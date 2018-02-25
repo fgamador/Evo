@@ -1,8 +1,12 @@
 package fga.evo.model.physics;
 
-public class NewtonianBodyEnvironment {
+public abstract class NewtonianBodyEnvironment {
     private double netForceX;
     private double netForceY;
+
+    public abstract double getCenterX();
+
+    public abstract double getCenterY();
 
     /**
      * Adds a force on the body that will be used by the next call to {@link NewtonianBody#subtick}. This is the
