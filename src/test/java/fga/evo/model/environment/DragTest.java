@@ -31,11 +31,12 @@ public class DragTest extends EvoTest {
     @Test
     public void testAddDragForceToCell_Motion() {
         Drag drag = new Drag();
-        cell.setVelocity(-2, 3);
+        StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
+        environment.setVelocity(-2, 3);
 
-        drag.updateEnvironment(cell.getEnvironment());
+        drag.updateEnvironment(environment);
 
-        assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), cell);
+        assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), environment);
     }
 
     @Test
