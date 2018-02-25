@@ -10,9 +10,9 @@ public class Puller {
     public static DoubleParameter forceFactor = new DoubleParameter(1);
 
     private double x, y;
-    private CellEnvironment environment;
+    private NewtonianBodyEnvironment environment;
 
-    public Puller(CellEnvironment environment) {
+    public Puller(NewtonianBodyEnvironment environment) {
         this.environment = environment;
     }
 
