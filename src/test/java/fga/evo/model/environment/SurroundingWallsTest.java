@@ -24,7 +24,7 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce((double) 0, (double) 0, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, 0, cell.getEnvironment());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(0.5, -0.5, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0.5, -0.5, cell.getEnvironment());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce(-0.5, 0.5, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(-0.5, 0.5, cell.getEnvironment());
     }
 
     @Test
@@ -52,6 +52,6 @@ public class SurroundingWallsTest extends EvoTest {
 
         walls.updateEnvironment(cell.getEnvironment(), cell);
 
-        assertNetForce((double) 0, (double) 0, ((NewtonianBody) cell).getEnvironment());
+        assertNetForce(0, 0, cell.getEnvironment());
     }
 }
