@@ -14,7 +14,7 @@ public class DragTest extends EvoTest {
     }
 
     @Test
-    public void testAddDragForceToCell_NoMotion() {
+    public void dragAddsNoForceIfNoVelocity() {
         Drag drag = new Drag();
         CellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
 
@@ -24,7 +24,7 @@ public class DragTest extends EvoTest {
     }
 
     @Test
-    public void testAddDragForceToCell_Motion() {
+    public void dragAddsForceOpposingVelocity() {
         Drag drag = new Drag();
         StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
         environment.setVelocity(-2, 3);
@@ -35,7 +35,7 @@ public class DragTest extends EvoTest {
     }
 
     @Test
-    public void testAddDragForceToCell_DragFactor() {
+    public void dragForceUsesDragFactor() {
         Drag.dragFactor.setValue(2);
         Drag drag = new Drag();
         StandaloneCellEnvironment environment = new StandaloneCellEnvironment(2, 0, -10);
