@@ -1,6 +1,7 @@
 package fga.evo.model.environment;
 
 import fga.evo.model.EvoTest;
+import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.Weight;
 import fga.evo.model.physics.Ball;
 import org.junit.Before;
@@ -10,15 +11,14 @@ import static fga.evo.model.Assert.assertNetForce;
 
 public class WeightTest extends EvoTest {
     private Weight weight;
-    private Ball cell;
+    private Cell cell;
     private double maxDisplacement;
 
     @Before
     public void setUp() {
         Weight.fluidDensity.setValue(0.01);
         weight = new Weight();
-        cell = new Ball();
-        cell.setRadius(10);
+        cell = new Cell(10);
         cell.setCenterPosition(0, -100);
         maxDisplacement = cell.getArea();
     }
