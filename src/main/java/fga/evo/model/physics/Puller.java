@@ -12,7 +12,7 @@ public class Puller {
     private NewtonianBody pulledBody;
     private NewtonianBodyEnvironment pulledBodyEnvironment;
 
-    public Puller(NewtonianBodyEnvironment pulledBodyEnvironment, NewtonianBody pulledBody) {
+    public Puller(NewtonianBody pulledBody, NewtonianBodyEnvironment pulledBodyEnvironment) {
         this.pulledBody = pulledBody;
         this.pulledBodyEnvironment = pulledBodyEnvironment;
     }
