@@ -17,9 +17,9 @@ public class SurroundingWalls extends EnvironmentalInfluence {
 
     @Override
     public void addForcesToCell(Cell cell) {
-        cell.addLeftBarrierCollisionForce(minX);
-        cell.addRightBarrierCollisionForce(maxX);
-        cell.addLowBarrierCollisionForce(minY);
+        cell.addLeftBarrierCollisionForce(cell.getEnvironment(), minX);
+        cell.addRightBarrierCollisionForce(cell.getEnvironment(), maxX);
+        cell.addLowBarrierCollisionForce(cell.getEnvironment(), minY);
         cell.addHighBarrierCollisionForce(cell.getEnvironment(), maxY);
     }
 

@@ -164,21 +164,21 @@ public class BallTest extends EvoTest {
     @Test
     public void leftBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addLeftBarrierCollisionForce(-0.5);
+        ball.addLeftBarrierCollisionForce(ball.getEnvironment(), -0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
     public void rightBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addRightBarrierCollisionForce(0.5);
+        ball.addRightBarrierCollisionForce(ball.getEnvironment(), 0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
     public void lowBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addLowBarrierCollisionForce(-0.5);
+        ball.addLowBarrierCollisionForce(ball.getEnvironment(), -0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
@@ -199,7 +199,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddLeftBarrierCollisionForce(Ball ball, double ballX, double wallX, double expected) {
         ball.setCenterPosition(ballX, 0);
-        ball.addLeftBarrierCollisionForce(wallX);
+        ball.addLeftBarrierCollisionForce(ball.getEnvironment(), wallX);
         assertNetForce(expected, 0, ball);
     }
 
@@ -213,7 +213,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddRightBarrierCollisionForce(Ball ball, double ballX, double wallX, double expected) {
         ball.setCenterPosition(ballX, 0);
-        ball.addRightBarrierCollisionForce(wallX);
+        ball.addRightBarrierCollisionForce(ball.getEnvironment(), wallX);
         assertNetForce(expected, 0, ball);
     }
 
@@ -227,7 +227,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddLowBarrierCollisionForce(Ball ball, double ballY, double wallY, double expected) {
         ball.setCenterPosition(0, ballY);
-        ball.addLowBarrierCollisionForce(wallY);
+        ball.addLowBarrierCollisionForce(ball.getEnvironment(), wallY);
         assertNetForce(0, expected, ball);
     }
 

@@ -75,10 +75,6 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         overlapAccumulator.addValue(overlap);
     }
 
-    public void addLeftBarrierCollisionForce(double wallX) {
-        addLeftBarrierCollisionForce(getEnvironment(), wallX);
-    }
-
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
      *
@@ -90,10 +86,6 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
             recordOverlap(overlap);
             environment.addForce(calcOverlapForce(overlap), (double) 0);
         }
-    }
-
-    public void addRightBarrierCollisionForce(double wallX) {
-        addRightBarrierCollisionForce(getEnvironment(), wallX);
     }
 
     /**
@@ -108,10 +100,6 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
             double forceX = -calcOverlapForce(overlap);
             environment.addForce(forceX, (double) 0);
         }
-    }
-
-    public void addLowBarrierCollisionForce(double wallY) {
-        addLowBarrierCollisionForce(getEnvironment(), wallY);
     }
 
     /**
