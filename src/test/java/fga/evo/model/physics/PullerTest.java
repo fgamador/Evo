@@ -15,8 +15,7 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_NoPull() {
-        Environment environment = new Environment();
-        environment.setCenterPosition(5, -5);
+        Environment environment = new Environment(5, -5);
         Puller puller = new Puller(environment);
         puller.setPosition(5, -5);
 
@@ -27,8 +26,7 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_Pull() {
-        Environment environment = new Environment();
-        environment.setCenterPosition(5, -5);
+        Environment environment = new Environment(5, -5);
         Puller puller = new Puller(environment);
         puller.setPosition(6, -6);
 
@@ -39,8 +37,7 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void testAddForceToCell_PullForceFactor() {
-        Environment environment = new Environment();
-        environment.setCenterPosition(5, -5);
+        Environment environment = new Environment(5, -5);
         Puller puller = new Puller(environment);
         puller.setPosition(6, -6);
         Puller.forceFactor.setValue(2);
@@ -54,7 +51,7 @@ public class PullerTest extends EvoTest {
         private double centerX;
         private double centerY;
 
-        public void setCenterPosition(double centerX, double centerY) {
+        Environment(double centerX, double centerY) {
             this.centerX = centerX;
             this.centerY = centerY;
         }
