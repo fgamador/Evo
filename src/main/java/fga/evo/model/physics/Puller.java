@@ -1,6 +1,5 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.CellEnvironment;
 import fga.evo.model.util.DoubleParameter;
 
