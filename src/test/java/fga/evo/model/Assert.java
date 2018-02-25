@@ -2,6 +2,7 @@ package fga.evo.model;
 
 import fga.evo.model.biology.Cell;
 import fga.evo.model.physics.NewtonianBody;
+import fga.evo.model.physics.NewtonianBodyEnvironment;
 
 import java.util.Collection;
 
@@ -69,6 +70,15 @@ public class Assert {
     public static void assertVelocity(double velocityX, double velocityY, NewtonianBody body, double delta) {
         assertEquals("Velocity X", velocityX, body.getVelocityX(), delta);
         assertEquals("Velocity Y", velocityY, body.getVelocityY(), delta);
+    }
+
+    public static void assertNetForce(double forceX, double forceY, NewtonianBodyEnvironment environment) {
+        assertNetForce(forceX, forceY, environment, DEFAULT_DELTA);
+    }
+
+    public static void assertNetForce(double forceX, double forceY, NewtonianBodyEnvironment environment, double delta) {
+        assertEquals("Force X", forceX, environment.getNetForceX(), delta);
+        assertEquals("Force Y", forceY, environment.getNetForceY(), delta);
     }
 
     public static void assertNetForce(double forceX, double forceY, NewtonianBody body) {
