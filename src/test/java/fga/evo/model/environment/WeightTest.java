@@ -21,7 +21,9 @@ public class WeightTest extends EvoTest {
 
     @Test
     public void neutralBuoyancy() {
-        cell.setMass(Weight.fluidDensity.getValue() * maxDisplacement);
+        Cell cell = new Cell(10);
+        cell.setCenterPosition(0, -100);
+        cell.setMass(Weight.fluidDensity.getValue() * cell.getArea());
         CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(environment, cell);
