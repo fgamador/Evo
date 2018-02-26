@@ -95,7 +95,8 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addRightBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
-        double overlap = getCenterX() + getRadius() - wallX;
+        double maxX = getCenterX() + getRadius();
+        double overlap = maxX - wallX;
         if (overlap > 0) {
             recordOverlap(overlap);
             environment.addForce(-calcOverlapForce(overlap), 0);
@@ -122,7 +123,8 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addHighBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
-        double overlap = getCenterY() + getRadius() - wallY;
+        double maxY = getCenterY() + getRadius();
+        double overlap = maxY - wallY;
         if (overlap > 0) {
             recordOverlap(overlap);
             environment.addForce(0, -calcOverlapForce(overlap));
