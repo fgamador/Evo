@@ -2,6 +2,7 @@ package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
 import fga.evo.model.physics.Ball;
+import fga.evo.model.physics.NewtonianBodyEnvironment;
 
 /**
  * The four walls surrounding the cells.
@@ -16,12 +17,64 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         this.maxY = maxY;
     }
 
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
+     *  @param ball
+     * @param wallX x-position of the barrier
+     */
+    public static void addLeftBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallX) {
+        double overlap = wallX - ball.getMinX();
+        if (overlap > 0) {
+            ball.recordOverlap(overlap);
+            environment.addForce(Ball.calcOverlapForce(overlap), 0);
+        }
+    }
+
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
+     *  @param ball
+     * @param wallX x-position of the barrier
+     */
+    public static void addRightBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallX) {
+        double overlap = ball.getMaxX() - wallX;
+        if (overlap > 0) {
+            ball.recordOverlap(overlap);
+            environment.addForce(-Ball.calcOverlapForce(overlap), 0);
+        }
+    }
+
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
+     *  @param ball
+     * @param wallY y-position of the barrier
+     */
+    public static void addLowBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallY) {
+        double overlap = wallY - ball.getMinY();
+        if (overlap > 0) {
+            ball.recordOverlap(overlap);
+            environment.addForce(0, Ball.calcOverlapForce(overlap));
+        }
+    }
+
+    /**
+     * Adds the force exerted on the ball if it is in collision with a barrier above it (larger y position).
+     *  @param ball
+     * @param wallY y-position of the barrier
+     */
+    public static void addHighBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallY) {
+        double overlap = ball.getMaxY() - wallY;
+        if (overlap > 0) {
+            ball.recordOverlap(overlap);
+            environment.addForce(0, -Ball.calcOverlapForce(overlap));
+        }
+    }
+
     @Override
     public void updateEnvironment(CellEnvironment environment, Cell cell) {
-        Ball.addLeftBarrierCollisionForce(environment, cell, minX);
-        Ball.addRightBarrierCollisionForce(environment, cell, maxX);
-        Ball.addLowBarrierCollisionForce(environment, cell, minY);
-        Ball.addHighBarrierCollisionForce(environment, cell, maxY);
+        addLeftBarrierCollisionForce(environment, cell, minX);
+        addRightBarrierCollisionForce(environment, cell, maxX);
+        addLowBarrierCollisionForce(environment, cell, minY);
+        addHighBarrierCollisionForce(environment, cell, maxY);
     }
 
     public void resizeWidth(double newWidth) {
