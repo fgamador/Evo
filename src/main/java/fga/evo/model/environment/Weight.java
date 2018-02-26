@@ -9,7 +9,7 @@ import fga.evo.model.util.DoubleParameter;
  */
 public class Weight extends EnvironmentalInfluence {
     public static DoubleParameter gravity = new DoubleParameter(0.5); // acceleration
-    public static DoubleParameter fluidDensity = new DoubleParameter(0.1); // mass per area // TODO 0.1 (0.01)
+    public static DoubleParameter fluidDensity = new DoubleParameter(0.1); // mass per area
 
     @Override
     public void updateEnvironment(CellEnvironment environment, Cell cell) {
