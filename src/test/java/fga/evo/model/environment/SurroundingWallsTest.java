@@ -2,8 +2,6 @@ package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
 import fga.evo.model.EvoTest;
-import fga.evo.model.physics.NewtonianBody;
-import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;

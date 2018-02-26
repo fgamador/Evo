@@ -84,8 +84,8 @@ public class PairBondTest extends EvoTest {
 
         bond.addForces();
 
-        assertNetForce(0, 0, ball1);
-        assertNetForce(0, 0, ball2);
+        assertNetForce((double) 0, (double) 0, ball1.getEnvironment());
+        assertNetForce((double) 0, (double) 0, ball2.getEnvironment());
     }
 
     @Test
@@ -98,8 +98,8 @@ public class PairBondTest extends EvoTest {
 
         bond.addForces();
 
-        assertNetForce(0, 0, ball1);
-        assertNetForce(0, 0, ball2);
+        assertNetForce((double) 0, (double) 0, ball1.getEnvironment());
+        assertNetForce((double) 0, (double) 0, ball2.getEnvironment());
     }
 
     @Test
@@ -110,8 +110,8 @@ public class PairBondTest extends EvoTest {
 
         bond.addForces();
 
-        assertNetForce(-1, 0, ball1);
-        assertNetForce(1, 0, ball2);
+        assertNetForce((double) -1, (double) 0, ball1.getEnvironment());
+        assertNetForce((double) 1, (double) 0, ball2.getEnvironment());
     }
 
     @Test
@@ -122,8 +122,8 @@ public class PairBondTest extends EvoTest {
 
         bond.addForces();
 
-        assertNetForce(0, -1, ball1);
-        assertNetForce(0, 1, ball2);
+        assertNetForce((double) 0, (double) -1, ball1.getEnvironment());
+        assertNetForce((double) 0, (double) 1, ball2.getEnvironment());
     }
 
     @Test
@@ -135,8 +135,8 @@ public class PairBondTest extends EvoTest {
 
         bond.addForces();
 
-        assertNetForce(-1, 0, ball1);
-        assertNetForce(1, 0, ball2);
+        assertNetForce((double) -1, (double) 0, ball1.getEnvironment());
+        assertNetForce((double) 1, (double) 0, ball2.getEnvironment());
     }
 
     private Ball createBall(int radius, int centerX, int centerY) {

@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertNetForce;
 import static fga.evo.model.EvoTest.SQRT_2;
-import static org.junit.Assert.*;
 
 public class PairCollisionTest {
     @Before
@@ -26,8 +25,8 @@ public class PairCollisionTest {
 
         PairCollision.addForces(ball1, ball2, 1);
 
-        assertNetForce(-1, 0, ball1);
-        assertNetForce(1, 0, ball2);
+        assertNetForce((double) -1, (double) 0, ball1.getEnvironment());
+        assertNetForce((double) 1, (double) 0, ball2.getEnvironment());
     }
 
     @Test
@@ -42,8 +41,10 @@ public class PairCollisionTest {
 
         PairCollision.addForces(ball1, ball2, 1);
 
-        assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball1);
-        assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
+        double forceX = -SQRT_2 / 2;
+        assertNetForce(forceX, SQRT_2 / 2, ball1.getEnvironment());
+        double forceY = -SQRT_2 / 2;
+        assertNetForce(SQRT_2 / 2, forceY, ball2.getEnvironment());
     }
 
     @Test
@@ -58,8 +59,10 @@ public class PairCollisionTest {
 
         PairCollision.addForces(ball2, ball1, 1);
 
-        assertNetForce(-SQRT_2 / 2, SQRT_2 / 2, ball1);
-        assertNetForce(SQRT_2 / 2, -SQRT_2 / 2, ball2);
+        double forceX = -SQRT_2 / 2;
+        assertNetForce(forceX, SQRT_2 / 2, ball1.getEnvironment());
+        double forceY = -SQRT_2 / 2;
+        assertNetForce(SQRT_2 / 2, forceY, ball2.getEnvironment());
     }
 
     @Test
@@ -74,7 +77,7 @@ public class PairCollisionTest {
 
         PairCollision.addForces(ball1, ball2, 2);
 
-        assertNetForce(0, 0, ball1);
-        assertNetForce(0, 0, ball2);
+        assertNetForce((double) 0, (double) 0, ball1.getEnvironment());
+        assertNetForce((double) 0, (double) 0, ball2.getEnvironment());
     }
 }
