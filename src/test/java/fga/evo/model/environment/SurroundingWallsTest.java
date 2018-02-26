@@ -29,7 +29,7 @@ public class SurroundingWallsTest extends EvoTest {
     }
 
     @Test
-    public void lowXYCollisionAddsForce() {
+    public void lowXYCollisionAddsExpectedForce() {
         cell.setCenterPosition(0.5, -0.5);
         CellEnvironment environment = new CellEnvironment();
 
@@ -39,7 +39,7 @@ public class SurroundingWallsTest extends EvoTest {
     }
 
     @Test
-    public void highXYCollisionAddsForce() {
+    public void highXYCollisionAddsExpectedForce() {
         cell.setCenterPosition(9.5, -9.5);
         CellEnvironment environment = new CellEnvironment();
 
