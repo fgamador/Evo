@@ -51,7 +51,7 @@ public class WeightTest extends EvoTest {
     }
 
     @Test
-    public void barelySubmergedBuoyancy() {
+    public void fullBuoyancyWhenBarelySubmerged() {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -cell.getRadius());
         setCellDensity(cell, Weight.fluidDensity.getValue());
@@ -63,7 +63,7 @@ public class WeightTest extends EvoTest {
     }
 
     @Test
-    public void fullyEmergedBuoyancy() {
+    public void noBuoyancyWhenFullyEmerged() {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, cell.getRadius());
         setCellDensity(cell, Weight.fluidDensity.getValue());
@@ -76,7 +76,7 @@ public class WeightTest extends EvoTest {
     }
 
     @Test
-    public void halfEmergedBuoyancy() {
+    public void halfBuoyancyWhenHalfEmerged() {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, 0);
         setCellDensity(cell, Weight.fluidDensity.getValue());
