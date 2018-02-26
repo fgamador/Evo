@@ -63,20 +63,7 @@ public class WeightTest extends EvoTest {
     }
 
     @Test
-    public void noBuoyancyWhenFullyEmerged() {
-        Cell cell = new Cell(10);
-        cell.setCenterPosition(0, cell.getRadius());
-        setCellDensity(cell, Weight.fluidDensity.getValue());
-        CellEnvironment environment = new CellEnvironment();
-
-        new Weight().updateEnvironment(environment, cell);
-
-        double forceY = -cell.getMass() * Weight.gravity.getValue();
-        assertNetForce(0, forceY, environment);
-    }
-
-    @Test
-    public void halfBuoyancyWhenHalfEmerged() {
+    public void halfBuoyancyWhenHalfSubmerged() {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, 0);
         setCellDensity(cell, Weight.fluidDensity.getValue());
@@ -85,6 +72,19 @@ public class WeightTest extends EvoTest {
         new Weight().updateEnvironment(environment, cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
+        assertNetForce(0, forceY, environment);
+    }
+
+    @Test
+    public void noBuoyancyWhenNotSubmerged() {
+        Cell cell = new Cell(10);
+        cell.setCenterPosition(0, cell.getRadius());
+        setCellDensity(cell, Weight.fluidDensity.getValue());
+        CellEnvironment environment = new CellEnvironment();
+
+        new Weight().updateEnvironment(environment, cell);
+
+        double forceY = -cell.getMass() * Weight.gravity.getValue();
         assertNetForce(0, forceY, environment);
     }
 
