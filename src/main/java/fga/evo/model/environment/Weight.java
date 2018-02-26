@@ -18,15 +18,15 @@ public class Weight extends EnvironmentalInfluence {
         environment.addForce(0, displacedFluidWeight - cellWeight);
     }
 
-    private double getDisplacement(Ball ball) {
-        if (ball.getCenterY() <= -ball.getRadius()) {
-            return ball.getArea();
-        } else if (ball.getCenterY() > ball.getRadius()) {
+    private double getDisplacement(Cell cell) {
+        if (cell.getCenterY() <= -cell.getRadius()) {
+            return cell.getArea();
+        } else if (cell.getCenterY() > cell.getRadius()) {
             return 0;
         } else {
-            double fractionSubmerged = (ball.getRadius() - ball.getCenterY()) / (2 * ball.getRadius());
+            double fractionSubmerged = (cell.getRadius() - cell.getCenterY()) / (2 * cell.getRadius());
             // linear approximation of the real, hairy equation; treats ball as a square, not a circle
-            return fractionSubmerged * ball.getArea();
+            return fractionSubmerged * cell.getArea();
         }
     }
 }
