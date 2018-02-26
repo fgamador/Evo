@@ -77,11 +77,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
 
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
-     *
-     * @param ball
+     *  @param ball
      * @param wallX x-position of the barrier
      */
-    public static void addLeftBarrierCollisionForce(Ball ball, NewtonianBodyEnvironment environment, double wallX) {
+    public static void addLeftBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallX) {
         double overlap = wallX - ball.getMinX();
         if (overlap > 0) {
             ball.recordOverlap(overlap);
@@ -91,11 +90,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
 
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier to its right (larger x position).
-     *
-     * @param ball
+     *  @param ball
      * @param wallX x-position of the barrier
      */
-    public static void addRightBarrierCollisionForce(Ball ball, NewtonianBodyEnvironment environment, double wallX) {
+    public static void addRightBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallX) {
         double overlap = ball.getMaxX() - wallX;
         if (overlap > 0) {
             ball.recordOverlap(overlap);
@@ -105,11 +103,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
 
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier below it (smaller y position).
-     *
-     * @param ball
+     *  @param ball
      * @param wallY y-position of the barrier
      */
-    public static void addLowBarrierCollisionForce(Ball ball, NewtonianBodyEnvironment environment, double wallY) {
+    public static void addLowBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallY) {
         double overlap = wallY - ball.getMinY();
         if (overlap > 0) {
             ball.recordOverlap(overlap);
@@ -119,11 +116,10 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
 
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier above it (larger y position).
-     *
-     * @param ball
+     *  @param ball
      * @param wallY y-position of the barrier
      */
-    public static void addHighBarrierCollisionForce(Ball ball, NewtonianBodyEnvironment environment, double wallY) {
+    public static void addHighBarrierCollisionForce(NewtonianBodyEnvironment environment, Ball ball, double wallY) {
         double overlap = ball.getMaxY() - wallY;
         if (overlap > 0) {
             ball.recordOverlap(overlap);
