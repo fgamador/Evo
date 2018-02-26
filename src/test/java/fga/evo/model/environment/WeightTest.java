@@ -32,7 +32,9 @@ public class WeightTest extends EvoTest {
     }
 
     @Test
-    public void testMaxBuoyancy() {
+    public void maxBuoyancy() {
+        Cell cell = new Cell(10);
+        cell.setCenterPosition(0, -100);
         cell.setMass(0);
         CellEnvironment environment = new CellEnvironment();
 
