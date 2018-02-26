@@ -10,16 +10,15 @@ import static fga.evo.model.Assert.assertNetForce;
 
 public class SurroundingWallsTest extends EvoTest {
     private SurroundingWalls walls;
-    private Cell cell;
 
     @Before
     public void setUp() {
         walls = new SurroundingWalls(0, 10, -10, 0);
-        cell = new Cell(1);
     }
 
     @Test
     public void justTouchingAddsNoForce() {
+        Cell cell = new Cell(1);
         cell.setCenterPosition(1, -1);
         CellEnvironment environment = new CellEnvironment();
 
@@ -30,6 +29,7 @@ public class SurroundingWallsTest extends EvoTest {
 
     @Test
     public void lowXYCollisionAddsExpectedForce() {
+        Cell cell = new Cell(1);
         cell.setCenterPosition(0.5, -0.5);
         CellEnvironment environment = new CellEnvironment();
 
@@ -40,6 +40,7 @@ public class SurroundingWallsTest extends EvoTest {
 
     @Test
     public void highXYCollisionAddsExpectedForce() {
+        Cell cell = new Cell(1);
         cell.setCenterPosition(9.5, -9.5);
         CellEnvironment environment = new CellEnvironment();
 
@@ -50,6 +51,7 @@ public class SurroundingWallsTest extends EvoTest {
 
     @Test
     public void highCeilingAddsNoForce() {
+        Cell cell = new Cell(1);
         walls = new SurroundingWalls(-5, 5, -5, 5);
         cell.setCenterPosition(0, 0);
         CellEnvironment environment = new CellEnvironment();
