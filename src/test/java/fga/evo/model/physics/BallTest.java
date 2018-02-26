@@ -164,28 +164,28 @@ public class BallTest extends EvoTest {
     @Test
     public void leftBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addLeftBarrierCollisionForce(ball.getEnvironment(), -0.5);
+        Ball.addLeftBarrierCollisionForce(ball, ball.getEnvironment(), -0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
     public void rightBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addRightBarrierCollisionForce(ball.getEnvironment(), 0.5);
+        Ball.addRightBarrierCollisionForce(ball, ball.getEnvironment(), 0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
     public void lowBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addLowBarrierCollisionForce(ball.getEnvironment(), -0.5);
+        Ball.addLowBarrierCollisionForce(ball, ball.getEnvironment(), -0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
     @Test
     public void highBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
-        ball.addHighBarrierCollisionForce(ball.getEnvironment(), 0.5);
+        Ball.addHighBarrierCollisionForce(ball, ball.getEnvironment(), 0.5);
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
@@ -199,7 +199,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddLeftBarrierCollisionForce(Ball ball, double ballX, double wallX, double expected) {
         ball.setCenterPosition(ballX, 0);
-        ball.addLeftBarrierCollisionForce(ball.getEnvironment(), wallX);
+        Ball.addLeftBarrierCollisionForce(ball, ball.getEnvironment(), wallX);
         assertNetForce(expected, (double) 0, ball.getEnvironment());
     }
 
@@ -213,7 +213,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddRightBarrierCollisionForce(Ball ball, double ballX, double wallX, double expected) {
         ball.setCenterPosition(ballX, 0);
-        ball.addRightBarrierCollisionForce(ball.getEnvironment(), wallX);
+        Ball.addRightBarrierCollisionForce(ball, ball.getEnvironment(), wallX);
         assertNetForce(expected, (double) 0, ball.getEnvironment());
     }
 
@@ -227,7 +227,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddLowBarrierCollisionForce(Ball ball, double ballY, double wallY, double expected) {
         ball.setCenterPosition(0, ballY);
-        ball.addLowBarrierCollisionForce(ball.getEnvironment(), wallY);
+        Ball.addLowBarrierCollisionForce(ball, ball.getEnvironment(), wallY);
         assertNetForce((double) 0, expected, ball.getEnvironment());
     }
 
@@ -241,7 +241,7 @@ public class BallTest extends EvoTest {
 
     private void checkAddHighBarrierCollisionForce(Ball ball, double ballY, double wallY, double expected) {
         ball.setCenterPosition(0, ballY);
-        ball.addHighBarrierCollisionForce(ball.getEnvironment(), wallY);
+        Ball.addHighBarrierCollisionForce(ball, ball.getEnvironment(), wallY);
         assertNetForce((double) 0, expected, ball.getEnvironment());
     }
 

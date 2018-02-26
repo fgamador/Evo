@@ -1,6 +1,7 @@
 package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
+import fga.evo.model.physics.Ball;
 
 /**
  * The four walls surrounding the cells.
@@ -17,10 +18,10 @@ public class SurroundingWalls extends EnvironmentalInfluence {
 
     @Override
     public void updateEnvironment(CellEnvironment environment, Cell cell) {
-        cell.addLeftBarrierCollisionForce(environment, minX);
-        cell.addRightBarrierCollisionForce(environment, maxX);
-        cell.addLowBarrierCollisionForce(environment, minY);
-        cell.addHighBarrierCollisionForce(environment, maxY);
+        Ball.addLeftBarrierCollisionForce(cell, environment, minX);
+        Ball.addRightBarrierCollisionForce(cell, environment, maxX);
+        Ball.addLowBarrierCollisionForce(cell, environment, minY);
+        Ball.addHighBarrierCollisionForce(cell, environment, maxY);
     }
 
     public void resizeWidth(double newWidth) {
