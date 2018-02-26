@@ -17,6 +17,14 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         this.maxY = maxY;
     }
 
+    @Override
+    public void updateEnvironment(CellEnvironment environment, Cell cell) {
+        addLeftBarrierCollisionForce(environment, cell, minX);
+        addRightBarrierCollisionForce(environment, cell, maxX);
+        addLowBarrierCollisionForce(environment, cell, minY);
+        addHighBarrierCollisionForce(environment, cell, maxY);
+    }
+
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
      *  @param ball
@@ -67,14 +75,6 @@ public class SurroundingWalls extends EnvironmentalInfluence {
             ball.recordOverlap(overlap);
             environment.addForce(0, -Ball.calcOverlapForce(overlap));
         }
-    }
-
-    @Override
-    public void updateEnvironment(CellEnvironment environment, Cell cell) {
-        addLeftBarrierCollisionForce(environment, cell, minX);
-        addRightBarrierCollisionForce(environment, cell, maxX);
-        addLowBarrierCollisionForce(environment, cell, minY);
-        addHighBarrierCollisionForce(environment, cell, maxY);
     }
 
     public void resizeWidth(double newWidth) {
