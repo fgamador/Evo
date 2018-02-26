@@ -71,7 +71,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         }
     }
 
-    private void recordOverlap(double overlap) {
+    public void recordOverlap(double overlap) {
         overlapAccumulator.addValue(overlap);
     }
 
@@ -156,7 +156,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
         return overlapAccumulator.getTotal();
     }
 
-    static double calcOverlapForce(double overlap) {
+    public static double calcOverlapForce(double overlap) {
         return overlapForceFactor.getValue() * overlap;
     }
 }
