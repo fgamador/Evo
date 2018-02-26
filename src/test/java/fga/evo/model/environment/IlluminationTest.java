@@ -2,7 +2,6 @@ package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
 import fga.evo.model.EvoTest;
-import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertEnergy;
@@ -68,7 +67,7 @@ public class IlluminationTest extends EvoTest {
         Cell cell = new Cell(1);
         cell.setCenterPosition(50, -50);
 
-        lighting.addEnergyToCell(cell);
+        lighting.updateEnvironment(cell.getEnvironment(), cell);
 
         assertEnergy(0.5, cell);
     }
