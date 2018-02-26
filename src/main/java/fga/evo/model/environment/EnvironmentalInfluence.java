@@ -12,9 +12,4 @@ public abstract class EnvironmentalInfluence {
     public void addEnergyToCell(Cell cell) {
         updateEnvironment(cell.getEnvironment(), cell);
     }
-
-    // TODO make this obsolete
-    public final void addForcesToCell(Cell cell) {
-        updateEnvironment(cell.getEnvironment(), cell);
-    }
 }
