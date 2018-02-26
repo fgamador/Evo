@@ -44,8 +44,10 @@ public class WeightTest extends EvoTest {
     }
 
     @Test
-    public void testSinking() {
-        cell.setMass(2 * Weight.fluidDensity.getValue() * maxDisplacement);
+    public void sinking() {
+        Cell cell = new Cell(10);
+        cell.setCenterPosition(0, -100);
+        cell.setMass(2 * Weight.fluidDensity.getValue() * cell.getArea());
         CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(environment, cell);
