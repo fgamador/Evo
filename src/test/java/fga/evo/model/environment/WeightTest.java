@@ -29,7 +29,7 @@ public class WeightTest extends EvoTest {
     public void maxBuoyancy() {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -100);
-        cell.setMass(0);
+        setCellDensity(cell, 0);
         CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(environment, cell);
@@ -41,7 +41,7 @@ public class WeightTest extends EvoTest {
     public void sinking() {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -100);
-        cell.setMass(2 * Weight.fluidDensity.getValue() * cell.getArea());
+        setCellDensity(cell, 2 * Weight.fluidDensity.getValue());
         CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(environment, cell);
