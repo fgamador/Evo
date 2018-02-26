@@ -8,15 +8,9 @@ import org.junit.Test;
 import static fga.evo.model.Assert.assertNetForce;
 
 public class WeightTest extends EvoTest {
-    private Cell cell;
-    private double maxDisplacement;
-
     @Before
     public void setUp() {
         Weight.fluidDensity.setValue(0.01);
-        cell = new Cell(10);
-        cell.setCenterPosition(0, -100);
-        maxDisplacement = cell.getArea();
     }
 
     @Test
