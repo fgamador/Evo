@@ -81,7 +81,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addLeftBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
-        double minX = getCenterX() - getRadius();
+        double minX = getMinX();
         double overlap = wallX - minX;
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -95,7 +95,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallX x-position of the barrier
      */
     public void addRightBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallX) {
-        double maxX = getCenterX() + getRadius();
+        double maxX = getMaxX();
         double overlap = maxX - wallX;
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -109,7 +109,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addLowBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
-        double minY = getCenterY() - getRadius();
+        double minY = getMinY();
         double overlap = wallY - minY;
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -123,7 +123,7 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
      * @param wallY y-position of the barrier
      */
     public void addHighBarrierCollisionForce(NewtonianBodyEnvironment environment, double wallY) {
-        double maxY = getCenterY() + getRadius();
+        double maxY = getMaxY();
         double overlap = maxY - wallY;
         if (overlap > 0) {
             recordOverlap(overlap);
@@ -134,6 +134,22 @@ public class Ball extends NewtonianBody implements OverlappableCircle {
     @Override
     public double getRadius() {
         return radius;
+    }
+
+    public double getMinX() {
+        return getCenterX() - getRadius();
+    }
+
+    public double getMaxX() {
+        return getCenterX() + getRadius();
+    }
+
+    public double getMinY() {
+        return getCenterY() - getRadius();
+    }
+
+    public double getMaxY() {
+        return getCenterY() + getRadius();
     }
 
     public double getArea() {
