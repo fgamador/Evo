@@ -18,7 +18,6 @@ public class WeightTest extends EvoTest {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -100);
         setCellDensity(cell, Weight.fluidDensity.getValue());
-        CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(cell);
 
@@ -30,7 +29,6 @@ public class WeightTest extends EvoTest {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -100);
         setCellDensity(cell, 0);
-        CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(cell);
 
@@ -42,7 +40,6 @@ public class WeightTest extends EvoTest {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -100);
         setCellDensity(cell, 2 * Weight.fluidDensity.getValue());
-        CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(cell);
 
@@ -55,7 +52,6 @@ public class WeightTest extends EvoTest {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, -cell.getRadius());
         setCellDensity(cell, Weight.fluidDensity.getValue());
-        CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(cell);
 
@@ -67,7 +63,6 @@ public class WeightTest extends EvoTest {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, 0);
         setCellDensity(cell, Weight.fluidDensity.getValue());
-        CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(cell);
 
@@ -80,7 +75,6 @@ public class WeightTest extends EvoTest {
         Cell cell = new Cell(10);
         cell.setCenterPosition(0, cell.getRadius());
         setCellDensity(cell, Weight.fluidDensity.getValue());
-        CellEnvironment environment = new CellEnvironment();
 
         new Weight().updateEnvironment(cell);
 
