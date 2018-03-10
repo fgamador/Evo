@@ -16,8 +16,8 @@ public class PairBondTest extends EvoTest {
 
     @Test
     public void aPairBondBondsToTheBallsItWasConstructedWith() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         PairBond bond = new PairBond(ball1, ball2);
 
@@ -27,26 +27,26 @@ public class PairBondTest extends EvoTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondABallToItself() {
-        Ball ball1 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
         new PairBond(ball1, ball1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondNull1() {
-        Ball ball = new Ball();
+        Ball ball = new BallWithEnvironment();
         new PairBond(null, ball);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondNull2() {
-        Ball ball = new Ball();
+        Ball ball = new BallWithEnvironment();
         new PairBond(ball, null);
     }
 
     @Test
     public void pairBondEqualsUsesBalls() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         PairBond bond1 = new PairBond(ball1, ball2);
         PairBond bond2 = new PairBond(ball1, ball2);
@@ -56,8 +56,8 @@ public class PairBondTest extends EvoTest {
 
     @Test
     public void pairBondEqualsIsOrderIndependent() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         PairBond bond1 = new PairBond(ball1, ball2);
         PairBond bond2 = new PairBond(ball2, ball1);
@@ -67,8 +67,8 @@ public class PairBondTest extends EvoTest {
 
     @Test
     public void pairBondHashCodeIsOrderIndependent() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         PairBond bond1 = new PairBond(ball1, ball2);
         PairBond bond2 = new PairBond(ball2, ball1);
@@ -140,7 +140,7 @@ public class PairBondTest extends EvoTest {
     }
 
     private Ball createBall(int radius, int centerX, int centerY) {
-        Ball ball1 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
         ball1.setRadius(radius);
         ball1.setCenterPosition(centerX, centerY);
         return ball1;
