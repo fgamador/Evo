@@ -17,7 +17,7 @@ public class BallTest extends EvoTest {
 
     @Test
     public void areaCorrespondsToRadius() {
-        Ball ball = new Ball();
+        Ball ball = new BallWithEnvironment();
         ball.setRadius(3);
         assertEquals(9 * Math.PI, ball.getArea(), Assert.DEFAULT_DELTA);
     }
@@ -30,8 +30,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void unbondedBallsAreNotBonded() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         assertFalse(ball1.isBondedTo(ball2));
         assertFalse(ball2.isBondedTo(ball1));
@@ -39,8 +39,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void bondingBallsBondsThem() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         ball1.addBond(ball2);
 
@@ -50,8 +50,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void bondingBallsReturnsBond() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
 
         PairBond bond = ball1.addBond(ball2);
 
@@ -61,8 +61,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void unbondingBallsUnbondsThem() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
         ball1.addBond(ball2);
 
         ball1.removeBond(ball2);
@@ -73,8 +73,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void unbondingBallsReturnsBond() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
         ball1.addBond(ball2);
 
         PairBond bond = ball1.removeBond(ball2);
@@ -85,8 +85,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void unbondingBallsFromOtherEndUnbondsThem() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
         ball1.addBond(ball2);
 
         ball2.removeBond(ball1);
@@ -97,9 +97,9 @@ public class BallTest extends EvoTest {
 
     @Test
     public void unbondingRemovesOnlySpecifiedBond() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
-        Ball ball3 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
+        Ball ball3 = new BallWithEnvironment();
         ball1.addBond(ball2);
         ball1.addBond(ball3);
 
@@ -113,16 +113,16 @@ public class BallTest extends EvoTest {
 
     @Test(expected = IllegalStateException.class)
     public void cannotBondSameBallTwice() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
         ball1.addBond(ball2);
         ball1.addBond(ball2);
     }
 
     @Test(expected = IllegalStateException.class)
     public void cannotBondSameBallTwiceEvenFromOtherEnd() {
-        Ball ball1 = new Ball();
-        Ball ball2 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
         ball1.addBond(ball2);
         ball2.addBond(ball1);
     }
@@ -247,7 +247,7 @@ public class BallTest extends EvoTest {
     }
 
     private Ball createBall(double radius, double centerX, double centerY) {
-        Ball ball = new Ball();
+        Ball ball = new BallWithEnvironment();
         ball.setRadius(radius);
         ball.setCenterPosition(centerX, centerY);
         return ball;
