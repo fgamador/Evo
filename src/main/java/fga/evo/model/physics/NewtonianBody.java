@@ -4,7 +4,7 @@ import fga.evo.model.util.DoubleParameter;
 
 import static fga.evo.model.util.Util.sqr;
 
-public class NewtonianBody {
+public abstract class NewtonianBody {
     public static DoubleParameter speedLimit = new DoubleParameter(4);
 
     private double mass;
