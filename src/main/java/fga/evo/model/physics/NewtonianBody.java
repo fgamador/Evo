@@ -12,7 +12,6 @@ public abstract class NewtonianBody {
     private double centerY;
     private double velocityX;
     private double velocityY;
-    private final NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
 
     public NewtonianBody() {
     }
@@ -22,9 +21,7 @@ public abstract class NewtonianBody {
         setVelocity(velocityX, velocityY);
     }
 
-    public NewtonianBodyEnvironment getEnvironment() {
-        return environment;
-    }
+    public abstract NewtonianBodyEnvironment getEnvironment();
 
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtick}.
