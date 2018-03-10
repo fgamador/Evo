@@ -1,7 +1,7 @@
 package fga.evo.model.physics;
 
 class NewtonianBodyWithEnvironment extends NewtonianBody {
-    NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
+    private NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
 
     public NewtonianBodyWithEnvironment() {
     }
