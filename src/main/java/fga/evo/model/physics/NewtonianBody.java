@@ -42,6 +42,10 @@ public class NewtonianBody {
         this.velocityY = velocityY;
     }
 
+    public void subtick(int subticksPerTick) {
+        subtick(getEnvironment(), subticksPerTick);
+    }
+
     public void subtick(NewtonianBodyEnvironment environment, int subticksPerTick) {
         updateVelocity(environment, subticksPerTick);
         limitSpeed();

@@ -12,7 +12,7 @@ public class NewtonianBodyTest extends EvoTest {
         NewtonianBody body = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
         body.setMass(1);
 
-        body.subtick(body.getEnvironment(), 1);
+        body.subtick(1);
 
         assertVelocity(0, 0, body);
         assertPosition(0, 0, body);
