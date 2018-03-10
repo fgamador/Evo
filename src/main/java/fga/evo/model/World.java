@@ -80,7 +80,7 @@ public class World {
     private void tickPhysicsAfterFirstOverlapDetection() {
         addNonOverlapForces();
         for (Cell cell : cells) {
-            cell.subtickPhysics(cell.getEnvironment(), subticksPerTick);
+            cell.subtickPhysics(subticksPerTick);
         }
         for (int i = 0; i < subticksPerTick - 1; i++) {
             subtickPhysics();
@@ -91,7 +91,7 @@ public class World {
         addForces();
 
         for (Cell cell : cells) {
-            cell.subtickPhysics(cell.getEnvironment(), subticksPerTick);
+            cell.subtickPhysics(subticksPerTick);
         }
     }
 

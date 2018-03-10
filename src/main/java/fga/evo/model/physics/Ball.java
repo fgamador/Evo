@@ -53,10 +53,9 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
     /**
      * Updates the ball's velocity and position per the forces currently on it, then clears the forces.
      *
-     * @param environment     holds the net forces on the ball
      * @param subticksPerTick time resolution
      */
-    public void subtickPhysics(NewtonianBodyEnvironment environment, int subticksPerTick) {
+    public void subtickPhysics(int subticksPerTick) {
         subtick(subticksPerTick);
         overlapAccumulator.decay();
     }
