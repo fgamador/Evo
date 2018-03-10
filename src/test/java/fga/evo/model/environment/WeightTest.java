@@ -20,7 +20,7 @@ public class WeightTest extends EvoTest {
         setCellDensity(cell, Weight.fluidDensity.getValue());
         CellEnvironment environment = new CellEnvironment();
 
-        new Weight().updateEnvironment(environment, cell);
+        new Weight().updateEnvironment(cell);
 
         assertNetForce(0, 0, cell.getEnvironment());
     }
@@ -32,7 +32,7 @@ public class WeightTest extends EvoTest {
         setCellDensity(cell, 0);
         CellEnvironment environment = new CellEnvironment();
 
-        new Weight().updateEnvironment(environment, cell);
+        new Weight().updateEnvironment(cell);
 
         assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell.getEnvironment());
     }
@@ -44,7 +44,7 @@ public class WeightTest extends EvoTest {
         setCellDensity(cell, 2 * Weight.fluidDensity.getValue());
         CellEnvironment environment = new CellEnvironment();
 
-        new Weight().updateEnvironment(environment, cell);
+        new Weight().updateEnvironment(cell);
 
         double forceY = -Weight.gravity.getValue() * Math.PI;
         assertNetForce(0, forceY, cell.getEnvironment());
@@ -57,7 +57,7 @@ public class WeightTest extends EvoTest {
         setCellDensity(cell, Weight.fluidDensity.getValue());
         CellEnvironment environment = new CellEnvironment();
 
-        new Weight().updateEnvironment(environment, cell);
+        new Weight().updateEnvironment(cell);
 
         assertNetForce(0, 0, cell.getEnvironment());
     }
@@ -69,7 +69,7 @@ public class WeightTest extends EvoTest {
         setCellDensity(cell, Weight.fluidDensity.getValue());
         CellEnvironment environment = new CellEnvironment();
 
-        new Weight().updateEnvironment(environment, cell);
+        new Weight().updateEnvironment(cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
         assertNetForce(0, forceY, cell.getEnvironment());
@@ -82,7 +82,7 @@ public class WeightTest extends EvoTest {
         setCellDensity(cell, Weight.fluidDensity.getValue());
         CellEnvironment environment = new CellEnvironment();
 
-        new Weight().updateEnvironment(environment, cell);
+        new Weight().updateEnvironment(cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue();
         assertNetForce(0, forceY, cell.getEnvironment());

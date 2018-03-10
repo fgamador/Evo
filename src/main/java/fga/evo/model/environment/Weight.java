@@ -1,7 +1,6 @@
 package fga.evo.model.environment;
 
 import fga.evo.model.biology.Cell;
-import fga.evo.model.physics.Ball;
 import fga.evo.model.util.DoubleParameter;
 
 /**
@@ -12,7 +11,7 @@ public class Weight extends EnvironmentalInfluence {
     public static DoubleParameter fluidDensity = new DoubleParameter(0.1); // mass per area
 
     @Override
-    public void updateEnvironment(CellEnvironment environment, Cell cell) {
+    public void updateEnvironment(Cell cell) {
         double displacedFluidMass = fluidDensity.getValue() * getDisplacement(cell);
         double forceY = (displacedFluidMass - cell.getMass()) * gravity.getValue();
         cell.getEnvironment().addForce(0, forceY);

@@ -14,7 +14,7 @@ public class SurroundingWallsTest extends EvoTest {
         cell.setCenterPosition(1, -1);
         CellEnvironment environment = new CellEnvironment();
 
-        walls.updateEnvironment(environment, cell);
+        walls.updateEnvironment(cell);
 
         assertNetForce(0, 0, cell.getEnvironment());
     }
@@ -26,7 +26,7 @@ public class SurroundingWallsTest extends EvoTest {
         cell.setCenterPosition(0.5, -0.5);
         CellEnvironment environment = new CellEnvironment();
 
-        walls.updateEnvironment(environment, cell);
+        walls.updateEnvironment(cell);
 
         assertNetForce(0.5, -0.5, cell.getEnvironment());
     }
@@ -38,7 +38,7 @@ public class SurroundingWallsTest extends EvoTest {
         cell.setCenterPosition(9.5, -9.5);
         CellEnvironment environment = new CellEnvironment();
 
-        walls.updateEnvironment(environment, cell);
+        walls.updateEnvironment(cell);
 
         assertNetForce(-0.5, 0.5, cell.getEnvironment());
     }
@@ -50,7 +50,7 @@ public class SurroundingWallsTest extends EvoTest {
         cell.setCenterPosition(0, 0);
         CellEnvironment environment = new CellEnvironment();
 
-        walls.updateEnvironment(environment, cell);
+        walls.updateEnvironment(cell);
 
         assertNetForce(0, 0, cell.getEnvironment());
     }

@@ -52,7 +52,7 @@ public class IlluminationTest extends EvoTest {
         Cell cell = new Cell(1);
         cell.setCenterPosition(0, -50);
 
-        lighting.updateEnvironment(null, cell);
+        lighting.updateEnvironment(cell);
 
         assertEquals(1, cell.getEnvironment().getLightIntensity(), 0);
     }
@@ -66,7 +66,7 @@ public class IlluminationTest extends EvoTest {
         Cell cell = new Cell(1);
         cell.setCenterPosition(50, -50);
 
-        lighting.updateEnvironment(cell.getEnvironment(), cell);
+        lighting.updateEnvironment(cell);
 
         assertEnergy(0.5, cell);
     }

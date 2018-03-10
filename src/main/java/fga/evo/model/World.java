@@ -72,7 +72,7 @@ public class World {
 
     private void tickBiology_ConsequencesPhase(Cell cell) {
         for (EnvironmentalInfluence influence : energyInfluences) {
-            influence.updateEnvironment(cell.getEnvironment(), cell);
+            influence.updateEnvironment(cell);
         }
         cell.tickBiology_ConsequencesPhase();
     }
@@ -108,7 +108,7 @@ public class World {
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : forceInfluences) {
-                influence.updateEnvironment(cell.getEnvironment(), cell);
+                influence.updateEnvironment(cell);
             }
 
             for (PairBond bond : bonds) {
