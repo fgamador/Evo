@@ -100,16 +100,4 @@ public class NewtonianBodyTest extends EvoTest {
         assertPosition(0.25, 0.25, body);
     }
 
-    private static class NewtonianBodyWithEnvironment extends NewtonianBody {
-        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
-
-        public NewtonianBodyWithEnvironment(double centerX, double centerY, double velocityX, double velocityY) {
-            super(centerX, centerY, velocityX, velocityY);
-        }
-
-        @Override
-        public NewtonianBodyEnvironment getEnvironment() {
-            return environment;
-        }
-    }
 }
