@@ -15,7 +15,7 @@ public class Weight extends EnvironmentalInfluence {
     public void updateEnvironment(CellEnvironment environment, Cell cell) {
         double displacedFluidMass = fluidDensity.getValue() * getDisplacement(cell);
         double forceY = (displacedFluidMass - cell.getMass()) * gravity.getValue();
-        environment.addForce(0, forceY);
+        cell.getEnvironment().addForce(0, forceY);
     }
 
     private double getDisplacement(Cell cell) {
