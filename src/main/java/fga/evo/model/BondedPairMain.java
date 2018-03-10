@@ -1,7 +1,6 @@
 package fga.evo.model;
 
-import fga.evo.model.physics.Ball;
-import fga.evo.model.physics.NewtonianBodyEnvironment;
+import fga.evo.model.physics.BallWithEnvironment;
 import fga.evo.model.physics.PairBond;
 
 public class BondedPairMain {
@@ -52,12 +51,4 @@ public class BondedPairMain {
                 + "," + ball1.getEnvironment().getNetForceX() + "," + ball2.getEnvironment().getNetForceX());
     }
 
-    private static class BallWithEnvironment extends Ball {
-        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
-
-        @Override
-        public NewtonianBodyEnvironment getEnvironment() {
-            return environment;
-        }
-    }
 }
