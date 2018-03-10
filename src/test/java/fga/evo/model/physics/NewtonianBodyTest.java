@@ -9,10 +9,10 @@ import static fga.evo.model.Assert.assertVelocity;
 public class NewtonianBodyTest extends EvoTest {
     @Test
     public void stationaryBodyWithNoForcesDoesNotMove() {
-        NewtonianBody body = new NewtonianBody(0, 0, 0, 0);
+        NewtonianBody body = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
         body.setMass(1);
 
-        body.subtick(new NewtonianBodyEnvironment(), 1);
+        body.subtick(body.getEnvironment(), 1);
 
         assertVelocity(0, 0, body);
         assertPosition(0, 0, body);
@@ -102,5 +102,18 @@ public class NewtonianBodyTest extends EvoTest {
 
         assertVelocity(0.5, 0.5, body);
         assertPosition(0.25, 0.25, body);
+    }
+
+    private static class NewtonianBodyWithEnvironment extends NewtonianBody {
+        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
+
+        public NewtonianBodyWithEnvironment(double centerX, double centerY, double velocityX, double velocityY) {
+            super(centerX, centerY, velocityX, velocityY);
+        }
+
+        @Override
+        public NewtonianBodyEnvironment getEnvironment() {
+            return environment;
+        }
     }
 }
