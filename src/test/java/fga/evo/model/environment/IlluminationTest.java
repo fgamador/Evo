@@ -51,11 +51,10 @@ public class IlluminationTest extends EvoTest {
         Illumination lighting = new Illumination(100);
         Cell cell = new Cell(1);
         cell.setCenterPosition(0, -50);
-        CellEnvironment environment = new CellEnvironment();
 
-        lighting.updateEnvironment(environment, cell);
+        lighting.updateEnvironment(null, cell);
 
-        assertEquals(1, environment.getLightIntensity(), 0);
+        assertEquals(1, cell.getEnvironment().getLightIntensity(), 0);
     }
 
     // TODO almost obsolete
