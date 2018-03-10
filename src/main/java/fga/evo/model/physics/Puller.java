@@ -10,11 +10,9 @@ public class Puller {
 
     private double x, y;
     private NewtonianBody pulledBody;
-    private NewtonianBodyEnvironment pulledBodyEnvironment;
 
     public Puller(NewtonianBody pulledBody, NewtonianBodyEnvironment pulledBodyEnvironment) {
         this.pulledBody = pulledBody;
-        this.pulledBodyEnvironment = pulledBodyEnvironment;
     }
 
     public void setPosition(double x, double y) {
@@ -24,6 +22,6 @@ public class Puller {
 
     public void addForce() {
         double factor = forceFactor.getValue();
-        pulledBodyEnvironment.addForce(factor * (x - pulledBody.getCenterX()), factor * (y - pulledBody.getCenterY()));
+        pulledBody.getEnvironment().addForce(factor * (x - pulledBody.getCenterX()), factor * (y - pulledBody.getCenterY()));
     }
 }
