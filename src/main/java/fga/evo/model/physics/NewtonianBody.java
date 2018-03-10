@@ -40,10 +40,7 @@ public abstract class NewtonianBody {
     }
 
     public void subtick(int subticksPerTick) {
-        subtick(getEnvironment(), subticksPerTick);
-    }
-
-    public void subtick(NewtonianBodyEnvironment environment, int subticksPerTick) {
+        NewtonianBodyEnvironment environment = getEnvironment();
         updateVelocity(environment, subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
