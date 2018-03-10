@@ -18,7 +18,7 @@ public class Drag extends EnvironmentalInfluence {
         // Idea: linearly reduce x-drag of partially submerged cell, same with y-drag but only if moving upward
         double dragX = calcDrag(cell.getVelocityX(), cell.getRadius());
         double dragY = calcDrag(cell.getVelocityY(), cell.getRadius());
-        environment.addForce(dragX, dragY);
+        cell.getEnvironment().addForce(dragX, dragY);
     }
 
     private double calcDrag(double velocity, double radius) {

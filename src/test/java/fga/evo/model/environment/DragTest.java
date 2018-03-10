@@ -21,7 +21,7 @@ public class DragTest extends EvoTest {
 
         new Drag().updateEnvironment(environment, cell);
 
-        assertNetForce(0, 0, environment);
+        assertNetForce(0, 0, cell.getEnvironment());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class DragTest extends EvoTest {
 
         new Drag().updateEnvironment(environment, cell);
 
-        assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), environment);
+        assertNetForce(8 * Drag.dragFactor.getValue(), -18 * Drag.dragFactor.getValue(), cell.getEnvironment());
     }
 
     @Test
@@ -46,6 +46,6 @@ public class DragTest extends EvoTest {
 
         new Drag().updateEnvironment(environment, cell);
 
-        assertNetForce(-4, 0, environment);
+        assertNetForce(-4, 0, cell.getEnvironment());
     }
 }
