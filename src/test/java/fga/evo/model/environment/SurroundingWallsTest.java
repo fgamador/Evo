@@ -12,7 +12,6 @@ public class SurroundingWallsTest extends EvoTest {
         SurroundingWalls walls = new SurroundingWalls(0, 10, -10, 0);
         Cell cell = new Cell(1);
         cell.setCenterPosition(1, -1);
-        CellEnvironment environment = new CellEnvironment();
 
         walls.updateEnvironment(cell);
 
@@ -24,7 +23,6 @@ public class SurroundingWallsTest extends EvoTest {
         SurroundingWalls walls = new SurroundingWalls(0, 10, -10, 0);
         Cell cell = new Cell(1);
         cell.setCenterPosition(0.5, -0.5);
-        CellEnvironment environment = new CellEnvironment();
 
         walls.updateEnvironment(cell);
 
@@ -36,7 +34,6 @@ public class SurroundingWallsTest extends EvoTest {
         SurroundingWalls walls = new SurroundingWalls(0, 10, -10, 0);
         Cell cell = new Cell(1);
         cell.setCenterPosition(9.5, -9.5);
-        CellEnvironment environment = new CellEnvironment();
 
         walls.updateEnvironment(cell);
 
@@ -48,7 +45,6 @@ public class SurroundingWallsTest extends EvoTest {
         SurroundingWalls walls = new SurroundingWalls(-5, 5, -5, 5);
         Cell cell = new Cell(1);
         cell.setCenterPosition(0, 0);
-        CellEnvironment environment = new CellEnvironment();
 
         walls.updateEnvironment(cell);
 
