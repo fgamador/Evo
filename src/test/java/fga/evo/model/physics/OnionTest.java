@@ -10,7 +10,7 @@ public class OnionTest extends EvoTest {
     @Test
     public void testSyncFields_OneRing() {
         TestRing ring = new TestRing(Math.PI);
-        Onion onion = new Onion();
+        Onion onion = new OnionWithEnvironment();
         onion.addRing(ring);
 
         onion.syncFields();
@@ -26,7 +26,7 @@ public class OnionTest extends EvoTest {
     public void testSyncFields_TwoRings() {
         TestRing ring1 = new TestRing(Math.PI);
         TestRing ring2 = new TestRing(3 * Math.PI);
-        Onion onion = new Onion();
+        Onion onion = new OnionWithEnvironment();
         onion.addRing(ring1);
         onion.addRing(ring2);
 
@@ -39,5 +39,14 @@ public class OnionTest extends EvoTest {
         assertEquals(ring2.getOuterRadius(), onion.getRadius(), 0.001);
         assertEquals(ring1.getArea() + ring2.getArea(), onion.getArea(), 0.001);
         assertEquals(ring1.getMass() + ring2.getMass(), onion.getMass(), 0.001);
+    }
+
+    private static class OnionWithEnvironment extends Onion {
+        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
+
+        @Override
+        public NewtonianBodyEnvironment getEnvironment() {
+            return environment;
+        }
     }
 }
