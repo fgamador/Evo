@@ -15,11 +15,11 @@ public class PairCollisionTest {
 
     @Test
     public void xOverlapAddsXForces() {
-        Ball ball1 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
 
-        Ball ball2 = new Ball();
+        Ball ball2 = new BallWithEnvironment();
         ball2.setRadius(1);
         ball2.setCenterPosition(1, 0);
 
@@ -31,11 +31,11 @@ public class PairCollisionTest {
 
     @Test
     public void xyOverlapAddsXYForces() {
-        Ball ball1 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
 
-        Ball ball2 = new Ball();
+        Ball ball2 = new BallWithEnvironment();
         ball2.setRadius(1);
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
@@ -49,11 +49,11 @@ public class PairCollisionTest {
 
     @Test
     public void reversingBallOrderMakesNoDifference() {
-        Ball ball1 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
 
-        Ball ball2 = new Ball();
+        Ball ball2 = new BallWithEnvironment();
         ball2.setRadius(1);
         ball2.setCenterPosition(1 / SQRT_2, -1 / SQRT_2);
 
@@ -67,11 +67,11 @@ public class PairCollisionTest {
 
     @Test
     public void overlapWithSameCenterPositionAddsNoForces() {
-        Ball ball1 = new Ball();
+        Ball ball1 = new BallWithEnvironment();
         ball1.setRadius(1);
         ball1.setCenterPosition(0, 0);
 
-        Ball ball2 = new Ball();
+        Ball ball2 = new BallWithEnvironment();
         ball2.setRadius(1);
         ball2.setCenterPosition(0, 0);
 
