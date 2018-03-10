@@ -14,41 +14,38 @@ public class PullerTest extends EvoTest {
 
     @Test
     public void pullerWithNoOffsetAddsNoForce() {
-        NewtonianBody body = new NewtonianBody();
+        NewtonianBody body = new NewtonianBodyWithEnvironment ();
         body.setCenterPosition(5, -5);
-        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
-        Puller puller = new Puller(body, environment);
+        Puller puller = new Puller(body, body.getEnvironment());
         puller.setPosition(5, -5);
 
         puller.addForce();
 
-        assertNetForce(0, 0, environment);
+        assertNetForce(0, 0, body.getEnvironment());
     }
 
     @Test
     public void pullWithOffsetAddsForce() {
-        NewtonianBody body = new NewtonianBody();
+        NewtonianBody body = new NewtonianBodyWithEnvironment();
         body.setCenterPosition(5, -5);
-        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
-        Puller puller = new Puller(body, environment);
+        Puller puller = new Puller(body, body.getEnvironment());
         puller.setPosition(6, -6);
 
         puller.addForce();
 
-        assertNetForce(1, -1, environment);
+        assertNetForce(1, -1, body.getEnvironment());
     }
 
     @Test
     public void pullerForceUsesForceFactor() {
-        NewtonianBody body = new NewtonianBody();
+        NewtonianBody body = new NewtonianBodyWithEnvironment();
         body.setCenterPosition(5, -5);
-        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
-        Puller puller = new Puller(body, environment);
+        Puller puller = new Puller(body, body.getEnvironment());
         puller.setPosition(6, -6);
         Puller.forceFactor.setValue(2);
 
         puller.addForce();
 
-        assertNetForce(2, -2, environment);
+        assertNetForce(2, -2, body.getEnvironment());
     }
 }
