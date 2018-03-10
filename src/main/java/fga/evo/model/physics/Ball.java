@@ -14,7 +14,7 @@ import static fga.evo.model.util.Util.sqr;
  * A circular body subject to Newtonian motion physics. Factored out of Cell as a base class
  * to honor the Single Responsibility Principle, which could be Needless Complexity...
  */
-public class Ball extends NewtonianBody implements OverlappableCircle {
+public abstract class Ball extends NewtonianBody implements OverlappableCircle {
     public static DoubleParameter overlapForceFactor = new DoubleParameter(1);
     public static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
