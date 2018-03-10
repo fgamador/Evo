@@ -16,7 +16,7 @@ public class PullerTest extends EvoTest {
     public void pullerWithNoOffsetAddsNoForce() {
         NewtonianBody body = new NewtonianBodyWithEnvironment ();
         body.setCenterPosition(5, -5);
-        Puller puller = new Puller(body, body.getEnvironment());
+        Puller puller = new Puller(body);
         puller.setPosition(5, -5);
 
         puller.addForce();
@@ -28,7 +28,7 @@ public class PullerTest extends EvoTest {
     public void pullWithOffsetAddsForce() {
         NewtonianBody body = new NewtonianBodyWithEnvironment();
         body.setCenterPosition(5, -5);
-        Puller puller = new Puller(body, body.getEnvironment());
+        Puller puller = new Puller(body);
         puller.setPosition(6, -6);
 
         puller.addForce();
@@ -40,7 +40,7 @@ public class PullerTest extends EvoTest {
     public void pullerForceUsesForceFactor() {
         NewtonianBody body = new NewtonianBodyWithEnvironment();
         body.setCenterPosition(5, -5);
-        Puller puller = new Puller(body, body.getEnvironment());
+        Puller puller = new Puller(body);
         puller.setPosition(6, -6);
         Puller.forceFactor.setValue(2);
 

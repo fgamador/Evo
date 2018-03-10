@@ -11,7 +11,7 @@ public class Puller {
     private double x, y;
     private NewtonianBody pulledBody;
 
-    public Puller(NewtonianBody pulledBody, NewtonianBodyEnvironment pulledBodyEnvironment) {
+    public Puller(NewtonianBody pulledBody) {
         this.pulledBody = pulledBody;
     }
 

@@ -139,7 +139,7 @@ public class World {
     }
 
     public void startPull(Cell cell) {
-        puller = new Puller(cell, cell.getEnvironment());
+        puller = new Puller(cell);
     }
 
     public void setPullPoint(double x, double y) {
