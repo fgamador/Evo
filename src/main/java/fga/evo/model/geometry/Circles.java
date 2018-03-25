@@ -1,7 +1,5 @@
 package fga.evo.model.geometry;
 
-import fga.evo.model.physics.Ball;
-
 import static fga.evo.model.util.Util.sqr;
 
 public class Circles {
@@ -11,6 +9,10 @@ public class Circles {
 
     public static double calcOverlap(Circle circle1, Circle circle2) {
         return calcOverlap(circle1, circle2, Math.sqrt(calcCenterSeparationSquared(circle1, circle2)));
+    }
+
+    public static double calcCenterSeparation(Circle circle1, Circle circle2) {
+        return Math.sqrt(calcCenterSeparationSquared(circle1, circle2));
     }
 
     public static double calcCenterSeparationSquared(Circle circle1, Circle circle2) {
@@ -33,9 +35,5 @@ public class Circles {
 
     public static double maxX(Circle circle) {
         return circle.getCenterX() + circle.getRadius();
-    }
-
-    public static double calcCenterSeparation(Ball ball1, Ball ball2) {
-        return Math.sqrt(calcCenterSeparationSquared(ball1, ball2));
     }
 }
