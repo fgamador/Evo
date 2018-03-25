@@ -1,6 +1,5 @@
 package fga.evo.model.geometry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class OverlapDetection {
@@ -29,7 +28,7 @@ public class OverlapDetection {
 
                 double centerSeparationSquared = Circles.calcCenterSeparationSquared(circle1, circle2);
                 if (Circles.circlesOverlap(circle1, circle2, centerSeparationSquared)) {
-                    double overlap = Circles.calcOverlap(circle1, circle2, Math.sqrt(centerSeparationSquared));
+                    double overlap = Circles.toOverlap(circle1, circle2, Math.sqrt(centerSeparationSquared));
                     circle1.onOverlap(circle2, overlap);
                 }
             }

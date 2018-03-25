@@ -24,7 +24,7 @@ public class PairBond {
     public void addForces() {
         double centerSeparation = Circles.calcCenterSeparation(ball1, ball2);
         if (centerSeparation != 0) {
-            double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
+            double overlap = Circles.toOverlap(ball1, ball2, centerSeparation);
             BallPairForces.addOverlapForces(ball1, ball2, centerSeparation, overlap);
             BallPairForces.addDampingForces(ball1, ball2);
         }
