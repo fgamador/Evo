@@ -22,8 +22,7 @@ public class PairBond {
      * Updates the forces on both of the balls. Call this only once for any particular pair of balls.
      */
     public void addForces() {
-        double centerSeparationSquared = Circles.calcCenterSeparationSquared(ball1, ball2);
-        double centerSeparation = Math.sqrt(centerSeparationSquared);
+        double centerSeparation = Math.sqrt(Circles.calcCenterSeparationSquared(ball1, ball2));
         if (centerSeparation != 0) {
             double overlap = Circles.calcOverlap(ball1, ball2, centerSeparation);
             BallPairForces.addOverlapForces(ball1, ball2, centerSeparation, overlap);
