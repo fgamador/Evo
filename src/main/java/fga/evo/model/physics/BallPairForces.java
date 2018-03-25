@@ -15,9 +15,7 @@ public class BallPairForces {
         double forceX = (ball1RelativeCenterX / centerSeparation) * force;
         double forceY = (ball1RelativeCenterY / centerSeparation) * force;
         ball1.getEnvironment().addForce(forceX, forceY);
-        double forceX1 = -forceX;
-        double forceY1 = -forceY;
-        ball2.getEnvironment().addForce(forceX1, forceY1);
+        ball2.getEnvironment().addForce(-forceX, -forceY);
     }
 
     public static void addDampingForces(Ball ball1, Ball ball2) {
@@ -26,8 +24,6 @@ public class BallPairForces {
         double forceX = -dampingForceFactor.getValue() * ball1RelativeVelocityX;
         double forceY = -dampingForceFactor.getValue() * ball1RelativeVelocityY;
         ball1.getEnvironment().addForce(forceX, forceY);
-        double forceX1 = -forceX;
-        double forceY1 = -forceY;
-        ball2.getEnvironment().addForce(forceX1, forceY1);
+        ball2.getEnvironment().addForce(-forceX, -forceY);
     }
 }
