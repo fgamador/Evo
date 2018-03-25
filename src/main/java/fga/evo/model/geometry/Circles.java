@@ -8,7 +8,7 @@ public class Circles {
     }
 
     public static double calcOverlap(Circle circle1, Circle circle2) {
-        return toOverlap(circle1, circle2, Math.sqrt(calcCenterSeparationSquared(circle1, circle2)));
+        return toOverlap(circle1, circle2, calcCenterSeparation(circle1, circle2));
     }
 
     public static double calcCenterSeparation(Circle circle1, Circle circle2) {
