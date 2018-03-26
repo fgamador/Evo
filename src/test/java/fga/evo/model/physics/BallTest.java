@@ -2,7 +2,6 @@ package fga.evo.model.physics;
 
 import fga.evo.model.Assert;
 import fga.evo.model.EvoTest;
-import fga.evo.model.environment.SurroundingWalls;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +24,7 @@ public class BallTest extends EvoTest {
     @Test
     public void ballCalculatesOverlapForceFromOverlapAndForceFactor() {
         Ball.overlapForceFactor.setValue(2);
-        assertEquals(6, Ball.calcOverlapForce(3), 0);
+        assertEquals(6, Ball.calcElasticDeformationForce(3), 0);
     }
 
     @Test

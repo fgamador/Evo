@@ -34,7 +34,7 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         double overlap = wallX - ball.getMinX();
         if (overlap > 0) {
             ball.recordOverlap(overlap);
-            ball.getEnvironment().addForce(Ball.calcOverlapForce(overlap), 0);
+            ball.getEnvironment().addForce(Ball.calcElasticDeformationForce(overlap), 0);
         }
     }
 
@@ -48,7 +48,7 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         double overlap = ball.getMaxX() - wallX;
         if (overlap > 0) {
             ball.recordOverlap(overlap);
-            ball.getEnvironment().addForce(-Ball.calcOverlapForce(overlap), 0);
+            ball.getEnvironment().addForce(-Ball.calcElasticDeformationForce(overlap), 0);
         }
     }
 
@@ -62,7 +62,7 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         double overlap = wallY - ball.getMinY();
         if (overlap > 0) {
             ball.recordOverlap(overlap);
-            ball.getEnvironment().addForce(0, Ball.calcOverlapForce(overlap));
+            ball.getEnvironment().addForce(0, Ball.calcElasticDeformationForce(overlap));
         }
     }
 
@@ -76,7 +76,7 @@ public class SurroundingWalls extends EnvironmentalInfluence {
         double overlap = ball.getMaxY() - wallY;
         if (overlap > 0) {
             ball.recordOverlap(overlap);
-            ball.getEnvironment().addForce(0, -Ball.calcOverlapForce(overlap));
+            ball.getEnvironment().addForce(0, -Ball.calcElasticDeformationForce(overlap));
         }
     }
 

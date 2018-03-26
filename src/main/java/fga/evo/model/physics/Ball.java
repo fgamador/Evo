@@ -103,7 +103,7 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
         return overlapAccumulator.getTotal();
     }
 
-    public static double calcOverlapForce(double overlap) {
+    public static double calcElasticDeformationForce(double overlap) {
         return overlapForceFactor.getValue() * overlap;
     }
 }
