@@ -24,7 +24,8 @@ public class BallTest extends EvoTest {
     @Test
     public void ballCalculatesOverlapForceFromOverlapAndForceFactor() {
         Ball.overlapForceFactor.setValue(2);
-        assertEquals(6, Ball.calcElasticDeformationForce(3), 0);
+        Ball ball = new BallWithEnvironment();
+        assertEquals(6, ball.calcElasticDeformationForce(3), 0);
     }
 
     @Test

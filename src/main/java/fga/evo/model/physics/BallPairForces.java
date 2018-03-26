@@ -9,7 +9,7 @@ public class BallPairForces {
     public static DoubleParameter dampingForceFactor = new DoubleParameter(1);
 
     public static void addOverlapForces(Ball ball1, Ball ball2, double centerSeparation, double overlap) {
-        double force = Ball.calcElasticDeformationForce(overlap);
+        double force = ball1.calcElasticDeformationForce(overlap);
         double ball1RelativeCenterX = ball1.getCenterX() - ball2.getCenterX();
         double ball1RelativeCenterY = ball1.getCenterY() - ball2.getCenterY();
         double forceX = (ball1RelativeCenterX / centerSeparation) * force;
