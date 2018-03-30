@@ -73,19 +73,18 @@ public class World {
 
     private void tickPhysicsAfterFirstOverlapDetection() {
         addNonOverlapForces();
-        for (Cell cell : cells)
-            cell.subtickPhysics(subticksPerTick);
-        for (int i = 0; i < subticksPerTick - 1; i++)
-            subtickPhysics();
-    }
-
-    private void subtickPhysics() {
-        overlapDetection.findAndNotifyOverlaps();
-
-        addNonOverlapForces();
 
         for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);
+
+        for (int i = 0; i < subticksPerTick - 1; i++) {
+            overlapDetection.findAndNotifyOverlaps();
+
+            addNonOverlapForces();
+
+            for (Cell cell : cells)
+                cell.subtickPhysics(subticksPerTick);
+        }
     }
 
     private void addNonOverlapForces() {
