@@ -25,8 +25,6 @@ public final class Illumination extends EnvironmentalInfluence {
     @Override
     public void updateEnvironment(Cell cell) {
         cell.getEnvironment().setLightIntensity(calcLightIntensity(cell.getCenterY()));
-        // TODO move this to PhotoRing updateCell method in another phase or something
-        cell.photosynthesize();
     }
 
     double calcLightIntensity(double y) {

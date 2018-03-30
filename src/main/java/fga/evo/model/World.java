@@ -65,8 +65,10 @@ public class World {
             cell.tickBiology_ControlPhase();
 
         for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : energyInfluences)
+            for (EnvironmentalInfluence influence : energyInfluences) {
                 influence.updateEnvironment(cell);
+                cell.photosynthesize();
+            }
 
             cell.tickBiology_ConsequencesPhase();
         }

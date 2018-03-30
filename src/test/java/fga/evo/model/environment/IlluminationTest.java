@@ -56,18 +56,4 @@ public class IlluminationTest extends EvoTest {
 
         assertEquals(1, cell.getEnvironment().getLightIntensity(), 0);
     }
-
-    // TODO almost obsolete
-    @Test
-    public void illuminationAddsEnergyToCell() {
-        Illumination.maxIntensity.setValue(2);
-        Illumination lighting = new Illumination(100);
-
-        Cell cell = new Cell(1);
-        cell.setCenterPosition(50, -50);
-
-        lighting.updateEnvironment(cell);
-
-        assertEnergy(0.5, cell);
-    }
 }
