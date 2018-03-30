@@ -68,10 +68,6 @@ public class World {
             cell.tickBiology_ConsequencesPhase();
         }
 
-        tickPhysicsAfterFirstOverlapDetection();
-    }
-
-    private void tickPhysicsAfterFirstOverlapDetection() {
         addNonOverlapForces();
 
         for (Cell cell : cells)
