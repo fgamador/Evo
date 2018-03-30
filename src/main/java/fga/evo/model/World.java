@@ -66,15 +66,11 @@ public class World {
         }
 
         for (Cell cell : cells) {
-            tickBiology_ConsequencesPhase(cell);
+            for (EnvironmentalInfluence influence : energyInfluences) {
+                influence.updateEnvironment(cell);
+            }
+            cell.tickBiology_ConsequencesPhase();
         }
-    }
-
-    private void tickBiology_ConsequencesPhase(Cell cell) {
-        for (EnvironmentalInfluence influence : energyInfluences) {
-            influence.updateEnvironment(cell);
-        }
-        cell.tickBiology_ConsequencesPhase();
     }
 
     private void tickPhysicsAfterFirstOverlapDetection() {
