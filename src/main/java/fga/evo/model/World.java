@@ -88,17 +88,13 @@ public class World {
     }
 
     private void subtickPhysics() {
-        addForces();
+        overlapDetection.findAndNotifyOverlaps();
+
+        addNonOverlapForces();
 
         for (Cell cell : cells) {
             cell.subtickPhysics(subticksPerTick);
         }
-    }
-
-    private void addForces() {
-        overlapDetection.findAndNotifyOverlaps();
-
-        addNonOverlapForces();
     }
 
     private void addNonOverlapForces() {
