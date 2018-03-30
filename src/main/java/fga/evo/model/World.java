@@ -60,6 +60,8 @@ public class World {
 
         for (Cell cell : cells) {
             cell.photosynthesize();
+        }
+        for (Cell cell : cells) {
             cell.tickBiology_ConsequencesPhase();
         }
 
