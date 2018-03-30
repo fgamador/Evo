@@ -55,12 +55,6 @@ public class World {
     private void tickWithMonitoredLifecycles() {
         overlapDetection.findAndNotifyOverlaps();
 
-        tickBiology();
-
-        tickPhysicsAfterFirstOverlapDetection();
-    }
-
-    private void tickBiology() {
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
                 influence.updateEnvironment(cell);
@@ -73,6 +67,8 @@ public class World {
             cell.photosynthesize();
             cell.tickBiology_ConsequencesPhase();
         }
+
+        tickPhysicsAfterFirstOverlapDetection();
     }
 
     private void tickPhysicsAfterFirstOverlapDetection() {
