@@ -54,6 +54,7 @@ public class World {
 
     private void tickWithMonitoredLifecycles() {
         overlapDetection.findAndNotifyOverlaps();
+        addNonOverlapForces();
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
@@ -68,14 +69,11 @@ public class World {
             cell.tickBiology_ConsequencesPhase();
         }
 
-        addNonOverlapForces();
-
         for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);
 
         for (int i = 0; i < subticksPerTick - 1; i++) {
             overlapDetection.findAndNotifyOverlaps();
-
             addNonOverlapForces();
 
             for (Cell cell : cells)
