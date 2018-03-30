@@ -67,7 +67,9 @@ public class World {
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
                 influence.updateEnvironment(cell);
+        }
 
+        for (Cell cell : cells) {
             cell.photosynthesize();
             cell.tickBiology_ConsequencesPhase();
         }
