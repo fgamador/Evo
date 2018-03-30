@@ -53,13 +53,7 @@ public class World {
     }
 
     private void tickWithMonitoredLifecycles() {
-        overlapDetection.findAndNotifyOverlaps();
-        addNonOverlapForces();
-
-        for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : energyInfluences)
-                influence.updateEnvironment(cell);
-        }
+        updateCellEnvironments();
 
         for (Cell cell : cells)
             cell.tickBiology_ControlPhase();
@@ -78,6 +72,16 @@ public class World {
 
             for (Cell cell : cells)
                 cell.subtickPhysics(subticksPerTick);
+        }
+    }
+
+    private void updateCellEnvironments() {
+        overlapDetection.findAndNotifyOverlaps();
+        addNonOverlapForces();
+
+        for (Cell cell : cells) {
+            for (EnvironmentalInfluence influence : energyInfluences)
+                influence.updateEnvironment(cell);
         }
     }
 
