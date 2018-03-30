@@ -61,13 +61,13 @@ public class World {
     }
 
     private void tickBiology() {
-        for (Cell cell : cells)
-            cell.tickBiology_ControlPhase();
-
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
                 influence.updateEnvironment(cell);
         }
+
+        for (Cell cell : cells)
+            cell.tickBiology_ControlPhase();
 
         for (Cell cell : cells) {
             cell.photosynthesize();
