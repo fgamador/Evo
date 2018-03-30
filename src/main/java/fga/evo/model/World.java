@@ -61,26 +61,23 @@ public class World {
     }
 
     private void tickBiology() {
-        for (Cell cell : cells) {
+        for (Cell cell : cells)
             cell.tickBiology_ControlPhase();
-        }
 
         for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : energyInfluences) {
+            for (EnvironmentalInfluence influence : energyInfluences)
                 influence.updateEnvironment(cell);
-            }
+
             cell.tickBiology_ConsequencesPhase();
         }
     }
 
     private void tickPhysicsAfterFirstOverlapDetection() {
         addNonOverlapForces();
-        for (Cell cell : cells) {
+        for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);
-        }
-        for (int i = 0; i < subticksPerTick - 1; i++) {
+        for (int i = 0; i < subticksPerTick - 1; i++)
             subtickPhysics();
-        }
     }
 
     private void subtickPhysics() {
@@ -88,24 +85,20 @@ public class World {
 
         addNonOverlapForces();
 
-        for (Cell cell : cells) {
+        for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);
-        }
     }
 
     private void addNonOverlapForces() {
-        if (puller != null) {
+        if (puller != null)
             puller.addForce();
-        }
 
         for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : forceInfluences) {
+            for (EnvironmentalInfluence influence : forceInfluences)
                 influence.updateEnvironment(cell);
-            }
 
-            for (PairBond bond : bonds) {
+            for (PairBond bond : bonds)
                 bond.addForces();
-            }
         }
     }
 
