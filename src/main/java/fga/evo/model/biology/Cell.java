@@ -79,7 +79,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         addEnergy(environment.takeDonatedEnergy());
     }
 
-    public void photosynthesize() {
+    void photosynthesize() {
         addEnergy(photoRing.photosynthesize(environment.getLightIntensity()));
     }
 
