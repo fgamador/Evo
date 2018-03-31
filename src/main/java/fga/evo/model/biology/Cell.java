@@ -65,11 +65,43 @@ public class Cell extends Onion implements CellControl.CellApi {
         tissueRings.add(ring);
     }
 
-    /**
-     * Converts incoming light into energy.
-     */
+    public void updateBiologyFromEnvironment() {
+        state.consequencesPhase(this);
+    }
+
+    private void liveConsequencesPhase() {
+        addDonatedEnergy();
+        photosynthesize();
+        subtractMaintenanceEnergy();
+        addDamage();
+    }
+
+    private void addDonatedEnergy() {
+        addEnergy(donatedEnergy);
+        donatedEnergy = 0;
+    }
+
     public void photosynthesize() {
         addEnergy(photoRing.photosynthesize(environment.getLightIntensity()));
+    }
+
+    private void subtractMaintenanceEnergy() {
+        for (TissueRing ring : tissueRings) {
+            addEnergy(-ring.getMaintenanceEnergy());
+        }
+    }
+
+    private void addEnergy(double energy) {
+        this.energy += energy;
+    }
+
+    private void addDamage() {
+        if (energy < 0) {
+            damage -= energy;
+        }
+        if (damage > maximumSurvivableDamage.getValue()) {
+            die();
+        }
     }
 
     public void die() {
@@ -79,10 +111,6 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     public void exertControl() {
         state.controlPhase(this);
-    }
-
-    public void updateBiologyFromEnvironment() {
-        state.consequencesPhase(this);
     }
 
     private void liveControlPhase() {
@@ -175,37 +203,6 @@ public class Cell extends Onion implements CellControl.CellApi {
         child.parent = null;
         child = null;
         lifecycleListener.onBondBroken(bond);
-    }
-
-    private void liveConsequencesPhase() {
-        addDonatedEnergy();
-        photosynthesize();
-        subtractMaintenanceEnergy();
-        addDamage();
-    }
-
-    private void addDonatedEnergy() {
-        addEnergy(donatedEnergy);
-        donatedEnergy = 0;
-    }
-
-    private void subtractMaintenanceEnergy() {
-        for (TissueRing ring : tissueRings) {
-            addEnergy(-ring.getMaintenanceEnergy());
-        }
-    }
-
-    private void addEnergy(double energy) {
-        this.energy += energy;
-    }
-
-    private void addDamage() {
-        if (energy < 0) {
-            damage -= energy;
-        }
-        if (damage > maximumSurvivableDamage.getValue()) {
-            die();
-        }
     }
 
     private void deadControlPhase() {
