@@ -69,7 +69,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         state.updateBiologyPhase(this);
     }
 
-    private void updateBiologyPhase_live() {
+    private void updateBiologyPhase_Live() {
         addDonatedEnergy();
         photosynthesize();
         subtractMaintenanceEnergy();
@@ -337,17 +337,17 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         public void updateBiologyPhase(Cell cell) {
-            cell.updateBiologyPhase_live();
+            cell.updateBiologyPhase_Live();
         }
     }
 
     private static class Dead implements State {
-        public void controlPhase(Cell cell) {
-            cell.deadControlPhase();
-        }
-
         public void updateBiologyPhase(Cell cell) {
             cell.deadConsequencesPhase();
+        }
+
+        public void controlPhase(Cell cell) {
+            cell.deadControlPhase();
         }
     }
 
