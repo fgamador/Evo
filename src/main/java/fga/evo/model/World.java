@@ -53,12 +53,7 @@ public class World {
     }
 
     private void tickWithMonitoredLifecycles() {
-        updateCellEnvironments();
-
-        for (Cell cell : cells)
-            cell.subtickPhysics(subticksPerTick);
-
-        for (int i = 0; i < subticksPerTick - 1; i++) {
+        for (int i = 0; i < subticksPerTick; i++) {
             updateCellEnvironments();
 
             for (Cell cell : cells)
