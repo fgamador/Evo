@@ -326,9 +326,9 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private interface State {
-        void controlPhase(Cell cell);
-
         void updateBiologyPhase(Cell cell);
+
+        void controlPhase(Cell cell);
     }
 
     private static class Alive implements State {
