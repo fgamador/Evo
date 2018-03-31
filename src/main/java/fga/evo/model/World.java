@@ -69,24 +69,20 @@ public class World {
 
     private void updateCellEnvironments() {
         overlapDetection.findAndNotifyOverlaps();
-        addNonOverlapForces();
+        if (puller != null)
+            puller.addForce();
+
+        for (Cell cell1 : cells) {
+            for (EnvironmentalInfluence influence1 : forceInfluences)
+                influence1.updateEnvironment(cell1);
+
+            for (PairBond bond : bonds)
+                bond.addForces();
+        }
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
                 influence.updateEnvironment(cell);
-        }
-    }
-
-    private void addNonOverlapForces() {
-        if (puller != null)
-            puller.addForce();
-
-        for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : forceInfluences)
-                influence.updateEnvironment(cell);
-
-            for (PairBond bond : bonds)
-                bond.addForces();
         }
     }
 
