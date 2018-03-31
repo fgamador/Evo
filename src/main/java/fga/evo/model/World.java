@@ -75,10 +75,10 @@ public class World {
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : forceInfluences)
                 influence.updateEnvironment(cell);
-
-            for (PairBond bond : bonds)
-                bond.addForces();
         }
+
+        for (PairBond bond : bonds)
+            bond.addForces();
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
