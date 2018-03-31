@@ -19,8 +19,6 @@ public class World {
     private static int subticksPerTick = 2;
 
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
-    private List<EnvironmentalInfluence> energyInfluences = new ArrayList<>();
-    private List<EnvironmentalInfluence> forceInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private List<PairBond> bonds = new ArrayList<>();
     private Puller puller;
@@ -29,11 +27,6 @@ public class World {
 
     public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);
-        // TODO bleah. Temp until can unify update-environment into one phase.
-        if (influence instanceof Illumination)
-            energyInfluences.add(influence);
-        else
-            forceInfluences.add(influence);
     }
 
     public void addCell(Cell cell) {
