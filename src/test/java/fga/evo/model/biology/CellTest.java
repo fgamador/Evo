@@ -291,13 +291,13 @@ public class CellTest {
         // second tick, first phase
         cell.exertControl();
         child.exertControl();
-        assertEquals(2, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getEnvironment().getDonatedEnergy(), 0);
         assertEnergy(0, child);
 
         // second tick, second phase
         cell.updateBiologyFromEnvironment();
         child.updateBiologyFromEnvironment();
-        assertEquals(0, child.getDonatedEnergy(), 0);
+        assertEquals(0, child.getEnvironment().getDonatedEnergy(), 0);
         assertEnergy(2 - child.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), child);
     }
 
@@ -326,7 +326,7 @@ public class CellTest {
         assertNotBonded(cell, child);
         assertEquals(1, lifecycleListener.brokenBonds.size());
         assertEquals(bond, lifecycleListener.brokenBonds.get(0));
-        assertEquals(2, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getEnvironment().getDonatedEnergy(), 0);
     }
 
     @Test
@@ -351,7 +351,7 @@ public class CellTest {
         assertNull(cell.getChild());
         assertNull(child.getParent());
         assertNotBonded(cell, child);
-        assertEquals(2, child.getDonatedEnergy(), 0);
+        assertEquals(2, child.getEnvironment().getDonatedEnergy(), 0);
     }
 
     @Test
@@ -374,7 +374,7 @@ public class CellTest {
         control.setDonation(-1);
         cell.exertControl();
         assertEquals(child, cell.getChild());
-        assertEquals(0, child.getDonatedEnergy(), 0);
+        assertEquals(0, child.getEnvironment().getDonatedEnergy(), 0);
     }
 
     @Test

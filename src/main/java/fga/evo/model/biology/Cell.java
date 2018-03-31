@@ -268,10 +268,6 @@ public class Cell extends Onion implements CellControl.CellApi {
         return energy;
     }
 
-    public double getDonatedEnergy() {
-        return getEnvironment().getDonatedEnergy();
-    }
-
     public boolean isAlive() {
         return state == ALIVE;
     }
