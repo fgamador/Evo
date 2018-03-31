@@ -77,13 +77,13 @@ public class World {
                 influence.updateEnvironment(cell);
         }
 
-        for (PairBond bond : bonds)
-            bond.addForces();
-
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : energyInfluences)
                 influence.updateEnvironment(cell);
         }
+
+        for (PairBond bond : bonds)
+            bond.addForces();
     }
 
     private void updatePerLifecycleChanges() {
