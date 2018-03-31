@@ -165,7 +165,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         if (child != null) {
-            child.setDonatedEnergy(requestedChildDonation);
+            child.environment.donatedEnergy = requestedChildDonation;
             if (Chance.beats(releaseChildOdds)) {
                 releaseChild();
             }
@@ -270,10 +270,6 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     public double getDonatedEnergy() {
         return environment.donatedEnergy;
-    }
-
-    public void setDonatedEnergy(double val) {
-        environment.donatedEnergy = val;
     }
 
     public boolean isAlive() {
