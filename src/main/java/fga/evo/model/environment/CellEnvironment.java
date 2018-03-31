@@ -3,7 +3,7 @@ package fga.evo.model.environment;
 import fga.evo.model.physics.NewtonianBodyEnvironment;
 
 public class CellEnvironment extends NewtonianBodyEnvironment {
-    private double donatedEnergy;
+    public double donatedEnergy;
     private double lightIntensity;
 
     public double getDonatedEnergy() {

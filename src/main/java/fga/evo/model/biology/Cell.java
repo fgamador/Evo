@@ -32,7 +32,6 @@ public class Cell extends Onion implements CellControl.CellApi {
     private double releaseChildOdds;
     private double releaseParentOdds;
     private double requestedChildDonation;
-    private double donatedEnergy;
     private Cell child;
     private Cell parent;
     private double damage;
@@ -77,8 +76,8 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private void addDonatedEnergy() {
-        addEnergy(donatedEnergy);
-        donatedEnergy = 0;
+        addEnergy(environment.donatedEnergy);
+        environment.donatedEnergy = 0;
     }
 
     public void photosynthesize() {
@@ -270,11 +269,11 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     public double getDonatedEnergy() {
-        return donatedEnergy;
+        return environment.donatedEnergy;
     }
 
     public void setDonatedEnergy(double val) {
-        donatedEnergy = val;
+        environment.donatedEnergy = val;
     }
 
     public boolean isAlive() {
