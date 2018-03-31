@@ -165,7 +165,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         }
 
         if (child != null) {
-            child.environment.donatedEnergy = requestedChildDonation;
+            child.environment.setDonatedEnergy(requestedChildDonation);
             if (Chance.beats(releaseChildOdds)) {
                 releaseChild();
             }
