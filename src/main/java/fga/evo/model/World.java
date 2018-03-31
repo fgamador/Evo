@@ -69,8 +69,6 @@ public class World {
 
     private void updateCellEnvironments() {
         overlapDetection.findAndNotifyOverlaps();
-        if (puller != null)
-            puller.addForce();
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : forceInfluences)
@@ -81,6 +79,9 @@ public class World {
 
         for (PairBond bond : bonds)
             bond.addForces();
+
+        if (puller != null)
+            puller.addForce();
     }
 
     private void updatePerLifecycleChanges() {
