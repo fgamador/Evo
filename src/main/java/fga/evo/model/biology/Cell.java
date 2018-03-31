@@ -205,10 +205,10 @@ public class Cell extends Onion implements CellControl.CellApi {
         lifecycleListener.onBondBroken(bond);
     }
 
-    private void deadControlPhase() {
+    private void controlPhase_Dead() {
     }
 
-    private void deadConsequencesPhase() {
+    private void updateBiologyPhase_Dead() {
         decay();
     }
 
@@ -343,11 +343,11 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     private static class Dead implements State {
         public void updateBiologyPhase(Cell cell) {
-            cell.deadConsequencesPhase();
+            cell.updateBiologyPhase_Dead();
         }
 
         public void controlPhase(Cell cell) {
-            cell.deadControlPhase();
+            cell.controlPhase_Dead();
         }
     }
 
