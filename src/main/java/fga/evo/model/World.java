@@ -59,8 +59,7 @@ public class World {
             cell.subtickPhysics(subticksPerTick);
 
         for (int i = 0; i < subticksPerTick - 1; i++) {
-            overlapDetection.findAndNotifyOverlaps();
-            addNonOverlapForces();
+            updateCellEnvironments();
 
             for (Cell cell : cells)
                 cell.subtickPhysics(subticksPerTick);
