@@ -205,9 +205,6 @@ public class Cell extends Onion implements CellControl.CellApi {
         lifecycleListener.onBondBroken(bond);
     }
 
-    private void controlPhase_Dead() {
-    }
-
     private void updateBiologyPhase_Dead() {
         decay();
     }
@@ -217,6 +214,9 @@ public class Cell extends Onion implements CellControl.CellApi {
             ring.decay();
         }
         syncFields();
+    }
+
+    private void controlPhase_Dead() {
     }
 
     /**
