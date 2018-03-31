@@ -151,7 +151,7 @@ public class Cell extends Onion implements CellControl.CellApi {
     }
 
     private void spawn() {
-        child = new Cell(0, control, lifecycleListener);
+        child = new Cell(1, control, lifecycleListener);
         child.parent = this;
         PairBond bond = addBond(child);
         child.addEnergy(requestedChildDonation);

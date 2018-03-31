@@ -242,8 +242,8 @@ public class CellTest {
         assertBonded(cell, child);
         assertEquals(cell.getControl(), child.getControl());
         assertEquals(cell.getLifecycleListener(), child.getLifecycleListener());
-        assertEquals(0, child.getPhotoArea(), 0);
-        assertEquals(0, child.getRadius(), 0);
+        assertEquals(Math.PI, child.getPhotoArea(), 0);
+        assertEquals(1, child.getRadius(), 0);
         assertEnergy(100 - 2, cell);
         assertEnergy(2, child);
         assertCenterSeparation(cell.getRadius(), cell, child, 0);

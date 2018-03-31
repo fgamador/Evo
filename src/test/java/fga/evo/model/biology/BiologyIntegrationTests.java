@@ -1,5 +1,6 @@
 package fga.evo.model.biology;
 
+import fga.evo.model.Assert;
 import fga.evo.model.WorldIntegrationTests;
 import fga.evo.model.control.FixedDepthSeekingControl;
 import fga.evo.model.control.ParentChildControl;
@@ -104,8 +105,8 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
         assertEquals(2, world.getCells().size());
         assertEquals(1, world.getBonds().size());
         Cell child = cell.getChild();
-        assertEquals(0, child.getRadius(), 0);
-        assertEquals(0, child.getMass(), 0);
+        assertEquals(1, child.getRadius(), 0);
+        assertEquals(Math.PI * PhotoRing.parameters.density.getValue(), child.getMass(), Assert.DEFAULT_DELTA);
         assertEquals(5, child.getCenterX(), 20);
         assertEquals(-5, child.getCenterY(), 20);
     }

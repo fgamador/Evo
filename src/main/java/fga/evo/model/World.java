@@ -59,9 +59,6 @@ public class World {
             cell.tickBiology_ConsequencesPhase();
 
         for (Cell cell : cells)
-            cell.tickBiology_ControlPhase();
-
-        for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);
 
         for (int i = 0; i < subticksPerTick - 1; i++) {
@@ -71,6 +68,9 @@ public class World {
             for (Cell cell : cells)
                 cell.subtickPhysics(subticksPerTick);
         }
+
+        for (Cell cell : cells)
+            cell.tickBiology_ControlPhase();
     }
 
     private void updateCellEnvironments() {
