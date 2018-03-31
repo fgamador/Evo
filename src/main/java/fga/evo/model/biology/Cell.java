@@ -81,7 +81,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         state.controlPhase(this);
     }
 
-    public void tickBiology_ConsequencesPhase() {
+    public void updateBiologyFromEnvironment() {
         state.consequencesPhase(this);
     }
 

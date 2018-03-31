@@ -285,7 +285,7 @@ public class CellTest {
         // first tick, both phases
         cell.tickBiology_ControlPhase();
         Cell child = lifecycleListener.bornCells.get(0);
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
         assertEnergy(2, child);
 
         // second tick, first phase
@@ -295,8 +295,8 @@ public class CellTest {
         assertEnergy(0, child);
 
         // second tick, second phase
-        cell.tickBiology_ConsequencesPhase();
-        child.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
+        child.updateBiologyFromEnvironment();
         assertEquals(0, child.getDonatedEnergy(), 0);
         assertEnergy(2 - child.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), child);
     }
@@ -315,7 +315,7 @@ public class CellTest {
         cell.tickBiology_ControlPhase();
         Cell child = lifecycleListener.bornCells.get(0);
         PairBond bond = lifecycleListener.formedBonds.get(0);
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         // second tick, first phase
         cell.tickBiology_ControlPhase();
@@ -342,7 +342,7 @@ public class CellTest {
         // first tick, both phases
         cell.tickBiology_ControlPhase();
         Cell child = lifecycleListener.bornCells.get(0);
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         // second tick, first phase
         cell.tickBiology_ControlPhase();
@@ -368,7 +368,7 @@ public class CellTest {
         // first tick, both phases
         cell.tickBiology_ControlPhase();
         Cell child = lifecycleListener.bornCells.get(0);
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         // second tick, first phase
         control.setDonation(-1);
@@ -383,7 +383,7 @@ public class CellTest {
                 .setPhotoRingOuterRadius(3)
                 .build();
 
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         assertEnergy(-cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), cell);
     }
@@ -396,7 +396,7 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         double expectedEnergy = 100
                 - cell.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue()
@@ -411,7 +411,7 @@ public class CellTest {
                 .setEnergy(10)
                 .build();
 
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         assertEquals(0, cell.getDamage(), 0);
     }
@@ -422,7 +422,7 @@ public class CellTest {
                 .setPhotoRingOuterRadius(1)
                 .build();
 
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         assertTrue(cell.isAlive());
         assertEquals(PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
@@ -438,7 +438,7 @@ public class CellTest {
                 .setLifecycleListener(lifecycleListener)
                 .build();
 
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         assertFalse(cell.isAlive());
         assertEquals(1, lifecycleListener.deadCells.size());
@@ -480,7 +480,7 @@ public class CellTest {
         double initialPhotoArea = cell.getPhotoArea();
         cell.die();
 
-        cell.tickBiology_ConsequencesPhase();
+        cell.updateBiologyFromEnvironment();
 
         double newFloatArea = initialFloatArea * (1 - FloatRing.parameters.decayRate.getValue());
         assertEquals(newFloatArea, cell.getFloatArea(), 0.001);

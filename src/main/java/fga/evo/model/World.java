@@ -3,7 +3,6 @@ package fga.evo.model;
 import fga.evo.model.biology.AccumulatingCellLifecycleListener;
 import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.EnvironmentalInfluence;
-import fga.evo.model.environment.Illumination;
 import fga.evo.model.geometry.OverlapDetection;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.physics.Puller;
@@ -54,7 +53,7 @@ public class World {
         }
 
         for (Cell cell : cells)
-            cell.tickBiology_ConsequencesPhase();
+            cell.updateBiologyFromEnvironment();
 
         for (Cell cell : cells)
             cell.tickBiology_ControlPhase();
