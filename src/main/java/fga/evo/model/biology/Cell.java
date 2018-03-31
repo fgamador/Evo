@@ -179,6 +179,7 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     private void liveConsequencesPhase() {
         addDonatedEnergy();
+        photosynthesize();
         subtractMaintenanceEnergy();
         addDamage();
     }

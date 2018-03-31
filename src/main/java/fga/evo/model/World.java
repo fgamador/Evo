@@ -58,10 +58,8 @@ public class World {
         for (Cell cell : cells)
             cell.tickBiology_ControlPhase();
 
-        for (Cell cell : cells) {
-            cell.photosynthesize();
+        for (Cell cell : cells)
             cell.tickBiology_ConsequencesPhase();
-        }
 
         for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);
