@@ -77,7 +77,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         lifecycleListener.onCellDied(this);
     }
 
-    public void tickBiology_ControlPhase() {
+    public void exertControl() {
         state.controlPhase(this);
     }
 

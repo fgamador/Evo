@@ -56,7 +56,7 @@ public class World {
             cell.updateBiologyFromEnvironment();
 
         for (Cell cell : cells)
-            cell.tickBiology_ControlPhase();
+            cell.exertControl();
     }
 
     private void updateCellEnvironments() {

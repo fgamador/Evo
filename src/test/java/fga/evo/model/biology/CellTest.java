@@ -46,7 +46,7 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         Assert.assertEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(100 - 2, cell.getEnergy(), 0.001);
@@ -60,7 +60,7 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
         assertEquals(100 - 2, cell.getEnergy(), 0.001);
@@ -73,7 +73,7 @@ public class CellTest {
                 .setPhotoRingArea(Math.PI)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
         assertEquals(0.1, cell.getEnergy(), 0.001);
@@ -87,7 +87,7 @@ public class CellTest {
                 .setEnergy(2)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
         assertEnergy(0, cell);
@@ -104,7 +104,7 @@ public class CellTest {
                 .setEnergy(100)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(3 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
@@ -121,7 +121,7 @@ public class CellTest {
                 .setPhotoRingArea(Math.PI)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(0.1 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
         assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
@@ -139,7 +139,7 @@ public class CellTest {
                 .setEnergy(1)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         double scaledFloatGrowthEnergy = 1 + 0.1;
         assertEquals(scaledFloatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
@@ -155,7 +155,7 @@ public class CellTest {
                 .setEnergy(1)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertTrue(cell.getFloatArea() > 0);
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
@@ -183,7 +183,7 @@ public class CellTest {
                 .setLifecycleListener(lifecycleListener)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertTrue(lifecycleListener.bornCells.isEmpty());
         assertTrue(lifecycleListener.formedBonds.isEmpty());
@@ -200,7 +200,7 @@ public class CellTest {
                 .build();
         Chance.setNextRandom(0.4);
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(1, lifecycleListener.bornCells.size());
         assertEquals(1, lifecycleListener.formedBonds.size());
@@ -216,7 +216,7 @@ public class CellTest {
                 .setLifecycleListener(lifecycleListener)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertTrue(lifecycleListener.bornCells.isEmpty());
         assertTrue(lifecycleListener.formedBonds.isEmpty());
@@ -232,7 +232,7 @@ public class CellTest {
                 .setLifecycleListener(lifecycleListener)
                 .build();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(1, lifecycleListener.bornCells.size());
         Cell child = lifecycleListener.bornCells.get(0);
@@ -264,7 +264,7 @@ public class CellTest {
                 .build();
         double startPhotoArea = cell.getPhotoArea();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         Cell child = lifecycleListener.bornCells.get(0);
         assertEnergy(10 / 2, child);
@@ -283,14 +283,14 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
         Cell child = lifecycleListener.bornCells.get(0);
         cell.updateBiologyFromEnvironment();
         assertEnergy(2, child);
 
         // second tick, first phase
-        cell.tickBiology_ControlPhase();
-        child.tickBiology_ControlPhase();
+        cell.exertControl();
+        child.exertControl();
         assertEquals(2, child.getDonatedEnergy(), 0);
         assertEnergy(0, child);
 
@@ -312,14 +312,14 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
         Cell child = lifecycleListener.bornCells.get(0);
         PairBond bond = lifecycleListener.formedBonds.get(0);
         cell.updateBiologyFromEnvironment();
 
         // second tick, first phase
-        cell.tickBiology_ControlPhase();
-        child.tickBiology_ControlPhase();
+        cell.exertControl();
+        child.exertControl();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
@@ -340,13 +340,13 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
         Cell child = lifecycleListener.bornCells.get(0);
         cell.updateBiologyFromEnvironment();
 
         // second tick, first phase
-        cell.tickBiology_ControlPhase();
-        child.tickBiology_ControlPhase();
+        cell.exertControl();
+        child.exertControl();
 
         assertNull(cell.getChild());
         assertNull(child.getParent());
@@ -366,13 +366,13 @@ public class CellTest {
                 .build();
 
         // first tick, both phases
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
         Cell child = lifecycleListener.bornCells.get(0);
         cell.updateBiologyFromEnvironment();
 
         // second tick, first phase
         control.setDonation(-1);
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
         assertEquals(child, cell.getChild());
         assertEquals(0, child.getDonatedEnergy(), 0);
     }
@@ -464,7 +464,7 @@ public class CellTest {
                 .build();
         cell.die();
 
-        cell.tickBiology_ControlPhase();
+        cell.exertControl();
 
         assertEquals(Math.PI, cell.getPhotoArea(), 0);
         assertEnergy(10, cell);
