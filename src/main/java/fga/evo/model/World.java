@@ -71,9 +71,7 @@ public class World {
         overlapDetection.findAndNotifyOverlaps();
 
         for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : forceInfluences)
-                influence.updateEnvironment(cell);
-            for (EnvironmentalInfluence influence : energyInfluences)
+            for (EnvironmentalInfluence influence : environmentalInfluences)
                 influence.updateEnvironment(cell);
         }
 
