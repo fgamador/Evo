@@ -10,6 +10,12 @@ public class CellEnvironment extends NewtonianBodyEnvironment {
         return donatedEnergy;
     }
 
+    public double takeDonatedEnergy() {
+        double energy = donatedEnergy;
+        donatedEnergy = 0;
+        return energy;
+    }
+
     public void setDonatedEnergy(double val) {
         donatedEnergy = val;
     }
