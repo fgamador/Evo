@@ -56,10 +56,10 @@ public class World {
         updateCellEnvironments();
 
         for (Cell cell : cells)
-            cell.tickBiology_ControlPhase();
+            cell.tickBiology_ConsequencesPhase();
 
         for (Cell cell : cells)
-            cell.tickBiology_ConsequencesPhase();
+            cell.tickBiology_ControlPhase();
 
         for (Cell cell : cells)
             cell.subtickPhysics(subticksPerTick);

@@ -32,7 +32,6 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
         cell.setCenterPosition(5, -5);
         world.tick();
-        world.tick();
 
         double addedLightEnergy = 0.5;
         double photoRingMaintenanceEnergy = Math.PI * PhotoRing.parameters.maintenanceCost.getValue();
