@@ -113,7 +113,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         state.controlPhase(this);
     }
 
-    private void liveControlPhase() {
+    private void controlPhase_Live() {
         control.exertControl(this);
         adjustAndChargeForEnergyRequests();
         resizeRings();
@@ -333,7 +333,7 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     private static class Alive implements State {
         public void controlPhase(Cell cell) {
-            cell.liveControlPhase();
+            cell.controlPhase_Live();
         }
 
         public void updateBiologyPhase(Cell cell) {
