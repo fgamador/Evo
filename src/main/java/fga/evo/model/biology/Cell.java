@@ -228,6 +228,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
      *
      * @param growthEnergy the desired amount of energy to spend on growth
      */
+    @Deprecated
     public void requestFloatAreaResize_Old(double growthEnergy) {
         floatRing.requestResize_Old(growthEnergy);
     }
@@ -237,6 +238,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
      *
      * @param growthEnergy the desired amount of energy to spend on growth
      */
+    @Deprecated
     public void requestPhotoAreaResize_Old(double growthEnergy) {
         photoRing.requestResize_Old(growthEnergy);
     }
