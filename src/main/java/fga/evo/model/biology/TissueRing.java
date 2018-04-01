@@ -18,7 +18,7 @@ public class TissueRing extends Ring {
 
     public void requestResize(double factor) {
         if (factor < 0)
-            throw new IllegalArgumentException("Resize request factor must be non-negative");
+            throw new IllegalArgumentException("Resize-request factor must be non-negative");
 
         deltaArea = calcDeltaArea(factor);
         intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);
