@@ -21,7 +21,7 @@ public class TissueRing extends Ring {
             throw new IllegalArgumentException("Resize request factor must be non-negative");
 
         deltaArea = calcDeltaArea(factor);
-        this.intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);
+        intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);
     }
 
     private double calcDeltaArea(double factor) {
