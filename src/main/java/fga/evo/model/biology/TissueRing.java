@@ -43,29 +43,29 @@ public class TissueRing extends Ring {
      */
     public void requestResize_Old(double availableEnergy) {
         if (availableEnergy >= 0) {
-            requestGrowth(availableEnergy);
+            requestGrowth_Old(availableEnergy);
         } else {
-            requestShrinkage(-availableEnergy);
+            requestShrinkage_Old(-availableEnergy);
         }
     }
 
-    private void requestGrowth(double availableEnergy) {
-        deltaArea = calcIntendedGrowth(availableEnergy);
+    private void requestGrowth_Old(double availableEnergy) {
+        deltaArea = calcIntendedGrowth_Old(availableEnergy);
         intendedEnergyConsumption = deltaArea * parameters.growthCost.getValue();
     }
 
-    private double calcIntendedGrowth(double availableEnergy) {
+    private double calcIntendedGrowth_Old(double availableEnergy) {
         double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
         double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
         return Math.min(requestedGrowth, maxAllowedGrowth);
     }
 
-    private void requestShrinkage(double requestedEnergy) {
-        deltaArea = -calcIntendedShrinkage(requestedEnergy);
+    private void requestShrinkage_Old(double requestedEnergy) {
+        deltaArea = -calcIntendedShrinkage_Old(requestedEnergy);
         intendedEnergyConsumption = deltaArea * parameters.shrinkageYield.getValue();
     }
 
-    private double calcIntendedShrinkage(double requestedEnergy) {
+    private double calcIntendedShrinkage_Old(double requestedEnergy) {
         double requestedShrinkage = requestedEnergy / parameters.shrinkageYield.getValue();
         double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate.getValue();
         return Math.min(requestedShrinkage, maxAllowedShrinkage);
