@@ -343,7 +343,6 @@ public class Cell extends Onion implements CellControl.CellApi {
 
     public static class Builder {
         private Cell cell;
-        private double energy;
 
         public Builder() {
             cell = new Cell(0);
