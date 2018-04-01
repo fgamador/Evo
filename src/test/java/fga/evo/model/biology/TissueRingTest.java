@@ -126,6 +126,18 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
+    public void resizeIsIdempotent() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        testSubject.requestResize(2);
+
+        testSubject.resize();
+        double areaAfterFirstResize = testSubject.getArea();
+        testSubject.resize();
+
+        assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
+    }
+
+    @Test
     public void decayUsesExpectedCalculation() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         double initialArea = testSubject.getArea();
@@ -199,7 +211,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void resizeIsIdempotent() {
+    public void resizeIsIdempotent_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(2);
         testSubject.resize();
