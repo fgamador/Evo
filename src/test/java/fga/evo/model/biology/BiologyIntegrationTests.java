@@ -26,8 +26,8 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
         Cell cell = new Cell.Builder()
-                .setControl(c -> c.requestPhotoAreaResize(1000))
-                .setPhotoRingArea(Math.PI)
+                .withControl(c -> c.requestPhotoAreaResize(1000))
+                .withPhotoRingArea(Math.PI)
                 .build();
         world.addCell(cell);
 
@@ -45,9 +45,9 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testBuoyancyControl_Deeper() {
         world.addEnvironmentalInfluence(new Weight());
         Cell cell = new Cell.Builder()
-                .setControl(new FixedDepthSeekingControl(100))
-                .setPhotoRingArea(Math.PI)
-                .setEnergy(100)
+                .withControl(new FixedDepthSeekingControl(100))
+                .withPhotoRingArea(Math.PI)
+                .withEnergy(100)
                 .build();
         world.addCell(cell);
 
@@ -69,9 +69,9 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testBuoyancyControl_Shallower() {
         world.addEnvironmentalInfluence(new Weight());
         Cell cell = new Cell.Builder()
-                .setControl(new FixedDepthSeekingControl(100))
-                .setPhotoRingArea(Math.PI)
-                .setEnergy(100)
+                .withControl(new FixedDepthSeekingControl(100))
+                .withPhotoRingArea(Math.PI)
+                .withEnergy(100)
                 .build();
         world.addCell(cell);
 
@@ -92,9 +92,9 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testReproduction() {
         Cell cell = new Cell.Builder()
-                .setControl(new ParentChildControl(1, 2))
-                .setPhotoRingOuterRadius(10)
-                .setEnergy(10)
+                .withControl(new ParentChildControl(1, 2))
+                .withPhotoRingOuterRadius(10)
+                .withEnergy(10)
                 .build();
         world.addCell(cell);
         cell.setCenterPosition(5, -5);
@@ -114,9 +114,9 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Test
     public void testGrowthAfterReproduction() {
         Cell cell = new Cell.Builder()
-                .setControl(new ParentChildControl(1, 2))
-                .setPhotoRingOuterRadius(10)
-                .setEnergy(10)
+                .withControl(new ParentChildControl(1, 2))
+                .withPhotoRingOuterRadius(10)
+                .withEnergy(10)
                 .build();
         world.addCell(cell);
         cell.setCenterPosition(5, -5);

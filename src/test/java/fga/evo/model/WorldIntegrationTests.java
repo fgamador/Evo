@@ -13,7 +13,7 @@ public abstract class WorldIntegrationTests extends EvoTest {
 
     protected Cell addCell(double radius) {
         Cell cell = new Cell.Builder()
-                .setPhotoRingOuterRadius(radius)
+                .withPhotoRingOuterRadius(radius)
                 .build();
         world.addCell(cell);
         return cell;

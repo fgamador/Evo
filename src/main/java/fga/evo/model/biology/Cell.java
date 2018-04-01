@@ -349,37 +349,37 @@ public class Cell extends Onion implements CellControl.CellApi {
             cell = new Cell(0);
         }
 
-        public Builder setControl(CellControl control) {
+        public Builder withControl(CellControl control) {
             cell.control = control;
             return this;
         }
 
-        public Builder setFloatRingArea(double area) {
+        public Builder withFloatRingArea(double area) {
             setArea(cell.floatRing, area);
             return this;
         }
 
-        public Builder setFloatRingOuterRadius(double radius) {
+        public Builder withFloatRingOuterRadius(double radius) {
             setArea(cell.floatRing, Math.PI * sqr(radius));
             return this;
         }
 
-        public Builder setPhotoRingArea(double area) {
+        public Builder withPhotoRingArea(double area) {
             setArea(cell.photoRing, area);
             return this;
         }
 
-        public Builder setPhotoRingOuterRadius(double radius) {
+        public Builder withPhotoRingOuterRadius(double radius) {
             setArea(cell.photoRing, Math.PI * sqr(radius) - cell.floatRing.getArea());
             return this;
         }
 
-        public Builder setEnergy(double energy) {
+        public Builder withEnergy(double energy) {
             cell.energy = energy;
             return this;
         }
 
-        public Builder setLifecycleListener(CellLifecycleListener listener) {
+        public Builder withLifecycleListener(CellLifecycleListener listener) {
             cell.lifecycleListener = listener;
             return this;
         }

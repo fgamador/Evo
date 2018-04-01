@@ -1,6 +1,5 @@
 package fga.evo.model.biology;
 
-import fga.evo.model.biology.Cell;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,21 +8,21 @@ public class CellBuilderTest {
     @Test(expected = IllegalStateException.class)
     public void testBuild_SetAreaTwice() {
         new Cell.Builder()
-                .setFloatRingArea(Math.PI)
-                .setFloatRingArea(Math.PI);
+                .withFloatRingArea(Math.PI)
+                .withFloatRingArea(Math.PI);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testBuild_SetOuterRadiusThenArea() {
         new Cell.Builder()
-                .setFloatRingOuterRadius(1)
-                .setFloatRingArea(Math.PI);
+                .withFloatRingOuterRadius(1)
+                .withFloatRingArea(Math.PI);
     }
 
     @Test
     public void testBuild_FloatRingOuterRadius() {
         Cell cell = new Cell.Builder()
-                .setFloatRingOuterRadius(1)
+                .withFloatRingOuterRadius(1)
                 .build();
         assertEquals(1, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);
@@ -36,8 +35,8 @@ public class CellBuilderTest {
     @Test
     public void testBuild_FloatRingAndPhotoRingOuterRadii() {
         Cell cell = new Cell.Builder()
-                .setFloatRingOuterRadius(1)
-                .setPhotoRingOuterRadius(2)
+                .withFloatRingOuterRadius(1)
+                .withPhotoRingOuterRadius(2)
                 .build();
         assertEquals(2, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);
@@ -50,7 +49,7 @@ public class CellBuilderTest {
     @Test
     public void testBuild_FloatRingArea() {
         Cell cell = new Cell.Builder()
-                .setFloatRingArea(Math.PI)
+                .withFloatRingArea(Math.PI)
                 .build();
         assertEquals(1, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);
@@ -63,8 +62,8 @@ public class CellBuilderTest {
     @Test
     public void testBuild_FloatRingAndPhotoRingAreas() {
         Cell cell = new Cell.Builder()
-                .setFloatRingArea(Math.PI)
-                .setPhotoRingArea(3 * Math.PI)
+                .withFloatRingArea(Math.PI)
+                .withPhotoRingArea(3 * Math.PI)
                 .build();
         assertEquals(2, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);
@@ -77,8 +76,8 @@ public class CellBuilderTest {
     @Test
     public void testBuild_FloatRingAndPhotoRingAreas_ReverseOrder() {
         Cell cell = new Cell.Builder()
-                .setPhotoRingArea(3 * Math.PI)
-                .setFloatRingArea(Math.PI)
+                .withPhotoRingArea(3 * Math.PI)
+                .withFloatRingArea(Math.PI)
                 .build();
         assertEquals(2, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);
@@ -91,8 +90,8 @@ public class CellBuilderTest {
     @Test
     public void testBuild_FloatRingAreaAndPhotoRingOuterRadius() {
         Cell cell = new Cell.Builder()
-                .setFloatRingArea(Math.PI)
-                .setPhotoRingOuterRadius(2)
+                .withFloatRingArea(Math.PI)
+                .withPhotoRingOuterRadius(2)
                 .build();
         assertEquals(2, cell.getRadius(), 0);
         assertEquals(1, cell.getFloatRingOuterRadius(), 0);
