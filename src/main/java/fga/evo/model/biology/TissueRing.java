@@ -67,7 +67,7 @@ public class TissueRing extends Ring {
 
     private double calcIntendedShrinkage_Old(double requestedEnergy) {
         double requestedShrinkage = requestedEnergy / parameters.shrinkageYield.getValue();
-        double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate.getValue();
+        double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate_Old.getValue();
         return Math.min(requestedShrinkage, maxAllowedShrinkage);
     }
 
