@@ -14,7 +14,7 @@ public class TissueRingTest extends EvoTest {
     public void tearDown() {
         TestTissueRing.parameters.maxResizeFactor.revertToDefaultValue();
         TestTissueRing.parameters.minResizeFactor.revertToDefaultValue();
-        TestTissueRing.parameters.maxGrowthRate.revertToDefaultValue();
+        TestTissueRing.parameters.maxGrowthRate_Old.revertToDefaultValue();
         TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
     }
 
@@ -162,9 +162,9 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void growthEnergyConsumptionIsLimitedByMaxGrowthRate_Old() {
-        TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
+        TestTissueRing.parameters.maxGrowthRate_Old.setValue(0.1);
         TissueRing testSubject = new TestTissueRing(Math.PI);
-        double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate.getValue();
+        double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate_Old.getValue();
         double maxGrowthEnergy = maxDeltaArea * TestTissueRing.parameters.growthCost.getValue();
         assertTrue(maxGrowthEnergy < 100);
 
@@ -256,7 +256,7 @@ public class TissueRingTest extends EvoTest {
             parameters.shrinkageYield = new DoubleParameter(0.05);
             parameters.maxResizeFactor = new DoubleParameter(100);
             parameters.minResizeFactor = new DoubleParameter(0.01);
-            parameters.maxGrowthRate = new DoubleParameter(100);
+            parameters.maxGrowthRate_Old = new DoubleParameter(100);
             parameters.maxShrinkRate = new DoubleParameter(1);
             parameters.decayRate = new DoubleParameter(0.1);
         }

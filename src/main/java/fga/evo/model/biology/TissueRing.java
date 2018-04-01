@@ -56,7 +56,7 @@ public class TissueRing extends Ring {
 
     private double calcIntendedGrowth_Old(double availableEnergy) {
         double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
-        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
+        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate_Old.getValue();
         return Math.min(requestedGrowth, maxAllowedGrowth);
     }
 

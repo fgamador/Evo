@@ -38,7 +38,7 @@ public class RegisteredParameters {
         register(prefix + ".growthCost", parameters.growthCost);
         register(prefix + ".maintenanceCost", parameters.maintenanceCost);
         register(prefix + ".shrinkageYield", parameters.shrinkageYield);
-        register(prefix + ".maxGrowthRate", parameters.maxGrowthRate);
+        register(prefix + ".maxGrowthRate", parameters.maxGrowthRate_Old);
     }
 
     public static void register(String name, DoubleParameter parameter) {
