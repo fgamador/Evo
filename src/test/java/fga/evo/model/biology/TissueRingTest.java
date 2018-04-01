@@ -1,5 +1,6 @@
 package fga.evo.model.biology;
 
+import fga.evo.model.Assert;
 import fga.evo.model.EvoTest;
 import fga.evo.model.util.DoubleParameter;
 import org.junit.After;
@@ -58,12 +59,13 @@ public class TissueRingTest extends EvoTest {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
-        final double resizeFactor = 2;
+        final double resizeFactor = 1.1;
         testSubject.requestResize(resizeFactor);
 
         final double deltaArea = resizeFactor * startArea - startArea;
         final double growthCost = deltaArea * TestTissueRing.parameters.growthCost.getValue();
-        assertEquals(growthCost, testSubject.getIntendedEnergyConsumption(), 0);
+        assertTrue(growthCost > 0);
+        assertEquals(growthCost, testSubject.getIntendedEnergyConsumption(), Assert.DEFAULT_DELTA);
     }
 
     @Test
@@ -71,12 +73,13 @@ public class TissueRingTest extends EvoTest {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
-        final double resizeFactor = 0.5;
+        final double resizeFactor = 0.9;
         testSubject.requestResize(resizeFactor);
 
         final double deltaArea = resizeFactor * startArea - startArea;
         final double shrinkageYield = deltaArea * TestTissueRing.parameters.shrinkageYield.getValue();
-        assertEquals(shrinkageYield, testSubject.getIntendedEnergyConsumption(), 0);
+        assertTrue(shrinkageYield < 0);
+        assertEquals(shrinkageYield, testSubject.getIntendedEnergyConsumption(), Assert.DEFAULT_DELTA);
     }
 
     @Test
