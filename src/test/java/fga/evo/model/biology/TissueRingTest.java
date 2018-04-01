@@ -114,6 +114,17 @@ public class TissueRingTest extends EvoTest {
         assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
+    @Test
+    public void resizeWithoutRequestDoesNothing() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        double initialArea = testSubject.getArea();
+
+        testSubject.resize();
+
+        assertEquals(initialArea, testSubject.getArea(), 0);
+        assertEquals(0, testSubject.getIntendedEnergyConsumption(), 0);
+    }
+
     //-----------------
 
     @Test
@@ -165,7 +176,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void resizeChangesArea() {
+    public void resizeChangesArea_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         double initialArea = testSubject.getArea();
         testSubject.requestResize_Old(2);
@@ -174,16 +185,6 @@ public class TissueRingTest extends EvoTest {
 
         double expectedFinalArea = initialArea + 2 / TestTissueRing.parameters.growthCost.getValue();
         assertEquals(expectedFinalArea, testSubject.getArea(), 0);
-    }
-
-    @Test
-    public void resizeWithoutRequestDoesNothing() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        double initialArea = testSubject.getArea();
-
-        testSubject.resize();
-
-        assertEquals(initialArea, testSubject.getArea(), 0);
     }
 
     @Test
