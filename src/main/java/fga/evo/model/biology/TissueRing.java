@@ -20,10 +20,12 @@ public class TissueRing extends Ring {
         if (factor < 0)
             throw new IllegalArgumentException("Resize request factor must be non-negative");
 
-        final double boundedFactor = Math.max(parameters.minResizeFactor.getValue(), Math.min(parameters.maxResizeFactor.getValue(), factor));
+        final double minFactor = parameters.minResizeFactor.getValue();
+        final double maxFactor = parameters.maxResizeFactor.getValue();
+        final double boundedFactor = Math.max(minFactor, Math.min(maxFactor, factor));
         deltaArea = (boundedFactor - 1) * getArea();
 
-        final DoubleParameter energyFactorParam = (deltaArea >= getArea()) ? parameters.growthCost : parameters.shrinkageYield;
+        DoubleParameter energyFactorParam = (deltaArea >= getArea()) ? parameters.growthCost : parameters.shrinkageYield;
         intendedEnergyConsumption = deltaArea * energyFactorParam.getValue();
     }
 
