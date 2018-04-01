@@ -25,8 +25,8 @@ public class TissueRing extends Ring {
     }
 
     private double calcDeltaArea(double factor) {
-        final double minFactor = parameters.minResizeFactor.getValue();
         final double maxFactor = parameters.maxResizeFactor.getValue();
+        final double minFactor = parameters.minResizeFactor.getValue();
         final double boundedFactor = Math.max(minFactor, Math.min(maxFactor, factor));
         return (boundedFactor - 1) * getArea();
     }
