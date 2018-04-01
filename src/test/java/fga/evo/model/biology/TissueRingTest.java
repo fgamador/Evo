@@ -23,6 +23,43 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
+    public void growsByRequestedAmount() {
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        final double resizeFactor = 2;
+        testSubject.requestResize(resizeFactor);
+        testSubject.resize();
+
+        assertEquals(resizeFactor * startArea, testSubject.getArea(), 0);
+    }
+
+    @Test
+    public void shrinksByRequestedAmount() {
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        final double resizeFactor = 0.5;
+        testSubject.requestResize(resizeFactor);
+        testSubject.resize();
+
+        assertEquals(resizeFactor * startArea, testSubject.getArea(), 0);
+    }
+
+//    @Test
+    public void growthUsesExpectedEnergy() {
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        final double resizeFactor = 2;
+        testSubject.requestResize(resizeFactor);
+
+        final double deltaArea = resizeFactor * startArea - startArea;
+        final double growthCost = deltaArea * TestTissueRing.parameters.growthCost.getValue();
+        assertEquals(growthCost, testSubject.getIntendedEnergyConsumption(), 0);
+    }
+
+    @Test
     public void growthUsesAvailableEnergy() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(2);

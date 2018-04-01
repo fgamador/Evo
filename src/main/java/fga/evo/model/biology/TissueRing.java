@@ -15,6 +15,10 @@ public class TissueRing extends Ring {
         this.parameters = parameters;
     }
 
+    public void requestResize(double factor) {
+        deltaArea = factor * getArea() - getArea();
+    }
+
     /**
      * Records a request that the ring's area grow or shrink using a specified amount of energy.
      *
