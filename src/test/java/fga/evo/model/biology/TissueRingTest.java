@@ -103,17 +103,28 @@ public class TissueRingTest extends EvoTest {
         assertEquals(TestTissueRing.parameters.minResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
     }
 
+    @Test
+    public void scalingResizeRequestScalesEnergyConsumption() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        testSubject.requestResize(10);
+        final double unscaledEnergy = testSubject.getIntendedEnergyConsumption();
+
+        testSubject.scaleResizeRequest(0.1);
+
+        assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
+    }
+
     //-----------------
 
     @Test
-    public void growthUsesAvailableEnergy() {
+    public void growthUsesAvailableEnergy_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(2);
         assertEquals(2, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
-    public void growthEnergyConsumptionIsLimitedByMaxGrowthRate() {
+    public void growthEnergyConsumptionIsLimitedByMaxGrowthRate_Old() {
         TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
         TissueRing testSubject = new TestTissueRing(Math.PI);
         double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate.getValue();
@@ -126,14 +137,14 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void shrinkageYieldsRequestedEnergy() {
+    public void shrinkageYieldsRequestedEnergy_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(-0.1);
         assertEquals(-0.1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
-    public void shrinkageEnergyYieldIsLimitedByAvailableArea() {
+    public void shrinkageEnergyYieldIsLimitedByAvailableArea_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         double initialArea = testSubject.getArea();
 
@@ -144,7 +155,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void scalingResizeRequestScalesEnergyConsumption() {
+    public void scalingResizeRequestScalesEnergyConsumption_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
 
         testSubject.requestResize_Old(10);
@@ -188,7 +199,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void resizeWillNotShrinkBelowZeroArea() {
+    public void resizeWillNotShrinkBelowZeroArea_Old() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(-5);
 
@@ -198,7 +209,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void shrinkingWithZeroShrinkageYieldParameterShrinksToZeroArea() {
+    public void shrinkingWithZeroShrinkageYieldParameterShrinksToZeroArea_Old() {
         TestTissueRing.parameters.shrinkageYield.setValue(0);
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(-0.01);
