@@ -17,6 +17,7 @@ public class TissueRing extends Ring {
 
     public void requestResize(double factor) {
         deltaArea = factor * getArea() - getArea();
+        intendedEnergyConsumption = deltaArea * parameters.growthCost.getValue();
     }
 
     /**

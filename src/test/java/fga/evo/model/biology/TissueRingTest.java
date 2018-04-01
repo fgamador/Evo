@@ -46,7 +46,7 @@ public class TissueRingTest extends EvoTest {
         assertEquals(resizeFactor * startArea, testSubject.getArea(), 0);
     }
 
-//    @Test
+    @Test
     public void growthUsesExpectedEnergy() {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
