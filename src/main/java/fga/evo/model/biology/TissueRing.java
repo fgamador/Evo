@@ -54,9 +54,9 @@ public class TissueRing extends Ring {
         return intendedEnergyConsumption;
     }
 
-    public void scaleResizeRequest(double ratio) {
-        deltaArea *= ratio;
-        intendedEnergyConsumption *= ratio;
+    public void scaleResizeRequest(double factor) {
+        deltaArea *= factor;
+        intendedEnergyConsumption *= factor;
     }
 
     public void resize() {
