@@ -20,7 +20,7 @@ public class TissueRing extends Ring {
      *
      * @param availableEnergy the amount of energy available for growth; negative to shrink
      */
-    public void requestResize(double availableEnergy) {
+    public void requestResize_Old(double availableEnergy) {
         if (availableEnergy >= 0) {
             requestGrowth(availableEnergy);
         } else {

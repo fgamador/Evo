@@ -8,8 +8,6 @@ import fga.evo.model.geometry.Ring;
 import fga.evo.model.util.Chance;
 import fga.evo.model.util.DoubleParameter;
 
-import java.util.*;
-
 import static fga.evo.model.util.Util.sqr;
 
 /**
@@ -217,7 +215,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
      * @param growthEnergy the desired amount of energy to spend on growth
      */
     public void requestFloatAreaResize(double growthEnergy) {
-        floatRing.requestResize(growthEnergy);
+        floatRing.requestResize_Old(growthEnergy);
     }
 
     /**
@@ -226,7 +224,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
      * @param growthEnergy the desired amount of energy to spend on growth
      */
     public void requestPhotoAreaResize(double growthEnergy) {
-        photoRing.requestResize(growthEnergy);
+        photoRing.requestResize_Old(growthEnergy);
     }
 
     public void setSpawnOdds(double val) {
