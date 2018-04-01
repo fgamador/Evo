@@ -21,16 +21,19 @@ public class TissueRing extends Ring {
             throw new IllegalArgumentException("Resize request factor must be non-negative");
 
         deltaArea = calcDeltaArea(factor);
-
-        DoubleParameter energyFactorParam = (this.deltaArea >= 0) ? parameters.growthCost : parameters.shrinkageYield;
-        intendedEnergyConsumption = this.deltaArea * energyFactorParam.getValue();
+        this.intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);
     }
 
-    public double calcDeltaArea(double factor) {
+    private double calcDeltaArea(double factor) {
         final double minFactor = parameters.minResizeFactor.getValue();
         final double maxFactor = parameters.maxResizeFactor.getValue();
         final double boundedFactor = Math.max(minFactor, Math.min(maxFactor, factor));
         return (boundedFactor - 1) * getArea();
+    }
+
+    private double calcIntendedEnergyConsumption(double deltaArea) {
+        DoubleParameter energyFactorParam = (deltaArea >= 0) ? parameters.growthCost : parameters.shrinkageYield;
+        return deltaArea * energyFactorParam.getValue();
     }
 
     /**
