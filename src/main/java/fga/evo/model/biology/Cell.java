@@ -22,7 +22,6 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     private static final State ALIVE = new Alive();
     private static final State DEAD = new Dead();
 
-    private List<TissueRing> tissueRings = new ArrayList<>();
     private FloatRing floatRing;
     private PhotoRing photoRing;
     private CellControl control;
@@ -59,11 +58,6 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
         return environment;
     }
 
-    protected void addRing(TissueRing ring) {
-        super.addRing(ring);
-        tissueRings.add(ring);
-    }
-
     public void updateBiologyFromEnvironment() {
         state.updateBiologyPhase(this);
     }
@@ -84,7 +78,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     }
 
     private void subtractMaintenanceEnergy() {
-        for (TissueRing ring : tissueRings) {
+        for (TissueRing ring : getRings()) {
             addEnergy(-ring.getMaintenanceEnergy());
         }
     }
@@ -122,7 +116,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     private void adjustAndChargeForEnergyRequests() {
         double intendedEnergyConsumption = Math.max(requestedChildDonation, 0);
 
-        for (TissueRing ring : tissueRings) {
+        for (TissueRing ring : getRings()) {
             double ringIntendedEnergyConsumption = ring.getIntendedEnergyConsumption();
             if (ringIntendedEnergyConsumption > 0) {
                 intendedEnergyConsumption += ringIntendedEnergyConsumption;
@@ -133,7 +127,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
 
         if (intendedEnergyConsumption > energy) {
             requestedChildDonation *= energy / intendedEnergyConsumption;
-            for (TissueRing ring : tissueRings) {
+            for (TissueRing ring : getRings()) {
                 if (ring.getIntendedEnergyConsumption() > 0) {
                     ring.scaleResizeRequest(energy / intendedEnergyConsumption);
                 }
@@ -144,7 +138,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     }
 
     private void resizeRings() {
-        for (TissueRing ring : tissueRings) {
+        for (TissueRing ring : getRings()) {
             ring.resize();
         }
         syncFields();
@@ -208,7 +202,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     }
 
     public void decay() {
-        for (TissueRing ring : tissueRings) {
+        for (TissueRing ring : getRings()) {
             ring.decay();
         }
         syncFields();
