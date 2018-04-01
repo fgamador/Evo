@@ -181,7 +181,7 @@ public class Cell extends Onion implements CellControl.CellApi {
         child.parent = this;
         PairBond bond = addBond(child);
         child.addEnergy(requestedChildDonation);
-        child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO random angle
+        child.setCenterPosition(getCenterX() + getRadius(), getCenterY()); // TODO control chooses angle
         lifecycleListener.onCellBorn(child);
         lifecycleListener.onBondFormed(bond);
     }
