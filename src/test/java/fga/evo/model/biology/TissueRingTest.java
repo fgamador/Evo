@@ -11,6 +11,8 @@ import static org.junit.Assert.assertTrue;
 public class TissueRingTest extends EvoTest {
     @After
     public void tearDown() {
+        TestTissueRing.parameters.maxResizeFactor.revertToDefaultValue();
+        TestTissueRing.parameters.minResizeFactor.revertToDefaultValue();
         TestTissueRing.parameters.maxGrowthRate.revertToDefaultValue();
         TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
     }
@@ -73,8 +75,20 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void growthIsLimitedByMaxGrowthRate() {
-        TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
+    public void growthIsLimitedByMaxResizeFactor() {
+        TestTissueRing.parameters.maxResizeFactor.setValue(1.1);
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        testSubject.requestResize(100);
+        testSubject.resize();
+
+        assertEquals(TestTissueRing.parameters.maxResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
+    }
+
+    //@Test
+    public void shrinkageIsLimitedByMinResizeFactor() {
+        TestTissueRing.parameters.minResizeFactor.setValue(0.1);
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
@@ -83,6 +97,8 @@ public class TissueRingTest extends EvoTest {
 
         assertEquals(TestTissueRing.parameters.maxGrowthRate.getValue() * startArea, testSubject.getArea(), 0);
     }
+
+    //-----------------
 
     @Test
     public void growthUsesAvailableEnergy() {
@@ -206,6 +222,8 @@ public class TissueRingTest extends EvoTest {
             parameters.growthCost = new DoubleParameter(0.1);
             parameters.maintenanceCost = new DoubleParameter(0.05);
             parameters.shrinkageYield = new DoubleParameter(0.05);
+            parameters.maxResizeFactor = new DoubleParameter(100);
+            parameters.minResizeFactor = new DoubleParameter(0.01);
             parameters.maxGrowthRate = new DoubleParameter(100);
             parameters.maxShrinkRate = new DoubleParameter(1);
             parameters.decayRate = new DoubleParameter(0.1);
