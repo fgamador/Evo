@@ -18,7 +18,7 @@ public class TissueRing extends Ring {
 
     public void requestResize(double factor) {
         final double boundedFactor = Math.min(parameters.maxGrowthRate.getValue(), factor);
-        deltaArea = boundedFactor * getArea() - getArea();
+        deltaArea = (boundedFactor - 1) * getArea();
         final DoubleParameter energyFactorParam = (factor >= 1) ? parameters.growthCost : parameters.shrinkageYield;
         intendedEnergyConsumption = deltaArea * energyFactorParam.getValue();
     }
