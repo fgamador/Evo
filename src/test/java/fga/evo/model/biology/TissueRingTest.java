@@ -73,6 +73,18 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
+    public void growthIsLimitedByMaxGrowthRate() {
+        TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        testSubject.requestResize(100);
+        testSubject.resize();
+
+        assertEquals(TestTissueRing.parameters.maxGrowthRate.getValue() * startArea, testSubject.getArea(), 0);
+    }
+
+    @Test
     public void growthUsesAvailableEnergy() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_Old(2);
