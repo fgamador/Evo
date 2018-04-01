@@ -8,11 +8,15 @@ import java.util.List;
 /**
  * A Ball composed of Rings. Manages ring geometry and mass.
  */
-public abstract class Onion extends Ball {
-    private List<Ring> rings = new ArrayList<>();
+public abstract class Onion<T extends Ring> extends Ball {
+    private List<T> rings = new ArrayList<>();
 
-    protected void addRing(Ring ring) {
+    protected void addRing(T ring) {
         rings.add(ring);
+    }
+
+    protected List<T> getRings() {
+        return rings;
     }
 
     protected void syncFields() {

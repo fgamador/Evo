@@ -16,7 +16,7 @@ import static fga.evo.model.util.Util.sqr;
  * The basic living unit in evo. A circular entity that can move and grow and reproduce.
  * Cells can also bond together to form larger organisms.
  */
-public class Cell extends Onion implements CellControl.CellApi {
+public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     public static DoubleParameter maximumSurvivableDamage = new DoubleParameter(10);
 
     private static final State ALIVE = new Alive();
