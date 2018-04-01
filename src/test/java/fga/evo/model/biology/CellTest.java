@@ -42,7 +42,7 @@ public class CellTest {
     @Test
     public void testControlPhase_FloatRingGrowth() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestFloatAreaResize(2))
+                .withControl(c -> c.requestFloatAreaResize_Old(2))
                 .withEnergy(100)
                 .build();
 
@@ -55,7 +55,7 @@ public class CellTest {
     @Test
     public void testControlPhase_PhotoRingGrowth() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize(2))
+                .withControl(c -> c.requestPhotoAreaResize_Old(2))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(100)
                 .build();
@@ -69,7 +69,7 @@ public class CellTest {
     @Test
     public void testControlPhase_PhotoRingShrinkage() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize(-0.1))
+                .withControl(c -> c.requestPhotoAreaResize_Old(-0.1))
                 .withPhotoRingArea(Math.PI)
                 .build();
 
@@ -82,7 +82,7 @@ public class CellTest {
     @Test
     public void testControlPhase_PhotoRingGrowth_ExcessiveRequest() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize(1000))
+                .withControl(c -> c.requestPhotoAreaResize_Old(1000))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(2)
                 .build();
@@ -97,8 +97,8 @@ public class CellTest {
     public void testControlPhase_FloatAndPhotoRingGrowth() {
         Cell cell = new Cell.Builder()
                 .withControl(c -> {
-                    c.requestFloatAreaResize(3);
-                    c.requestPhotoAreaResize(2);
+                    c.requestFloatAreaResize_Old(3);
+                    c.requestPhotoAreaResize_Old(2);
                 })
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(100)
@@ -115,8 +115,8 @@ public class CellTest {
     public void testControlPhase_OffsettingRequests() {
         Cell cell = new Cell.Builder()
                 .withControl(c -> {
-                    c.requestFloatAreaResize(0.1);
-                    c.requestPhotoAreaResize(-0.1);
+                    c.requestFloatAreaResize_Old(0.1);
+                    c.requestPhotoAreaResize_Old(-0.1);
                 })
                 .withPhotoRingArea(Math.PI)
                 .build();
@@ -132,8 +132,8 @@ public class CellTest {
     public void testControlPhase_ScaledOffsettingRequests() {
         Cell cell = new Cell.Builder()
                 .withControl(c -> {
-                    c.requestFloatAreaResize(2);
-                    c.requestPhotoAreaResize(-0.1);
+                    c.requestFloatAreaResize_Old(2);
+                    c.requestPhotoAreaResize_Old(-0.1);
                 })
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(1)
@@ -150,7 +150,7 @@ public class CellTest {
     @Test
     public void testControlPhase_FloatRingGrowthAffectsPhotoRingAndCell() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestFloatAreaResize(1000))
+                .withControl(c -> c.requestFloatAreaResize_Old(1000))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(1)
                 .build();
@@ -256,7 +256,7 @@ public class CellTest {
                 .withControl(c -> {
                     c.setSpawnOdds(1);
                     c.requestChildDonation(10);
-                    c.requestPhotoAreaResize(10);
+                    c.requestPhotoAreaResize_Old(10);
                 })
                 .withPhotoRingOuterRadius(10)
                 .withEnergy(10)
@@ -458,7 +458,7 @@ public class CellTest {
     @Test
     public void testControlPhase_Dead() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize(1))
+                .withControl(c -> c.requestPhotoAreaResize_Old(1))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(10)
                 .build();
