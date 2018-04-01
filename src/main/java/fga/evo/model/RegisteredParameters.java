@@ -38,6 +38,8 @@ public class RegisteredParameters {
         register(prefix + ".growthCost", parameters.growthCost);
         register(prefix + ".maintenanceCost", parameters.maintenanceCost);
         register(prefix + ".shrinkageYield", parameters.shrinkageYield);
+//        register(prefix + ".maxResizeFactor", parameters.maxResizeFactor);
+//        register(prefix + ".minResizeFactor", parameters.minResizeFactor);
         register(prefix + ".maxGrowthRate", parameters.maxGrowthRate_Old);
     }
 
