@@ -17,6 +17,9 @@ public class TissueRing extends Ring {
     }
 
     public void requestResize(double factor) {
+        if (factor < 0)
+            throw new IllegalArgumentException("Resize request factor must be non-negative");
+
         final double boundedFactor = Math.max(parameters.minResizeFactor.getValue(), Math.min(parameters.maxResizeFactor.getValue(), factor));
         deltaArea = (boundedFactor - 1) * getArea();
 

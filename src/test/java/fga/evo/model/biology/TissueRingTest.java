@@ -24,6 +24,11 @@ public class TissueRingTest extends EvoTest {
         assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void resizeRequestMustBeNonNegative() {
+        new TestTissueRing(Math.PI).requestResize(-1);
+    }
+
     @Test
     public void growsByRequestedAmount() {
         final double startArea = Math.PI;
