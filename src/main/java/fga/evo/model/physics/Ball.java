@@ -24,6 +24,7 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
     private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
     public void setRadius(double val) {
+        assert val >= 0;
         radius = val;
         area = Math.PI * sqr(radius);
     }
