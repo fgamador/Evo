@@ -32,7 +32,7 @@ public abstract class NewtonianBody {
     }
 
     /**
-     * Sets the ball's initial velocity. All subsequent updates to velocity should be done by {@link #subtick}.
+     * Sets the body's initial velocity. All subsequent updates to velocity should be done by {@link #subtick}.
      */
     public void setVelocity(double velocityX, double velocityY) {
         this.velocityX = velocityX;
@@ -48,7 +48,7 @@ public abstract class NewtonianBody {
     }
 
     private void updateVelocity(NewtonianBodyEnvironment environment, int subticksPerTick) {
-        assert getMass() > 0;
+        assert mass > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick
         double accelerationX = environment.getNetForceX() / getMass();
