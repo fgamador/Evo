@@ -15,6 +15,7 @@ public class Ring {
     }
 
     public void setArea(double val) {
+        assert val >= 0;
         area = val;
         mass = parameters.density.getValue() * area;
     }
