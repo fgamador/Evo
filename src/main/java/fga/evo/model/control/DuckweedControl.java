@@ -15,6 +15,7 @@ public class DuckweedControl extends FixedDepthSeekingControl {
         double desiredPhotoArea = 300 * Math.PI;
         double desiredDeltaPhotoArea = desiredPhotoArea - cell.getPhotoArea();
         cell.requestPhotoAreaResize_Old(desiredDeltaPhotoArea / 50);
+        // TODO cell.requestPhotoAreaResize(desiredPhotoArea / cell.getPhotoArea());
 
         double areaFactor = 1 + cell.getPhotoArea() - desiredDeltaPhotoArea;
         double overlapFactor = 0.5 - cell.getRecentTotalOverlap();

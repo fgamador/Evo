@@ -19,5 +19,6 @@ public class FixedDepthSeekingControl implements CellControl {
         double desiredVelocityY = -(targetDepth + cell.getCenterY()) / 100;
         double desiredDeltaVY = desiredVelocityY - cell.getVelocityY();
         cell.requestFloatAreaResize_Old(desiredDeltaVY / 10);
+        // TODO cell.requestFloatAreaResize(10 * desiredVelocityY + 1);
     }
 }
