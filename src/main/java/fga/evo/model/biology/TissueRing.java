@@ -17,9 +17,6 @@ public class TissueRing extends Ring {
     }
 
     public void requestResize(double factor) {
-        if (factor < 0)
-            throw new IllegalArgumentException("Resize-request factor must be non-negative");
-
         deltaArea = calcDeltaArea(factor);
         intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);
     }
@@ -28,7 +25,8 @@ public class TissueRing extends Ring {
         final double maxFactor = parameters.maxResizeFactor.getValue();
         final double minFactor = parameters.minResizeFactor.getValue();
         final double boundedFactor = Math.max(minFactor, Math.min(maxFactor, factor));
-        return (boundedFactor - 1) * getArea();
+        // TODO need a notion of minimum area
+        return Math.max((boundedFactor - 1) * Math.max(getArea(), 1), -getArea());
     }
 
     private double calcIntendedEnergyConsumption(double deltaArea) {

@@ -25,11 +25,6 @@ public class TissueRingTest extends EvoTest {
         assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void resizeRequestMustBeNonNegative() {
-        new TestTissueRing(Math.PI).requestResize(-1);
-    }
-
     @Test
     public void growsByRequestedAmount() {
         final double startArea = Math.PI;
@@ -52,6 +47,27 @@ public class TissueRingTest extends EvoTest {
         testSubject.resize();
 
         assertEquals(resizeFactor * startArea, testSubject.getArea(), 0);
+    }
+
+    // TODO need a notion of minimum area
+    @Test
+    public void canGrowFromZeroArea() {
+        TissueRing testSubject = new TestTissueRing(0);
+
+        testSubject.requestResize(2);
+        testSubject.resize();
+
+        assertEquals(1, testSubject.getArea(), 0);
+    }
+
+    @Test
+    public void cannotShrinkBelowZeroArea() {
+        TissueRing testSubject = new TestTissueRing(0.1);
+
+        testSubject.requestResize(0.00001);
+        testSubject.resize();
+
+        assertEquals(0, testSubject.getArea(), 0);
     }
 
     @Test
