@@ -49,6 +49,66 @@ public class TissueRingTest extends EvoTest {
         assertEquals(0, testSubject.getArea(), 0);
     }
 
+    @Test
+    public void growthUsesExpectedEnergy() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+
+        testSubject.requestResize(1.1);
+
+        final double growthCost = 1.1 * TestTissueRing.parameters.growthCost.getValue();
+        assertTrue(growthCost > 0);
+        assertApproxEquals(growthCost, testSubject.getIntendedEnergyConsumption());
+    }
+
+//    @Test
+//    public void shrinkageYieldsExpectedEnergy_New() {
+//        final double startArea = Math.PI;
+//        TissueRing testSubject = new TestTissueRing(startArea);
+//
+//        final double resizeFactor = 0.9;
+//        testSubject.requestResize_New(resizeFactor);
+//
+//        final double deltaArea = resizeFactor * startArea - startArea;
+//        final double shrinkageYield = deltaArea * TestTissueRing.parameters.shrinkageYield.getValue();
+//        assertTrue(shrinkageYield < 0);
+//        assertEquals(shrinkageYield, testSubject.getIntendedEnergyConsumption(), Assert.DEFAULT_DELTA);
+//    }
+//
+//    @Test
+//    public void growthIsLimitedByMaxResizeFactor_New() {
+//        TestTissueRing.parameters.maxResizeFactor.setValue(1.1);
+//        final double startArea = Math.PI;
+//        TissueRing testSubject = new TestTissueRing(startArea);
+//
+//        testSubject.requestResize_New(10);
+//        testSubject.resize();
+//
+//        assertEquals(TestTissueRing.parameters.maxResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
+//    }
+//
+//    @Test
+//    public void shrinkageIsLimitedByMinResizeFactor_New() {
+//        TestTissueRing.parameters.minResizeFactor.setValue(0.1);
+//        final double startArea = Math.PI;
+//        TissueRing testSubject = new TestTissueRing(startArea);
+//
+//        testSubject.requestResize_New(0.01);
+//        testSubject.resize();
+//
+//        assertEquals(TestTissueRing.parameters.minResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
+//    }
+//
+//    @Test
+//    public void scalingResizeRequestScalesEnergyConsumption_New() {
+//        TissueRing testSubject = new TestTissueRing(Math.PI);
+//        testSubject.requestResize_New(10);
+//        final double unscaledEnergy = testSubject.getIntendedEnergyConsumption();
+//
+//        testSubject.scaleResizeRequest(0.1);
+//
+//        assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
+//    }
+
     //-----------------
 
     @Test
