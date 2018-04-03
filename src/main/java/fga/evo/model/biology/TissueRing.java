@@ -16,6 +16,13 @@ public class TissueRing extends Ring {
         this.parameters = parameters;
     }
 
+    public void requestResize(double deltaArea) {
+        this.deltaArea = deltaArea;
+        intendedEnergyConsumption = calcIntendedEnergyConsumption(this.deltaArea);
+    }
+
+    // ----------------
+
     public void requestResize_New(double factor) {
         deltaArea = calcDeltaArea_New(factor);
         intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);

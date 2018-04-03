@@ -6,6 +6,7 @@ import fga.evo.model.util.DoubleParameter;
 import org.junit.After;
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -16,6 +17,16 @@ public class TissueRingTest extends EvoTest {
         TestTissueRing.parameters.minResizeFactor.revertToDefaultValue();
         TestTissueRing.parameters.maxGrowthRate_Old.revertToDefaultValue();
         TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
+    }
+
+    @Test
+    public void growsByRequestedAmount() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+
+        testSubject.requestResize(0.5);
+        testSubject.resize();
+
+        assertApproxEquals(Math.PI + 0.5, testSubject.getArea());
     }
 
     //-----------------

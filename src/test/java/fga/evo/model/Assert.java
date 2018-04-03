@@ -17,9 +17,9 @@ import static org.junit.Assert.assertTrue;
 public class Assert {
     public static final double DEFAULT_DELTA = 0.00001;
 
-//    public static void assertEquals(double expected, double actual) {
-//        assertEquals(expected, actual, DEFAULT_DELTA);
-//    }
+    public static void assertApproxEquals(double expected, double actual) {
+        assertEquals(expected, actual, DEFAULT_DELTA);
+    }
 
     public static void assertEmpty(Collection<?> collection) {
         assertTrue(collection.isEmpty());
