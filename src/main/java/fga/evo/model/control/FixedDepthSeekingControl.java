@@ -18,7 +18,6 @@ public class FixedDepthSeekingControl implements CellControl {
     public void exertControl(CellApi cell) {
         double desiredVelocityY = -(targetDepth + cell.getCenterY()) / 100;
         double desiredDeltaVY = desiredVelocityY - cell.getVelocityY();
-        cell.requestFloatAreaResize_Old(desiredDeltaVY / 10);
-        // TODO cell.requestFloatAreaResize(10 * desiredVelocityY + 1);
+        cell.requestFloatAreaResize(desiredDeltaVY * 10);
     }
 }
