@@ -23,7 +23,7 @@ public class TissueRing extends Ring {
 
     private double boundDeltaArea(double deltaArea) {
         double maxDeltaArea = parameters.maxGrowthRate.getValue() * Math.max(1, getArea());
-        double minDeltaArea = -getArea();
+        double minDeltaArea = -parameters.maxShrinkRate.getValue() * getArea();
         return Math.max(minDeltaArea, Math.min(maxDeltaArea, deltaArea));
     }
 

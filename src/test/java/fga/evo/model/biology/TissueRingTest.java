@@ -84,17 +84,17 @@ public class TissueRingTest extends EvoTest {
         assertApproxEquals((1 + TestTissueRing.parameters.maxGrowthRate.getValue()) * startArea, testSubject.getArea());
     }
 
-//    @Test
-//    public void shrinkageIsLimitedByMinResizeFactor_New() {
-//        TestTissueRing.parameters.minResizeFactor.setValue(0.1);
-//        final double startArea = Math.PI;
-//        TissueRing testSubject = new TestTissueRing(startArea);
-//
-//        testSubject.requestResize_New(0.01);
-//        testSubject.resize();
-//
-//        assertEquals(TestTissueRing.parameters.minResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
-//    }
+    @Test
+    public void shrinkageIsLimitedByMaxShrinkRate() {
+        TestTissueRing.parameters.maxShrinkRate.setValue(0.1);
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        testSubject.requestResize(-2);
+        testSubject.resize();
+
+        assertApproxEquals((1 - TestTissueRing.parameters.maxShrinkRate.getValue()) * startArea, testSubject.getArea());
+    }
 
     @Test
     public void canGrowFromZeroArea() {
