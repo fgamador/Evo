@@ -13,9 +13,9 @@ import static org.junit.Assert.assertTrue;
 public class TissueRingTest extends EvoTest {
     @After
     public void tearDown() {
-        TestTissueRing.parameters.maxResizeFactor.revertToDefaultValue();
-        TestTissueRing.parameters.minResizeFactor.revertToDefaultValue();
-        TestTissueRing.parameters.maxGrowthRate_Old.revertToDefaultValue();
+        TestTissueRing.parameters.maxResizeFactor_New.revertToDefaultValue();
+        TestTissueRing.parameters.minResizeFactor_New.revertToDefaultValue();
+        TestTissueRing.parameters.maxGrowthRate.revertToDefaultValue();
         TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
     }
 
@@ -74,14 +74,14 @@ public class TissueRingTest extends EvoTest {
 
     //@Test
     public void growthIsLimitedByMaxGrowthRate() {
-        TestTissueRing.parameters.maxGrowthRate_Old.setValue(0.1);
+        TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
         testSubject.requestResize(10);
         testSubject.resize();
 
-        assertApproxEquals((1 + TestTissueRing.parameters.maxGrowthRate_Old.getValue()) * startArea, testSubject.getArea());
+        assertApproxEquals((1 + TestTissueRing.parameters.maxGrowthRate.getValue()) * startArea, testSubject.getArea());
     }
 
 //    @Test
@@ -225,26 +225,26 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void growthIsLimitedByMaxResizeFactor_New() {
-        TestTissueRing.parameters.maxResizeFactor.setValue(1.1);
+        TestTissueRing.parameters.maxResizeFactor_New.setValue(1.1);
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
         testSubject.requestResize_New(10);
         testSubject.resize();
 
-        assertEquals(TestTissueRing.parameters.maxResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
+        assertEquals(TestTissueRing.parameters.maxResizeFactor_New.getValue() * startArea, testSubject.getArea(), 0);
     }
 
     @Test
     public void shrinkageIsLimitedByMinResizeFactor_New() {
-        TestTissueRing.parameters.minResizeFactor.setValue(0.1);
+        TestTissueRing.parameters.minResizeFactor_New.setValue(0.1);
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
         testSubject.requestResize_New(0.01);
         testSubject.resize();
 
-        assertEquals(TestTissueRing.parameters.minResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
+        assertEquals(TestTissueRing.parameters.minResizeFactor_New.getValue() * startArea, testSubject.getArea(), 0);
     }
 
     @Test
@@ -281,9 +281,9 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void growthEnergyConsumptionIsLimitedByMaxGrowthRate_Old() {
-        TestTissueRing.parameters.maxGrowthRate_Old.setValue(0.1);
+        TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
         TissueRing testSubject = new TestTissueRing(Math.PI);
-        double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate_Old.getValue();
+        double maxDeltaArea = testSubject.getArea() * TestTissueRing.parameters.maxGrowthRate.getValue();
         double maxGrowthEnergy = maxDeltaArea * TestTissueRing.parameters.growthCost.getValue();
         assertTrue(maxGrowthEnergy < 100);
 
@@ -373,10 +373,10 @@ public class TissueRingTest extends EvoTest {
             parameters.growthCost = new DoubleParameter(0.1);
             parameters.maintenanceCost = new DoubleParameter(0.05);
             parameters.shrinkageYield = new DoubleParameter(0.05);
-            parameters.maxResizeFactor = new DoubleParameter(100);
-            parameters.minResizeFactor = new DoubleParameter(0.01);
-            parameters.maxGrowthRate_Old = new DoubleParameter(100);
-            parameters.maxShrinkRate_Old = new DoubleParameter(1);
+            parameters.maxResizeFactor_New = new DoubleParameter(100);
+            parameters.minResizeFactor_New = new DoubleParameter(0.01);
+            parameters.maxGrowthRate = new DoubleParameter(100);
+            parameters.maxShrinkRate = new DoubleParameter(1);
             parameters.decayRate = new DoubleParameter(0.1);
         }
 

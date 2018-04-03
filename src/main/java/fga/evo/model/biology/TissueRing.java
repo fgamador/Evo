@@ -33,8 +33,8 @@ public class TissueRing extends Ring {
     }
 
     private double calcDeltaArea_New(double factor) {
-        final double maxFactor = parameters.maxResizeFactor.getValue();
-        final double minFactor = parameters.minResizeFactor.getValue();
+        final double maxFactor = parameters.maxResizeFactor_New.getValue();
+        final double minFactor = parameters.minResizeFactor_New.getValue();
         final double boundedFactor = Math.max(minFactor, Math.min(maxFactor, factor));
         // TODO need a notion of minimum area
         return Math.max((boundedFactor - 1) * Math.max(getArea(), 1), -getArea());
@@ -66,7 +66,7 @@ public class TissueRing extends Ring {
 
     private double calcIntendedGrowth_Old(double availableEnergy) {
         double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
-        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate_Old.getValue();
+        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
         return Math.min(requestedGrowth, maxAllowedGrowth);
     }
 
@@ -77,7 +77,7 @@ public class TissueRing extends Ring {
 
     private double calcIntendedShrinkage_Old(double requestedEnergy) {
         double requestedShrinkage = requestedEnergy / parameters.shrinkageYield.getValue();
-        double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate_Old.getValue();
+        double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate.getValue();
         return Math.min(requestedShrinkage, maxAllowedShrinkage);
     }
 
