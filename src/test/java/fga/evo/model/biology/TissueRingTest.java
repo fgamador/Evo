@@ -72,7 +72,7 @@ public class TissueRingTest extends EvoTest {
         assertApproxEquals(shrinkageYield, testSubject.getIntendedEnergyConsumption());
     }
 
-    //@Test
+    @Test
     public void growthIsLimitedByMaxGrowthRate() {
         TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
         final double startArea = Math.PI;
