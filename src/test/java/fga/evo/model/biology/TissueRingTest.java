@@ -72,18 +72,18 @@ public class TissueRingTest extends EvoTest {
         assertApproxEquals(shrinkageYield, testSubject.getIntendedEnergyConsumption());
     }
 
-//    @Test
-//    public void growthIsLimitedByMaxResizeFactor_New() {
-//        TestTissueRing.parameters.maxResizeFactor.setValue(1.1);
-//        final double startArea = Math.PI;
-//        TissueRing testSubject = new TestTissueRing(startArea);
-//
-//        testSubject.requestResize_New(10);
-//        testSubject.resize();
-//
-//        assertEquals(TestTissueRing.parameters.maxResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
-//    }
-//
+    //@Test
+    public void growthIsLimitedByMaxGrowthRate() {
+        TestTissueRing.parameters.maxGrowthRate_Old.setValue(0.1);
+        final double startArea = Math.PI;
+        TissueRing testSubject = new TestTissueRing(startArea);
+
+        testSubject.requestResize(10);
+        testSubject.resize();
+
+        assertApproxEquals((1 + TestTissueRing.parameters.maxGrowthRate_Old.getValue()) * startArea, testSubject.getArea());
+    }
+
 //    @Test
 //    public void shrinkageIsLimitedByMinResizeFactor_New() {
 //        TestTissueRing.parameters.minResizeFactor.setValue(0.1);
