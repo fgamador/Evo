@@ -16,12 +16,12 @@ public class TissueRing extends Ring {
         this.parameters = parameters;
     }
 
-    public void requestResize(double factor) {
-        deltaArea = calcDeltaArea(factor);
+    public void requestResize_New(double factor) {
+        deltaArea = calcDeltaArea_New(factor);
         intendedEnergyConsumption = calcIntendedEnergyConsumption(deltaArea);
     }
 
-    private double calcDeltaArea(double factor) {
+    private double calcDeltaArea_New(double factor) {
         final double maxFactor = parameters.maxResizeFactor.getValue();
         final double minFactor = parameters.minResizeFactor.getValue();
         final double boundedFactor = Math.max(minFactor, Math.min(maxFactor, factor));
