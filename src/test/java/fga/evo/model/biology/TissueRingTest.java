@@ -18,8 +18,10 @@ public class TissueRingTest extends EvoTest {
         TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
     }
 
+    //-----------------
+
     @Test
-    public void growsByRequestedAmount() {
+    public void growsByRequestedAmount_New() {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
@@ -31,7 +33,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void shrinksByRequestedAmount() {
+    public void shrinksByRequestedAmount_New() {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
@@ -44,7 +46,7 @@ public class TissueRingTest extends EvoTest {
 
     // TODO need a notion of minimum area
     @Test
-    public void canGrowFromZeroArea() {
+    public void canGrowFromZeroArea_New() {
         TissueRing testSubject = new TestTissueRing(0);
 
         testSubject.requestResize_New(2);
@@ -54,7 +56,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void cannotShrinkBelowZeroArea() {
+    public void cannotShrinkBelowZeroArea_New() {
         TissueRing testSubject = new TestTissueRing(0.1);
 
         testSubject.requestResize_New(0.00001);
@@ -64,7 +66,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void growthUsesExpectedEnergy() {
+    public void growthUsesExpectedEnergy_New() {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
@@ -78,7 +80,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void shrinkageYieldsExpectedEnergy() {
+    public void shrinkageYieldsExpectedEnergy_New() {
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
 
@@ -92,7 +94,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void growthIsLimitedByMaxResizeFactor() {
+    public void growthIsLimitedByMaxResizeFactor_New() {
         TestTissueRing.parameters.maxResizeFactor.setValue(1.1);
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
@@ -104,7 +106,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void shrinkageIsLimitedByMinResizeFactor() {
+    public void shrinkageIsLimitedByMinResizeFactor_New() {
         TestTissueRing.parameters.minResizeFactor.setValue(0.1);
         final double startArea = Math.PI;
         TissueRing testSubject = new TestTissueRing(startArea);
@@ -116,7 +118,7 @@ public class TissueRingTest extends EvoTest {
     }
 
     @Test
-    public void scalingResizeRequestScalesEnergyConsumption() {
+    public void scalingResizeRequestScalesEnergyConsumption_New() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
         testSubject.requestResize_New(10);
         final double unscaledEnergy = testSubject.getIntendedEnergyConsumption();
