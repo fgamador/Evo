@@ -95,17 +95,17 @@ public class TissueRingTest extends EvoTest {
 //
 //        assertEquals(TestTissueRing.parameters.minResizeFactor.getValue() * startArea, testSubject.getArea(), 0);
 //    }
-//
-//    @Test
-//    public void scalingResizeRequestScalesEnergyConsumption_New() {
-//        TissueRing testSubject = new TestTissueRing(Math.PI);
-//        testSubject.requestResize_New(10);
-//        final double unscaledEnergy = testSubject.getIntendedEnergyConsumption();
-//
-//        testSubject.scaleResizeRequest(0.1);
-//
-//        assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
-//    }
+
+    @Test
+    public void scalingResizeRequestScalesEnergyConsumption() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        testSubject.requestResize(10);
+        final double unscaledEnergy = testSubject.getIntendedEnergyConsumption();
+
+        testSubject.scaleResizeRequest(0.1);
+
+        assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
+    }
 
     //-----------------
 
