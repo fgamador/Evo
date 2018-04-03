@@ -119,6 +119,35 @@ public class TissueRingTest extends EvoTest {
         assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
     }
 
+    @Test
+    public void resizeWithoutRequestDoesNothing() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        double initialArea = testSubject.getArea();
+
+        testSubject.resize();
+
+        assertEquals(initialArea, testSubject.getArea(), 0);
+        assertEquals(0, testSubject.getIntendedEnergyConsumption(), 0);
+    }
+
+    @Test
+    public void maintenanceEnergyDependsOnMaintenanceCost() {
+        TissueRing testSubject = new TestTissueRing(Math.PI * 9);
+        double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
+        assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
+    }
+
+    @Test
+    public void decayUsesExpectedCalculation() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        final double initialArea = testSubject.getArea();
+
+        testSubject.decay();
+
+        final double expectedFinalArea = initialArea * (1 - TestTissueRing.parameters.decayRate.getValue());
+        assertEquals(expectedFinalArea, testSubject.getArea(), 0.001);
+    }
+
     //-----------------
 
     @Test
@@ -239,37 +268,6 @@ public class TissueRingTest extends EvoTest {
         testSubject.resize();
 
         assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
-    }
-
-    //-----------------
-
-    @Test
-    public void resizeWithoutRequestDoesNothing() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        double initialArea = testSubject.getArea();
-
-        testSubject.resize();
-
-        assertEquals(initialArea, testSubject.getArea(), 0);
-        assertEquals(0, testSubject.getIntendedEnergyConsumption(), 0);
-    }
-
-    @Test
-    public void maintenanceEnergyDependsOnMaintenanceCost() {
-        TissueRing testSubject = new TestTissueRing(Math.PI * 9);
-        double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
-        assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
-    }
-
-    @Test
-    public void decayUsesExpectedCalculation() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        final double initialArea = testSubject.getArea();
-
-        testSubject.decay();
-
-        final double expectedFinalArea = initialArea * (1 - TestTissueRing.parameters.decayRate.getValue());
-        assertEquals(expectedFinalArea, testSubject.getArea(), 0.001);
     }
 
     //-----------------
