@@ -210,17 +210,17 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     }
 
     /**
-     * Records a request that the cell's float-ring area change by a specified factor.
+     * Records a request that the cell's float-ring area change by a specified amount.
      */
-    public void requestFloatAreaResize(double factor) {
-        floatRing.requestResize_New(factor);
+    public void requestFloatAreaResize(double deltaArea) {
+        floatRing.requestResize(deltaArea);
     }
 
     /**
-     * Records a request that the cell's photo-ring area change by a specified factor.
+     * Records a request that the cell's photo-ring area change by a specified amount.
      */
-    public void requestPhotoAreaResize(double factor) {
-        photoRing.requestResize_New(factor);
+    public void requestPhotoAreaResize(double deltaArea) {
+        photoRing.requestResize(deltaArea);
     }
 
     /**
