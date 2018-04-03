@@ -39,6 +39,16 @@ public class TissueRingTest extends EvoTest {
         assertApproxEquals(Math.PI - 0.5, testSubject.getArea());
     }
 
+    @Test
+    public void cannotShrinkBelowZeroArea() {
+        TissueRing testSubject = new TestTissueRing(1);
+
+        testSubject.requestResize(-2);
+        testSubject.resize();
+
+        assertEquals(0, testSubject.getArea(), 0);
+    }
+
     //-----------------
 
     @Test
