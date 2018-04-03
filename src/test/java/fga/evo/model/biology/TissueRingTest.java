@@ -107,6 +107,18 @@ public class TissueRingTest extends EvoTest {
         assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
+    @Test
+    public void resizeIsIdempotent() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        testSubject.requestResize(2);
+
+        testSubject.resize();
+        final double areaAfterFirstResize = testSubject.getArea();
+        testSubject.resize();
+
+        assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
+    }
+
     //-----------------
 
     @Test
@@ -217,6 +229,18 @@ public class TissueRingTest extends EvoTest {
         assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
     }
 
+    @Test
+    public void resizeIsIdempotent_New() {
+        TissueRing testSubject = new TestTissueRing(Math.PI);
+        testSubject.requestResize_New(2);
+
+        testSubject.resize();
+        final double areaAfterFirstResize = testSubject.getArea();
+        testSubject.resize();
+
+        assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
+    }
+
     //-----------------
 
     @Test
@@ -228,18 +252,6 @@ public class TissueRingTest extends EvoTest {
 
         assertEquals(initialArea, testSubject.getArea(), 0);
         assertEquals(0, testSubject.getIntendedEnergyConsumption(), 0);
-    }
-
-    @Test
-    public void resizeIsIdempotent() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        testSubject.requestResize_New(2);
-
-        testSubject.resize();
-        final double areaAfterFirstResize = testSubject.getArea();
-        testSubject.resize();
-
-        assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
     }
 
     @Test
