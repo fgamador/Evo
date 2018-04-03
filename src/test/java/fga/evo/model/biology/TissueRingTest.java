@@ -41,6 +41,7 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void cannotShrinkBelowZeroArea() {
+        TestTissueRing.parameters.maxShrinkRate = new DoubleParameter(1);
         TissueRing testSubject = new TestTissueRing(1);
 
         testSubject.requestResize(-2);
