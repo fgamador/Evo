@@ -2,7 +2,6 @@ package fga.evo.model.biology;
 
 import fga.evo.model.EvoTest;
 import fga.evo.model.util.DoubleParameter;
-import org.junit.After;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertApproxEquals;
@@ -10,12 +9,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TissueRingTest extends EvoTest {
-    @After
-    public void tearDown() {
-        TestTissueRing.parameters.maxGrowthRate.revertToDefaultValue();
-        TestTissueRing.parameters.shrinkageYield.revertToDefaultValue();
-    }
-
     @Test
     public void growsByRequestedAmount() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
@@ -113,7 +106,7 @@ public class TissueRingTest extends EvoTest {
 
         testSubject.scaleResizeRequest(0.1);
 
-        assertEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption(), 0);
+        assertApproxEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption());
     }
 
     @Test
@@ -125,13 +118,13 @@ public class TissueRingTest extends EvoTest {
         final double areaAfterFirstResize = testSubject.getArea();
         testSubject.resize();
 
-        assertEquals(areaAfterFirstResize, testSubject.getArea(), 0);
+        assertApproxEquals(areaAfterFirstResize, testSubject.getArea());
     }
 
     @Test
     public void resizeWithoutRequestDoesNothing() {
         TissueRing testSubject = new TestTissueRing(Math.PI);
-        double initialArea = testSubject.getArea();
+        final double initialArea = testSubject.getArea();
 
         testSubject.resize();
 
@@ -142,8 +135,8 @@ public class TissueRingTest extends EvoTest {
     @Test
     public void maintenanceEnergyDependsOnMaintenanceCost() {
         TissueRing testSubject = new TestTissueRing(Math.PI * 9);
-        double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
-        assertEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy(), 0);
+        final double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
+        assertApproxEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy());
     }
 
     @Test
@@ -154,7 +147,7 @@ public class TissueRingTest extends EvoTest {
         testSubject.decay();
 
         final double expectedFinalArea = initialArea * (1 - TestTissueRing.parameters.decayRate.getValue());
-        assertEquals(expectedFinalArea, testSubject.getArea(), 0.001);
+        assertApproxEquals(expectedFinalArea, testSubject.getArea());
     }
 
     private static class TestTissueRing extends TissueRing {
