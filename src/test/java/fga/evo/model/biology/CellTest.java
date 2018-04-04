@@ -48,7 +48,7 @@ public class CellTest {
         cell.exertControl();
 
         assertApproxEquals(2, cell.getFloatArea());
-        assertApproxEquals(100 - 2 * FloatRing.parameters.growthCost.getValue(), cell.getEnergy());
+        assertEnergy(100 - 2 * FloatRing.parameters.growthCost.getValue(), cell);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CellTest {
         cell.exertControl();
 
         assertApproxEquals(Math.PI + 2, cell.getPhotoArea());
-        assertApproxEquals(100 - 2 * PhotoRing.parameters.growthCost.getValue(), cell.getEnergy());
+        assertEnergy(100 - 2 * PhotoRing.parameters.growthCost.getValue(), cell);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class CellTest {
         cell.exertControl();
 
         assertApproxEquals(Math.PI - 0.1, cell.getPhotoArea());
-        assertApproxEquals(0.1 * PhotoRing.parameters.shrinkageYield.getValue(), cell.getEnergy());
+        assertEnergy(0.1 * PhotoRing.parameters.shrinkageYield.getValue(), cell);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class CellTest {
 
         assertApproxEquals(3, cell.getFloatArea());
         assertApproxEquals(Math.PI + 2, cell.getPhotoArea());
-        assertApproxEquals(100 - (3 * FloatRing.parameters.growthCost.getValue() + 2 * PhotoRing.parameters.growthCost.getValue()), cell.getEnergy());
+        assertEnergy(100 - (3 * FloatRing.parameters.growthCost.getValue() + 2 * PhotoRing.parameters.growthCost.getValue()), cell);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class CellTest {
 
         assertApproxEquals(0.1, cell.getFloatArea());
         assertApproxEquals(Math.PI - 0.1, cell.getPhotoArea());
-        assertEquals(0, cell.getEnergy(), 0);
+        assertEnergy(0, cell);
     }
 
     @Test
@@ -145,7 +145,7 @@ public class CellTest {
         double scaledFloatGrowthEnergy = 1 + 0.1;
         assertApproxEquals(scaledFloatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
         assertApproxEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea());
-        assertEquals(0, cell.getEnergy(), 0);
+        assertEnergy(0, cell);
     }
 
     @Test
@@ -270,7 +270,7 @@ public class CellTest {
         Cell child = lifecycleListener.bornCells.get(0);
         assertEnergy(10 / 2, child);
         assertApproxEquals((10 / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea);
-        assertEquals(0, cell.getEnergy(), 0);
+        assertEnergy(0, cell);
     }
 
     @Test
