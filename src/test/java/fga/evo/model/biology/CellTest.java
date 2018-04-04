@@ -81,7 +81,7 @@ public class CellTest {
     @Test
     public void testControlPhase_PhotoRingGrowth_ExcessiveRequest() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize_Old(1000))
+                .withControl(c -> c.requestPhotoAreaResize(1000))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(2)
                 .build();
