@@ -96,8 +96,8 @@ public class CellTest {
     public void testControlPhase_FloatAndPhotoRingGrowth() {
         Cell cell = new Cell.Builder()
                 .withControl(c -> {
-                    c.requestFloatAreaResize_Old(3);
-                    c.requestPhotoAreaResize_Old(2);
+                    c.requestFloatAreaResize(3);
+                    c.requestPhotoAreaResize(2);
                 })
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(100)
@@ -105,9 +105,9 @@ public class CellTest {
 
         cell.exertControl();
 
-        assertApproxEquals(3 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
-        assertApproxEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea());
-        assertApproxEquals(100 - (3 + 2), cell.getEnergy());
+        assertApproxEquals(3, cell.getFloatArea());
+        assertApproxEquals(Math.PI + 2, cell.getPhotoArea());
+        assertApproxEquals(100 - (3 * FloatRing.parameters.growthCost.getValue() + 2 * PhotoRing.parameters.growthCost.getValue()), cell.getEnergy());
     }
 
     @Test
