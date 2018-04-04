@@ -32,42 +32,6 @@ public class TissueRing extends Ring {
         return deltaArea * energyFactorParam.getValue();
     }
 
-    /**
-     * Records a request that the ring's area grow or shrink using a specified amount of energy.
-     *
-     * @param availableEnergy the amount of energy available for growth; negative to shrink
-     */
-    @Deprecated
-    public void requestResize_Old(double availableEnergy) {
-        if (availableEnergy >= 0) {
-            requestGrowth_Old(availableEnergy);
-        } else {
-            requestShrinkage_Old(-availableEnergy);
-        }
-    }
-
-    private void requestGrowth_Old(double availableEnergy) {
-        deltaArea = calcIntendedGrowth_Old(availableEnergy);
-        intendedEnergyConsumption = deltaArea * parameters.growthCost.getValue();
-    }
-
-    private double calcIntendedGrowth_Old(double availableEnergy) {
-        double requestedGrowth = availableEnergy / parameters.growthCost.getValue();
-        double maxAllowedGrowth = Math.max(getArea(), 1) * parameters.maxGrowthRate.getValue();
-        return Math.min(requestedGrowth, maxAllowedGrowth);
-    }
-
-    private void requestShrinkage_Old(double requestedEnergy) {
-        deltaArea = -calcIntendedShrinkage_Old(requestedEnergy);
-        intendedEnergyConsumption = deltaArea * parameters.shrinkageYield.getValue();
-    }
-
-    private double calcIntendedShrinkage_Old(double requestedEnergy) {
-        double requestedShrinkage = requestedEnergy / parameters.shrinkageYield.getValue();
-        double maxAllowedShrinkage = getArea() * parameters.maxShrinkRate.getValue();
-        return Math.min(requestedShrinkage, maxAllowedShrinkage);
-    }
-
     public double getIntendedEnergyConsumption() {
         return intendedEnergyConsumption;
     }
