@@ -1,6 +1,5 @@
 package fga.evo.model.biology;
 
-import fga.evo.model.Assert;
 import fga.evo.model.EvoTest;
 import fga.evo.model.util.DoubleParameter;
 import org.junit.After;
