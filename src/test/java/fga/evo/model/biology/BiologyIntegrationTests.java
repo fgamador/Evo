@@ -26,7 +26,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     public void testPhotosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize_Old(1000))
+                .withControl(c -> c.requestPhotoAreaResize(1000))
                 .withPhotoRingArea(Math.PI)
                 .build();
         world.addCell(cell);
