@@ -112,18 +112,20 @@ public class CellTest {
 
     @Test
     public void testControlPhase_OffsettingRequests() {
+        FloatRing.parameters.growthCost.setValue(0.5);
+        PhotoRing.parameters.shrinkageYield.setValue(0.5);
         Cell cell = new Cell.Builder()
                 .withControl(c -> {
-                    c.requestFloatAreaResize_Old(0.1);
-                    c.requestPhotoAreaResize_Old(-0.1);
+                    c.requestFloatAreaResize(0.1);
+                    c.requestPhotoAreaResize(-0.1);
                 })
                 .withPhotoRingArea(Math.PI)
                 .build();
 
         cell.exertControl();
 
-        assertApproxEquals(0.1 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
-        assertApproxEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea());
+        assertApproxEquals(0.1, cell.getFloatArea());
+        assertApproxEquals(Math.PI - 0.1, cell.getPhotoArea());
         assertEquals(0, cell.getEnergy(), 0);
     }
 
