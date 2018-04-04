@@ -257,7 +257,7 @@ public class CellTest {
                 .withControl(c -> {
                     c.setSpawnOdds(1);
                     c.requestChildDonation(10);
-                    c.requestPhotoAreaResize_Old(10);
+                    c.requestPhotoAreaResize(10 / PhotoRing.parameters.growthCost.getValue());
                 })
                 .withPhotoRingOuterRadius(10)
                 .withEnergy(10)
