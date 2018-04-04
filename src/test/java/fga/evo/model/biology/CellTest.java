@@ -54,15 +54,15 @@ public class CellTest {
     @Test
     public void testControlPhase_PhotoRingGrowth() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize_Old(2))
+                .withControl(c -> c.requestPhotoAreaResize(2))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(100)
                 .build();
 
         cell.exertControl();
 
-        assertApproxEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea());
-        assertApproxEquals(100 - 2, cell.getEnergy());
+        assertApproxEquals(Math.PI + 2, cell.getPhotoArea());
+        assertApproxEquals(100 - 2 * PhotoRing.parameters.growthCost.getValue(), cell.getEnergy());
     }
 
     @Test
