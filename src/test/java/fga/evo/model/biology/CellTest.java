@@ -149,7 +149,7 @@ public class CellTest {
     @Test
     public void testControlPhase_FloatRingGrowthAffectsPhotoRingAndCell() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestFloatAreaResize_Old(1000))
+                .withControl(c -> c.requestFloatAreaResize(1000))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(1)
                 .build();
