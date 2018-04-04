@@ -68,14 +68,14 @@ public class CellTest {
     @Test
     public void testControlPhase_PhotoRingShrinkage() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize_Old(-0.1))
+                .withControl(c -> c.requestPhotoAreaResize(-0.1))
                 .withPhotoRingArea(Math.PI)
                 .build();
 
         cell.exertControl();
 
-        assertApproxEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea());
-        assertApproxEquals(0.1, cell.getEnergy());
+        assertApproxEquals(Math.PI - 0.1, cell.getPhotoArea());
+        assertApproxEquals(0.1 * PhotoRing.parameters.shrinkageYield.getValue(), cell.getEnergy());
     }
 
     @Test
