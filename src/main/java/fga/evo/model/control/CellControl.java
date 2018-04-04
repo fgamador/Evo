@@ -32,9 +32,9 @@ public interface CellControl {
 
         double getRecentTotalOverlap();
 
-        void requestFloatAreaResize(double factor);
+        void requestFloatAreaResize(double deltaArea);
 
-        void requestPhotoAreaResize(double factor);
+        void requestPhotoAreaResize(double deltaArea);
 
         @Deprecated
         void requestFloatAreaResize_Old(double growthEnergy);
