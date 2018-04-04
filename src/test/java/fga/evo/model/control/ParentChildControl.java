@@ -40,7 +40,7 @@ public class ParentChildControl implements CellControl {
             cell.setReleaseChildOdds(releaseChildOdds);
         } else {
             // run by child
-            cell.requestPhotoAreaResize_Old(cell.getEnergy());
+            cell.requestPhotoAreaResize(1000);
             cell.setReleaseParentOdds(releaseParentOdds);
         }
     }
