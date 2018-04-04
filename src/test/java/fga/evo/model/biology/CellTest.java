@@ -459,7 +459,7 @@ public class CellTest {
     @Test
     public void testControlPhase_Dead() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize_Old(1))
+                .withControl(c -> c.requestPhotoAreaResize(1))
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(10)
                 .build();
