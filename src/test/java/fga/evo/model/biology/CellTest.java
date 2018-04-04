@@ -41,14 +41,14 @@ public class CellTest {
     @Test
     public void testControlPhase_FloatRingGrowth() {
         Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestFloatAreaResize_Old(2))
+                .withControl(c -> c.requestFloatAreaResize(2))
                 .withEnergy(100)
                 .build();
 
         cell.exertControl();
 
-        assertApproxEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
-        assertApproxEquals(100 - 2, cell.getEnergy());
+        assertApproxEquals(2, cell.getFloatArea());
+        assertApproxEquals(100 - 2 * FloatRing.parameters.growthCost.getValue(), cell.getEnergy());
     }
 
     @Test
