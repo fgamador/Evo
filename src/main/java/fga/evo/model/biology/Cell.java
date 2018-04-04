@@ -224,16 +224,6 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
     }
 
     /**
-     * Records a request that the cell's float-ring area grow using a specified amount of energy.
-     *
-     * @param growthEnergy the desired amount of energy to spend on growth
-     */
-    @Deprecated
-    public void requestFloatAreaResize_Old(double growthEnergy) {
-        floatRing.requestResize_Old(growthEnergy);
-    }
-
-    /**
      * Records a request that the cell's photo-ring area grow using a specified amount of energy.
      *
      * @param growthEnergy the desired amount of energy to spend on growth
