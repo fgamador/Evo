@@ -133,8 +133,8 @@ public class CellTest {
     public void testControlPhase_ScaledOffsettingRequests() {
         Cell cell = new Cell.Builder()
                 .withControl(c -> {
-                    c.requestFloatAreaResize_Old(2);
-                    c.requestPhotoAreaResize_Old(-0.1);
+                    c.requestFloatAreaResize(2 / FloatRing.parameters.growthCost.getValue());
+                    c.requestPhotoAreaResize(-0.1 / PhotoRing.parameters.shrinkageYield.getValue());
                 })
                 .withPhotoRingArea(Math.PI)
                 .withEnergy(1)
