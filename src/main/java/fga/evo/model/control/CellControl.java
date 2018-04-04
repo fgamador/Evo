@@ -36,9 +36,6 @@ public interface CellControl {
 
         void requestPhotoAreaResize(double deltaArea);
 
-        @Deprecated
-        void requestPhotoAreaResize_Old(double growthEnergy);
-
         void requestChildDonation(double donatedEnergy);
 
         void setSpawnOdds(double odds);

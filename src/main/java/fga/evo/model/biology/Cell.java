@@ -223,16 +223,6 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi {
         photoRing.requestResize(deltaArea);
     }
 
-    /**
-     * Records a request that the cell's photo-ring area grow using a specified amount of energy.
-     *
-     * @param growthEnergy the desired amount of energy to spend on growth
-     */
-    @Deprecated
-    public void requestPhotoAreaResize_Old(double growthEnergy) {
-        photoRing.requestResize_Old(growthEnergy);
-    }
-
     public void setSpawnOdds(double val) {
         this.spawnOdds = val;
     }
