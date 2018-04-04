@@ -15,7 +15,7 @@ public class CellTest {
         Cell cell = new Cell.Builder()
                 .withPhotoRingArea(Math.PI)
                 .build();
-        Assert.assertEquals(PhotoRing.parameters.density.getValue() * Math.PI, cell.getMass(), 0.001);
+        assertApproxEquals(PhotoRing.parameters.density.getValue() * Math.PI, cell.getMass());
     }
 
     @Test
@@ -24,7 +24,7 @@ public class CellTest {
                 .withFloatRingArea(Math.PI)
                 .withPhotoRingArea(3 * Math.PI)
                 .build();
-        assertEquals(3 * Math.PI, cell.getNonFloatArea(), 0.001);
+        assertApproxEquals(3 * Math.PI, cell.getNonFloatArea());
     }
 
     @Test
@@ -48,8 +48,8 @@ public class CellTest {
 
         cell.exertControl();
 
-        Assert.assertEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(100 - 2, cell.getEnergy(), 0.001);
+        assertApproxEquals(2 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
+        assertApproxEquals(100 - 2, cell.getEnergy());
     }
 
     @Test
@@ -62,8 +62,8 @@ public class CellTest {
 
         cell.exertControl();
 
-        assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
-        assertEquals(100 - 2, cell.getEnergy(), 0.001);
+        assertApproxEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea());
+        assertApproxEquals(100 - 2, cell.getEnergy());
     }
 
     @Test
@@ -75,8 +75,8 @@ public class CellTest {
 
         cell.exertControl();
 
-        assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
-        assertEquals(0.1, cell.getEnergy(), 0.001);
+        assertApproxEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea());
+        assertApproxEquals(0.1, cell.getEnergy());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class CellTest {
 
         cell.exertControl();
 
-        assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
+        assertApproxEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea());
         assertEnergy(0, cell);
     }
 
@@ -106,9 +106,9 @@ public class CellTest {
 
         cell.exertControl();
 
-        assertEquals(3 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea(), 0.001);
-        assertEquals(100 - (3 + 2), cell.getEnergy(), 0.001);
+        assertApproxEquals(3 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
+        assertApproxEquals(Math.PI + 2 / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea());
+        assertApproxEquals(100 - (3 + 2), cell.getEnergy());
     }
 
     @Test
@@ -123,8 +123,8 @@ public class CellTest {
 
         cell.exertControl();
 
-        assertEquals(0.1 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
+        assertApproxEquals(0.1 / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
+        assertApproxEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea());
         assertEquals(0, cell.getEnergy(), 0);
     }
 
@@ -142,8 +142,8 @@ public class CellTest {
         cell.exertControl();
 
         double scaledFloatGrowthEnergy = 1 + 0.1;
-        assertEquals(scaledFloatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea(), 0.001);
-        assertEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea(), 0.001);
+        assertApproxEquals(scaledFloatGrowthEnergy / FloatRing.parameters.growthCost.getValue(), cell.getFloatArea());
+        assertApproxEquals(Math.PI - 0.1 / PhotoRing.parameters.shrinkageYield.getValue(), cell.getPhotoArea());
         assertEquals(0, cell.getEnergy(), 0);
     }
 
@@ -158,17 +158,17 @@ public class CellTest {
         cell.exertControl();
 
         assertTrue(cell.getFloatArea() > 0);
-        assertEquals(Math.PI, cell.getPhotoArea(), 0);
-        assertEquals(cell.getFloatArea() + cell.getPhotoArea(), cell.getArea(), 0.001);
+        assertApproxEquals(Math.PI, cell.getPhotoArea());
+        assertApproxEquals(cell.getFloatArea() + cell.getPhotoArea(), cell.getArea());
 
         assertTrue(cell.getFloatRingOuterRadius() > 0);
         assertTrue(cell.getPhotoRingOuterRadius() > 1);
         assertTrue(cell.getPhotoRingOuterRadius() > cell.getFloatRingOuterRadius());
         assertEquals(cell.getPhotoRingOuterRadius(), cell.getRadius(), 0);
 
-        assertEquals(cell.getFloatArea() * FloatRing.parameters.density.getValue()
+        assertApproxEquals(cell.getFloatArea() * FloatRing.parameters.density.getValue()
                         + cell.getPhotoArea() * PhotoRing.parameters.density.getValue(),
-                cell.getMass(), 0.001);
+                cell.getMass());
 
         assertEnergy(0, cell);
     }
@@ -268,7 +268,7 @@ public class CellTest {
 
         Cell child = lifecycleListener.bornCells.get(0);
         assertEnergy(10 / 2, child);
-        assertEquals((10 / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea, 0.001);
+        assertApproxEquals((10 / 2) / PhotoRing.parameters.growthCost.getValue(), cell.getPhotoArea() - startPhotoArea);
         assertEquals(0, cell.getEnergy(), 0);
     }
 
@@ -425,8 +425,8 @@ public class CellTest {
         cell.updateBiologyFromEnvironment();
 
         assertTrue(cell.isAlive());
-        assertEquals(PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
-                cell.getDamage(), 0.001);
+        assertApproxEquals(PhotoRing.parameters.maintenanceCost.getValue() * cell.getPhotoArea(),
+                cell.getDamage());
     }
 
     @Test
@@ -483,11 +483,11 @@ public class CellTest {
         cell.updateBiologyFromEnvironment();
 
         double newFloatArea = initialFloatArea * (1 - FloatRing.parameters.decayRate.getValue());
-        assertEquals(newFloatArea, cell.getFloatArea(), 0.001);
+        assertApproxEquals(newFloatArea, cell.getFloatArea());
         double newFloatRadius = Math.sqrt(newFloatArea / Math.PI);
-        assertEquals(newFloatRadius, cell.getFloatRingOuterRadius(), 0.001);
+        assertApproxEquals(newFloatRadius, cell.getFloatRingOuterRadius());
         double newPhotoArea = initialPhotoArea * (1 - PhotoRing.parameters.decayRate.getValue());
-        assertEquals(newPhotoArea, cell.getPhotoArea(), 0.001);
-        assertEquals(newFloatArea + newPhotoArea, cell.getArea(), 0.001);
+        assertApproxEquals(newPhotoArea, cell.getPhotoArea());
+        assertApproxEquals(newFloatArea + newPhotoArea, cell.getArea());
     }
 }
