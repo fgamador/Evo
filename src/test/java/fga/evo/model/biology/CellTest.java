@@ -3,7 +3,6 @@ package fga.evo.model.biology;
 import fga.evo.model.control.ParentChildControl;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.util.Chance;
-import org.junit.Assert;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.*;
