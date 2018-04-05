@@ -1,6 +1,5 @@
 package fga.evo.model.physics;
 
-import fga.evo.model.Assert;
 import fga.evo.model.EvoTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -130,8 +129,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void ballsRecordOverlap() {
-        Ball ball1 = createBall(1, 0, 0);
-        Ball ball2 = createBall(1, 1.5, 0);
+        Ball ball1 = createBall(0);
+        Ball ball2 = createBall(1.5);
 
         ball1.onOverlap(ball2, 0.5);
 
@@ -141,8 +140,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void ballsRecordOverlapEvenWhenBonded() {
-        Ball ball1 = createBall(1, 0, 0);
-        Ball ball2 = createBall(1, 1.5, 0);
+        Ball ball1 = createBall(0);
+        Ball ball2 = createBall(1.5);
         ball1.addBond(ball2);
 
         ball1.onOverlap(ball2, 0.5);
@@ -153,9 +152,9 @@ public class BallTest extends EvoTest {
 
     @Test
     public void subtickDecaysRecordedOverlap() {
-        Ball ball1 = createBall(1, 0, 0);
+        Ball ball1 = createBall(0);
         ball1.setMass(1);
-        Ball ball2 = createBall(1, 1.5, 0);
+        Ball ball2 = createBall(1.5);
         ball1.onOverlap(ball2, 0.5);
 
         ball1.subtickPhysics(2);
@@ -163,10 +162,10 @@ public class BallTest extends EvoTest {
         assertTrue(ball1.getRecentTotalOverlap() < 0.5);
     }
 
-    private Ball createBall(double radius, double centerX, double centerY) {
+    private Ball createBall(double centerX) {
         Ball ball = new BallWithEnvironment();
-        ball.setRadius(radius);
-        ball.setCenterPosition(centerX, centerY);
+        ball.setRadius(1);
+        ball.setCenterPosition(centerX, 0);
         return ball;
     }
 }
