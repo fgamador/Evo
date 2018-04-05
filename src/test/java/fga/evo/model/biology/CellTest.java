@@ -27,18 +27,6 @@ public class CellTest {
     }
 
     @Test
-    public void testPhotosynthesize() {
-        Cell cell = new Cell.Builder()
-                .withPhotoRingOuterRadius(3)
-                .build();
-
-        cell.getEnvironment().setLightIntensity(2);
-        cell.photosynthesize();
-
-        assertEnergy(4.5, cell);
-    }
-
-    @Test
     public void testControlPhase_FloatRingGrowth() {
         Cell cell = new Cell.Builder()
                 .withControl(c -> c.requestFloatAreaResize(2))

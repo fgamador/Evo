@@ -62,17 +62,13 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
 
     private void updateBiologyPhase_Live() {
         addDonatedEnergy();
-        photosynthesize();
+        photoRing.updateFromEnvironment(this);
         subtractMaintenanceEnergy();
         addDamage();
     }
 
     private void addDonatedEnergy() {
         addEnergy(environment.takeDonatedEnergy());
-    }
-
-    void photosynthesize() {
-        photoRing.updateFromEnvironment(this);
     }
 
     private void subtractMaintenanceEnergy() {
