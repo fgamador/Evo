@@ -1,5 +1,6 @@
 package fga.evo.model.biology;
 
+import fga.evo.model.environment.CellEnvironment;
 import fga.evo.model.geometry.Ring;
 import fga.evo.model.util.DoubleParameter;
 
@@ -14,6 +15,9 @@ public class TissueRing extends Ring {
     protected TissueRing(TissueRingParameters parameters, double area) {
         super(parameters, area);
         this.parameters = parameters;
+    }
+
+    public void updateFromEnvironment(CellApi cell) {
     }
 
     public void requestResize(double desiredDeltaArea) {
@@ -56,9 +60,11 @@ public class TissueRing extends Ring {
     }
 
     /**
-     * The API that a TissueRing uses to influence a Cell.
+     * The API that a TissueRing uses to interact with a Cell.
      */
     interface CellApi {
+        CellEnvironment getEnvironment();
+
         void addEnergy(double energy);
     }
 }

@@ -72,7 +72,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
     }
 
     void photosynthesize() {
-        addEnergy(photoRing.photosynthesize(environment.getLightIntensity()));
+        photoRing.updateFromEnvironment(this);
     }
 
     private void subtractMaintenanceEnergy() {

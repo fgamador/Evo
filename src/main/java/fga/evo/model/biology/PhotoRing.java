@@ -22,6 +22,11 @@ public class PhotoRing extends TissueRing {
         super(parameters, area);
     }
 
+    @Override
+    public void updateFromEnvironment(CellApi cell) {
+        cell.addEnergy(photosynthesize(cell.getEnvironment().getLightIntensity()));
+    }
+
     /**
      * Converts incoming light into energy.
      *
