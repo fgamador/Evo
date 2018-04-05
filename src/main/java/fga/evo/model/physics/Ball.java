@@ -67,8 +67,8 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
     @Override
     public void onOverlap(OverlappableCircle circle, double overlap) {
         Ball ball2 = (Ball) circle;
-        recordOverlap(overlap);
-        ball2.recordOverlap(overlap);
+        getEnvironment().addOverlap(overlap);
+        ball2.getEnvironment().addOverlap(overlap);
         if (!isBondedTo(circle)) {
             PairCollision.addForces(this, ball2, overlap);
         }
@@ -76,10 +76,6 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
 
     public double calcElasticDeformationForce(double overlap) {
         return overlapForceFactor.getValue() * overlap;
-    }
-
-    public void recordOverlap(double overlap) {
-        getEnvironment().addOverlap(overlap);
     }
 
     @Override
