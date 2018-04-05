@@ -8,27 +8,27 @@ import static org.junit.Assert.assertEquals;
 
 public class PhotoRingTest extends EvoTest {
     @Test
-    public void testCalcPhotoAbsorptivity_NoInnerRing() {
+    public void photoAbsorptivityWithNoInnerRing() {
         PhotoRing testSubject = new PhotoRing(Math.PI);
         testSubject.setRadiiBasedOnArea(0);
-        assertEquals(0.5, testSubject.calcPhotoAbsorptivity(), 0);
+        assertApproxEquals(0.5, testSubject.calcPhotoAbsorptivity());
     }
 
     @Test
-    public void testCalcPhotoAbsorptivity_NoInnerRing2() {
+    public void photoAbsorptivityWithNoInnerRingAndLargerArea() {
         PhotoRing testSubject = new PhotoRing(Math.PI * 9);
         testSubject.setRadiiBasedOnArea(0);
-        assertEquals(0.75, testSubject.calcPhotoAbsorptivity(), 0);
+        assertApproxEquals(0.75, testSubject.calcPhotoAbsorptivity());
     }
 
     @Test
-    public void testCalcPhotoAbsorptivity_WithInnerRing() {
+    public void photoAbsorptivityWithInnerRing() {
         FloatRing innerRing = new FloatRing(Math.PI);
         innerRing.setRadiiBasedOnArea(0);
         PhotoRing ring = new PhotoRing(Math.PI * 3);
         ring.setRadiiBasedOnArea(innerRing.getOuterRadius());
 
-        assertEquals(0.5, ring.calcPhotoAbsorptivity(), 0);
+        assertApproxEquals(0.5, ring.calcPhotoAbsorptivity());
     }
 
     @Test
