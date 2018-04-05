@@ -19,14 +19,14 @@ public class BallTest extends EvoTest {
     public void areaCorrespondsToRadius() {
         Ball ball = new BallWithEnvironment();
         ball.setRadius(3);
-        assertEquals(9 * Math.PI, ball.getArea(), Assert.DEFAULT_DELTA);
+        assertApproxEquals(9 * Math.PI, ball.getArea());
     }
 
     @Test
     public void ballCalculatesOverlapForceFromOverlapAndForceFactor() {
         Ball.overlapForceFactor.setValue(2);
         Ball ball = new BallWithEnvironment();
-        assertEquals(6, ball.calcElasticDeformationForce(3), 0);
+        assertApproxEquals(6, ball.calcElasticDeformationForce(3));
     }
 
     @Test
