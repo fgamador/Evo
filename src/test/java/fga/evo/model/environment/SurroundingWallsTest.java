@@ -6,6 +6,7 @@ import fga.evo.model.physics.Ball;
 import fga.evo.model.physics.BallWithEnvironment;
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.assertEquals;
 
@@ -58,6 +59,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void leftBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addLeftBarrierCollisionForce(ball, -0.5);
+        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
@@ -65,6 +67,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void rightBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addRightBarrierCollisionForce(ball, 0.5);
+        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
@@ -72,6 +75,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void lowBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addLowBarrierCollisionForce(ball, -0.5);
+        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
@@ -79,6 +83,7 @@ public class SurroundingWallsTest extends EvoTest {
     public void highBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addHighBarrierCollisionForce(ball, 0.5);
+        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
         assertEquals(0.5, ball.getRecentTotalOverlap(), 0);
     }
 
