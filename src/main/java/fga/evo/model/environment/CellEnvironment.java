@@ -1,8 +1,9 @@
 package fga.evo.model.environment;
 
+import fga.evo.model.physics.BallEnvironment;
 import fga.evo.model.physics.NewtonianBodyEnvironment;
 
-public class CellEnvironment extends NewtonianBodyEnvironment {
+public class CellEnvironment extends BallEnvironment {
     private double donatedEnergy;
     private double lightIntensity;
 
