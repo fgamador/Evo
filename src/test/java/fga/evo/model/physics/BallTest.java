@@ -129,8 +129,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void ballsRecordOverlap() {
-        Ball ball1 = createBall(0);
-        Ball ball2 = createBall(1.5);
+        Ball ball1 = createBallAtX(0);
+        Ball ball2 = createBallAtX(1.5);
 
         ball1.onOverlap(ball2, 0.5);
 
@@ -140,8 +140,8 @@ public class BallTest extends EvoTest {
 
     @Test
     public void ballsRecordOverlapEvenWhenBonded() {
-        Ball ball1 = createBall(0);
-        Ball ball2 = createBall(1.5);
+        Ball ball1 = createBallAtX(0);
+        Ball ball2 = createBallAtX(1.5);
         ball1.addBond(ball2);
 
         ball1.onOverlap(ball2, 0.5);
@@ -152,9 +152,9 @@ public class BallTest extends EvoTest {
 
     @Test
     public void subtickDecaysRecordedOverlap() {
-        Ball ball1 = createBall(0);
+        Ball ball1 = createBallAtX(0);
         ball1.setMass(1);
-        Ball ball2 = createBall(1.5);
+        Ball ball2 = createBallAtX(1.5);
         ball1.onOverlap(ball2, 0.5);
 
         ball1.subtickPhysics(2);
@@ -162,7 +162,7 @@ public class BallTest extends EvoTest {
         assertTrue(ball1.getRecentTotalOverlap() < 0.5);
     }
 
-    private Ball createBall(double centerX) {
+    private Ball createBallAtX(double centerX) {
         Ball ball = new BallWithEnvironment();
         ball.setRadius(1);
         ball.setCenterPosition(centerX, 0);
