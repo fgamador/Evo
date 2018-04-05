@@ -107,5 +107,4 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
     public double getRecentTotalOverlap() {
         return overlapAccumulator.getTotal();
     }
-
 }
