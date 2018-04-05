@@ -54,4 +54,11 @@ public class TissueRing extends Ring {
     public void decay() {
         multiplyAreaBy(1 - parameters.decayRate.getValue());
     }
+
+    /**
+     * The API that a TissueRing uses to influence a Cell.
+     */
+    interface CellApi {
+        void addEnergy(double energy);
+    }
 }
