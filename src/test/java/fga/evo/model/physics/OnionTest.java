@@ -42,10 +42,10 @@ public class OnionTest extends EvoTest {
     }
 
     private static class OnionWithEnvironment extends Onion<TestRing> {
-        NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
+        BallEnvironment environment = new BallEnvironment();
 
         @Override
-        public NewtonianBodyEnvironment getEnvironment() {
+        public BallEnvironment getEnvironment() {
             return environment;
         }
     }

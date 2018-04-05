@@ -5,6 +5,7 @@ import fga.evo.model.EvoTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static fga.evo.model.Assert.assertNetForce;
 import static org.junit.Assert.*;
 
@@ -134,8 +135,11 @@ public class BallTest extends EvoTest {
 
         ball1.onOverlap(ball2, 0.5);
 
-        assertEquals(0.5, ball1.getRecentTotalOverlap(), 0);
-        assertEquals(0.5, ball2.getRecentTotalOverlap(), 0);
+//        assertApproxEquals(0.5, ball1.getEnvironment().getAndClearTotalOverlap());
+//        assertApproxEquals(0.5, ball2.getEnvironment().getAndClearTotalOverlap());
+
+        assertApproxEquals(0.5, ball1.getRecentTotalOverlap());
+        assertApproxEquals(0.5, ball2.getRecentTotalOverlap());
     }
 
     @Test

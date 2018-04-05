@@ -1,10 +1,10 @@
 package fga.evo.model.physics;
 
 public class BallWithEnvironment extends Ball {
-    private NewtonianBodyEnvironment environment = new NewtonianBodyEnvironment();
+    private BallEnvironment environment = new BallEnvironment();
 
     @Override
-    public NewtonianBodyEnvironment getEnvironment() {
+    public BallEnvironment getEnvironment() {
         return environment;
     }
 }
