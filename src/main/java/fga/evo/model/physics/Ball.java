@@ -60,6 +60,7 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
      */
     public void subtickPhysics(int subticksPerTick) {
         subtick(subticksPerTick);
+        overlapAccumulator.addValue(getEnvironment().getAndClearTotalOverlap());
         overlapAccumulator.decay();
     }
 
@@ -79,7 +80,6 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
 
     public void recordOverlap(double overlap) {
         getEnvironment().addOverlap(overlap);
-        overlapAccumulator.addValue(overlap);
     }
 
     @Override

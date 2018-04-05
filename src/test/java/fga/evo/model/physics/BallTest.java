@@ -137,9 +137,6 @@ public class BallTest extends EvoTest {
 
         assertApproxEquals(0.5, ball1.getEnvironment().getAndClearTotalOverlap());
         assertApproxEquals(0.5, ball2.getEnvironment().getAndClearTotalOverlap());
-
-        assertApproxEquals(0.5, ball1.getRecentTotalOverlap());
-        assertApproxEquals(0.5, ball2.getRecentTotalOverlap());
     }
 
     @Test
@@ -152,9 +149,6 @@ public class BallTest extends EvoTest {
 
         assertApproxEquals(0.5, ball1.getEnvironment().getAndClearTotalOverlap());
         assertApproxEquals(0.5, ball2.getEnvironment().getAndClearTotalOverlap());
-
-        assertApproxEquals(0.5, ball1.getRecentTotalOverlap());
-        assertApproxEquals(0.5, ball2.getRecentTotalOverlap());
     }
 
     @Test
