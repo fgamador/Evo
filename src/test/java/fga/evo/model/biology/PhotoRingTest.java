@@ -3,6 +3,7 @@ package fga.evo.model.biology;
 import fga.evo.model.EvoTest;
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static org.junit.Assert.assertEquals;
 
 public class PhotoRingTest extends EvoTest {
@@ -31,9 +32,14 @@ public class PhotoRingTest extends EvoTest {
     }
 
     @Test
-    public void photosynthesisReturnsTheRightAmountOfEnergy() {
+    public void photosynthesisAddsEnergyToCell() {
+        TissueRingCellApiWithEnvironment cell = new TissueRingCellApiWithEnvironment();
         PhotoRing testSubject = new PhotoRing(Math.PI * 9);
         testSubject.setRadiiBasedOnArea(0);
-        assertEquals(4.5, testSubject.photosynthesize(2), 0);
+
+        cell.getEnvironment().setLightIntensity(2);
+        testSubject.updateFromEnvironment(cell);
+
+        assertApproxEquals(4.5, cell.energy);
     }
 }
