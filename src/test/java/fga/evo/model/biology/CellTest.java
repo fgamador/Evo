@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 public class CellTest {
     @Test
     public void tickDecaysRecordedOverlap() {
-        Cell cell1 = new Cell.Builder().withPhotoRingOuterRadius(1).build();
-        Cell cell2 = new Cell.Builder().withPhotoRingOuterRadius(1).build();
+        Cell cell1 = new Cell.Builder().build();
+        Cell cell2 = new Cell.Builder().build();
         cell1.onOverlap(cell2, 0.5);
 
         cell1.updateBiologyFromEnvironment();
