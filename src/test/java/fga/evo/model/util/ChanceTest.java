@@ -8,39 +8,39 @@ import static org.junit.Assert.assertTrue;
 
 public class ChanceTest {
     @Test
-    public void testGuaranteedSuccess() {
+    public void guaranteedSuccess() {
         Chance.setNextRandom(0.999);
         assertTrue(Chance.beats(1));
         assertTrue(Chance.beats(10));
     }
 
     @Test
-    public void testGuaranteedFail() {
+    public void guaranteedFail() {
         Chance.setNextRandom(0);
         assertFalse(Chance.beats(0));
         assertFalse(Chance.beats(-10));
     }
 
     @Test
-    public void testConditionalSuccess() {
+    public void conditionalSuccess() {
         Chance.setNextRandom(0.49);
         assertTrue(Chance.beats(0.5));
     }
 
     @Test
-    public void testConditionalFail() {
+    public void conditionalFail() {
         Chance.setNextRandom(0.49);
         assertTrue(Chance.beats(0.5));
     }
 
     @Test
-    public void testExactMatch() {
+    public void beatsExactMatchOdds() {
         Chance.setNextRandom(0.5);
         assertFalse(Chance.beats(0.5));
     }
 
     @Test
-    public void testGoodOddsUsuallySucceed() {
+    public void goodOddsUsuallySucceed() {
         int numSucceeded = 0;
         for (int i = 0; i < 1000; i++) {
             if (Chance.beats(0.8))
