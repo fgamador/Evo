@@ -65,7 +65,7 @@ public class OverlappableCirclesBubbleSortedByMinXTest {
         private double centerX;
         private double centerY;
 
-        public MovableCircle(double radius, double centerX, double centerY) {
+        MovableCircle(double radius, double centerX, double centerY) {
             this.radius = radius;
             this.centerX = centerX;
             this.centerY = centerY;
@@ -86,7 +86,7 @@ public class OverlappableCirclesBubbleSortedByMinXTest {
             return centerY;
         }
 
-        public void setCenterX(double val) {
+        void setCenterX(double val) {
             centerX = val;
         }
 
