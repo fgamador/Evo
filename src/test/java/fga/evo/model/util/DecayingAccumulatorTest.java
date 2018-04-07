@@ -16,27 +16,27 @@ public class DecayingAccumulatorTest {
 
     @Test
     public void accumulationStartsAtZero() {
-        DecayingAccumulator testSubject = new DecayingAccumulator(retentionRate);
-        assertExactEquals(0, testSubject.getTotal());
+        DecayingAccumulator subject = new DecayingAccumulator(retentionRate);
+        assertExactEquals(0, subject.getTotal());
     }
 
     @Test
     public void accumulatedOverlapsSum() {
-        DecayingAccumulator testSubject = new DecayingAccumulator(retentionRate);
-        testSubject.addValue(1);
-        testSubject.addValue(0.5);
+        DecayingAccumulator subject = new DecayingAccumulator(retentionRate);
+        subject.addValue(1);
+        subject.addValue(0.5);
 
-        assertExactEquals(1.5, testSubject.getTotal());
+        assertExactEquals(1.5, subject.getTotal());
     }
 
     @Test
     public void accumulationCanDecay() {
         retentionRate.setValue(0.75);
 
-        DecayingAccumulator testSubject = new DecayingAccumulator(retentionRate);
-        testSubject.addValue(2);
-        testSubject.decay();
+        DecayingAccumulator subject = new DecayingAccumulator(retentionRate);
+        subject.addValue(2);
+        subject.decay();
 
-        assertApproxEquals(1.5, testSubject.getTotal());
+        assertApproxEquals(1.5, subject.getTotal());
     }
 }
