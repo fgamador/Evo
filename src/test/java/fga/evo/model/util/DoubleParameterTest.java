@@ -1,36 +1,34 @@
 package fga.evo.model.util;
 
-import fga.evo.model.util.DoubleParameter;
-import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static fga.evo.model.Assert.assertExactEquals;
 
 public class DoubleParameterTest {
-    private DoubleParameter param;
-
-    @Before
-    public void setUp() {
-        param = new DoubleParameter(2.5);
+    @Test
+    public void hasDefaultValue() {
+        DoubleParameter testSubject = new DoubleParameter(2.5);
+        assertExactEquals(2.5, testSubject.getDefaultValue());
     }
 
     @Test
-    public void testGetDefaultValue() {
-        assertEquals(2.5, param.getDefaultValue(), 0);
-        assertEquals(2.5, param.getValue(), 0);
+    public void valueStartsAsDefaultValue() {
+        DoubleParameter testSubject = new DoubleParameter(2.5);
+        assertExactEquals(2.5, testSubject.getValue());
     }
 
     @Test
-    public void testSetValue() {
-        param.setValue(3);
-        assertEquals(3, param.getValue(), 0);
+    public void canChangeValue() {
+        DoubleParameter testSubject = new DoubleParameter(2.5);
+        testSubject.setValue(3);
+        assertExactEquals(3, testSubject.getValue());
     }
 
     @Test
-    public void testRevertToDefaultValue() {
-        param.setValue(3);
-        param.revertToDefaultValue();
-        assertEquals(2.5, param.getValue(), 0);
+    public void canRevertToDefaultValue() {
+        DoubleParameter testSubject = new DoubleParameter(2.5);
+        testSubject.setValue(3);
+        testSubject.revertToDefaultValue();
+        assertExactEquals(2.5, testSubject.getValue());
     }
 }
