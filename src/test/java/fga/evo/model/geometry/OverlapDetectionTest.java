@@ -1,12 +1,13 @@
 package fga.evo.model.geometry;
 
-import fga.evo.model.Assert;
 import org.junit.Test;
 
 import java.util.*;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static fga.evo.model.EvoTest.SQRT_2;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class OverlapDetectionTest {
     private Map<Set<Circle>, Double> overlaps = new HashMap<>();
@@ -93,14 +94,14 @@ public class OverlapDetectionTest {
         SpyCircle circle3 = new SpyCircle(1, 1.5, 0);
 
         OverlapDetection testSubject = new OverlapDetection();
-        // will sort as circle1, circle3, circle2
+        // will sort by x into circle1, circle3, circle2
         testSubject.addCircles(Arrays.asList(circle1, circle2, circle3));
 
         circle1.setCenterX(1);
         circle2.setCenterX(1.5);
         circle3.setCenterX(3);
 
-        // must sort as circle1, circle2, circle3 to find the overlaps
+        // must re-sort by the new x into circle1, circle2, circle3 to find the overlaps
         testSubject.findAndNotifyOverlaps();
 
         assertTrue(foundOverlap(circle1, circle2));
@@ -117,7 +118,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEquals(0.5, getOverlap(circle1, circle2), Assert.DEFAULT_DELTA);
+        assertApproxEquals(0.5, getOverlap(circle1, circle2));
     }
 
     @Test
@@ -129,7 +130,7 @@ public class OverlapDetectionTest {
         testSubject.addCircles(Arrays.asList(circle1, circle2));
         testSubject.findAndNotifyOverlaps();
 
-        assertEquals(1, getOverlap(circle1, circle2), Assert.DEFAULT_DELTA);
+        assertApproxEquals(1, getOverlap(circle1, circle2));
     }
 
     private void recordOverlap(Circle circle1, Circle circle2, double overlap) {
@@ -156,7 +157,7 @@ public class OverlapDetectionTest {
         private double centerX;
         private double centerY;
 
-        public SpyCircle(double radius, double centerX, double centerY) {
+        SpyCircle(double radius, double centerX, double centerY) {
             this.radius = radius;
             this.centerX = centerX;
             this.centerY = centerY;
@@ -177,7 +178,7 @@ public class OverlapDetectionTest {
             return centerY;
         }
 
-        public void setCenterX(double val) {
+        void setCenterX(double val) {
             centerX = val;
         }
 
