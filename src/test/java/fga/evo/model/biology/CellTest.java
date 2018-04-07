@@ -16,8 +16,9 @@ public class CellTest {
         cell1.onOverlap(cell2, 0.5);
 
         cell1.updateBiologyFromEnvironment();
+        assertApproxEquals(0.5, cell1.getRecentTotalOverlap());
 
-        assertTrue(cell1.getRecentTotalOverlap() > 0);
+        cell1.updateBiologyFromEnvironment();
         assertTrue(cell1.getRecentTotalOverlap() < 0.5);
     }
 
