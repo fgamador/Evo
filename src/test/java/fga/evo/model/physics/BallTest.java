@@ -150,18 +150,6 @@ public class BallTest extends EvoTest {
         assertApproxEquals(0.5, ball2.getEnvironment().getAndClearTotalOverlap());
     }
 
-    @Test
-    public void subtickDecaysRecordedOverlap() {
-        Ball ball1 = createBallAtX(0);
-        ball1.setMass(1);
-        Ball ball2 = createBallAtX(1.5);
-        ball1.onOverlap(ball2, 0.5);
-
-        ball1.subtickPhysics(2);
-
-        assertTrue(ball1.getRecentTotalOverlap() < 0.5);
-    }
-
     private Ball createBallAtX(double centerX) {
         Ball ball = new BallWithEnvironment();
         ball.setRadius(1);
