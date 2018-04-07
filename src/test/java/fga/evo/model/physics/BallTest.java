@@ -1,19 +1,13 @@
 package fga.evo.model.physics;
 
 import fga.evo.model.EvoTest;
-import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertApproxEquals;
-import static fga.evo.model.Assert.assertNetForce;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class BallTest extends EvoTest {
-    @Before
-    public void setUp() {
-        NewtonianBody.speedLimit.setValue(100);
-    }
-
     @Test
     public void areaCorrespondsToRadius() {
         Ball ball = new BallWithEnvironment();
