@@ -7,9 +7,7 @@ import fga.evo.model.physics.NewtonianBodyEnvironment;
 import java.util.Collection;
 
 import static fga.evo.model.util.Util.sqr;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Additional evo-specific assertions.
