@@ -9,51 +9,51 @@ import static org.junit.Assert.assertEquals;
 public class OverlappableCirclesBubbleSortedByMinXTest {
     @Test
     public void addAddsInSortedOrder() {
-        OverlappableCirclesBubbleSortedByMinX testSubject = new OverlappableCirclesBubbleSortedByMinX();
+        OverlappableCirclesBubbleSortedByMinX subject = new OverlappableCirclesBubbleSortedByMinX();
         OverlappableCircle circle1 = createCircle(1, 1, 0);
         OverlappableCircle circle2 = createCircle(1, 2, 0);
 
-        testSubject.add(circle2);
-        testSubject.add(circle1);
+        subject.add(circle2);
+        subject.add(circle1);
 
-        assertEquals(2, testSubject.size());
-        assertEquals(circle1, testSubject.get(0));
-        assertEquals(circle2, testSubject.get(1));
+        assertEquals(2, subject.size());
+        assertEquals(circle1, subject.get(0));
+        assertEquals(circle2, subject.get(1));
     }
 
     @Test
     public void addAllAddsInSortedOrder() {
-        OverlappableCirclesBubbleSortedByMinX testSubject = new OverlappableCirclesBubbleSortedByMinX();
+        OverlappableCirclesBubbleSortedByMinX subject = new OverlappableCirclesBubbleSortedByMinX();
         OverlappableCircle circle1 = createCircle(1, 1, 0);
         OverlappableCircle circle2 = createCircle(1, 2, 0);
         OverlappableCircle circle3 = createCircle(1, 3, 0);
 
-        testSubject.addAll(Arrays.asList(circle3, circle2, circle1));
+        subject.addAll(Arrays.asList(circle3, circle2, circle1));
 
-        assertEquals(3, testSubject.size());
-        assertEquals(circle1, testSubject.get(0));
-        assertEquals(circle2, testSubject.get(1));
-        assertEquals(circle3, testSubject.get(2));
+        assertEquals(3, subject.size());
+        assertEquals(circle1, subject.get(0));
+        assertEquals(circle2, subject.get(1));
+        assertEquals(circle3, subject.get(2));
     }
 
     @Test
     public void sortByMinXSortsAfterMovement() {
-        OverlappableCirclesBubbleSortedByMinX testSubject = new OverlappableCirclesBubbleSortedByMinX();
+        OverlappableCirclesBubbleSortedByMinX subject = new OverlappableCirclesBubbleSortedByMinX();
         MovableCircle circle1 = new MovableCircle(1, 3, 0);
         MovableCircle circle2 = new MovableCircle(1, 2, 0);
         MovableCircle circle3 = new MovableCircle(1, 1, 0);
-        testSubject.addAll(Arrays.asList(circle3, circle2, circle1));
+        subject.addAll(Arrays.asList(circle3, circle2, circle1));
 
         circle1.setCenterX(1);
         circle2.setCenterX(2);
         circle3.setCenterX(3);
 
-        testSubject.sortByMinX();
+        subject.sortByMinX();
 
-        assertEquals(3, testSubject.size());
-        assertEquals(circle1, testSubject.get(0));
-        assertEquals(circle2, testSubject.get(1));
-        assertEquals(circle3, testSubject.get(2));
+        assertEquals(3, subject.size());
+        assertEquals(circle1, subject.get(0));
+        assertEquals(circle2, subject.get(1));
+        assertEquals(circle3, subject.get(2));
     }
 
     private OverlappableCircle createCircle(int radius, int centerX, int centerY) {

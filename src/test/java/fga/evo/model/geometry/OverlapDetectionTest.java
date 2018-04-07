@@ -17,9 +17,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 3, -3);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertFalse(foundOverlap(circle1, circle2));
     }
@@ -29,9 +29,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 2, 0);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertFalse(foundOverlap(circle1, circle2));
     }
@@ -41,9 +41,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 1.99, 0);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertTrue(foundOverlap(circle1, circle2));
     }
@@ -53,9 +53,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 1, 2);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertFalse(foundOverlap(circle1, circle2));
     }
@@ -65,9 +65,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 1.5, 1.5);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertFalse(foundOverlap(circle1, circle2));
     }
@@ -78,9 +78,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle2 = createCircle(1, 1.5, 0);
         OverlappableCircle circle3 = createCircle(1, 3, 0);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle3, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle3, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertTrue(foundOverlap(circle1, circle2));
         assertTrue(foundOverlap(circle2, circle3));
@@ -93,16 +93,16 @@ public class OverlapDetectionTest {
         SpyCircle circle2 = new SpyCircle(1, 3, 0);
         SpyCircle circle3 = new SpyCircle(1, 1.5, 0);
 
-        OverlapDetection testSubject = new OverlapDetection();
+        OverlapDetection subject = new OverlapDetection();
         // will sort by x into circle1, circle3, circle2
-        testSubject.addCircles(Arrays.asList(circle1, circle2, circle3));
+        subject.addCircles(Arrays.asList(circle1, circle2, circle3));
 
         circle1.setCenterX(1);
         circle2.setCenterX(1.5);
         circle3.setCenterX(3);
 
         // must re-sort by the new x into circle1, circle2, circle3 to find the overlaps
-        testSubject.findAndNotifyOverlaps();
+        subject.findAndNotifyOverlaps();
 
         assertTrue(foundOverlap(circle1, circle2));
         assertTrue(foundOverlap(circle2, circle3));
@@ -114,9 +114,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 1.5, 0);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertApproxEquals(0.5, getOverlap(circle1, circle2));
     }
@@ -126,9 +126,9 @@ public class OverlapDetectionTest {
         OverlappableCircle circle1 = createCircle(1, 0, 0);
         OverlappableCircle circle2 = createCircle(1, 1 / SQRT_2, -1 / SQRT_2);
 
-        OverlapDetection testSubject = new OverlapDetection();
-        testSubject.addCircles(Arrays.asList(circle1, circle2));
-        testSubject.findAndNotifyOverlaps();
+        OverlapDetection subject = new OverlapDetection();
+        subject.addCircles(Arrays.asList(circle1, circle2));
+        subject.findAndNotifyOverlaps();
 
         assertApproxEquals(1, getOverlap(circle1, circle2));
     }
