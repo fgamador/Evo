@@ -3,8 +3,8 @@ package fga.evo.model.util;
 import org.junit.After;
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static fga.evo.model.Assert.assertExactEquals;
-import static org.junit.Assert.assertEquals;
 
 public class DecayingAccumulatorTest {
     private DoubleParameter retentionRate = new DoubleParameter(0.95);
@@ -26,7 +26,7 @@ public class DecayingAccumulatorTest {
         testSubject.addValue(1);
         testSubject.addValue(0.5);
 
-        assertEquals(1.5, testSubject.getTotal(), 0);
+        assertExactEquals(1.5, testSubject.getTotal());
     }
 
     @Test
@@ -37,6 +37,6 @@ public class DecayingAccumulatorTest {
         testSubject.addValue(2);
         testSubject.decay();
 
-        assertEquals(1.5, testSubject.getTotal(), 0);
+        assertApproxEquals(1.5, testSubject.getTotal());
     }
 }
