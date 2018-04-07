@@ -15,7 +15,7 @@ public class CellEnvironment extends BallEnvironment {
         donatedEnergy = val;
     }
 
-    public double takeDonatedEnergy() {
+    public double getAndClearDonatedEnergy() {
         double energy = donatedEnergy;
         donatedEnergy = 0;
         return energy;

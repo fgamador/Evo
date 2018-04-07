@@ -76,7 +76,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
     }
 
     private void addDonatedEnergy() {
-        addEnergy(environment.takeDonatedEnergy());
+        addEnergy(environment.getAndClearDonatedEnergy());
     }
 
     private void subtractMaintenanceEnergy() {
