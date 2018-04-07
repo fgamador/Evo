@@ -3,7 +3,8 @@ package fga.evo.model.util;
 import org.junit.After;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static fga.evo.model.Assert.assertExactEquals;
+import static org.junit.Assert.assertEquals;
 
 public class DecayingAccumulatorTest {
     private DoubleParameter retentionRate = new DoubleParameter(0.95);
@@ -14,28 +15,28 @@ public class DecayingAccumulatorTest {
     }
 
     @Test
-    public void testNoOverlaps() {
-        DecayingAccumulator sensor = new DecayingAccumulator(retentionRate);
-        assertEquals(0, sensor.getTotal(), 0);
+    public void accumulationStartsAtZero() {
+        DecayingAccumulator testSubject = new DecayingAccumulator(retentionRate);
+        assertExactEquals(0, testSubject.getTotal());
     }
 
     @Test
-    public void testOverlaps() {
-        DecayingAccumulator sensor = new DecayingAccumulator(retentionRate);
-        sensor.addValue(1);
-        sensor.addValue(0.5);
+    public void accumulatedOverlapsSum() {
+        DecayingAccumulator testSubject = new DecayingAccumulator(retentionRate);
+        testSubject.addValue(1);
+        testSubject.addValue(0.5);
 
-        assertEquals(1.5, sensor.getTotal(), 0);
+        assertEquals(1.5, testSubject.getTotal(), 0);
     }
 
     @Test
-    public void testDecay() {
+    public void accumulationCanDecay() {
         retentionRate.setValue(0.75);
 
-        DecayingAccumulator sensor = new DecayingAccumulator(retentionRate);
-        sensor.addValue(2);
-        sensor.decay();
+        DecayingAccumulator testSubject = new DecayingAccumulator(retentionRate);
+        testSubject.addValue(2);
+        testSubject.decay();
 
-        assertEquals(1.5, sensor.getTotal(), 0);
+        assertEquals(1.5, testSubject.getTotal(), 0);
     }
 }

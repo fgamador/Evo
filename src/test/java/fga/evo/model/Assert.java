@@ -21,6 +21,10 @@ public class Assert {
         assertEquals(expected, actual, DEFAULT_DELTA);
     }
 
+    public static void assertExactEquals(double expected, double actual) {
+        assertEquals(expected, actual, 0);
+    }
+
     public static void assertEmpty(Collection<?> collection) {
         assertTrue(collection.isEmpty());
     }
