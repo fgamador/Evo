@@ -4,41 +4,41 @@ import fga.evo.model.EvoTest;
 import fga.evo.model.geometry.TestRing;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static fga.evo.model.Assert.assertApproxEquals;
 
 public class OnionTest extends EvoTest {
     @Test
-    public void testSyncFields_OneRing() {
+    public void syncFieldsWithOneRing() {
         TestRing ring = new TestRing(Math.PI);
-        Onion<TestRing> onion = new OnionWithEnvironment();
-        onion.addRing(ring);
+        Onion<TestRing> subject = new OnionWithEnvironment();
+        subject.addRing(ring);
 
-        onion.syncFields();
+        subject.syncFields();
 
-        assertEquals(1, ring.getOuterRadius(), 0.001);
-        assertEquals(Math.PI * TestRing.parameters.density.getValue(), ring.getMass(), 0.001);
-        assertEquals(ring.getOuterRadius(), onion.getRadius(), 0.001);
-        assertEquals(ring.getArea(), onion.getArea(), 0.001);
-        assertEquals(ring.getMass(), onion.getMass(), 0.001);
+        assertApproxEquals(1, ring.getOuterRadius());
+        assertApproxEquals(Math.PI * TestRing.parameters.density.getValue(), ring.getMass());
+        assertApproxEquals(ring.getOuterRadius(), subject.getRadius());
+        assertApproxEquals(ring.getArea(), subject.getArea());
+        assertApproxEquals(ring.getMass(), subject.getMass());
     }
 
     @Test
-    public void testSyncFields_TwoRings() {
+    public void syncFieldsWithTwoRings() {
         TestRing ring1 = new TestRing(Math.PI);
         TestRing ring2 = new TestRing(3 * Math.PI);
-        Onion<TestRing> onion = new OnionWithEnvironment();
-        onion.addRing(ring1);
-        onion.addRing(ring2);
+        Onion<TestRing> subject = new OnionWithEnvironment();
+        subject.addRing(ring1);
+        subject.addRing(ring2);
 
-        onion.syncFields();
+        subject.syncFields();
 
-        assertEquals(Math.PI, ring1.getArea(), 0.001);
-        assertEquals(Math.PI * TestRing.parameters.density.getValue(), ring1.getMass(), 0.001);
-        assertEquals(3 * Math.PI, ring2.getArea(), 0.001);
-        assertEquals(3 * Math.PI * TestRing.parameters.density.getValue(), ring2.getMass(), 0.001);
-        assertEquals(ring2.getOuterRadius(), onion.getRadius(), 0.001);
-        assertEquals(ring1.getArea() + ring2.getArea(), onion.getArea(), 0.001);
-        assertEquals(ring1.getMass() + ring2.getMass(), onion.getMass(), 0.001);
+        assertApproxEquals(Math.PI, ring1.getArea());
+        assertApproxEquals(Math.PI * TestRing.parameters.density.getValue(), ring1.getMass());
+        assertApproxEquals(3 * Math.PI, ring2.getArea());
+        assertApproxEquals(3 * Math.PI * TestRing.parameters.density.getValue(), ring2.getMass());
+        assertApproxEquals(ring2.getOuterRadius(), subject.getRadius());
+        assertApproxEquals(ring1.getArea() + ring2.getArea(), subject.getArea());
+        assertApproxEquals(ring1.getMass() + ring2.getMass(), subject.getMass());
     }
 
     private static class OnionWithEnvironment extends Onion<TestRing> {
