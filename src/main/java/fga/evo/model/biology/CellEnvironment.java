@@ -1,4 +1,4 @@
-package fga.evo.model.environment;
+package fga.evo.model.biology;
 
 import fga.evo.model.physics.BallEnvironment;
 import fga.evo.model.physics.NewtonianBodyEnvironment;

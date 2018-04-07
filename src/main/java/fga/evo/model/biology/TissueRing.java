@@ -1,6 +1,5 @@
 package fga.evo.model.biology;
 
-import fga.evo.model.environment.CellEnvironment;
 import fga.evo.model.geometry.Ring;
 import fga.evo.model.util.DoubleParameter;
 
