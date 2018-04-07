@@ -15,7 +15,7 @@ public class CellTest {
         Cell cell2 = new Cell.Builder().withPhotoRingOuterRadius(1).build();
         cell1.onOverlap(cell2, 0.5);
 
-        cell1.subtickPhysics(2);
+        cell1.updateBiologyFromEnvironment();
 
         assertTrue(cell1.getRecentTotalOverlap() > 0);
         assertTrue(cell1.getRecentTotalOverlap() < 0.5);

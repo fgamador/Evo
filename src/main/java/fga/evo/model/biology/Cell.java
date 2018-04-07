@@ -58,13 +58,6 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
         return environment;
     }
 
-    @Override
-    public void subtickPhysics(int subticksPerTick) {
-        super.subtickPhysics(subticksPerTick);
-        overlapAccumulator.addValue(getEnvironment().getAndClearTotalOverlap());
-        overlapAccumulator.decay();
-    }
-
     public double getRecentTotalOverlap() {
         return overlapAccumulator.getTotal();
     }
@@ -78,6 +71,8 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
         photoRing.updateFromEnvironment(this);
         subtractMaintenanceEnergy();
         addDamage();
+        overlapAccumulator.addValue(getEnvironment().getAndClearTotalOverlap());
+        overlapAccumulator.decay();
     }
 
     private void addDonatedEnergy() {
