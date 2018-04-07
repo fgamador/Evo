@@ -16,12 +16,10 @@ import static fga.evo.model.util.Util.sqr;
  */
 public abstract class Ball extends NewtonianBody implements OverlappableCircle {
     public static DoubleParameter overlapForceFactor = new DoubleParameter(1);
-    public static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
     private double radius;
     private double area;
     private List<PairBond> bonds = new ArrayList<>();
-    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
     public abstract BallEnvironment getEnvironment();
 
@@ -60,8 +58,6 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
      */
     public void subtickPhysics(int subticksPerTick) {
         subtick(subticksPerTick);
-        overlapAccumulator.addValue(getEnvironment().getAndClearTotalOverlap());
-        overlapAccumulator.decay();
     }
 
     @Override
@@ -101,9 +97,5 @@ public abstract class Ball extends NewtonianBody implements OverlappableCircle {
 
     public double getArea() {
         return area;
-    }
-
-    public double getRecentTotalOverlap() {
-        return overlapAccumulator.getTotal();
     }
 }

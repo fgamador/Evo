@@ -1,5 +1,6 @@
 package fga.evo.model;
 
+import fga.evo.model.biology.Cell;
 import fga.evo.model.biology.FloatRing;
 import fga.evo.model.biology.PhotoRing;
 import fga.evo.model.biology.TissueRingParameters;
@@ -22,7 +23,7 @@ public class RegisteredParameters {
         register("Ball.speedLimit", NewtonianBody.speedLimit);
         register("Ball.overlapForceFactor", Ball.overlapForceFactor);
         register("Ball.dampingForceFactor", BallPairForces.dampingForceFactor);
-        register("Ball.overlapAccumulatorRetentionRate", Ball.overlapAccumulatorRetentionRate);
+        register("Cell.overlapAccumulatorRetentionRate", Cell.overlapAccumulatorRetentionRate);
         register("Drag.dragFactor", Drag.dragFactor);
         register("Illumination.maxIntensity", Illumination.maxIntensity);
         register("Puller.forceFactor", Puller.forceFactor);

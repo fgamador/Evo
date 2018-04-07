@@ -6,6 +6,7 @@ import fga.evo.model.physics.Onion;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.geometry.Ring;
 import fga.evo.model.util.Chance;
+import fga.evo.model.util.DecayingAccumulator;
 import fga.evo.model.util.DoubleParameter;
 
 import static fga.evo.model.util.Util.sqr;
@@ -16,6 +17,7 @@ import static fga.evo.model.util.Util.sqr;
  */
 public class Cell extends Onion<TissueRing> implements CellControl.CellApi, TissueRing.CellApi {
     public static DoubleParameter maximumSurvivableDamage = new DoubleParameter(10);
+    public static DoubleParameter overlapAccumulatorRetentionRate = new DoubleParameter(0.95);
 
     private static final State ALIVE = new Alive();
     private static final State DEAD = new Dead();
@@ -34,6 +36,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
     private double damage;
     private CellLifecycleListener lifecycleListener;
     private CellEnvironment environment = new CellEnvironment();
+    private DecayingAccumulator overlapAccumulator = new DecayingAccumulator(overlapAccumulatorRetentionRate);
 
     public Cell(double radius) {
         this(radius, c -> {
@@ -59,11 +62,12 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
     @Override
     public void subtickPhysics(int subticksPerTick) {
         super.subtickPhysics(subticksPerTick);
+        overlapAccumulator.addValue(getEnvironment().getAndClearTotalOverlap());
+        overlapAccumulator.decay();
     }
 
-    @Override
     public double getRecentTotalOverlap() {
-        return super.getRecentTotalOverlap();
+        return overlapAccumulator.getTotal();
     }
 
     public void updateBiologyFromEnvironment() {
