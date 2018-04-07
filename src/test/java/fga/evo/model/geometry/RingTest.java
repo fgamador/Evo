@@ -4,7 +4,7 @@ import fga.evo.model.EvoTest;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertApproxEquals;
-import static org.junit.Assert.assertEquals;
+import static fga.evo.model.Assert.assertExactEquals;
 
 public class RingTest extends EvoTest {
     @Test
@@ -53,6 +53,6 @@ public class RingTest extends EvoTest {
     public void whenAreaIsZeroOuterRadiusGetsSetEqualToInnerRadius() {
         Ring testSubject = new TestRing(0);
         testSubject.setRadiiBasedOnArea(1);
-        assertEquals(testSubject.getInnerRadius(), testSubject.getOuterRadius(), 0);
+        assertExactEquals(testSubject.getInnerRadius(), testSubject.getOuterRadius());
     }
 }
