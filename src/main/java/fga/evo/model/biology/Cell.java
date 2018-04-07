@@ -56,6 +56,11 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
         return environment;
     }
 
+    @Override
+    public void subtickPhysics(int subticksPerTick) {
+        super.subtickPhysics(subticksPerTick);
+    }
+
     public void updateBiologyFromEnvironment() {
         state.updateBiologyPhase(this);
     }
