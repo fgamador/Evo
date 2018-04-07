@@ -61,6 +61,11 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
         super.subtickPhysics(subticksPerTick);
     }
 
+    @Override
+    public double getRecentTotalOverlap() {
+        return super.getRecentTotalOverlap();
+    }
+
     public void updateBiologyFromEnvironment() {
         state.updateBiologyPhase(this);
     }
