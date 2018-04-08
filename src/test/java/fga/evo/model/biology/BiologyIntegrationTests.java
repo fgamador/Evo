@@ -11,7 +11,8 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class BiologyIntegrationTests extends WorldIntegrationTests {
     @Before
@@ -23,31 +24,31 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testPhotosyntheticGrowth() {
+    public void photosyntheticGrowth() {
         world.addEnvironmentalInfluence(new Illumination(10));
-        Cell cell = new Cell.Builder()
-                .withControl(c -> c.requestPhotoAreaResize(1000))
-                .withPhotoRingArea(Math.PI)
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestPhotoAreaResize(1000)) //
+                .withPhotoRingArea(Math.PI) //
                 .build();
         world.addCell(cell);
 
         cell.setCenterPosition(5, -5);
         world.tick();
 
-        double addedLightEnergy = 0.5;
-        double photoRingMaintenanceEnergy = Math.PI * PhotoRing.parameters.maintenanceCost.getValue();
-        double energyBudget = addedLightEnergy - photoRingMaintenanceEnergy;
-        double addedPhotoRingArea = energyBudget / PhotoRing.parameters.growthCost.getValue();
+        final double addedLightEnergy = 0.5;
+        final double photoRingMaintenanceEnergy = Math.PI * PhotoRing.parameters.maintenanceCost.getValue();
+        final double energyBudget = addedLightEnergy - photoRingMaintenanceEnergy;
+        final double addedPhotoRingArea = energyBudget / PhotoRing.parameters.growthCost.getValue();
         assertEquals(Math.PI + addedPhotoRingArea, cell.getPhotoArea(), 0.001);
     }
 
     @Test
-    public void testBuoyancyControl_Deeper() {
+    public void buoyancyControlMovesCellDownward() {
         world.addEnvironmentalInfluence(new Weight());
-        Cell cell = new Cell.Builder()
-                .withControl(new FixedDepthSeekingControl(100))
-                .withPhotoRingArea(Math.PI)
-                .withEnergy(100)
+        Cell cell = new Cell.Builder() //
+                .withControl(new FixedDepthSeekingControl(100)) //
+                .withPhotoRingArea(Math.PI) //
+                .withEnergy(100) //
                 .build();
         world.addCell(cell);
 
@@ -66,12 +67,12 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testBuoyancyControl_Shallower() {
+    public void buoyancyControlMovesCellUpward() {
         world.addEnvironmentalInfluence(new Weight());
-        Cell cell = new Cell.Builder()
-                .withControl(new FixedDepthSeekingControl(100))
-                .withPhotoRingArea(Math.PI)
-                .withEnergy(100)
+        Cell cell = new Cell.Builder() //
+                .withControl(new FixedDepthSeekingControl(100)) //
+                .withPhotoRingArea(Math.PI) //
+                .withEnergy(100) //
                 .build();
         world.addCell(cell);
 
@@ -90,11 +91,11 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testReproduction() {
-        Cell cell = new Cell.Builder()
-                .withControl(new ParentChildControl(1, 2))
-                .withPhotoRingOuterRadius(10)
-                .withEnergy(10)
+    public void reproduction() {
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 2)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(10) //
                 .build();
         world.addCell(cell);
         cell.setCenterPosition(5, -5);
@@ -112,11 +113,11 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testGrowthAfterReproduction() {
-        Cell cell = new Cell.Builder()
-                .withControl(new ParentChildControl(1, 2))
-                .withPhotoRingOuterRadius(10)
-                .withEnergy(10)
+    public void growthAfterReproduction() {
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 2)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(10) //
                 .build();
         world.addCell(cell);
         cell.setCenterPosition(5, -5);
