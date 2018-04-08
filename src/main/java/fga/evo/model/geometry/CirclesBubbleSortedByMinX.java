@@ -3,15 +3,15 @@ package fga.evo.model.geometry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CirclesBubbleSortedByMinX {
-    private List<OverlappableCircle> circles = new ArrayList<>();
+public class CirclesBubbleSortedByMinX<T extends Circle> {
+    private List<T> circles = new ArrayList<>();
 
-    public void add(OverlappableCircle circle) {
+    public void add(T circle) {
         circles.add(circle);
         sortByMinX();
     }
 
-    public void addAll(List<? extends OverlappableCircle> circles) {
+    public void addAll(List<? extends T> circles) {
         this.circles.addAll(circles);
         sortByMinX();
     }
@@ -20,7 +20,7 @@ public class CirclesBubbleSortedByMinX {
         circles.clear();
     }
 
-    public OverlappableCircle get(int index) {
+    public T get(int index) {
         return circles.get(index);
     }
 
@@ -42,7 +42,7 @@ public class CirclesBubbleSortedByMinX {
     }
 
     private void swapCircles(int index1, int index2) {
-        OverlappableCircle temp = circles.get(index1);
+        T temp = circles.get(index1);
         circles.set(index1, circles.get(index2));
         circles.set(index2, temp);
     }
