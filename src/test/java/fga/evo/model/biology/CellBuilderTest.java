@@ -7,21 +7,21 @@ import static fga.evo.model.Assert.assertExactEquals;
 
 public class CellBuilderTest {
     @Test(expected = IllegalStateException.class)
-    public void testBuild_SetAreaTwice() {
+    public void cannotSetAreaTwice() {
         new Cell.Builder()
                 .withFloatRingArea(Math.PI)
                 .withFloatRingArea(Math.PI);
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testBuild_SetOuterRadiusThenArea() {
+    public void cannotSetOuterRadiusThenArea() {
         new Cell.Builder()
                 .withFloatRingOuterRadius(1)
                 .withFloatRingArea(Math.PI);
     }
 
     @Test
-    public void testBuild_FloatRingOuterRadius() {
+    public void setsAllFromFloatRingOuterRadius() {
         Cell cell = new Cell.Builder()
                 .withFloatRingOuterRadius(1)
                 .build();
@@ -34,7 +34,7 @@ public class CellBuilderTest {
     }
 
     @Test
-    public void testBuild_FloatRingAndPhotoRingOuterRadii() {
+    public void setsAllFromFloatRingAndPhotoRingOuterRadii() {
         Cell cell = new Cell.Builder()
                 .withFloatRingOuterRadius(1)
                 .withPhotoRingOuterRadius(2)
@@ -48,7 +48,7 @@ public class CellBuilderTest {
     }
 
     @Test
-    public void testBuild_FloatRingArea() {
+    public void setsAllFromFloatRingArea() {
         Cell cell = new Cell.Builder()
                 .withFloatRingArea(Math.PI)
                 .build();
@@ -61,7 +61,7 @@ public class CellBuilderTest {
     }
 
     @Test
-    public void testBuild_FloatRingAndPhotoRingAreas() {
+    public void setsAllFromFloatRingAndPhotoRingAreas() {
         Cell cell = new Cell.Builder()
                 .withFloatRingArea(Math.PI)
                 .withPhotoRingArea(3 * Math.PI)
@@ -75,7 +75,7 @@ public class CellBuilderTest {
     }
 
     @Test
-    public void testBuild_FloatRingAndPhotoRingAreas_ReverseOrder() {
+    public void setsAllFromFloatRingAndPhotoRingAreasSpecifiedInReverseOrder() {
         Cell cell = new Cell.Builder()
                 .withPhotoRingArea(3 * Math.PI)
                 .withFloatRingArea(Math.PI)
@@ -89,7 +89,7 @@ public class CellBuilderTest {
     }
 
     @Test
-    public void testBuild_FloatRingAreaAndPhotoRingOuterRadius() {
+    public void setsAllFromFloatRingAreaAndPhotoRingOuterRadius() {
         Cell cell = new Cell.Builder()
                 .withFloatRingArea(Math.PI)
                 .withPhotoRingOuterRadius(2)
