@@ -19,16 +19,16 @@ public class PairBondTest extends EvoTest {
         Ball ball1 = new BallWithEnvironment();
         Ball ball2 = new BallWithEnvironment();
 
-        PairBond bond = new PairBond(ball1, ball2);
+        PairBond subject = new PairBond(ball1, ball2);
 
-        assertTrue(bond.bondsTo(ball1));
-        assertTrue(bond.bondsTo(ball2));
+        assertTrue(subject.bondsTo(ball1));
+        assertTrue(subject.bondsTo(ball2));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void aPairBondCannotBondABallToItself() {
-        Ball ball1 = new BallWithEnvironment();
-        new PairBond(ball1, ball1);
+        Ball ball = new BallWithEnvironment();
+        new PairBond(ball, ball);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -52,6 +52,18 @@ public class PairBondTest extends EvoTest {
         PairBond bond2 = new PairBond(ball1, ball2);
 
         assertEquals(bond1, bond2);
+    }
+
+    @Test
+    public void pairBondEqualsUsesBalls2() {
+        Ball ball1 = new BallWithEnvironment();
+        Ball ball2 = new BallWithEnvironment();
+        Ball ball3 = new BallWithEnvironment();
+
+        PairBond bond1 = new PairBond(ball1, ball2);
+        PairBond bond2 = new PairBond(ball1, ball3);
+
+        assertNotEquals(bond1, bond2);
     }
 
     @Test
@@ -80,63 +92,63 @@ public class PairBondTest extends EvoTest {
     public void pairBondAddsNoForcesToBallsJustTouchingAtRest() {
         Ball ball1 = createBall(1, 0, 0);
         Ball ball2 = createBall(1, 2, 0);
-        PairBond bond = ball1.addBond(ball2);
+        PairBond subject = ball1.addBond(ball2);
 
-        bond.addForces();
+        subject.addForces();
 
-        assertNetForce((double) 0, (double) 0, ball1.getEnvironment());
-        assertNetForce((double) 0, (double) 0, ball2.getEnvironment());
+        assertNetForce(0, 0, ball1.getEnvironment());
+        assertNetForce(0, 0, ball2.getEnvironment());
     }
 
     @Test
     public void pairBondAddsNoForcesToBallsJustTouchingMovingTogether() {
         Ball ball1 = createBall(1, 0, 0);
         Ball ball2 = createBall(1, 2, 0);
-        PairBond bond = ball1.addBond(ball2);
+        PairBond subject = ball1.addBond(ball2);
         ball1.setVelocity(1, 0);
         ball2.setVelocity(1, 0);
 
-        bond.addForces();
+        subject.addForces();
 
-        assertNetForce((double) 0, (double) 0, ball1.getEnvironment());
-        assertNetForce((double) 0, (double) 0, ball2.getEnvironment());
+        assertNetForce(0, 0, ball1.getEnvironment());
+        assertNetForce(0, 0, ball2.getEnvironment());
     }
 
     @Test
     public void pairBondAddsXRepulsionForceWhenXOverlap() {
         Ball ball1 = createBall(1, 0, 0);
         Ball ball2 = createBall(1, 1, 0);
-        PairBond bond = ball1.addBond(ball2);
+        PairBond subject = ball1.addBond(ball2);
 
-        bond.addForces();
+        subject.addForces();
 
-        assertNetForce((double) -1, (double) 0, ball1.getEnvironment());
-        assertNetForce((double) 1, (double) 0, ball2.getEnvironment());
+        assertNetForce(-1, 0, ball1.getEnvironment());
+        assertNetForce(1, 0, ball2.getEnvironment());
     }
 
     @Test
     public void pairBondAddsYAttractionForceWhenYSeparation() {
         Ball ball1 = createBall(1, 0, 0);
         Ball ball2 = createBall(1, 0, -3);
-        PairBond bond = ball1.addBond(ball2);
+        PairBond subject = ball1.addBond(ball2);
 
-        bond.addForces();
+        subject.addForces();
 
-        assertNetForce((double) 0, (double) -1, ball1.getEnvironment());
-        assertNetForce((double) 0, (double) 1, ball2.getEnvironment());
+        assertNetForce(0, -1, ball1.getEnvironment());
+        assertNetForce(0, 1, ball2.getEnvironment());
     }
 
     @Test
     public void pairBondAddsDampingForceWhenRelativeVelocity() {
         Ball ball1 = createBall(1, 0, 0);
         Ball ball2 = createBall(1, 2, 0);
-        PairBond bond = ball1.addBond(ball2);
+        PairBond subject = ball1.addBond(ball2);
         ball2.setVelocity(-1, 0);
 
-        bond.addForces();
+        subject.addForces();
 
-        assertNetForce((double) -1, (double) 0, ball1.getEnvironment());
-        assertNetForce((double) 1, (double) 0, ball2.getEnvironment());
+        assertNetForce(-1, 0, ball1.getEnvironment());
+        assertNetForce(1, 0, ball2.getEnvironment());
     }
 
     private Ball createBall(int radius, int centerX, int centerY) {
