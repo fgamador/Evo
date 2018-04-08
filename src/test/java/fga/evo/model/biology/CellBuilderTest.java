@@ -2,7 +2,8 @@ package fga.evo.model.biology;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static fga.evo.model.Assert.assertApproxEquals;
+import static fga.evo.model.Assert.assertExactEquals;
 
 public class CellBuilderTest {
     @Test(expected = IllegalStateException.class)
@@ -24,12 +25,12 @@ public class CellBuilderTest {
         Cell cell = new Cell.Builder()
                 .withFloatRingOuterRadius(1)
                 .build();
-        assertEquals(1, cell.getRadius(), 0);
-        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
-        assertEquals(1, cell.getPhotoRingOuterRadius(), 0);
-        assertEquals(Math.PI, cell.getArea(), 0.001);
-        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
-        assertEquals(0, cell.getPhotoArea(), 0.001);
+        assertExactEquals(1, cell.getRadius());
+        assertExactEquals(1, cell.getFloatRingOuterRadius());
+        assertExactEquals(1, cell.getPhotoRingOuterRadius());
+        assertApproxEquals(Math.PI, cell.getArea());
+        assertApproxEquals(Math.PI, cell.getFloatArea());
+        assertApproxEquals(0, cell.getPhotoArea());
     }
 
     @Test
@@ -38,12 +39,12 @@ public class CellBuilderTest {
                 .withFloatRingOuterRadius(1)
                 .withPhotoRingOuterRadius(2)
                 .build();
-        assertEquals(2, cell.getRadius(), 0);
-        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
-        assertEquals(2, cell.getPhotoRingOuterRadius(), 0);
-        assertEquals(4 * Math.PI, cell.getArea(), 0.001);
-        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
-        assertEquals(3 * Math.PI, cell.getPhotoArea(), 0.001);
+        assertExactEquals(2, cell.getRadius());
+        assertExactEquals(1, cell.getFloatRingOuterRadius());
+        assertExactEquals(2, cell.getPhotoRingOuterRadius());
+        assertApproxEquals(4 * Math.PI, cell.getArea());
+        assertApproxEquals(Math.PI, cell.getFloatArea());
+        assertApproxEquals(3 * Math.PI, cell.getPhotoArea());
     }
 
     @Test
@@ -51,12 +52,12 @@ public class CellBuilderTest {
         Cell cell = new Cell.Builder()
                 .withFloatRingArea(Math.PI)
                 .build();
-        assertEquals(1, cell.getRadius(), 0);
-        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
-        assertEquals(1, cell.getPhotoRingOuterRadius(), 0);
-        assertEquals(Math.PI, cell.getArea(), 0.001);
-        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
-        assertEquals(0, cell.getPhotoArea(), 0.001);
+        assertExactEquals(1, cell.getRadius());
+        assertExactEquals(1, cell.getFloatRingOuterRadius());
+        assertExactEquals(1, cell.getPhotoRingOuterRadius());
+        assertApproxEquals(Math.PI, cell.getArea());
+        assertApproxEquals(Math.PI, cell.getFloatArea());
+        assertApproxEquals(0, cell.getPhotoArea());
     }
 
     @Test
@@ -65,12 +66,12 @@ public class CellBuilderTest {
                 .withFloatRingArea(Math.PI)
                 .withPhotoRingArea(3 * Math.PI)
                 .build();
-        assertEquals(2, cell.getRadius(), 0);
-        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
-        assertEquals(2, cell.getPhotoRingOuterRadius(), 0);
-        assertEquals(4 * Math.PI, cell.getArea(), 0.001);
-        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
-        assertEquals(3 * Math.PI, cell.getPhotoArea(), 0.001);
+        assertExactEquals(2, cell.getRadius());
+        assertExactEquals(1, cell.getFloatRingOuterRadius());
+        assertExactEquals(2, cell.getPhotoRingOuterRadius());
+        assertApproxEquals(4 * Math.PI, cell.getArea());
+        assertApproxEquals(Math.PI, cell.getFloatArea());
+        assertApproxEquals(3 * Math.PI, cell.getPhotoArea());
     }
 
     @Test
@@ -79,12 +80,12 @@ public class CellBuilderTest {
                 .withPhotoRingArea(3 * Math.PI)
                 .withFloatRingArea(Math.PI)
                 .build();
-        assertEquals(2, cell.getRadius(), 0);
-        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
-        assertEquals(2, cell.getPhotoRingOuterRadius(), 0);
-        assertEquals(4 * Math.PI, cell.getArea(), 0.001);
-        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
-        assertEquals(3 * Math.PI, cell.getPhotoArea(), 0.001);
+        assertExactEquals(2, cell.getRadius());
+        assertExactEquals(1, cell.getFloatRingOuterRadius());
+        assertExactEquals(2, cell.getPhotoRingOuterRadius());
+        assertApproxEquals(4 * Math.PI, cell.getArea());
+        assertApproxEquals(Math.PI, cell.getFloatArea());
+        assertApproxEquals(3 * Math.PI, cell.getPhotoArea());
     }
 
     @Test
@@ -93,11 +94,11 @@ public class CellBuilderTest {
                 .withFloatRingArea(Math.PI)
                 .withPhotoRingOuterRadius(2)
                 .build();
-        assertEquals(2, cell.getRadius(), 0);
-        assertEquals(1, cell.getFloatRingOuterRadius(), 0);
-        assertEquals(2, cell.getPhotoRingOuterRadius(), 0);
-        assertEquals(4 * Math.PI, cell.getArea(), 0.001);
-        assertEquals(Math.PI, cell.getFloatArea(), 0.001);
-        assertEquals(3 * Math.PI, cell.getPhotoArea(), 0.001);
+        assertExactEquals(2, cell.getRadius());
+        assertExactEquals(1, cell.getFloatRingOuterRadius());
+        assertExactEquals(2, cell.getPhotoRingOuterRadius());
+        assertApproxEquals(4 * Math.PI, cell.getArea());
+        assertApproxEquals(Math.PI, cell.getFloatArea());
+        assertApproxEquals(3 * Math.PI, cell.getPhotoArea());
     }
 }
