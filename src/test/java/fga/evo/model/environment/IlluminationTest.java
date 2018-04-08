@@ -1,58 +1,57 @@
 package fga.evo.model.environment;
 
-import fga.evo.model.biology.Cell;
 import fga.evo.model.EvoTest;
+import fga.evo.model.biology.Cell;
 import org.junit.Test;
 
-import static fga.evo.model.Assert.assertEnergy;
 import static org.junit.Assert.assertEquals;
 
 public class IlluminationTest extends EvoTest {
     @Test
     public void transmissionAtTheSurfaceIsTheMaximum() {
-        Illumination lighting = new Illumination(100);
-        assertEquals(1, lighting.calcTransmissionFactor(0), 0);
+        Illumination subject = new Illumination(100);
+        assertEquals(1, subject.calcTransmissionFactor(0), 0);
     }
 
     @Test
     public void transmissionAboveTheSurfaceIsTheMaximum() {
-        Illumination lighting = new Illumination(100);
-        assertEquals(1, lighting.calcTransmissionFactor(50), 0);
+        Illumination subject = new Illumination(100);
+        assertEquals(1, subject.calcTransmissionFactor(50), 0);
     }
 
     @Test
     public void transmissionDecreasesWithDepth() {
-        Illumination lighting = new Illumination(100);
-        assertEquals(0.5, lighting.calcTransmissionFactor(-50), 0);
+        Illumination subject = new Illumination(100);
+        assertEquals(0.5, subject.calcTransmissionFactor(-50), 0);
     }
 
     @Test
     public void transmissionAtDepthLimitIsZero() {
-        Illumination lighting = new Illumination(100);
-        assertEquals(0, lighting.calcTransmissionFactor(-100), 0);
+        Illumination subject = new Illumination(100);
+        assertEquals(0, subject.calcTransmissionFactor(-100), 0);
     }
 
     @Test
     public void transmissionBeyondDepthLimitIsZero() {
-        Illumination lighting = new Illumination(100);
-        assertEquals(0, lighting.calcTransmissionFactor(-110), 0);
+        Illumination subject = new Illumination(100);
+        assertEquals(0, subject.calcTransmissionFactor(-110), 0);
     }
 
     @Test
     public void intensityScalesWithTransmission() {
         Illumination.maxIntensity.setValue(2);
-        Illumination lighting = new Illumination(100);
-        assertEquals(1, lighting.calcLightIntensity(-50), 0);
+        Illumination subject = new Illumination(100);
+        assertEquals(1, subject.calcLightIntensity(-50), 0);
     }
 
     @Test
     public void illuminationUpdatesCellEnvironment() {
         Illumination.maxIntensity.setValue(2);
-        Illumination lighting = new Illumination(100);
+        Illumination subject = new Illumination(100);
         Cell cell = new Cell(1);
         cell.setCenterPosition(0, -50);
 
-        lighting.updateEnvironment(cell);
+        subject.updateEnvironment(cell);
 
         assertEquals(1, cell.getEnvironment().getLightIntensity(), 0);
     }
