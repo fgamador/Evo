@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertApproxEquals;
+import static fga.evo.model.Assert.assertExactEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -44,7 +45,7 @@ public class TissueRingTest extends EvoTest {
         subject.requestResize(-2);
         subject.resize();
 
-        assertEquals(0, subject.getArea(), 0);
+        assertExactEquals(0, subject.getArea());
     }
 
     @Test
@@ -135,8 +136,8 @@ public class TissueRingTest extends EvoTest {
 
         subject.resize();
 
-        assertEquals(initialArea, subject.getArea(), 0);
-        assertEquals(0, subject.getIntendedEnergyConsumption(), 0);
+        assertExactEquals(initialArea, subject.getArea());
+        assertExactEquals(0, subject.getIntendedEnergyConsumption());
     }
 
     @Test
