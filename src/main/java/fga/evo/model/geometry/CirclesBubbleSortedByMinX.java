@@ -3,7 +3,7 @@ package fga.evo.model.geometry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OverlappableCirclesBubbleSortedByMinX {
+public class CirclesBubbleSortedByMinX {
     private List<OverlappableCircle> circles = new ArrayList<>();
 
     public void add(OverlappableCircle circle) {

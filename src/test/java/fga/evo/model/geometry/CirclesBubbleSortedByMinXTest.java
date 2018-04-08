@@ -6,10 +6,10 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class OverlappableCirclesBubbleSortedByMinXTest {
+public class CirclesBubbleSortedByMinXTest {
     @Test
     public void addAddsInSortedOrder() {
-        OverlappableCirclesBubbleSortedByMinX subject = new OverlappableCirclesBubbleSortedByMinX();
+        CirclesBubbleSortedByMinX subject = new CirclesBubbleSortedByMinX();
         OverlappableCircle circle1 = createCircle(1, 1, 0);
         OverlappableCircle circle2 = createCircle(1, 2, 0);
 
@@ -23,7 +23,7 @@ public class OverlappableCirclesBubbleSortedByMinXTest {
 
     @Test
     public void addAllAddsInSortedOrder() {
-        OverlappableCirclesBubbleSortedByMinX subject = new OverlappableCirclesBubbleSortedByMinX();
+        CirclesBubbleSortedByMinX subject = new CirclesBubbleSortedByMinX();
         OverlappableCircle circle1 = createCircle(1, 1, 0);
         OverlappableCircle circle2 = createCircle(1, 2, 0);
         OverlappableCircle circle3 = createCircle(1, 3, 0);
@@ -38,7 +38,7 @@ public class OverlappableCirclesBubbleSortedByMinXTest {
 
     @Test
     public void sortByMinXSortsAfterMovement() {
-        OverlappableCirclesBubbleSortedByMinX subject = new OverlappableCirclesBubbleSortedByMinX();
+        CirclesBubbleSortedByMinX subject = new CirclesBubbleSortedByMinX();
         MovableCircle circle1 = new MovableCircle(1, 3, 0);
         MovableCircle circle2 = new MovableCircle(1, 2, 0);
         MovableCircle circle3 = new MovableCircle(1, 1, 0);
