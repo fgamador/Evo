@@ -4,21 +4,20 @@ import fga.evo.model.EvoTest;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertApproxEquals;
-import static org.junit.Assert.assertEquals;
 
 public class PhotoRingTest extends EvoTest {
     @Test
     public void photoAbsorptivityWithNoInnerRing() {
-        PhotoRing testSubject = new PhotoRing(Math.PI);
-        testSubject.setRadiiBasedOnArea(0);
-        assertApproxEquals(0.5, testSubject.calcPhotoAbsorptivity());
+        PhotoRing subject = new PhotoRing(Math.PI);
+        subject.setRadiiBasedOnArea(0);
+        assertApproxEquals(0.5, subject.calcPhotoAbsorptivity());
     }
 
     @Test
     public void photoAbsorptivityWithNoInnerRingAndLargerArea() {
-        PhotoRing testSubject = new PhotoRing(Math.PI * 9);
-        testSubject.setRadiiBasedOnArea(0);
-        assertApproxEquals(0.75, testSubject.calcPhotoAbsorptivity());
+        PhotoRing subject = new PhotoRing(Math.PI * 9);
+        subject.setRadiiBasedOnArea(0);
+        assertApproxEquals(0.75, subject.calcPhotoAbsorptivity());
     }
 
     @Test
@@ -34,11 +33,11 @@ public class PhotoRingTest extends EvoTest {
     @Test
     public void photosynthesisAddsEnergyToCell() {
         TissueRingCellApiWithEnvironment cell = new TissueRingCellApiWithEnvironment();
-        PhotoRing testSubject = new PhotoRing(Math.PI * 9);
-        testSubject.setRadiiBasedOnArea(0);
+        PhotoRing subject = new PhotoRing(Math.PI * 9);
+        subject.setRadiiBasedOnArea(0);
 
         cell.getEnvironment().setLightIntensity(2);
-        testSubject.updateFromEnvironment(cell);
+        subject.updateFromEnvironment(cell);
 
         assertApproxEquals(4.5, cell.energy);
     }

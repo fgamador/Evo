@@ -18,143 +18,143 @@ public class TissueRingTest extends EvoTest {
 
     @Test
     public void growsByRequestedAmount() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
+        TissueRing subject = new TestTissueRing(Math.PI);
 
-        testSubject.requestResize(0.5);
-        testSubject.resize();
+        subject.requestResize(0.5);
+        subject.resize();
 
-        assertApproxEquals(Math.PI + 0.5, testSubject.getArea());
+        assertApproxEquals(Math.PI + 0.5, subject.getArea());
     }
 
     @Test
     public void shrinksByRequestedAmount() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
+        TissueRing subject = new TestTissueRing(Math.PI);
 
-        testSubject.requestResize(-0.5);
-        testSubject.resize();
+        subject.requestResize(-0.5);
+        subject.resize();
 
-        assertApproxEquals(Math.PI - 0.5, testSubject.getArea());
+        assertApproxEquals(Math.PI - 0.5, subject.getArea());
     }
 
     @Test
     public void cannotShrinkBelowZeroArea() {
         TestTissueRing.parameters.maxShrinkRate.setValue(1);
-        TissueRing testSubject = new TestTissueRing(1);
+        TissueRing subject = new TestTissueRing(1);
 
-        testSubject.requestResize(-2);
-        testSubject.resize();
+        subject.requestResize(-2);
+        subject.resize();
 
-        assertEquals(0, testSubject.getArea(), 0);
+        assertEquals(0, subject.getArea(), 0);
     }
 
     @Test
     public void growthUsesExpectedEnergy() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
+        TissueRing subject = new TestTissueRing(Math.PI);
 
-        testSubject.requestResize(1.1);
+        subject.requestResize(1.1);
 
         final double growthCost = 1.1 * TestTissueRing.parameters.growthCost.getValue();
         assertTrue(growthCost > 0);
-        assertApproxEquals(growthCost, testSubject.getIntendedEnergyConsumption());
+        assertApproxEquals(growthCost, subject.getIntendedEnergyConsumption());
     }
 
     @Test
     public void shrinkageYieldsExpectedEnergy() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
+        TissueRing subject = new TestTissueRing(Math.PI);
 
         final double deltaArea = -0.9;
-        testSubject.requestResize(deltaArea);
+        subject.requestResize(deltaArea);
 
         final double shrinkageYield = deltaArea * TestTissueRing.parameters.shrinkageYield.getValue();
         assertTrue(shrinkageYield < 0);
-        assertApproxEquals(shrinkageYield, testSubject.getIntendedEnergyConsumption());
+        assertApproxEquals(shrinkageYield, subject.getIntendedEnergyConsumption());
     }
 
     @Test
     public void growthIsLimitedByMaxGrowthRate() {
         TestTissueRing.parameters.maxGrowthRate.setValue(0.1);
         final double startArea = Math.PI;
-        TissueRing testSubject = new TestTissueRing(startArea);
+        TissueRing subject = new TestTissueRing(startArea);
 
-        testSubject.requestResize(10);
-        testSubject.resize();
+        subject.requestResize(10);
+        subject.resize();
 
-        assertApproxEquals((1 + TestTissueRing.parameters.maxGrowthRate.getValue()) * startArea, testSubject.getArea());
+        assertApproxEquals((1 + TestTissueRing.parameters.maxGrowthRate.getValue()) * startArea, subject.getArea());
     }
 
     @Test
     public void shrinkageIsLimitedByMaxShrinkRate() {
         TestTissueRing.parameters.maxShrinkRate.setValue(0.1);
         final double startArea = Math.PI;
-        TissueRing testSubject = new TestTissueRing(startArea);
+        TissueRing subject = new TestTissueRing(startArea);
 
-        testSubject.requestResize(-2);
-        testSubject.resize();
+        subject.requestResize(-2);
+        subject.resize();
 
-        assertApproxEquals((1 - TestTissueRing.parameters.maxShrinkRate.getValue()) * startArea, testSubject.getArea());
+        assertApproxEquals((1 - TestTissueRing.parameters.maxShrinkRate.getValue()) * startArea, subject.getArea());
     }
 
     @Test
     public void canGrowFromZeroArea() {
         TestTissueRing.parameters.maxGrowthRate.setValue(10);
-        TissueRing testSubject = new TestTissueRing(0);
+        TissueRing subject = new TestTissueRing(0);
 
-        testSubject.requestResize(1);
-        testSubject.resize();
+        subject.requestResize(1);
+        subject.resize();
 
-        assertApproxEquals(1, testSubject.getArea());
+        assertApproxEquals(1, subject.getArea());
     }
 
     @Test
     public void scalingResizeRequestScalesEnergyConsumption() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        testSubject.requestResize(10);
-        final double unscaledEnergy = testSubject.getIntendedEnergyConsumption();
+        TissueRing subject = new TestTissueRing(Math.PI);
+        subject.requestResize(10);
+        final double unscaledEnergy = subject.getIntendedEnergyConsumption();
 
-        testSubject.scaleResizeRequest(0.1);
+        subject.scaleResizeRequest(0.1);
 
-        assertApproxEquals(unscaledEnergy * 0.1, testSubject.getIntendedEnergyConsumption());
+        assertApproxEquals(unscaledEnergy * 0.1, subject.getIntendedEnergyConsumption());
     }
 
     @Test
     public void resizeIsIdempotent() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        testSubject.requestResize(2);
+        TissueRing subject = new TestTissueRing(Math.PI);
+        subject.requestResize(2);
 
-        testSubject.resize();
-        final double areaAfterFirstResize = testSubject.getArea();
-        testSubject.resize();
+        subject.resize();
+        final double areaAfterFirstResize = subject.getArea();
+        subject.resize();
 
-        assertApproxEquals(areaAfterFirstResize, testSubject.getArea());
+        assertApproxEquals(areaAfterFirstResize, subject.getArea());
     }
 
     @Test
     public void resizeWithoutRequestDoesNothing() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        final double initialArea = testSubject.getArea();
+        TissueRing subject = new TestTissueRing(Math.PI);
+        final double initialArea = subject.getArea();
 
-        testSubject.resize();
+        subject.resize();
 
-        assertEquals(initialArea, testSubject.getArea(), 0);
-        assertEquals(0, testSubject.getIntendedEnergyConsumption(), 0);
+        assertEquals(initialArea, subject.getArea(), 0);
+        assertEquals(0, subject.getIntendedEnergyConsumption(), 0);
     }
 
     @Test
     public void maintenanceEnergyDependsOnMaintenanceCost() {
-        TissueRing testSubject = new TestTissueRing(Math.PI * 9);
-        final double expectedMaintenanceEnergy = testSubject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
-        assertApproxEquals(expectedMaintenanceEnergy, testSubject.getMaintenanceEnergy());
+        TissueRing subject = new TestTissueRing(Math.PI * 9);
+        final double expectedMaintenanceEnergy = subject.getArea() * TestTissueRing.parameters.maintenanceCost.getValue();
+        assertApproxEquals(expectedMaintenanceEnergy, subject.getMaintenanceEnergy());
     }
 
     @Test
     public void decayUsesExpectedCalculation() {
-        TissueRing testSubject = new TestTissueRing(Math.PI);
-        final double initialArea = testSubject.getArea();
+        TissueRing subject = new TestTissueRing(Math.PI);
+        final double initialArea = subject.getArea();
 
-        testSubject.decay();
+        subject.decay();
 
         final double expectedFinalArea = initialArea * (1 - TestTissueRing.parameters.decayRate.getValue());
-        assertApproxEquals(expectedFinalArea, testSubject.getArea());
+        assertApproxEquals(expectedFinalArea, subject.getArea());
     }
 
     private static class TestTissueRing extends TissueRing {
