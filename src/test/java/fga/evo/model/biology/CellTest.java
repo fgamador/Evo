@@ -24,19 +24,27 @@ public class CellTest {
 
     @Test
     public void testGetMass() {
-        Cell cell = new Cell.Builder().withPhotoRingArea(Math.PI).build();
+        Cell cell = new Cell.Builder() //
+                .withPhotoRingArea(Math.PI) //
+                .build();
         assertApproxEquals(PhotoRing.parameters.density.getValue() * Math.PI, cell.getMass());
     }
 
     @Test
     public void testGetNonFloatArea() {
-        Cell cell = new Cell.Builder().withFloatRingArea(Math.PI).withPhotoRingArea(3 * Math.PI).build();
+        Cell cell = new Cell.Builder() //
+                .withFloatRingArea(Math.PI) //
+                .withPhotoRingArea(3 * Math.PI) //
+                .build();
         assertApproxEquals(3 * Math.PI, cell.getNonFloatArea());
     }
 
     @Test
     public void testControlPhase_FloatRingGrowth() {
-        Cell cell = new Cell.Builder().withControl(c -> c.requestFloatAreaResize(2)).withEnergy(100).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestFloatAreaResize(2)) //
+                .withEnergy(100) //
+                .build();
 
         cell.exertControl();
 
@@ -46,7 +54,10 @@ public class CellTest {
 
     @Test
     public void testControlPhase_PhotoRingGrowth() {
-        Cell cell = new Cell.Builder().withControl(c -> c.requestPhotoAreaResize(2)).withPhotoRingArea(Math.PI).withEnergy(100).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestPhotoAreaResize(2)) //
+                .withPhotoRingArea(Math.PI).withEnergy(100) //
+                .build();
 
         cell.exertControl();
 
@@ -56,7 +67,10 @@ public class CellTest {
 
     @Test
     public void testControlPhase_PhotoRingShrinkage() {
-        Cell cell = new Cell.Builder().withControl(c -> c.requestPhotoAreaResize(-0.1)).withPhotoRingArea(Math.PI).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestPhotoAreaResize(-0.1)) //
+                .withPhotoRingArea(Math.PI) //
+                .build();
 
         cell.exertControl();
 
@@ -66,7 +80,10 @@ public class CellTest {
 
     @Test
     public void testControlPhase_PhotoRingGrowth_ExcessiveRequest() {
-        Cell cell = new Cell.Builder().withControl(c -> c.requestPhotoAreaResize(1000)).withPhotoRingArea(Math.PI).withEnergy(2).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestPhotoAreaResize(1000)) //
+                .withPhotoRingArea(Math.PI).withEnergy(2) //
+                .build();
 
         cell.exertControl();
 
@@ -76,10 +93,14 @@ public class CellTest {
 
     @Test
     public void testControlPhase_FloatAndPhotoRingGrowth() {
-        Cell cell = new Cell.Builder().withControl(c -> {
-            c.requestFloatAreaResize(3);
-            c.requestPhotoAreaResize(2);
-        }).withPhotoRingArea(Math.PI).withEnergy(100).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> {
+                    c.requestFloatAreaResize(3);
+                    c.requestPhotoAreaResize(2);
+                }) //
+                .withPhotoRingArea(Math.PI) //
+                .withEnergy(100) //
+                .build();
 
         cell.exertControl();
 
@@ -92,10 +113,13 @@ public class CellTest {
     public void testControlPhase_OffsettingRequests() {
         FloatRing.parameters.growthCost.setValue(0.5);
         PhotoRing.parameters.shrinkageYield.setValue(0.5);
-        Cell cell = new Cell.Builder().withControl(c -> {
-            c.requestFloatAreaResize(0.1);
-            c.requestPhotoAreaResize(-0.1);
-        }).withPhotoRingArea(Math.PI).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> {
+                    c.requestFloatAreaResize(0.1);
+                    c.requestPhotoAreaResize(-0.1);
+                }) //
+                .withPhotoRingArea(Math.PI) //
+                .build();
 
         cell.exertControl();
 
@@ -106,10 +130,13 @@ public class CellTest {
 
     @Test
     public void testControlPhase_ScaledOffsettingRequests() {
-        Cell cell = new Cell.Builder().withControl(c -> {
-            c.requestFloatAreaResize(2 / FloatRing.parameters.growthCost.getValue());
-            c.requestPhotoAreaResize(-0.1 / PhotoRing.parameters.shrinkageYield.getValue());
-        }).withPhotoRingArea(Math.PI).withEnergy(1).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> {
+                    c.requestFloatAreaResize(2 / FloatRing.parameters.growthCost.getValue());
+                    c.requestPhotoAreaResize(-0.1 / PhotoRing.parameters.shrinkageYield.getValue());
+                }) //
+                .withPhotoRingArea(Math.PI) //
+                .withEnergy(1).build();
 
         cell.exertControl();
 
@@ -121,7 +148,11 @@ public class CellTest {
 
     @Test
     public void testControlPhase_FloatRingGrowthAffectsPhotoRingAndCell() {
-        Cell cell = new Cell.Builder().withControl(c -> c.requestFloatAreaResize(1000)).withPhotoRingArea(Math.PI).withEnergy(1).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestFloatAreaResize(1000)) //
+                .withPhotoRingArea(Math.PI) //
+                .withEnergy(1) //
+                .build();
 
         cell.exertControl();
 
@@ -142,7 +173,12 @@ public class CellTest {
     @Test
     public void testControlPhase_NoSpawnOddsNoChild() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(0, 2)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(0, 2)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         cell.exertControl();
 
@@ -153,7 +189,12 @@ public class CellTest {
     @Test
     public void testControlPhase_SpawnOddsSuccessSpawnChild() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(0.5, 2)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(0.5, 2)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
         Chance.setNextRandom(0.4);
 
         cell.exertControl();
@@ -165,7 +206,12 @@ public class CellTest {
     @Test
     public void testControlPhase_NoDonatedEnergyNoChild() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(1, 0)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 0)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         cell.exertControl();
 
@@ -176,7 +222,12 @@ public class CellTest {
     @Test
     public void testControlPhase_SpawnChild() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(1, 2)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 2)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         cell.exertControl();
 
@@ -198,11 +249,16 @@ public class CellTest {
     @Test
     public void testControlPhase_ScaleChildDonation() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(c -> {
-            c.setSpawnOdds(1);
-            c.requestChildDonation(10);
-            c.requestPhotoAreaResize(10 / PhotoRing.parameters.growthCost.getValue());
-        }).withPhotoRingOuterRadius(10).withEnergy(10).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> {
+                    c.setSpawnOdds(1);
+                    c.requestChildDonation(10);
+                    c.requestPhotoAreaResize(10 / PhotoRing.parameters.growthCost.getValue());
+                }) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(10) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
         double startPhotoArea = cell.getPhotoArea();
 
         cell.exertControl();
@@ -216,7 +272,12 @@ public class CellTest {
     @Test
     public void testBothPhases_MaintainChild() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(1, 2)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 2)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         // first tick, both phases
         cell.exertControl();
@@ -240,7 +301,12 @@ public class CellTest {
     @Test
     public void testControlPhase_ReleaseChild() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(1, 2).setReleaseChildOdds(1)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 2).setReleaseChildOdds(1)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         // first tick, both phases
         cell.exertControl();
@@ -263,7 +329,12 @@ public class CellTest {
     @Test
     public void testControlPhase_ReleaseParent() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withControl(new ParentChildControl(1, 2).setReleaseParentOdds(1)).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(new ParentChildControl(1, 2).setReleaseParentOdds(1)) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         // first tick, both phases
         cell.exertControl();
@@ -284,7 +355,12 @@ public class CellTest {
     public void testControlPhase_NegativeDonationDoesNothing() {
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
         ParentChildControl control = new ParentChildControl(1, 2);
-        Cell cell = new Cell.Builder().withControl(control).withPhotoRingOuterRadius(10).withEnergy(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(control) //
+                .withPhotoRingOuterRadius(10) //
+                .withEnergy(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         // first tick, both phases
         cell.exertControl();
@@ -300,7 +376,9 @@ public class CellTest {
 
     @Test
     public void testConsequencesPhase_PhotoRingMaintenanceEnergy() {
-        Cell cell = new Cell.Builder().withPhotoRingOuterRadius(3).build();
+        Cell cell = new Cell.Builder() //
+                .withPhotoRingOuterRadius(3) //
+                .build();
 
         cell.updateBiologyFromEnvironment();
 
@@ -309,7 +387,11 @@ public class CellTest {
 
     @Test
     public void testConsequencesPhase_PhotoAndFloatRingMaintenanceEnergy() {
-        Cell cell = new Cell.Builder().withFloatRingOuterRadius(1).withPhotoRingOuterRadius(2).withEnergy(100).build();
+        Cell cell = new Cell.Builder() //
+                .withFloatRingOuterRadius(1) //
+                .withPhotoRingOuterRadius(2) //
+                .withEnergy(100) //
+                .build();
 
         cell.updateBiologyFromEnvironment();
 
@@ -319,7 +401,10 @@ public class CellTest {
 
     @Test
     public void testConsequencesPhase_NoDamage() {
-        Cell cell = new Cell.Builder().withPhotoRingOuterRadius(1).withEnergy(10).build();
+        Cell cell = new Cell.Builder() //
+                .withPhotoRingOuterRadius(1) //
+                .withEnergy(10) //
+                .build();
 
         cell.updateBiologyFromEnvironment();
 
@@ -328,7 +413,9 @@ public class CellTest {
 
     @Test
     public void testConsequencesPhase_Damage() {
-        Cell cell = new Cell.Builder().withPhotoRingOuterRadius(1).build();
+        Cell cell = new Cell.Builder() //
+                .withPhotoRingOuterRadius(1) //
+                .build();
 
         cell.updateBiologyFromEnvironment();
 
@@ -340,7 +427,10 @@ public class CellTest {
     public void testConsequencesPhase_DeadlyDamage() {
         Cell.maximumSurvivableDamage.setValue(0.1);
         AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
-        Cell cell = new Cell.Builder().withPhotoRingArea(100).withLifecycleListener(lifecycleListener).build();
+        Cell cell = new Cell.Builder() //
+                .withPhotoRingArea(100) //
+                .withLifecycleListener(lifecycleListener) //
+                .build();
 
         cell.updateBiologyFromEnvironment();
 
@@ -361,7 +451,11 @@ public class CellTest {
 
     @Test
     public void testControlPhase_Dead() {
-        Cell cell = new Cell.Builder().withControl(c -> c.requestPhotoAreaResize(1)).withPhotoRingArea(Math.PI).withEnergy(10).build();
+        Cell cell = new Cell.Builder() //
+                .withControl(c -> c.requestPhotoAreaResize(1)) //
+                .withPhotoRingArea(Math.PI) //
+                .withEnergy(10) //
+                .build();
         cell.die();
 
         cell.exertControl();
@@ -372,7 +466,10 @@ public class CellTest {
 
     @Test
     public void testConsequencesPhase_Dead() {
-        Cell cell = new Cell.Builder().withFloatRingOuterRadius(1).withPhotoRingOuterRadius(2).build();
+        Cell cell = new Cell.Builder() //
+                .withFloatRingOuterRadius(1) //
+                .withPhotoRingOuterRadius(2) //
+                .build();
         double initialFloatArea = cell.getFloatArea();
         double initialPhotoArea = cell.getPhotoArea();
         cell.die();
