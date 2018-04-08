@@ -7,16 +7,13 @@ import fga.evo.model.biology.PhotoRing;
 import fga.evo.model.environment.Drag;
 import fga.evo.model.environment.SurroundingWalls;
 import fga.evo.model.environment.Weight;
-import fga.evo.model.physics.Puller;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static fga.evo.model.Assert.assertPosition;
 import static fga.evo.model.Assert.assertVelocity;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PhysicsIntegrationTests extends WorldIntegrationTests {
     private int defaultSubticksPerTick;
@@ -38,7 +35,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testNoCollision() {
+    public void noForces() {
         world.addEnvironmentalInfluence(new SurroundingWalls(0, 10, -10, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
@@ -55,7 +52,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testBoxCornerCollisions() {
+    public void wallCornerOverlaps() {
         World.setSubticksPerTick(1);
         world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell1 = addCell(1);
@@ -73,7 +70,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testFullWallCollision() {
+    public void fullWallCollision() {
         World.setSubticksPerTick(1);
         world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell = addCell(1);
@@ -102,7 +99,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testMultipleWallCollisions_DoubleResolution() {
+    public void multipleWallCollisionsAtTwoSubticksPerTick() {
         World.setSubticksPerTick(2);
         world.addEnvironmentalInfluence(new SurroundingWalls(0, 3, -20, 0));
         Cell cell = addCell(1);
@@ -122,7 +119,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testCellCollision() {
+    public void cellCollision() {
         World.setSubticksPerTick(1);
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
@@ -139,7 +136,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
 //    @Test
-//    public void testCellBond() {
+//    public void cellBond() {
 //        Cell cell1 = addCell(10);
 //        Cell cell2 = addCell(10);
 //        cell1.addBond(cell2);
@@ -151,7 +148,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 //    }
 
     @Test
-    public void testFluidDrag() {
+    public void fluidDrag() {
         world.addEnvironmentalInfluence(new Drag());
         Cell cell = addCell(1);
         cell.setVelocity(1, 0);
@@ -162,7 +159,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testBuoyancy_Sinking() {
+    public void buoyancyWhileSinking() {
         PhotoRing.parameters.density.revertToDefaultValue();
         world.addEnvironmentalInfluence(new Weight());
         assertTrue(PhotoRing.parameters.density.getValue() > Weight.fluidDensity.getValue());
@@ -174,7 +171,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     }
 
     @Test
-    public void testTick_Pull() {
+    public void worldPull() {
         World.setSubticksPerTick(1);
         Cell cell = addCell(1);
         cell.setCenterPosition(5, -5);
