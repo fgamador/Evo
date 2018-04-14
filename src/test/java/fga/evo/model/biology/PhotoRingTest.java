@@ -41,4 +41,18 @@ public class PhotoRingTest extends EvoTest {
 
         assertApproxEquals(4.5, cell.energy);
     }
+
+    @Test
+    public void photosynthesisIsReducedByShadowing() {
+        TissueRingCellApiWithEnvironment cell = new TissueRingCellApiWithEnvironment();
+        PhotoRing subject = new PhotoRing(Math.PI * 9);
+        subject.setRadiiBasedOnArea(0);
+
+        cell.getEnvironment().setLightIntensity(2);
+        cell.getEnvironment().addShadowing(0.1);
+
+        subject.updateFromEnvironment(cell);
+
+        assertApproxEquals(0.45, cell.energy);
+    }
 }

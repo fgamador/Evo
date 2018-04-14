@@ -25,7 +25,7 @@ public class PhotoRing extends TissueRing {
     @Override
     public void updateFromEnvironment(CellApi cell) {
         // photosynthesis
-        final double lightIntensity = cell.getEnvironment().getLightIntensity();
+        final double lightIntensity = cell.getEnvironment().getLightIntensity() * cell.getEnvironment().getShadowTransmissionFraction();
         final double absorbedEnergy = lightIntensity * getOuterRadius() * calcPhotoAbsorptivity();
         cell.addEnergy(absorbedEnergy);
     }

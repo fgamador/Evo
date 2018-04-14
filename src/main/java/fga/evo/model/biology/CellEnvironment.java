@@ -6,6 +6,7 @@ import fga.evo.model.physics.NewtonianBodyEnvironment;
 public class CellEnvironment extends BallEnvironment {
     private double donatedEnergy;
     private double lightIntensity;
+    private double transmissionFraction = 1;
 
     public double getDonatedEnergy() {
         return donatedEnergy;
@@ -27,5 +28,13 @@ public class CellEnvironment extends BallEnvironment {
 
     public void setLightIntensity(double val) {
         lightIntensity = val;
+    }
+
+    public void addShadowing(double transmissionFraction) {
+        this.transmissionFraction *= transmissionFraction;
+    }
+
+    public double getShadowTransmissionFraction() {
+        return transmissionFraction;
     }
 }
