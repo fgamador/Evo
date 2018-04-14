@@ -1,12 +1,11 @@
 package fga.evo.model.biology;
 
 import fga.evo.model.physics.BallEnvironment;
-import fga.evo.model.physics.NewtonianBodyEnvironment;
 
 public class CellEnvironment extends BallEnvironment {
     private double donatedEnergy;
     private double lightIntensity;
-    private double transmissionFraction = 1;
+    private double shadowTransmissionFraction = 1;
 
     public double getDonatedEnergy() {
         return donatedEnergy;
@@ -31,10 +30,12 @@ public class CellEnvironment extends BallEnvironment {
     }
 
     public void addShadowing(double transmissionFraction) {
-        this.transmissionFraction *= transmissionFraction;
+        this.shadowTransmissionFraction *= transmissionFraction;
     }
 
-    public double getShadowTransmissionFraction() {
-        return transmissionFraction;
+    public double getAndResetShadowTransmissionFraction() {
+        double fraction = shadowTransmissionFraction;
+        shadowTransmissionFraction = 1;
+        return fraction;
     }
 }
