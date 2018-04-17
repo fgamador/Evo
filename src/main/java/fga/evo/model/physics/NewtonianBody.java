@@ -60,7 +60,7 @@ public abstract class NewtonianBody {
         updateVelocity(environment, subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
-        environment.clearForces();
+        clearForces();
     }
 
     private void updateVelocity(NewtonianBodyEnvironment environment, int subticksPerTick) {
