@@ -55,14 +55,6 @@ public class NewtonianBody {
         netForceX = netForceY = 0;
     }
 
-    public double getNetForceX() {
-        return netForceX;
-    }
-
-    public double getNetForceY() {
-        return netForceY;
-    }
-
     public void subtick(int subticksPerTick) {
         updateVelocity(subticksPerTick);
         limitSpeed();
@@ -120,5 +112,13 @@ public class NewtonianBody {
 
     public double getVelocityY() {
         return velocityY;
+    }
+
+    public double getNetForceX() {
+        return netForceX;
+    }
+
+    public double getNetForceY() {
+        return netForceY;
     }
 }
