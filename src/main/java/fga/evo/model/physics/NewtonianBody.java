@@ -12,6 +12,8 @@ public abstract class NewtonianBody {
     private double centerY;
     private double velocityX;
     private double velocityY;
+    private double netForceX;
+    private double netForceY;
 
     public NewtonianBody() {
     }
@@ -40,19 +42,20 @@ public abstract class NewtonianBody {
     }
 
     public void addForce(double forceX, double forceY) {
-        getEnvironment().addForce(forceX, forceY);
+        netForceX += forceX;
+        netForceY += forceY;
     }
 
     public void clearForces() {
-        getEnvironment().clearForces();
+        netForceX = netForceY = 0;
     }
 
     public double getNetForceX() {
-        return getEnvironment().getNetForceX();
+        return netForceX;
     }
 
     public double getNetForceY() {
-        return getEnvironment().getNetForceY();
+        return netForceY;
     }
 
     public void subtick(int subticksPerTick) {
