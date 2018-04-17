@@ -39,6 +39,22 @@ public abstract class NewtonianBody {
         this.velocityY = velocityY;
     }
 
+    public void addForce(double forceX, double forceY) {
+        getEnvironment().addForce(forceX, forceY);
+    }
+
+    public void clearForces() {
+        getEnvironment().clearForces();
+    }
+
+    public double getNetForceX() {
+        return getEnvironment().getNetForceX();
+    }
+
+    public double getNetForceY() {
+        return getEnvironment().getNetForceY();
+    }
+
     public void subtick(int subticksPerTick) {
         NewtonianBodyEnvironment environment = getEnvironment();
         updateVelocity(environment, subticksPerTick);
