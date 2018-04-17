@@ -9,7 +9,7 @@ import static fga.evo.model.Assert.assertVelocity;
 public class NewtonianBodyTest extends EvoTest {
     @Test
     public void stationaryBodyWithNoForcesDoesNotMove() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
+        NewtonianBody subject = new NewtonianBody(0, 0, 0, 0);
         subject.setMass(1);
 
         subject.subtick(1);
@@ -20,7 +20,7 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void movingBodyWithNoForcesCoasts() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 0.5, -1);
+        NewtonianBody subject = new NewtonianBody(0, 0, 0.5, -1);
         subject.setMass(1);
 
         subject.subtick(1);
@@ -31,7 +31,7 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void stationaryBodyWithForceAccelerates() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
+        NewtonianBody subject = new NewtonianBody(0, 0, 0, 0);
         subject.setMass(1);
         subject.addForce(0.5, -1);
 
@@ -43,7 +43,7 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void twoForcesHaveAdditiveAcceleration() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
+        NewtonianBody subject = new NewtonianBody(0, 0, 0, 0);
         subject.setMass(1);
         subject.addForce(0.5, -1);
         subject.addForce(1.5, 2);
@@ -56,7 +56,7 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void doubleMassHasHalvedAcceleration() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
+        NewtonianBody subject = new NewtonianBody(0, 0, 0, 0);
         subject.setMass(2);
         subject.addForce(1, -2);
 
@@ -69,7 +69,7 @@ public class NewtonianBodyTest extends EvoTest {
     @Test
     public void speedLimitCapsVelocity() {
         NewtonianBody.speedLimit.setValue(4);
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 8 / SQRT_2, -8 / SQRT_2);
+        NewtonianBody subject = new NewtonianBody(0, 0, 8 / SQRT_2, -8 / SQRT_2);
         subject.setMass(1);
 
         subject.subtick(1);
@@ -79,7 +79,7 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void doubleResolutionSubticksMoveAtHalfVelocity() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 1, 1);
+        NewtonianBody subject = new NewtonianBody(0, 0, 1, 1);
         subject.setMass(1);
 
         subject.subtick(2);
@@ -90,7 +90,7 @@ public class NewtonianBodyTest extends EvoTest {
 
     @Test
     public void doubleResolutionSubticksAccelerateAtHalfForce() {
-        NewtonianBody subject = new NewtonianBodyWithEnvironment(0, 0, 0, 0);
+        NewtonianBody subject = new NewtonianBody(0, 0, 0, 0);
         subject.setMass(1);
         subject.addForce(1, 1);
 
