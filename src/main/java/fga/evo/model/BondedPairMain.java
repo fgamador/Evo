@@ -49,6 +49,6 @@ public class BondedPairMain {
         System.out.println(tick + "," + subtick + "," //
                 + ball1.getCenterX() + "," + ball2.getCenterX() + "," //
                 + ball1.getVelocityX() + "," + ball2.getVelocityX() + "," //
-                + ball1.getEnvironment().getNetForceX() + "," + ball2.getEnvironment().getNetForceX());
+                + ball1.getNetForceX() + "," + ball2.getNetForceX());
     }
 }
