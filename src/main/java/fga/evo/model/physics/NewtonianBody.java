@@ -67,13 +67,13 @@ public abstract class NewtonianBody {
 
     public void subtick(int subticksPerTick) {
         NewtonianBodyEnvironment environment = getEnvironment();
-        updateVelocity(environment, subticksPerTick);
+        updateVelocity(subticksPerTick);
         limitSpeed();
         updatePosition(subticksPerTick);
         clearForces();
     }
 
-    private void updateVelocity(NewtonianBodyEnvironment environment, int subticksPerTick) {
+    private void updateVelocity(int subticksPerTick) {
         assert mass > 0;
 
         // the acceleration to apply instantaneously at the beginning of this subtick
