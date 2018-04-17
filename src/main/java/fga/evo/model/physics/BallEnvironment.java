@@ -1,6 +1,6 @@
 package fga.evo.model.physics;
 
-public class BallEnvironment extends NewtonianBodyEnvironment {
+public class BallEnvironment {
     private double totalOverlap;
 
     public void addOverlap(double overlap) {

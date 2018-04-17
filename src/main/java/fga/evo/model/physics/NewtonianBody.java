@@ -23,10 +23,6 @@ public class NewtonianBody {
         setVelocity(velocityX, velocityY);
     }
 
-    public NewtonianBodyEnvironment getEnvironment() {
-        return null;
-    }
-
     /**
      * Sets the ball's initial position. All subsequent updates to position should be done by {@link #subtick}.
      */
