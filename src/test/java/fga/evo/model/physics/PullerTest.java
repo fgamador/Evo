@@ -21,7 +21,7 @@ public class PullerTest extends EvoTest {
 
         subject.addForce();
 
-        assertNetForce(0, 0, body.getEnvironment());
+        assertNetForce(0, 0, body);
     }
 
     @Test
@@ -33,7 +33,7 @@ public class PullerTest extends EvoTest {
 
         subject.addForce();
 
-        assertNetForce(1, -1, body.getEnvironment());
+        assertNetForce(1, -1, body);
     }
 
     @Test
@@ -46,6 +46,6 @@ public class PullerTest extends EvoTest {
 
         subject.addForce();
 
-        assertNetForce(2, -2, body.getEnvironment());
+        assertNetForce(2, -2, body);
     }
 }

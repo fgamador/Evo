@@ -21,7 +21,7 @@ public class WeightTest extends EvoTest {
 
         new Weight().updateEnvironment(cell);
 
-        assertNetForce(0, 0, cell.getEnvironment());
+        assertNetForce(0, 0, cell);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class WeightTest extends EvoTest {
 
         new Weight().updateEnvironment(cell);
 
-        assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell.getEnvironment());
+        assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class WeightTest extends EvoTest {
         new Weight().updateEnvironment(cell);
 
         double forceY = -Weight.gravity.getValue() * Math.PI;
-        assertNetForce(0, forceY, cell.getEnvironment());
+        assertNetForce(0, forceY, cell);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class WeightTest extends EvoTest {
 
         new Weight().updateEnvironment(cell);
 
-        assertNetForce(0, 0, cell.getEnvironment());
+        assertNetForce(0, 0, cell);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class WeightTest extends EvoTest {
         new Weight().updateEnvironment(cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
-        assertNetForce(0, forceY, cell.getEnvironment());
+        assertNetForce(0, forceY, cell);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class WeightTest extends EvoTest {
         new Weight().updateEnvironment(cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue();
-        assertNetForce(0, forceY, cell.getEnvironment());
+        assertNetForce(0, forceY, cell);
     }
 
     private static void setCellDensity(Cell cell, double density) {

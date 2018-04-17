@@ -25,8 +25,8 @@ public class PairCollisionTest {
 
         PairCollision.addForces(ball1, ball2, 1);
 
-        assertNetForce((double) -1, (double) 0, ball1.getEnvironment());
-        assertNetForce((double) 1, (double) 0, ball2.getEnvironment());
+        assertNetForce(-1, 0, ball1);
+        assertNetForce(1, 0, ball2);
     }
 
     @Test
@@ -42,9 +42,9 @@ public class PairCollisionTest {
         PairCollision.addForces(ball1, ball2, 1);
 
         double forceX = -SQRT_2 / 2;
-        assertNetForce(forceX, SQRT_2 / 2, ball1.getEnvironment());
+        assertNetForce(forceX, SQRT_2 / 2, ball1);
         double forceY = -SQRT_2 / 2;
-        assertNetForce(SQRT_2 / 2, forceY, ball2.getEnvironment());
+        assertNetForce(SQRT_2 / 2, forceY, ball2);
     }
 
     @Test
@@ -60,9 +60,9 @@ public class PairCollisionTest {
         PairCollision.addForces(ball2, ball1, 1);
 
         double forceX = -SQRT_2 / 2;
-        assertNetForce(forceX, SQRT_2 / 2, ball1.getEnvironment());
+        assertNetForce(forceX, SQRT_2 / 2, ball1);
         double forceY = -SQRT_2 / 2;
-        assertNetForce(SQRT_2 / 2, forceY, ball2.getEnvironment());
+        assertNetForce(SQRT_2 / 2, forceY, ball2);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class PairCollisionTest {
 
         PairCollision.addForces(ball1, ball2, 2);
 
-        assertNetForce((double) 0, (double) 0, ball1.getEnvironment());
-        assertNetForce((double) 0, (double) 0, ball2.getEnvironment());
+        assertNetForce(0, 0, ball1);
+        assertNetForce(0, 0, ball2);
     }
 }
