@@ -3,6 +3,7 @@ package fga.evo.model;
 import fga.evo.model.biology.AccumulatingCellLifecycleListener;
 import fga.evo.model.biology.Cell;
 import fga.evo.model.environment.EnvironmentalInfluence;
+import fga.evo.model.environment.ForceInfluence;
 import fga.evo.model.geometry.OverlapDetection;
 import fga.evo.model.physics.PairBond;
 import fga.evo.model.physics.Puller;
@@ -17,6 +18,7 @@ import java.util.List;
 public class World {
     private static int subticksPerTick = 2;
 
+    private List<ForceInfluence> forceInfluences = new ArrayList<>();
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
     private List<Cell> cells = new ArrayList<>();
     private List<PairBond> bonds = new ArrayList<>();
@@ -24,11 +26,12 @@ public class World {
     private AccumulatingCellLifecycleListener lifecycleListener = new AccumulatingCellLifecycleListener();
     private OverlapDetection overlapDetection = new OverlapDetection();
 
-    public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
-        environmentalInfluences.add(influence);
+    public void addForceInfluence(ForceInfluence influence) {
+        forceInfluences.add(influence);
+        environmentalInfluences.add((EnvironmentalInfluence) influence);
     }
 
-    public void addForceInfluence(EnvironmentalInfluence influence) {
+    public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
         environmentalInfluences.add(influence);
     }
 
