@@ -28,6 +28,10 @@ public class World {
         environmentalInfluences.add(influence);
     }
 
+    public void addForceInfluence(EnvironmentalInfluence influence) {
+        environmentalInfluences.add(influence);
+    }
+
     public void addCell(Cell cell) {
         cells.add(cell);
         overlapDetection.addCircle(cell);

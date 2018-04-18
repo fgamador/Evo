@@ -14,9 +14,9 @@ public class Main extends Evo {
 
     @Override
     protected void addInfluences(World world) {
-        world.addEnvironmentalInfluence(walls = new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
-        world.addEnvironmentalInfluence(new Drag());
-        world.addEnvironmentalInfluence(new Weight());
+        world.addForceInfluence(walls = new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
+        world.addForceInfluence(new Drag());
+        world.addForceInfluence(new Weight());
         world.addEnvironmentalInfluence(light = new Illumination(WATER_DEPTH));
     }
 

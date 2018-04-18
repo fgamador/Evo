@@ -36,7 +36,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void noForces() {
-        world.addEnvironmentalInfluence(new SurroundingWalls(0, 10, -10, 0));
+        world.addForceInfluence(new SurroundingWalls(0, 10, -10, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // no cell or wall overlap
@@ -54,7 +54,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void wallCornerOverlaps() {
         World.setSubticksPerTick(1);
-        world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
+        world.addForceInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // overlap walls by 0.5
@@ -72,7 +72,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void fullWallCollision() {
         World.setSubticksPerTick(1);
-        world.addEnvironmentalInfluence(new SurroundingWalls(0, 500, -500, 0));
+        world.addForceInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
         cell.setCenterPosition(1, -250); // overlap 0.0, accel 0.0
@@ -101,7 +101,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void multipleWallCollisionsAtTwoSubticksPerTick() {
         World.setSubticksPerTick(2);
-        world.addEnvironmentalInfluence(new SurroundingWalls(0, 3, -20, 0));
+        world.addForceInfluence(new SurroundingWalls(0, 3, -20, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
         cell.setCenterPosition(1, -10);
@@ -149,7 +149,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void fluidDrag() {
-        world.addEnvironmentalInfluence(new Drag());
+        world.addForceInfluence(new Drag());
         Cell cell = addCell(1);
         cell.setVelocity(1, 0);
 
@@ -161,7 +161,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
     @Test
     public void buoyancyWhileSinking() {
         PhotoRing.parameters.density.revertToDefaultValue();
-        world.addEnvironmentalInfluence(new Weight());
+        world.addForceInfluence(new Weight());
         assertTrue(PhotoRing.parameters.density.getValue() > Weight.fluidDensity.getValue());
         Cell cell = addCell(1);
 

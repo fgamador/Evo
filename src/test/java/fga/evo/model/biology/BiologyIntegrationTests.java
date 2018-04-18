@@ -44,7 +44,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void buoyancyControlMovesCellDownward() {
-        world.addEnvironmentalInfluence(new Weight());
+        world.addForceInfluence(new Weight());
         Cell cell = new Cell.Builder() //
                 .withControl(new FixedDepthSeekingControl(100)) //
                 .withPhotoRingArea(Math.PI) //
@@ -68,7 +68,7 @@ public class BiologyIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void buoyancyControlMovesCellUpward() {
-        world.addEnvironmentalInfluence(new Weight());
+        world.addForceInfluence(new Weight());
         Cell cell = new Cell.Builder() //
                 .withControl(new FixedDepthSeekingControl(100)) //
                 .withPhotoRingArea(Math.PI) //

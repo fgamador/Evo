@@ -42,9 +42,9 @@ public class TimingMain {
     }
 
     private static void addInfluences(World world) {
-        world.addEnvironmentalInfluence(new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
-        world.addEnvironmentalInfluence(new Drag());
-        world.addEnvironmentalInfluence(new Weight());
+        world.addForceInfluence(new SurroundingWalls(0, WIDTH, -WATER_DEPTH, AIR_HEIGHT));
+        world.addForceInfluence(new Drag());
+        world.addForceInfluence(new Weight());
         world.addEnvironmentalInfluence(new Illumination(WATER_DEPTH));
     }
 
