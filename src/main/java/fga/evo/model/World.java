@@ -67,14 +67,14 @@ public class World {
 
     private void moveCells() {
         for (int i = 0; i < subticksPerTick; i++) {
-            addForces();
+            addForcesToCells();
 
             for (Cell cell : cells)
                 cell.subtickPhysics(subticksPerTick);
         }
     }
 
-    private void addForces() {
+    private void addForcesToCells() {
         overlapDetection.findAndNotifyOverlaps();
 
         for (Cell cell : cells) {
