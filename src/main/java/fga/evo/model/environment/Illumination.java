@@ -6,7 +6,7 @@ import fga.evo.model.util.DoubleParameter;
 /**
  * The light illuminating the cells.
  */
-public final class Illumination extends EnvironmentalInfluence {
+public final class Illumination implements EnvironmentalInfluence {
     public static DoubleParameter maxIntensity = new DoubleParameter(1);
 
     private double depthLimit;
