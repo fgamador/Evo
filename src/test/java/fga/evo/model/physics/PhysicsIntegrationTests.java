@@ -16,13 +16,13 @@ import static fga.evo.model.Assert.assertVelocity;
 import static org.junit.Assert.*;
 
 public class PhysicsIntegrationTests extends WorldIntegrationTests {
-    private int defaultSubticksPerTick;
+    private int defaultMovesPerTick;
 
     @Before
     public void setUp() {
         Weight.fluidDensity.setValue(0.01);
         Puller.forceFactor.setValue(1);
-        defaultSubticksPerTick = World.getSubticksPerTick();
+        defaultMovesPerTick = World.getMovesPerTick();
 
         // ensure that a cell with radius 1 has mass 1
         // TODO mock the mass (or make these ball tests?)
@@ -31,7 +31,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @After
     public void tearDown() {
-        World.setSubticksPerTick(defaultSubticksPerTick);
+        World.setMovesPerTick(defaultMovesPerTick);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void wallCornerOverlaps() {
-        World.setSubticksPerTick(1);
+        World.setMovesPerTick(1);
         world.addForceInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
@@ -71,7 +71,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void fullWallCollision() {
-        World.setSubticksPerTick(1);
+        World.setMovesPerTick(1);
         world.addForceInfluence(new SurroundingWalls(0, 500, -500, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
@@ -100,7 +100,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void multipleWallCollisionsAtTwoSubticksPerTick() {
-        World.setSubticksPerTick(2);
+        World.setMovesPerTick(2);
         world.addForceInfluence(new SurroundingWalls(0, 3, -20, 0));
         Cell cell = addCell(1);
         cell.setVelocity(-1, 0);
@@ -120,7 +120,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void cellCollision() {
-        World.setSubticksPerTick(1);
+        World.setMovesPerTick(1);
         Cell cell1 = addCell(1);
         Cell cell2 = addCell(1);
         // overlap by 1
@@ -172,7 +172,7 @@ public class PhysicsIntegrationTests extends WorldIntegrationTests {
 
     @Test
     public void worldPull() {
-        World.setSubticksPerTick(1);
+        World.setMovesPerTick(1);
         Cell cell = addCell(1);
         cell.setCenterPosition(5, -5);
         world.startPull(cell);

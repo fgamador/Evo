@@ -36,8 +36,8 @@ public class BondedPairMain {
         for (int i = 0; i < SUBTICKS_PER_TICK; i++) {
             bond.addForces();
             printState(number, i);
-            ball1.subtickPhysics(SUBTICKS_PER_TICK);
-            ball2.subtickPhysics(SUBTICKS_PER_TICK);
+            ball1.move(SUBTICKS_PER_TICK);
+            ball2.move(SUBTICKS_PER_TICK);
         }
     }
 

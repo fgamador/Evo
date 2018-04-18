@@ -16,7 +16,7 @@ import java.util.List;
  * The world in which the cells live. The root container of the whole model. The entry point for simulation clock ticks.
  */
 public class World {
-    private static int subticksPerTick = 2;
+    private static int movesPerTick = 2;
 
     private List<ForceInfluence> forceInfluences = new ArrayList<>();
     private List<EnvironmentalInfluence> environmentalInfluences = new ArrayList<>();
@@ -58,11 +58,11 @@ public class World {
     }
 
     private void moveCells() {
-        for (int i = 0; i < subticksPerTick; i++) {
+        for (int i = 0; i < movesPerTick; i++) {
             addForcesToCells();
 
             for (Cell cell : cells)
-                cell.subtickPhysics(subticksPerTick);
+                cell.move(movesPerTick);
         }
     }
 
@@ -139,11 +139,11 @@ public class World {
     // Parameters
     //=========================================================================
 
-    public static int getSubticksPerTick() {
-        return subticksPerTick;
+    public static int getMovesPerTick() {
+        return movesPerTick;
     }
 
-    public static void setSubticksPerTick(int val) {
-        subticksPerTick = val;
+    public static void setMovesPerTick(int val) {
+        movesPerTick = val;
     }
 }
