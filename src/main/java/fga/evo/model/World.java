@@ -53,7 +53,7 @@ public class World {
 
     private void tickWithMonitoredLifecycles() {
         for (int i = 0; i < subticksPerTick; i++) {
-            updateCellEnvironments();
+            addForces();
 
             for (Cell cell : cells)
                 cell.subtickPhysics(subticksPerTick);
@@ -66,7 +66,7 @@ public class World {
             cell.exertControl();
     }
 
-    private void updateCellEnvironments() {
+    private void addForces() {
         overlapDetection.findAndNotifyOverlaps();
 
         for (Cell cell : cells) {
