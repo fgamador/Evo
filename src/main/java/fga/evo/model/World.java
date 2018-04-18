@@ -51,12 +51,7 @@ public class World {
     }
 
     private void tickWithMonitoredLifecycles() {
-        for (int i = 0; i < subticksPerTick; i++) {
-            addForces();
-
-            for (Cell cell : cells)
-                cell.subtickPhysics(subticksPerTick);
-        }
+        moveCells();
 
         for (Cell cell : cells) {
             for (EnvironmentalInfluence influence : environmentalInfluences)
@@ -68,6 +63,15 @@ public class World {
 
         for (Cell cell : cells)
             cell.exertControl();
+    }
+
+    private void moveCells() {
+        for (int i = 0; i < subticksPerTick; i++) {
+            addForces();
+
+            for (Cell cell : cells)
+                cell.subtickPhysics(subticksPerTick);
+        }
     }
 
     private void addForces() {
