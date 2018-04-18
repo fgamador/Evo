@@ -28,7 +28,6 @@ public class World {
 
     public void addForceInfluence(ForceInfluence influence) {
         forceInfluences.add(influence);
-        environmentalInfluences.add((EnvironmentalInfluence) influence);
     }
 
     public void addEnvironmentalInfluence(EnvironmentalInfluence influence) {
@@ -59,6 +58,11 @@ public class World {
                 cell.subtickPhysics(subticksPerTick);
         }
 
+        for (Cell cell : cells) {
+            for (EnvironmentalInfluence influence : environmentalInfluences)
+                influence.updateEnvironment(cell);
+        }
+
         for (Cell cell : cells)
             cell.updateBiologyFromEnvironment();
 
@@ -70,8 +74,8 @@ public class World {
         overlapDetection.findAndNotifyOverlaps();
 
         for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : environmentalInfluences)
-                influence.updateEnvironment(cell);
+            for (ForceInfluence influence : forceInfluences)
+                influence.addForce(cell);
         }
 
         for (PairBond bond : bonds)
