@@ -52,11 +52,7 @@ public class World {
 
     private void tickWithMonitoredLifecycles() {
         moveCells();
-
-        for (Cell cell : cells) {
-            for (EnvironmentalInfluence influence : environmentalInfluences)
-                influence.updateEnvironment(cell);
-        }
+        updateCellEnvironments();
 
         for (Cell cell : cells)
             cell.updateBiologyFromEnvironment();
@@ -87,6 +83,13 @@ public class World {
 
         if (puller != null)
             puller.addForce();
+    }
+
+    private void updateCellEnvironments() {
+        for (Cell cell : cells) {
+            for (EnvironmentalInfluence influence : environmentalInfluences)
+                influence.updateEnvironment(cell);
+        }
     }
 
     private void updatePerLifecycleChanges() {
