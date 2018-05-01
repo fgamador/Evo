@@ -24,10 +24,6 @@ public class SurroundingWalls implements ForceInfluence {
         addHighBarrierCollisionForce(cell, maxY);
     }
 
-    public void updateEnvironment(Cell cell) {
-        addForce(cell);
-    }
-
     /**
      * Adds the force exerted on the ball if it is in collision with a barrier to its left (smaller x position).
      *
