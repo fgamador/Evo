@@ -12,7 +12,6 @@ public class BallEnvironment {
     }
 
     public void clearTotalOverlap() {
-        double overlap = totalOverlap;
         totalOverlap = 0;
     }
 }
