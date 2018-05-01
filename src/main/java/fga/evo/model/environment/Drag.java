@@ -8,16 +8,11 @@ import static fga.evo.model.util.Util.sqr;
 /**
  * Drag caused by the fluid medium in which the cells live.
  */
-public class Drag implements EnvironmentalInfluence, ForceInfluence {
+public class Drag implements ForceInfluence {
     public static DoubleParameter dragFactor = new DoubleParameter(0.001);
 
     @Override
     public void addForce(Cell cell) {
-        updateEnvironment(cell);
-    }
-
-    @Override
-    public void updateEnvironment(Cell cell) {
         // TODO if the cell is not wholly submerged, drag will be reduced, but it depends on what direction the cell is moving
         // Idea: linearly reduce x-drag of partially submerged cell, same with y-drag but only if moving upward
         double dragX = calcDrag(cell.getVelocityX(), cell.getRadius());
