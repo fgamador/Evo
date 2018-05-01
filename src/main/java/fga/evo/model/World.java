@@ -51,22 +51,22 @@ public class World {
     }
 
     private void tickWithMonitoredLifecycles() {
-        moveCells();
+        detectOverlapsAndMoveCells();
         updateCellEnvironments();
         updateCells();
         runCellControls();
     }
 
-    private void moveCells() {
+    private void detectOverlapsAndMoveCells() {
         for (int i = 0; i < movesPerTick; i++) {
-            addForcesToCells();
+            detectOverlapsAndAddForcesToCells();
 
             for (Cell cell : cells)
                 cell.move(movesPerTick);
         }
     }
 
-    private void addForcesToCells() {
+    private void detectOverlapsAndAddForcesToCells() {
         overlapDetection.findAndNotifyOverlaps();
 
         for (Cell cell : cells) {
