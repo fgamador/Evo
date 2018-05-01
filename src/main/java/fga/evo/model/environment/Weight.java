@@ -12,18 +12,14 @@ public class Weight implements EnvironmentalInfluence, ForceInfluence {
 
     @Override
     public void addForce(Cell cell) {
-        addForceInner(cell);
+        double displacedFluidMass = fluidDensity.getValue() * getDisplacement(cell);
+        double forceY = (displacedFluidMass - cell.getMass()) * gravity.getValue();
+        cell.addForce(0, forceY);
     }
 
     @Override
     public void updateEnvironment(Cell cell) {
         addForce(cell);
-    }
-
-    private void addForceInner(Cell cell) {
-        double displacedFluidMass = fluidDensity.getValue() * getDisplacement(cell);
-        double forceY = (displacedFluidMass - cell.getMass()) * gravity.getValue();
-        cell.addForce(0, forceY);
     }
 
     private double getDisplacement(Cell cell) {
