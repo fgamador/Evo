@@ -12,12 +12,12 @@ public class Weight implements EnvironmentalInfluence, ForceInfluence {
 
     @Override
     public void addForce(Cell cell) {
-        updateEnvironment(cell);
+        addForceInner(cell);
     }
 
     @Override
     public void updateEnvironment(Cell cell) {
-        addForce(cell);
+        addForceInner(cell);
     }
 
     private void addForceInner(Cell cell) {
