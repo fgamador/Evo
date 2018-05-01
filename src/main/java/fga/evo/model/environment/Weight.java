@@ -17,10 +17,6 @@ public class Weight implements ForceInfluence {
         cell.addForce(0, forceY);
     }
 
-    public void updateEnvironment(Cell cell) {
-        addForce(cell);
-    }
-
     private double getDisplacement(Cell cell) {
         if (cell.getCenterY() <= -cell.getRadius()) {
             return cell.getArea();

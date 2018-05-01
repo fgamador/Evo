@@ -19,7 +19,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, -100);
         setCellDensity(cell, Weight.fluidDensity.getValue());
 
-        new Weight().updateEnvironment(cell);
+        new Weight().addForce(cell);
 
         assertNetForce(0, 0, cell);
     }
@@ -30,7 +30,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, -100);
         setCellDensity(cell, 0);
 
-        new Weight().updateEnvironment(cell);
+        new Weight().addForce(cell);
 
         assertNetForce(0, Weight.gravity.getValue() * Math.PI, cell);
     }
@@ -41,7 +41,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, -100);
         setCellDensity(cell, 2 * Weight.fluidDensity.getValue());
 
-        new Weight().updateEnvironment(cell);
+        new Weight().addForce(cell);
 
         double forceY = -Weight.gravity.getValue() * Math.PI;
         assertNetForce(0, forceY, cell);
@@ -53,7 +53,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, -cell.getRadius());
         setCellDensity(cell, Weight.fluidDensity.getValue());
 
-        new Weight().updateEnvironment(cell);
+        new Weight().addForce(cell);
 
         assertNetForce(0, 0, cell);
     }
@@ -64,7 +64,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, 0);
         setCellDensity(cell, Weight.fluidDensity.getValue());
 
-        new Weight().updateEnvironment(cell);
+        new Weight().addForce(cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue() / 2;
         assertNetForce(0, forceY, cell);
@@ -76,7 +76,7 @@ public class WeightTest extends EvoTest {
         cell.setCenterPosition(0, cell.getRadius());
         setCellDensity(cell, Weight.fluidDensity.getValue());
 
-        new Weight().updateEnvironment(cell);
+        new Weight().addForce(cell);
 
         double forceY = -cell.getMass() * Weight.gravity.getValue();
         assertNetForce(0, forceY, cell);
