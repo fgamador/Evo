@@ -11,16 +11,15 @@ import static org.junit.Assert.*;
 public class CellTest {
     @Test
     public void tickDecaysRecordedOverlap() {
-        Cell cell1 = new Cell.Builder().build();
-        Cell cell2 = new Cell.Builder().build();
-        cell1.onOverlap(cell2, 0.5);
+        Cell subject = new Cell.Builder().build();
+        subject.getEnvironment().addOverlap(0.5);
 
-        cell1.updateBiologyFromEnvironment();
-        assertApproxEquals(0.5, cell1.getRecentTotalOverlap());
+        subject.updateBiologyFromEnvironment();
+        assertApproxEquals(0.5, subject.getRecentTotalOverlap());
 
-        cell1.getEnvironment().clearTotalOverlap();
-        cell1.updateBiologyFromEnvironment();
-        assertTrue(cell1.getRecentTotalOverlap() < 0.5);
+        subject.getEnvironment().clearTotalOverlap();
+        subject.updateBiologyFromEnvironment();
+        assertTrue(subject.getRecentTotalOverlap() < 0.5);
     }
 
     @Test
