@@ -60,7 +60,7 @@ public class World {
     private void detectOverlapsAndMoveCells() {
         for (int i = 0; i < movesPerTick; i++) {
             for (Cell cell : cells) {
-                cell.getEnvironment().clearTotalOverlap();
+                cell.getEnvironment().reset();
                 cell.getEnvironment().resetShadowTransmissionFraction();
                 cell.getEnvironment().clearDonatedEnergy();
             }
