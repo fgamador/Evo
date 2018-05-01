@@ -294,7 +294,6 @@ public class CellTest {
         // second tick, second phase
         subject.updateBiologyFromEnvironment();
         child.updateBiologyFromEnvironment();
-        assertEquals(0, child.getEnvironment().getDonatedEnergy(), 0);
         assertEnergy(2 - child.getPhotoArea() * PhotoRing.parameters.maintenanceCost.getValue(), child);
     }
 

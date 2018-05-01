@@ -62,6 +62,7 @@ public class World {
             for (Cell cell : cells) {
                 cell.getEnvironment().clearTotalOverlap();
                 cell.getEnvironment().resetShadowTransmissionFraction();
+                cell.getEnvironment().clearDonatedEnergy();
             }
 
             detectOverlapsAndAddForcesToCells();
