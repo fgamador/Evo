@@ -73,7 +73,6 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
         addDamage();
         overlapAccumulator.decay();
         overlapAccumulator.addValue(getEnvironment().getTotalOverlap());
-        getEnvironment().clearTotalOverlap();
     }
 
     private void addDonatedEnergy() {
