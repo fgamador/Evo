@@ -19,7 +19,7 @@ public class CellEnvironmentTest {
         CellEnvironment subject = new CellEnvironment();
         subject.addShadowing(0.5);
         assertExactEquals(0.5, subject.getShadowTransmissionFraction());
-        subject.getAndResetShadowTransmissionFraction();
+        subject.resetShadowTransmissionFraction();
         assertExactEquals(1, subject.getShadowTransmissionFraction());
     }
 }

@@ -29,7 +29,7 @@ public class PhotoRing extends TissueRing {
         final double lightIntensity = environment.getLightIntensity() * environment.getShadowTransmissionFraction();
         final double absorbedEnergy = lightIntensity * getOuterRadius() * calcPhotoAbsorptivity();
         cell.addEnergy(absorbedEnergy);
-        environment.getAndResetShadowTransmissionFraction();
+        environment.resetShadowTransmissionFraction();
     }
 
     /**
