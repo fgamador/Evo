@@ -128,8 +128,8 @@ public class BallTest extends EvoTest {
 
         ball1.onOverlap(ball2, 0.5);
 
-        assertApproxEquals(0.5, ball1.getEnvironment().getAndClearTotalOverlap());
-        assertApproxEquals(0.5, ball2.getEnvironment().getAndClearTotalOverlap());
+        assertApproxEquals(0.5, ball1.getEnvironment().getTotalOverlap());
+        assertApproxEquals(0.5, ball2.getEnvironment().getTotalOverlap());
     }
 
     @Test
@@ -140,8 +140,8 @@ public class BallTest extends EvoTest {
 
         ball1.onOverlap(ball2, 0.5);
 
-        assertApproxEquals(0.5, ball1.getEnvironment().getAndClearTotalOverlap());
-        assertApproxEquals(0.5, ball2.getEnvironment().getAndClearTotalOverlap());
+        assertApproxEquals(0.5, ball1.getEnvironment().getTotalOverlap());
+        assertApproxEquals(0.5, ball2.getEnvironment().getTotalOverlap());
     }
 
     private Ball createBallAtX(double centerX) {

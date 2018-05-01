@@ -58,28 +58,28 @@ public class SurroundingWallsTest extends EvoTest {
     public void leftBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addLeftBarrierCollisionForce(ball, -0.5);
-        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
+        assertApproxEquals(0.5, ball.getEnvironment().getTotalOverlap());
     }
 
     @Test
     public void rightBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addRightBarrierCollisionForce(ball, 0.5);
-        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
+        assertApproxEquals(0.5, ball.getEnvironment().getTotalOverlap());
     }
 
     @Test
     public void lowBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addLowBarrierCollisionForce(ball, -0.5);
-        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
+        assertApproxEquals(0.5, ball.getEnvironment().getTotalOverlap());
     }
 
     @Test
     public void highBarrierCollisionRecordsOverlap() {
         Ball ball = createBall(1, 0, 0);
         SurroundingWalls.addHighBarrierCollisionForce(ball, 0.5);
-        assertApproxEquals(0.5, ball.getEnvironment().getAndClearTotalOverlap());
+        assertApproxEquals(0.5, ball.getEnvironment().getTotalOverlap());
     }
 
     @Test
