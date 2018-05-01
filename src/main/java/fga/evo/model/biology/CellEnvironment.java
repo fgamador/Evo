@@ -16,7 +16,6 @@ public class CellEnvironment extends BallEnvironment {
     }
 
     public void clearDonatedEnergy() {
-        double energy = donatedEnergy;
         donatedEnergy = 0;
     }
 
@@ -37,7 +36,6 @@ public class CellEnvironment extends BallEnvironment {
     }
 
     public void resetShadowTransmissionFraction() {
-        double fraction = shadowTransmissionFraction;
         shadowTransmissionFraction = 1;
     }
 }
