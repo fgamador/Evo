@@ -24,7 +24,6 @@ public class SurroundingWalls implements EnvironmentalInfluence, ForceInfluence 
         addHighBarrierCollisionForce(cell, maxY);
     }
 
-    @Override
     public void updateEnvironment(Cell cell) {
         addForce(cell);
     }
