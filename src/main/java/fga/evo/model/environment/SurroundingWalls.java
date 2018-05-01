@@ -6,7 +6,7 @@ import fga.evo.model.physics.Ball;
 /**
  * The four walls surrounding the cells.
  */
-public class SurroundingWalls implements EnvironmentalInfluence, ForceInfluence {
+public class SurroundingWalls implements ForceInfluence {
     private double minX, maxX, minY, maxY;
 
     public SurroundingWalls(double minX, double maxX, double minY, double maxY) {
