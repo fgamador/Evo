@@ -6,7 +6,7 @@ import fga.evo.model.util.DoubleParameter;
 /**
  * The effects of gravity, including cell weight and buoyancy.
  */
-public class Weight implements EnvironmentalInfluence, ForceInfluence {
+public class Weight implements ForceInfluence {
     public static DoubleParameter gravity = new DoubleParameter(0.5); // acceleration
     public static DoubleParameter fluidDensity = new DoubleParameter(0.1); // mass per area
 
