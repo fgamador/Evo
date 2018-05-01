@@ -13,13 +13,4 @@ public class CellEnvironmentTest {
         subject.addShadowing(0.1);
         assertApproxEquals(0.05, subject.getShadowTransmissionFraction());
     }
-
-    @Test
-    public void gettingShadowingResetsIt() {
-        CellEnvironment subject = new CellEnvironment();
-        subject.addShadowing(0.5);
-        assertExactEquals(0.5, subject.getShadowTransmissionFraction());
-        subject.resetShadowTransmissionFraction();
-        assertExactEquals(1, subject.getShadowTransmissionFraction());
-    }
 }
