@@ -17,7 +17,6 @@ public class Weight implements EnvironmentalInfluence, ForceInfluence {
         cell.addForce(0, forceY);
     }
 
-    @Override
     public void updateEnvironment(Cell cell) {
         addForce(cell);
     }
