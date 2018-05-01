@@ -18,19 +18,15 @@ public class SurroundingWalls implements EnvironmentalInfluence, ForceInfluence 
 
     @Override
     public void addForce(Cell cell) {
-        addForceInner(cell);
+        addLeftBarrierCollisionForce(cell, minX);
+        addRightBarrierCollisionForce(cell, maxX);
+        addLowBarrierCollisionForce(cell, minY);
+        addHighBarrierCollisionForce(cell, maxY);
     }
 
     @Override
     public void updateEnvironment(Cell cell) {
         addForce(cell);
-    }
-
-    private void addForceInner(Cell cell) {
-        addLeftBarrierCollisionForce(cell, minX);
-        addRightBarrierCollisionForce(cell, maxX);
-        addLowBarrierCollisionForce(cell, minY);
-        addHighBarrierCollisionForce(cell, maxY);
     }
 
     /**
