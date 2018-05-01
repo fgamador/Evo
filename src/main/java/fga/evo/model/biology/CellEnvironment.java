@@ -15,10 +15,9 @@ public class CellEnvironment extends BallEnvironment {
         donatedEnergy = val;
     }
 
-    public double getAndClearDonatedEnergy() {
+    public void getAndClearDonatedEnergy() {
         double energy = donatedEnergy;
         donatedEnergy = 0;
-        return energy;
     }
 
     public double getLightIntensity() {
@@ -37,9 +36,8 @@ public class CellEnvironment extends BallEnvironment {
         return shadowTransmissionFraction;
     }
 
-    public double getAndResetShadowTransmissionFraction() {
+    public void getAndResetShadowTransmissionFraction() {
         double fraction = shadowTransmissionFraction;
         shadowTransmissionFraction = 1;
-        return fraction;
     }
 }
