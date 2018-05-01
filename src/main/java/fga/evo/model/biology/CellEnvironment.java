@@ -33,6 +33,10 @@ public class CellEnvironment extends BallEnvironment {
         this.shadowTransmissionFraction *= transmissionFraction;
     }
 
+    public double getShadowTransmissionFraction() {
+        return shadowTransmissionFraction;
+    }
+
     public double getAndResetShadowTransmissionFraction() {
         double fraction = shadowTransmissionFraction;
         shadowTransmissionFraction = 1;
