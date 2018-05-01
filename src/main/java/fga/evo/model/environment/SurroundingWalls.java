@@ -23,7 +23,7 @@ public class SurroundingWalls implements EnvironmentalInfluence, ForceInfluence 
 
     @Override
     public void updateEnvironment(Cell cell) {
-        addForceInner(cell);
+        addForce(cell);
     }
 
     private void addForceInner(Cell cell) {
