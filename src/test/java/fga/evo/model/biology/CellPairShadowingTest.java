@@ -2,6 +2,7 @@ package fga.evo.model.biology;
 
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertExactEquals;
 import static org.junit.Assert.*;
 
 public class CellPairShadowingTest {
@@ -13,5 +14,7 @@ public class CellPairShadowingTest {
         shadowee.setCenterPosition(0, -2);
 
         CellPairShadowing.addShadowing(shadower, shadowee);
+
+        assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
     }
 }
