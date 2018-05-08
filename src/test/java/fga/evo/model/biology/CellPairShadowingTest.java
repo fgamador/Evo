@@ -16,5 +16,6 @@ public class CellPairShadowingTest {
         CellPairShadowing.addShadowing(shadower, shadowee);
 
         assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
+        assertTrue(shadowee.getEnvironment().getShadowTransmissionFraction() < 1);
     }
 }
