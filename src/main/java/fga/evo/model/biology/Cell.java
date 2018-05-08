@@ -345,6 +345,15 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
             return this;
         }
 
+        public Builder withRadius(double radius) {
+            return withPhotoRingOuterRadius(radius);
+        }
+
+        public Builder withCenterPosition(double centerX, double centerY) {
+            cell.setCenterPosition(centerX, centerY);
+            return this;
+        }
+
         public Builder withFloatRingArea(double area) {
             setArea(cell.floatRing, area);
             return this;

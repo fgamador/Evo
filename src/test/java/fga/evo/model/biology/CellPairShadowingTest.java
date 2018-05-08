@@ -7,13 +7,22 @@ import static org.junit.Assert.*;
 
 public class CellPairShadowingTest {
     @Test
-    public void totalOverlap() {
-        Cell shadower = new Cell(2);
-        shadower.setCenterPosition(0, 0);
-        Cell shadowee = new Cell(1);
-        shadowee.setCenterPosition(0, -2);
+    public void overlapShadowsLowerCell() {
+        Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
+        Cell shadowee = new Cell.Builder().withRadius(1).withCenterPosition(0, -2).build();
 
         CellPairShadowing.addShadowing(shadower, shadowee);
+
+        assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
+        assertTrue(shadowee.getEnvironment().getShadowTransmissionFraction() < 1);
+    }
+
+    @Test
+    public void overlapShadowsLowerCell2() {
+        Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
+        Cell shadowee = new Cell.Builder().withRadius(1).withCenterPosition(0, -2).build();
+
+        CellPairShadowing.addShadowing(shadowee, shadower);
 
         assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
         assertTrue(shadowee.getEnvironment().getShadowTransmissionFraction() < 1);
