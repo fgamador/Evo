@@ -215,7 +215,7 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
 
     public double getShadowTransmissionFraction() {
         // TODO calculate from size somehow
-        return 0.5;
+        return 0.25;
     }
 
     /**
