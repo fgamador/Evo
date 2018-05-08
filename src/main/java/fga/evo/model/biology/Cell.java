@@ -213,6 +213,11 @@ public class Cell extends Onion<TissueRing> implements CellControl.CellApi, Tiss
     private void controlPhase_Dead() {
     }
 
+    public double getShadowTransmissionFraction() {
+        // TODO calculate from size somehow
+        return 0.5;
+    }
+
     /**
      * Records a request that the cell's float-ring area change by a specified amount.
      */

@@ -2,6 +2,7 @@ package fga.evo.model.biology;
 
 import org.junit.Test;
 
+import static fga.evo.model.Assert.assertApproxEquals;
 import static fga.evo.model.Assert.assertExactEquals;
 import static org.junit.Assert.*;
 
@@ -26,5 +27,17 @@ public class CellPairShadowingTest {
 
         assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
         assertTrue(shadowee.getEnvironment().getShadowTransmissionFraction() < 1);
+    }
+
+    //@Test
+    public void partialOverlapIncreasesTransmissionFactor() {
+        Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
+        Cell shadowee = new Cell.Builder().withRadius(2).withCenterPosition(1, -2).build();
+
+        CellPairShadowing.addShadowing(shadowee, shadower);
+
+        double fullOverlapTransmissionFactor = shadower.getShadowTransmissionFraction();
+        double halfOverlapTransmissionFactor = fullOverlapTransmissionFactor + (1 - fullOverlapTransmissionFactor) / 2;
+        assertApproxEquals(halfOverlapTransmissionFactor, shadowee.getEnvironment().getShadowTransmissionFraction());
     }
 }
