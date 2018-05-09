@@ -28,15 +28,14 @@ public class CellPairShadowingTest {
         assertExactEquals(shadower.getShadowTransmissionFraction(), shadowee.getEnvironment().getShadowTransmissionFraction());
     }
 
-    //@Test
+    @Test
     public void partialOverlapIncreasesTransmissionFactor() {
         Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
-        Cell shadowee = new Cell.Builder().withRadius(2).withCenterPosition(1, -2).build();
+        Cell shadowee = new Cell.Builder().withRadius(2).withCenterPosition(3, -4).build();
 
         CellPairShadowing.addShadowing(shadowee, shadower);
 
-        double fullOverlapTransmissionFactor = shadower.getShadowTransmissionFraction();
-        double halfOverlapTransmissionFactor = fullOverlapTransmissionFactor + (1 - fullOverlapTransmissionFactor) / 2;
-        assertApproxEquals(halfOverlapTransmissionFactor, shadowee.getEnvironment().getShadowTransmissionFraction());
+        double quarterOverlapTransmissionFactor = 0.75 + 0.25 * shadower.getShadowTransmissionFraction();
+        assertApproxEquals(quarterOverlapTransmissionFactor, shadowee.getEnvironment().getShadowTransmissionFraction());
     }
 }
