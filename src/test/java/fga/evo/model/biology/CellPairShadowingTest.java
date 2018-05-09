@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import static fga.evo.model.Assert.assertApproxEquals;
 import static fga.evo.model.Assert.assertExactEquals;
-import static org.junit.Assert.*;
 
 public class CellPairShadowingTest {
     @Test
