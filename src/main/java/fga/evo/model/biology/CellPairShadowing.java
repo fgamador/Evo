@@ -11,8 +11,12 @@ public class CellPairShadowing {
             lowerCell = cell1;
         }
 
-        double overlapFraction = calcXOverlap(cell1, cell2) / (2 * lowerCell.getRadius());
-        lowerCell.getEnvironment().addShadowing(1 - overlapFraction + overlapFraction * upperCell.getShadowTransmissionFraction());
+        lowerCell.getEnvironment().addShadowing(calcTransmissionFraction(upperCell, lowerCell));
+    }
+
+    private static double calcTransmissionFraction(Cell upperCell, Cell lowerCell) {
+        double overlapFraction = calcXOverlap(upperCell, lowerCell) / (2 * lowerCell.getRadius());
+        return 1 - overlapFraction + overlapFraction * upperCell.getShadowTransmissionFraction();
     }
 
     private static double calcXOverlap(Cell cell1, Cell cell2) {
