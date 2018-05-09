@@ -1,16 +1,14 @@
 package fga.evo.model.biology;
 
 public class CellPairShadowing {
-    public static void addShadowing(Cell cell1, Cell cell2) {
-        Cell upperCell, lowerCell;
-        if (cell1.getCenterY() > cell2.getCenterY()) {
-            upperCell = cell1;
-            lowerCell = cell2;
-        } else {
-            upperCell = cell2;
-            lowerCell = cell1;
-        }
+    public static void addShadowingToLowerCell(Cell cell1, Cell cell2) {
+        if (cell1.getCenterY() > cell2.getCenterY())
+            addShadowingInner(cell1, cell2);
+        else
+            addShadowingInner(cell2, cell1);
+    }
 
+    private static void addShadowingInner(Cell upperCell, Cell lowerCell) {
         lowerCell.getEnvironment().addShadowing(calcTransmissionFraction(upperCell, lowerCell));
     }
 

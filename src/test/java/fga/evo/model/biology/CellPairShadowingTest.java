@@ -11,7 +11,7 @@ public class CellPairShadowingTest {
         Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
         Cell shadowee = new Cell.Builder().withRadius(1).withCenterPosition(0, -2).build();
 
-        CellPairShadowing.addShadowing(shadower, shadowee);
+        CellPairShadowing.addShadowingToLowerCell(shadower, shadowee);
 
         assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
         assertExactEquals(shadower.getShadowTransmissionFraction(), shadowee.getEnvironment().getShadowTransmissionFraction());
@@ -22,7 +22,7 @@ public class CellPairShadowingTest {
         Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
         Cell shadowee = new Cell.Builder().withRadius(1).withCenterPosition(0, -2).build();
 
-        CellPairShadowing.addShadowing(shadowee, shadower);
+        CellPairShadowing.addShadowingToLowerCell(shadowee, shadower);
 
         assertExactEquals(1, shadower.getEnvironment().getShadowTransmissionFraction());
         assertExactEquals(shadower.getShadowTransmissionFraction(), shadowee.getEnvironment().getShadowTransmissionFraction());
@@ -33,7 +33,7 @@ public class CellPairShadowingTest {
         Cell shadower = new Cell.Builder().withRadius(2).withCenterPosition(0, 0).build();
         Cell shadowee = new Cell.Builder().withRadius(2).withCenterPosition(3, -4).build();
 
-        CellPairShadowing.addShadowing(shadowee, shadower);
+        CellPairShadowing.addShadowingToLowerCell(shadowee, shadower);
 
         double quarterOverlapTransmissionFactor = 0.75 + 0.25 * shadower.getShadowTransmissionFraction();
         assertApproxEquals(quarterOverlapTransmissionFactor, shadowee.getEnvironment().getShadowTransmissionFraction());
